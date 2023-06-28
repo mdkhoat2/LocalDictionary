@@ -368,3 +368,6 @@ obj/
 *.cbp
 *.depend
 *.layout
+
+#VSCode
+.vscode/
