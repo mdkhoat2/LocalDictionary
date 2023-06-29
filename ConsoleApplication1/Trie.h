@@ -1,9 +1,7 @@
 #ifndef TRIE_H
 #define TRIE_H
 
-#include <string>
-#include <vector>
-
+#include "WordData.h"
 
 struct TrieNode
 {
@@ -20,7 +18,7 @@ struct TrieNode
     */
     TrieNode* links[66];
     bool flag;
-    std::string wordDef;
+    std::string wordInfo;
 
     // Constructor
     TrieNode();
@@ -35,12 +33,11 @@ struct TrieNode
 };
 
 // Functions about Trie opearations 
-void trieInsert(TrieNode*& root, std::string word, std::string wordDef);
+void trieInsert(TrieNode*& root, std::string word, std::string wordInfo);
 std::string trieSearch(TrieNode* root, std::string word);
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth = 0);
 void trieDeleteAll(TrieNode* &root);
 
-// Helper functions to read from file
-bool isValidCharacter(char ch);
+
 
 #endif // TRIE_H

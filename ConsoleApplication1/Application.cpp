@@ -24,7 +24,8 @@ void Application::loadEngEngDict()
 {
     std::ifstream fin("data/EE.txt");
     // Skip the first 59 lines (unnecessary lines)
-    std::string line, word, wordDef;
+    std::string line, word, wordInfo;
+    bool moreThan1Def = false;
     int count = 0;
     while(count < 59)
     {
@@ -44,9 +45,10 @@ void Application::loadEngEngDict()
             else
             {
                 // insert the previous word with its definition
-                trieInsert(engEngRoot, word, wordDef);
+                trieInsert(engEngRoot, word, wordInfo);
                 word = line;
-                wordDef.clear();
+                wordInfo.clear();
+                moreThan1Def = false;
             }
         }
         else
@@ -55,14 +57,52 @@ void Application::loadEngEngDict()
             int i = 0;
             while(line[i] == ' ')
                 ++i;
-            // Read the definition
-            if(wordDef.empty())
-                wordDef = line.substr(i);
+            // Read the word's information
+            // The first line will definitely contain the word type
+            if(wordInfo.empty()) 
+            {
+                std::string wordType;
+                while(line[i] != ' ')
+                    wordType += line[i++];
+                if(isdigit(line[i+1]))
+                    moreThan1Def = true;
+                wordInfo += wordType + "\n" + line.substr(i+1);
+            }
             else
-                wordDef += " " + line.substr(i);
+            {
+                // Check for "X:" which indicates another meaning of the same word type
+                int j  = i;
+                std::string numStr;
+                while(line[j] != ':' && j < line.length())
+                    numStr += line[j++];
+                if(isNumber(numStr) && moreThan1Def)
+                    wordInfo += "\n" + line.substr(i);
+                else
+                {
+                    // Check for any other word type
+                    std::string wordType;
+                    while(line[i] != ' ' && i < line.length())
+                        wordType += line[i++];
+                    // If the word has another word type
+                    if(isValidWordType(wordType))
+                    {
+                        wordInfo += "\n" + wordType + "\n" + line.substr(i+1);
+                    }
+                    // If it is a normal line
+                    else if(line[i] == ' ')
+                    {
+                        wordInfo += wordType + line.substr(i);
+                    }
+                    // If the line contains only 1 word that is not a word type
+                    else
+                    {   
+                        wordInfo += wordType;
+                    }
+                }
+            }
         }
     }
-    trieInsert(engEngRoot, word, wordDef);
+    trieInsert(engEngRoot, word, wordInfo); // Insert last word
     fin.close();
 }
 
@@ -164,9 +204,13 @@ void Application::handleEvent()
             if(searchButton.isMouseOver(window))
             {
                 std::string inputWord = searchBar.getText();
-                std::string wordDef = trieSearch(engEngRoot, inputWord);
-                if(!wordDef.empty())
-                    std::cout << wordDef << "\n";
+                std::string wordInfo = trieSearch(engEngRoot, inputWord);
+                if(!wordInfo.empty())
+                {
+                    WordData theWordData;
+                    extractWordData(theWordData, inputWord, wordInfo);
+                    theWordData.consolePrint();
+                }
                 else
                     std::cout << "Cannot find the word" << "\n";
             }

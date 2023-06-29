@@ -1,5 +1,6 @@
 #include <sstream>
 #include "Trie.h"
+#include "WordData.h"
 
 TrieNode::TrieNode() : flag(false) {
     for(int i = 0; i < 66; ++i) {
@@ -78,7 +79,7 @@ bool TrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsert(TrieNode*& root, std::string word, std::string wordDef)
+void trieInsert(TrieNode*& root, std::string word, std::string wordInfo)
 {
     if(root == nullptr)
         root = new TrieNode();
@@ -92,7 +93,7 @@ void trieInsert(TrieNode*& root, std::string word, std::string wordDef)
         node = node->get(word[i]);
     }
     node->setEnd();
-    node->wordDef = wordDef;
+    node->wordInfo = wordInfo;
 }
 
 std::string trieSearch(TrieNode* root, std::string word)
@@ -107,7 +108,7 @@ std::string trieSearch(TrieNode* root, std::string word)
         node = node->get(word[i]);
     }
     if(node->isEnd())
-        return node->wordDef;
+        return node->wordInfo;
 }
 
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
@@ -163,21 +164,3 @@ void trieDeleteAll(TrieNode* &root)
     delete root;
 }
 
-bool isValidCharacter(char ch)
-{
-    if(ch >= 'a' && ch <= 'z')
-        return true;
-    if(ch >= 'A' && ch <= 'Z')
-        return true;
-    if(ch >= '0' && ch <= '9')
-        return true;
-    if(ch == 39) // single quote
-        return true;
-    if(ch == 46) // dot
-        return true;
-    if(ch == 45) // hyphen
-        return true;
-    if(ch == 32) // space
-        return true;
-    return false;
-}

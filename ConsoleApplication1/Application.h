@@ -4,6 +4,7 @@
 #include "Button.h"
 #include "Textbox.h"
 #include "Trie.h"
+#include "WordData.h"
 
 class Application
 {
