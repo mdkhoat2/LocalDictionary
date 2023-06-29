@@ -8,7 +8,17 @@
 struct TrieNode
 {
     // Member variables
-    TrieNode* links[26];
+    /*
+        Indices for characters
+        0 -> 25: a -> z
+        26 -> 51: A -> Z
+        52 -> 61: 0 -> 9
+        62: '
+        63: .
+        64: -
+        65: [space]
+    */
+    TrieNode* links[66];
     bool flag;
     std::string wordDef;
 
@@ -30,8 +40,7 @@ std::string trieSearch(TrieNode* root, std::string word);
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth = 0);
 void trieDeleteAll(TrieNode* &root);
 
-// Functions to read from file
-
-bool isValidWord(std::string word);
+// Helper functions to read from file
+bool isValidCharacter(char ch);
 
 #endif // TRIE_H

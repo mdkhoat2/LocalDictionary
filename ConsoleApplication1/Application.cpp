@@ -23,7 +23,7 @@ Application::~Application()
 void Application::loadEngEngDict()
 {
     std::ifstream fin("data/EE.txt");
-    // Skip the first 59 lines
+    // Skip the first 59 lines (unnecessary lines)
     std::string line, word, wordDef;
     int count = 0;
     while(count < 59)
@@ -36,13 +36,14 @@ void Application::loadEngEngDict()
     {
         if(line[0] != ' ') // this is a word
         {
-            if(count == 59)
+            if(count == 59) // Read first word
             {   
                 ++count;
                 word = line;
             }
             else
             {
+                // insert the previous word with its definition
                 trieInsert(engEngRoot, word, wordDef);
                 word = line;
                 wordDef.clear();
@@ -50,9 +51,11 @@ void Application::loadEngEngDict()
         }
         else
         {
+            // Skip leading spaces
             int i = 0;
             while(line[i] == ' ')
                 ++i;
+            // Read the definition
             if(wordDef.empty())
                 wordDef = line.substr(i);
             else
