@@ -1,6 +1,7 @@
 #include <fstream>
 #include "Application.h"
 
+
 Application::Application() :
     videoMode(1200, 900),
     window(videoMode, "Dictionary"),
@@ -150,7 +151,7 @@ void Application::initFont()
 void Application::initSearchBar()
 {
     searchBar.setPosition({ 125, 180 });
-	searchBar.setLimit(true, 100); //set limit to 100 characters
+	searchBar.setLimit(true, 70); //set limit to 100 characters
 	searchBar.setFont(font);
 }
 
