@@ -5,7 +5,6 @@ TrieNode::TrieNode() : flag(false) {
     for(int i = 0; i < 26; ++i) {
       links[i] = nullptr;
     }
-    wordInfo = nullptr;
 }
 
 bool TrieNode::containsKey(char ch) {
@@ -38,32 +37,36 @@ bool TrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsert(TrieNode*& root, WordInfo wordInfoInsert)
+void trieInsert(TrieNode*& root, std::string word, std::string wordDef)
 {
-    std::string word = wordInfoInsert.word;
+    if(root == nullptr)
+        root = new TrieNode();
     TrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
+        if(word[i] < 'a' || word[i] > 'z')
+            return;
         if(!node->containsKey(word[i])) {
             node->put(word[i], new TrieNode());
         }
         node = node->get(word[i]);
     }
     node->setEnd();
-    node->wordInfo = new WordInfo;
-    node->wordInfo->word = wordInfoInsert.word;
-    node->wordInfo->wordTypes = wordInfoInsert.wordTypes;
-    node->wordInfo->wordDefinitions = wordInfoInsert.wordDefinitions;
+    node->wordDef = wordDef;
 }
 
-bool trieSearch(TrieNode* root, std::string word)
+std::string trieSearch(TrieNode* root, std::string word)
 {
     TrieNode* node = root;
-    for(int i = 0; i < word.length(); ++i) {
+    for(int i = 0; i < word.length(); ++i) 
+    {
+        if(word[i] < 'a' || word[i] > 'z')
+            return "";
         if(!node->containsKey(word[i]))
-            return false;
+            return "";
         node = node->get(word[i]);
     }
-    return node->isEnd();
+    if(node->isEnd())
+        return node->wordDef;
 }
 
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
@@ -77,7 +80,6 @@ TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
             root->flag = false;
 
         if (root->hasNoChildren()) {
-            delete root->wordInfo;
             delete root;
             root = nullptr;
         }
@@ -89,7 +91,6 @@ TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
     root->links[index] = trieRemove(root->links[index], word, depth + 1);
 
     if (root->hasNoChildren() && root->flag == false) {
-        delete root->wordInfo;
         delete root;
         root = nullptr;
     }
@@ -97,8 +98,23 @@ TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
     return root;
 }
 
-void getWordInfoFromString(WordInfo &wordInfo, std::string def)
+void trieDeleteAll(TrieNode* &root)
 {
-    
+    if(root == nullptr)
+        return;
+    for(int i = 0; i < 26; ++i)
+    {
+        trieDeleteAll(root->links[i]);
+    }
+    delete root;
+}
 
+bool isValidWord(std::string word)
+{
+    for(int i = 0; i < word.length(); ++i)
+    {
+        if(word[i] < 'a' || word[i] > 'z')
+            return false;
+    }
+    return true;
 }

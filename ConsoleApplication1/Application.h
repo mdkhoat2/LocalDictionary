@@ -1,13 +1,16 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "button.h"
-#include "textbox.h"
+#include "Button.h"
+#include "Textbox.h"
+#include "Trie.h"
 
 class Application
 {
 public:
     Application();
+    ~Application();
+    void loadEngEngDict();
     void run();
 public:
     void handleEvent();
@@ -29,6 +32,8 @@ private:
 
     Textbox searchBar;
     Button searchButton;
+
+    TrieNode* engEngRoot;
 private:
     void initWindow();
     void initBackground();

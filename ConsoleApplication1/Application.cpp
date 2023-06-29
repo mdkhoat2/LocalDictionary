@@ -1,7 +1,12 @@
-
+#include <fstream>
 #include "Application.h"
 
-Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary"), searchBar(20, sf::Color::Black, true), searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent)
+Application::Application() :
+    videoMode(1200, 900),
+    window(videoMode, "Dictionary"),
+    searchBar(20, sf::Color::Black, true),
+    searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    engEngRoot(nullptr)
 {
     initWindow();
     initBackground();
@@ -10,10 +15,58 @@ Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary
     initSearchButton();
 }
 
+Application::~Application()
+{
+    trieDeleteAll(engEngRoot);
+}
+
+void Application::loadEngEngDict()
+{
+    std::ifstream fin("data/EE.txt");
+    // Skip the first 59 lines
+    std::string line, word, wordDef;
+    int count = 0;
+    while(count < 59)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+
+    while(std::getline(fin, line))
+    {
+        if(line[0] != ' ') // this is a word
+        {
+            if(count == 59)
+            {   
+                ++count;
+                word = line;
+            }
+            else
+            {
+                trieInsert(engEngRoot, word, wordDef);
+                word = line;
+                wordDef.clear();
+            }
+        }
+        else
+        {
+            int i = 0;
+            while(line[i] == ' ')
+                ++i;
+            if(wordDef.empty())
+                wordDef = line.substr(i);
+            else
+                wordDef += " " + line.substr(i);
+        }
+    }
+    trieInsert(engEngRoot, word, wordDef);
+    fin.close();
+}
+
 void Application::initWindow()
 {
     sf::Vector2i centerWindow(
-        (sf::VideoMode::getDesktopMode().width / 2) - 600, 
+        (sf::VideoMode::getDesktopMode().width / 2) - 600,
         (sf::VideoMode::getDesktopMode().height / 2) - 450
     );
 	window.setPosition(centerWindow);
@@ -68,11 +121,11 @@ void Application::run()
 {
     while(window.isOpen())
     {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
         {
 			searchBar.setSelected(true);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
 			searchBar.setSelected(false);
 		}
@@ -86,7 +139,7 @@ void Application::run()
 void Application::handleEvent()
 {
     //Event Loop:
-    while (window.pollEvent(event)) 
+    while (window.pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
             window.close();
@@ -107,7 +160,12 @@ void Application::handleEvent()
         {
             if(searchButton.isMouseOver(window))
             {
-                std::cout << searchBar.getText() << "\n";
+                std::string inputWord = searchBar.getText();
+                std::string wordDef = trieSearch(engEngRoot, inputWord);
+                if(!wordDef.empty())
+                    std::cout << wordDef << "\n";
+                else
+                    std::cout << "Cannot find the word" << "\n";
             }
         }
     }
