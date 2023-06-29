@@ -139,9 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="Textbox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="textbox.h" />
   </ItemGroup>

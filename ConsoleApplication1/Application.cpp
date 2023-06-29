@@ -1,7 +1,7 @@
 
 #include "Application.h"
 
-Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary"), searchBar(20, sf::Color::Black, true), searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent)
+Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary", sf::Style::Close), searchBar(20, sf::Color::Black, true), searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent)
 {
     initWindow();
     initBackground();
@@ -54,7 +54,7 @@ void Application::initFont()
 void Application::initSearchBar()
 {
     searchBar.setPosition({ 125, 180 });
-	searchBar.setLimit(true, 100); //set limit to 100 characters
+	searchBar.setLimit(true, 70); //set limit to 100 characters
 	searchBar.setFont(font);
 }
 
