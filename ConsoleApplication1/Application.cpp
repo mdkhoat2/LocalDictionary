@@ -1,7 +1,13 @@
-
+#include <fstream>
 #include "Application.h"
 
-Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary", sf::Style::Close), searchBar(20, sf::Color::Black, true), searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent)
+
+Application::Application() :
+    videoMode(1200, 900),
+    window(videoMode, "Dictionary"),
+    searchBar(20, sf::Color::Black, true),
+    searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    engEngRoot(nullptr)
 {
     initWindow();
     initBackground();
@@ -10,10 +16,101 @@ Application::Application() : videoMode(1200, 900), window(videoMode, "Dictionary
     initSearchButton();
 }
 
+Application::~Application()
+{
+    trieDeleteAll(engEngRoot);
+}
+
+void Application::loadEngEngDict()
+{
+    std::ifstream fin("data/EE.txt");
+    // Skip the first 59 lines (unnecessary lines)
+    std::string line, word, wordInfo;
+    bool moreThan1Def = false;
+    int count = 0;
+    while(count < 59)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+
+    while(std::getline(fin, line))
+    {
+        if(line[0] != ' ') // this is a word
+        {
+            if(count == 59) // Read first word
+            {   
+                ++count;
+                word = line;
+            }
+            else
+            {
+                // insert the previous word with its definition
+                trieInsert(engEngRoot, word, wordInfo);
+                word = line;
+                wordInfo.clear();
+                moreThan1Def = false;
+            }
+        }
+        else
+        {
+            // Skip leading spaces
+            int i = 0;
+            while(line[i] == ' ')
+                ++i;
+            // Read the word's information
+            // The first line will definitely contain the word type
+            if(wordInfo.empty()) 
+            {
+                std::string wordType;
+                while(line[i] != ' ')
+                    wordType += line[i++];
+                if(isdigit(line[i+1]))
+                    moreThan1Def = true;
+                wordInfo += wordType + "\n" + line.substr(i+1);
+            }
+            else
+            {
+                // Check for "X:" which indicates another meaning of the same word type
+                int j  = i;
+                std::string numStr;
+                while(line[j] != ':' && j < line.length())
+                    numStr += line[j++];
+                if(isNumber(numStr) && moreThan1Def)
+                    wordInfo += "\n" + line.substr(i);
+                else
+                {
+                    // Check for any other word type
+                    std::string wordType;
+                    while(line[i] != ' ' && i < line.length())
+                        wordType += line[i++];
+                    // If the word has another word type
+                    if(isValidWordType(wordType))
+                    {
+                        wordInfo += "\n" + wordType + "\n" + line.substr(i+1);
+                    }
+                    // If it is a normal line
+                    else if(line[i] == ' ')
+                    {
+                        wordInfo += wordType + line.substr(i);
+                    }
+                    // If the line contains only 1 word that is not a word type
+                    else
+                    {   
+                        wordInfo += wordType;
+                    }
+                }
+            }
+        }
+    }
+    trieInsert(engEngRoot, word, wordInfo); // Insert last word
+    fin.close();
+}
+
 void Application::initWindow()
 {
     sf::Vector2i centerWindow(
-        (sf::VideoMode::getDesktopMode().width / 2) - 600, 
+        (sf::VideoMode::getDesktopMode().width / 2) - 600,
         (sf::VideoMode::getDesktopMode().height / 2) - 450
     );
 	window.setPosition(centerWindow);
@@ -68,11 +165,11 @@ void Application::run()
 {
     while(window.isOpen())
     {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
         {
 			searchBar.setSelected(true);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
 			searchBar.setSelected(false);
 		}
@@ -86,7 +183,7 @@ void Application::run()
 void Application::handleEvent()
 {
     //Event Loop:
-    while (window.pollEvent(event)) 
+    while (window.pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
             window.close();
@@ -107,7 +204,16 @@ void Application::handleEvent()
         {
             if(searchButton.isMouseOver(window))
             {
-                std::cout << searchBar.getText() << "\n";
+                std::string inputWord = searchBar.getText();
+                std::string wordInfo = trieSearch(engEngRoot, inputWord);
+                if(!wordInfo.empty())
+                {
+                    WordData theWordData;
+                    extractWordData(theWordData, inputWord, wordInfo);
+                    theWordData.consolePrint();
+                }
+                else
+                    std::cout << "Cannot find the word" << "\n";
             }
         }
     }
