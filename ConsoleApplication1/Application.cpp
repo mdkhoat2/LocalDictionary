@@ -6,7 +6,8 @@ Application::Application() :
     videoMode(1200, 900),
     window(videoMode, "Dictionary"),
     searchBar(20, sf::Color::Black, true),
-    searchButton("", { 50, 50 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr)
 {
     initWindow();
@@ -14,6 +15,7 @@ Application::Application() :
     initFont();
     initSearchBar();
     initSearchButton();
+    initMenuButton();
 }
 
 Application::~Application()
@@ -151,14 +153,20 @@ void Application::initFont()
 void Application::initSearchBar()
 {
     searchBar.setPosition({ 125, 180 });
-	searchBar.setLimit(true, 70); //set limit to 100 characters
+	searchBar.setLimit(true, 65); //set limit to 65 characters
 	searchBar.setFont(font);
 }
 
 void Application::initSearchButton()
 {
     searchButton.setFont(font);
-	searchButton.setPosition({ 875, 170 });
+	searchButton.setPosition({ 882, 175 });
+}
+
+void Application::initMenuButton()
+{
+	menuButton.setFont(font);
+	menuButton.setPosition({ 972, 163 });
 }
 
 void Application::run()
@@ -166,13 +174,9 @@ void Application::run()
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-        {
 			searchBar.setSelected(true);
-		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        {
 			searchBar.setSelected(false);
-		}
 
         handleEvent();
         update();
@@ -193,11 +197,25 @@ void Application::handleEvent()
         {
             if(searchButton.isMouseOver(window))
             {
-                searchButton.setBackColor(sf::Color::Transparent);
+                sf::Color grey(0, 0, 0, 120);
+                searchButton.button.setOutlineColor(grey);
+                searchButton.button.setOutlineThickness(2);
             }
             else
             {
-                searchButton.setBackColor(sf::Color::Transparent);
+                searchButton.button.setOutlineColor(sf::Color::Transparent);
+                searchButton.button.setOutlineThickness(2);
+            }
+            if (menuButton.isMouseOver(window))
+            {
+                sf::Color grey(0, 0, 0, 120);
+                menuButton.button.setOutlineColor(grey);
+                menuButton.button.setOutlineThickness(2);
+            }
+            else
+            {
+                menuButton.button.setOutlineColor(sf::Color::Transparent);
+                menuButton.button.setOutlineThickness(2);
             }
         }
         else if(event.type == sf::Event::MouseButtonPressed)
@@ -230,5 +248,6 @@ void Application::render()
     window.draw(mainScreen);
     searchBar.drawTo(window);
     searchButton.drawTo(window);
+    menuButton.drawTo(window);
     window.display();
 }

@@ -33,6 +33,7 @@ private:
 
     Textbox searchBar;
     Button searchButton;
+    Button menuButton;
 
     TrieNode* engEngRoot;
 private:
@@ -41,6 +42,7 @@ private:
     void initFont();
     void initSearchBar();
     void initSearchButton();
+    void initMenuButton();
 };
 
 #endif
