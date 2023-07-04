@@ -94,12 +94,12 @@ void Application::loadEngEngDict()
                     // If it is a normal line
                     else if(line[i] == ' ')
                     {
-                        wordInfo += wordType + line.substr(i);
+                        wordInfo += " " + wordType + line.substr(i);
                     }
                     // If the line contains only 1 word that is not a word type
                     else
                     {   
-                        wordInfo += wordType;
+                        wordInfo += " " + wordType;
                     }
                 }
             }
@@ -223,7 +223,7 @@ void Application::handleEvent()
             if(searchButton.isMouseOver(window))
             {
                 std::string inputWord = searchBar.getText();
-                std::string wordInfo = trieSearch(engEngRoot, inputWord);
+                std::string wordInfo = engEngSearch(engEngRoot, inputWord);
                 if(!wordInfo.empty())
                 {
                     WordData theWordData;
