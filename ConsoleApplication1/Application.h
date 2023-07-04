@@ -5,6 +5,7 @@
 #include "Textbox.h"
 #include "Trie.h"
 #include "WordData.h"
+#include "History.h"
 
 class Application
 {
@@ -34,6 +35,7 @@ private:
     Textbox searchBar;
     Button searchButton;
     Button menuButton;
+    History history;
 
     TrieNode* engEngRoot;
 private:
