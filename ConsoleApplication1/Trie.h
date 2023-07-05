@@ -15,8 +15,9 @@ struct TrieNode
         63: .
         64: -
         65: [space]
+        66: /
     */
-    TrieNode* links[66];
+    TrieNode* links[67];
     bool flag;
     std::string wordInfo;
 
@@ -38,6 +39,7 @@ std::string trieSearch(TrieNode* root, std::string word);
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth = 0);
 void trieDeleteAll(TrieNode* &root);
 
-
+// Search functions
+std::string engEngSearch(TrieNode* root, std::string &word);
 
 #endif // TRIE_H

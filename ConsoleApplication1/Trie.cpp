@@ -1,9 +1,8 @@
 #include <sstream>
 #include "Trie.h"
-#include "WordData.h"
 
 TrieNode::TrieNode() : flag(false) {
-    for(int i = 0; i < 66; ++i) {
+    for(int i = 0; i < 67; ++i) {
       links[i] = nullptr;
     }
 }
@@ -23,6 +22,8 @@ bool TrieNode::containsKey(char ch) {
         return (links[64] != nullptr);
     if(ch == 32) // space
         return (links[65] != nullptr);
+    if(ch == 47) // forward slash
+        return (links[66] != nullptr);
 }
 
 void TrieNode::put(char ch, TrieNode* node) {
@@ -40,6 +41,8 @@ void TrieNode::put(char ch, TrieNode* node) {
         links[64] = node;
     else if(ch == 32) // space
         links[65] = node;
+    else if(ch == 47) // forward slash
+        links[66] = node;
     else
         return;
 }
@@ -59,6 +62,8 @@ TrieNode* TrieNode::get(char ch) {
         return links[64];
     if(ch == 32) // space
         return links[65];
+    if(ch == 47) // forward slash
+        return links[66];
 }
 
 void TrieNode::setEnd() {
@@ -71,7 +76,7 @@ bool TrieNode::isEnd() {
 
 bool TrieNode::hasNoChildren()
 {
-    for (int i = 0; i < 66; i++)
+    for (int i = 0; i < 67; i++)
     {
         if (links[i])
             return false;
@@ -102,9 +107,9 @@ std::string trieSearch(TrieNode* root, std::string word)
     for(int i = 0; i < word.length(); ++i) 
     {
         if(!isValidCharacter(word[i]))
-            return "";
+            return std::string();
         if(!node->containsKey(word[i]))
-            return "";
+            return std::string();
         node = node->get(word[i]);
     }
     if(node->isEnd())
@@ -143,6 +148,8 @@ TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
         index = 64;
     else if(word[depth] == 32) // space
         index = 65;
+    else if(word[depth] == 47) // forward slash
+        index = 66;
     root->links[index] = trieRemove(root->links[index], word, depth + 1);
 
     if (root->hasNoChildren() && root->flag == false) {
@@ -157,10 +164,64 @@ void trieDeleteAll(TrieNode* &root)
 {
     if(root == nullptr)
         return;
-    for(int i = 0; i < 66; ++i)
+    for(int i = 0; i < 67; ++i)
     {
         trieDeleteAll(root->links[i]);
     }
     delete root;
 }
 
+std::string engEngSearch(TrieNode *root, std::string &word)
+{
+    std::string result = trieSearch(root, word);
+    // If there is a word looks the same as inputWord
+    if(!result.empty())
+        return result;
+    // Uppercase all characters
+    for(int i = 0; i < word.length(); ++i)
+    {
+        if(word[i] >= 'a' && word[i] <= 'z')
+            word[i] = toupper(word[i]);
+    }
+    result = trieSearch(root, word);
+    if(!result.empty())
+        return result;
+    // Lowercase all characters of inputWord
+    for(int i = 0; i < word.length(); ++i)
+    {
+        word[i] = tolower(word[i]);
+    }
+    result = trieSearch(root, word);
+    if(!result.empty())
+        return result;
+    // Lowercase all characters and uppercase first character of first single word
+    word[0] = toupper(word[0]);
+    result = trieSearch(root, word);
+    if(!result.empty())
+        return result;
+    // Lowercase all characters and uppercase first character of second single word
+    word[0] = tolower(word[0]);
+    int i = 0;
+    while(word[i] != ' ' && i < word.length())
+        ++i;
+    if(i < word.length() && word[i] == ' ')
+    {
+        if(word[i+1] >= 'a' && word[i+1] <= 'z')
+            word[i+1] = toupper(word[i+1]);
+    }
+    result = trieSearch(root, word);
+    if(!result.empty())
+        return result;
+    // Lowercase all characters and uppercase all first characters of each single word
+    for(int i = 0; i < word.length(); ++i)
+    {
+        if(i == 0)
+            word[0] = toupper(word[0]);
+        if(word[i-1] == ' ')
+            word[i] = toupper(word[i]);
+    }
+    result = trieSearch(root, word);
+    if(!result.empty())
+        return result;
+    return std::string();
+}

@@ -95,12 +95,12 @@ void Application::loadEngEngDict()
                     // If it is a normal line
                     else if(line[i] == ' ')
                     {
-                        wordInfo += wordType + line.substr(i);
+                        wordInfo += " " + wordType + line.substr(i);
                     }
                     // If the line contains only 1 word that is not a word type
                     else
                     {   
-                        wordInfo += wordType;
+                        wordInfo += " " + wordType;
                     }
                 }
             }

@@ -101,6 +101,8 @@ bool isValidCharacter(char ch)
         return true;
     if(ch == 32) // space
         return true;
+    if(ch == 47) // forward slash
+        return true;
     return false;
 }
 
