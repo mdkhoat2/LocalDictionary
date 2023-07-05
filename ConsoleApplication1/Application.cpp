@@ -1,3 +1,4 @@
+#pragma once
 #include <fstream>
 #include "Application.h"
 
@@ -161,12 +162,14 @@ void Application::initSearchButton()
 {
     searchButton.setFont(font);
 	searchButton.setPosition({ 882, 175 });
+    searchButton.button.setOutlineThickness(2);
 }
 
 void Application::initMenuButton()
 {
 	menuButton.setFont(font);
 	menuButton.setPosition({ 972, 163 });
+    menuButton.button.setOutlineThickness(2);
 }
 
 void Application::run()
@@ -193,37 +196,14 @@ void Application::handleEvent()
             window.close();
         if(event.type == sf::Event::TextEntered)
             searchBar.typedOn(event);
-        if(event.type == sf::Event::MouseMoved)
-        {
-            if(searchButton.isMouseOver(window))
-            {
-                sf::Color grey(0, 0, 0, 120);
-                searchButton.button.setOutlineColor(grey);
-                searchButton.button.setOutlineThickness(2);
-            }
-            else
-            {
-                searchButton.button.setOutlineColor(sf::Color::Transparent);
-                searchButton.button.setOutlineThickness(2);
-            }
-            if (menuButton.isMouseOver(window))
-            {
-                sf::Color grey(0, 0, 0, 120);
-                menuButton.button.setOutlineColor(grey);
-                menuButton.button.setOutlineThickness(2);
-            }
-            else
-            {
-                menuButton.button.setOutlineColor(sf::Color::Transparent);
-                menuButton.button.setOutlineThickness(2);
-            }
-        }
-        else if(event.type == sf::Event::MouseButtonPressed)
+        if(event.type == sf::Event::MouseButtonPressed)
         {
             if(searchButton.isMouseOver(window))
             {
                 std::string inputWord = searchBar.getText();
-                std::string wordInfo = engEngSearch(engEngRoot, inputWord);
+                if (inputWord!="")
+                    history.add(inputWord);
+                std::string wordInfo = trieSearch(engEngRoot, inputWord);
                 if(!wordInfo.empty())
                 {
                     WordData theWordData;
@@ -239,7 +219,15 @@ void Application::handleEvent()
 
 void Application::update()
 {
-
+    sf::Color grey(0, 0, 0, 120);
+    if (searchButton.isMouseOver(window))
+        searchButton.button.setOutlineColor(grey);
+    else
+        searchButton.button.setOutlineColor(sf::Color::Transparent);
+    if (menuButton.isMouseOver(window))
+        menuButton.button.setOutlineColor(grey);
+    else
+        menuButton.button.setOutlineColor(sf::Color::Transparent);
 }
 
 void Application::render()
@@ -249,5 +237,6 @@ void Application::render()
     searchBar.drawTo(window);
     searchButton.drawTo(window);
     menuButton.drawTo(window);
+    history.drawTo(window);
     window.display();
 }
