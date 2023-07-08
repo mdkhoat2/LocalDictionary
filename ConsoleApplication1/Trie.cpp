@@ -96,9 +96,43 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
     node->wordInfo = wordInfo;
 }
 
+void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
+{
+    if(root == nullptr)
+        root = new VieTrieNode();
+    VieTrieNode* node = root;
+    for(int i = 0; i < word.length(); ++i) {
+        if(!isValidCharacter(word[i]))
+            return;
+        if(!node->containsKey(word[i])) {
+            node->put(word[i], new VieTrieNode());
+        }
+        node = node->get(word[i]);
+    }
+    node->flag = true;
+    node->wordInfo = wordInfo;
+}
+
 std::string trieSearch(EngTrieNode* root, std::string word)
 {
     EngTrieNode* node = root;
+    for(int i = 0; i < word.length(); ++i) 
+    {
+        if(!isValidCharacter(word[i]))
+            return std::string();
+        if(!node->containsKey(word[i]))
+            return std::string();
+        node = node->get(word[i]);
+    }
+    if(node->flag)
+        return node->wordInfo;
+    else
+        return std::string();
+}
+
+std::string trieSearch(VieTrieNode *root, std::wstring word)
+{
+    VieTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
         if(!isValidCharacter(word[i]))
@@ -157,6 +191,214 @@ EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
     return root;
 }
 
+VieTrieNode *trieRemove(VieTrieNode *&root, std::wstring word, int depth)
+{
+    if (!root)
+        return nullptr;
+
+    if (depth == word.size()) {
+
+        if (root->flag)
+            root->flag = false;
+
+        if (root->hasNoChildren()) {
+            delete root;
+            root = nullptr;
+        }
+
+        return root;
+    }
+    // Get index in Trie
+    int index = 0;
+    if(word[depth] == 'a')
+        index = 0;
+    else if(word[depth] == L'á')
+        index = 1;
+    else if(word[depth] == L'à')
+        index = 2;
+    else if(word[depth] == L'ả')
+        index = 3;
+    else if(word[depth] == L'ã')
+        index = 4;
+    else if(word[depth] == L'ạ')
+        index = 5;
+    else if(word[depth] == L'â')
+        index = 6;
+    else if(word[depth] == L'ấ')
+        index = 7;
+    else if(word[depth] == L'ầ')
+        index = 8;
+    else if(word[depth] == L'ẩ')
+        index = 9;
+    else if(word[depth] == L'ẫ')
+        index = 10;
+    else if(word[depth] == L'ậ')
+        index = 11;
+    else if(word[depth] == L'ă')
+        index = 12;
+    else if(word[depth] == L'ắ')
+        index = 13;
+    else if(word[depth] == L'ằ')
+        index = 14;
+    else if(word[depth] == L'ẳ')
+        index = 15;
+    else if(word[depth] == L'ẵ')
+        index = 16;
+    else if(word[depth] == L'ặ')
+        index = 17;
+    else if(word[depth] == 'b')
+        index = 18;
+    else if(word[depth] == 'c')
+        index = 19;
+    else if(word[depth] == 'd')
+        index = 20;
+    else if(word[depth] == L'đ')
+        index = 21;
+    else if(word[depth] == 'e')
+        index = 22;
+    else if(word[depth] == L'é')
+        index = 23;
+    else if(word[depth] == L'è')
+        index = 24;
+    else if(word[depth] == L'ẻ')
+        index = 25;
+    else if(word[depth] == L'ẽ')
+        index = 26;
+    else if(word[depth] == L'ẹ')
+        index = 27;
+    else if(word[depth] == L'ê')
+        index = 28;
+    else if(word[depth] == L'ế')
+        index = 29;
+    else if(word[depth] == L'ề')
+        index = 30;
+    else if(word[depth] == L'ể')
+        index = 31;
+    else if(word[depth] == L'ễ')
+        index = 32;
+    else if(word[depth] == L'ệ')
+        index = 33;
+    else if(word[depth] == 'g')
+        index = 34;
+    else if(word[depth] == 'h')
+        index = 35;
+    else if(word[depth] == 'i')
+        index = 36;
+    else if(word[depth] == L'í')
+        index = 37; 
+    else if(word[depth] == L'ì')
+        index = 38;
+    else if(word[depth] == L'ỉ')
+        index = 39;
+    else if(word[depth] == L'ĩ')
+        index = 40;
+    else if(word[depth] == L'ị')
+        index = 41;
+    else if(word[depth] == 'k')
+        index = 42;
+    else if(word[depth] == 'l')
+        index = 43;
+    else if(word[depth] == 'm')
+        index = 44;
+    else if(word[depth] == 'n')
+        index = 45;
+    else if(word[depth] == 'o')
+        index = 46;
+    else if(word[depth] == L'ó')
+        index = 47;
+    else if(word[depth] == L'ò')
+        index = 48;
+    else if(word[depth] == L'ỏ')
+        index = 49;
+    else if(word[depth] == L'õ')
+        index = 50;
+    else if(word[depth] == L'ọ')
+        index = 51;
+    else if(word[depth] == L'ô')
+        index = 52;
+    else if(word[depth] == L'ố')
+        index = 53;
+    else if(word[depth] == L'ồ')
+        index = 54;
+    else if(word[depth] == L'ổ')
+        index = 55;
+    else if(word[depth] == L'ỗ')
+        index = 56;
+    else if(word[depth] == L'ộ')
+        index = 57;
+    else if(word[depth] == L'ơ')
+        index = 58;
+    else if(word[depth] == L'ớ')
+        index = 59;
+    else if(word[depth] == L'ờ')
+        index = 60;
+    else if(word[depth] == L'ở')
+        index = 61;
+    else if(word[depth] == L'ỡ')
+        index = 62;
+    else if(word[depth] == L'ợ')
+        index = 63;
+    else if(word[depth] == 'p')
+        index = 64;
+    else if(word[depth] == 'q')
+        index = 65;
+    else if(word[depth] == 'r')
+        index = 66;
+    else if(word[depth] == 's')
+        index = 67;
+    else if(word[depth] == 't')
+        index = 68;
+    else if(word[depth] == 'u')
+        index = 69;
+    else if(word[depth] == L'ú')
+        index = 70;
+    else if(word[depth] == L'ù')
+        index = 71;
+    else if(word[depth] == L'ủ')
+        index = 72;
+    else if(word[depth] == L'ũ')
+        index = 73;
+    else if(word[depth] == L'ụ')
+        index = 74;
+    else if(word[depth] == L'ư')
+        index = 75;
+    else if(word[depth] == L'ứ')
+        index = 76;
+    else if(word[depth] == L'ừ')
+        index = 77;
+    else if(word[depth] == L'ử')
+        index = 78;
+    else if(word[depth] == L'ữ')
+        index = 79;
+    else if(word[depth] == L'ự')
+        index = 80;
+    else if(word[depth] == 'v')
+        index = 81;
+    else if(word[depth] == 'x')
+        index = 82;
+    else if(word[depth] == 'y')
+        index = 83;
+    else if(word[depth] == L'ý')
+        index = 84;
+    else if(word[depth] == L'ỳ')
+        index = 85;
+    else if(word[depth] == L'ỷ')
+        index = 86;
+    else if(word[depth] == L'ỹ')
+        index = 87;
+    else if(word[depth] == L'ỵ')
+        index = 88;
+
+    root->links[index] = trieRemove(root->links[index], word, depth + 1);
+
+    if (root->hasNoChildren() && root->flag == false) {
+        delete root;
+        root = nullptr;
+    }
+
+    return root;
+}
+
 void trieDeleteAll(EngTrieNode* &root)
 {
     if(root == nullptr)
@@ -166,6 +408,19 @@ void trieDeleteAll(EngTrieNode* &root)
         trieDeleteAll(root->links[i]);
     }
     delete root;
+    root = nullptr;
+}
+
+void trieDeleteAll(VieTrieNode *&root)
+{
+    if(root == nullptr)
+        return;
+    for(int i = 0; i < 67; ++i)
+    {
+        trieDeleteAll(root->links[i]);
+    }
+    delete root;
+    root = nullptr;
 }
 
 std::string filterAndSearch(EngTrieNode *root, std::string &word)
@@ -777,5 +1032,15 @@ VieTrieNode* VieTrieNode::get(wchar_t ch)
     if(ch == L'ỵ')
         return links[88];
     return nullptr;
+}
+
+bool VieTrieNode::hasNoChildren()
+{
+    for (int i = 0; i < 89; i++)
+    {
+        if (links[i])
+            return false;
+    }
+    return true;
 }
 
