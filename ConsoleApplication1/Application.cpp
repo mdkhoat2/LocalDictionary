@@ -9,7 +9,9 @@ Application::Application() :
     searchBar(20, sf::Color::Black, true),
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    engEngRoot(nullptr)
+    engEngRoot(nullptr),
+    vieEngRoot(nullptr),
+    history()
 {
     initWindow();
     initBackground();
@@ -174,6 +176,8 @@ void Application::initMenuButton()
 
 void Application::run()
 {
+    // Load dictionaries
+    loadEngEngDict();
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -203,7 +207,7 @@ void Application::handleEvent()
                 std::string inputWord = searchBar.getText();
                 if (inputWord!="")
                     history.add(inputWord);
-                std::string wordInfo = trieSearch(engEngRoot, inputWord);
+                std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
                 if(!wordInfo.empty())
                 {
                     WordData theWordData;

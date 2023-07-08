@@ -1,13 +1,14 @@
 #include <sstream>
 #include "Trie.h"
 
-TrieNode::TrieNode() : flag(false) {
-    for(int i = 0; i < 67; ++i) {
+EngTrieNode::EngTrieNode() : flag(false) 
+{
+    for(int i = 0; i < 67; ++i) 
       links[i] = nullptr;
-    }
 }
 
-bool TrieNode::containsKey(char ch) {
+bool EngTrieNode::containsKey(char ch) 
+{
     if(ch >= 'a' && ch <= 'z')
         return (links[ch - 'a'] != nullptr);
     if(ch >= 'A' && ch <= 'Z')
@@ -26,7 +27,8 @@ bool TrieNode::containsKey(char ch) {
         return (links[66] != nullptr);
 }
 
-void TrieNode::put(char ch, TrieNode* node) {
+void EngTrieNode::put(char ch, EngTrieNode* node) 
+{
     if(ch >= 'a' && ch <= 'z')
         links[ch - 'a'] = node;
     else if(ch >= 'A' && ch <= 'Z')
@@ -47,7 +49,8 @@ void TrieNode::put(char ch, TrieNode* node) {
         return;
 }
 
-TrieNode* TrieNode::get(char ch) {
+EngTrieNode* EngTrieNode::get(char ch) 
+{
     if(ch >= 'a' && ch <= 'z')
         return links[ch - 'a'];
     if(ch >= 'A' && ch <= 'Z')
@@ -66,15 +69,7 @@ TrieNode* TrieNode::get(char ch) {
         return links[66];
 }
 
-void TrieNode::setEnd() {
-    flag = true;
-}
-
-bool TrieNode::isEnd() {
-    return flag;
-}
-
-bool TrieNode::hasNoChildren()
+bool EngTrieNode::hasNoChildren()
 {
     for (int i = 0; i < 67; i++)
     {
@@ -84,26 +79,26 @@ bool TrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsert(TrieNode*& root, std::string word, std::string wordInfo)
+void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
 {
     if(root == nullptr)
-        root = new TrieNode();
-    TrieNode* node = root;
+        root = new EngTrieNode();
+    EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
         if(!isValidCharacter(word[i]))
             return;
         if(!node->containsKey(word[i])) {
-            node->put(word[i], new TrieNode());
+            node->put(word[i], new EngTrieNode());
         }
         node = node->get(word[i]);
     }
-    node->setEnd();
+    node->flag = true;
     node->wordInfo = wordInfo;
 }
 
-std::string trieSearch(TrieNode* root, std::string word)
+std::string trieSearch(EngTrieNode* root, std::string word)
 {
-    TrieNode* node = root;
+    EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
         if(!isValidCharacter(word[i]))
@@ -112,11 +107,13 @@ std::string trieSearch(TrieNode* root, std::string word)
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->isEnd())
+    if(node->flag)
         return node->wordInfo;
+    else
+        return std::string();
 }
 
-TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
+EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
 {
     if (!root)
         return nullptr;
@@ -160,7 +157,7 @@ TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
     return root;
 }
 
-void trieDeleteAll(TrieNode* &root)
+void trieDeleteAll(EngTrieNode* &root)
 {
     if(root == nullptr)
         return;
@@ -171,7 +168,7 @@ void trieDeleteAll(TrieNode* &root)
     delete root;
 }
 
-std::string engEngSearch(TrieNode *root, std::string &word)
+std::string filterAndSearch(EngTrieNode *root, std::string &word)
 {
     std::string result = trieSearch(root, word);
     // If there is a word looks the same as inputWord
@@ -225,3 +222,560 @@ std::string engEngSearch(TrieNode *root, std::string &word)
         return result;
     return std::string();
 }
+
+VieTrieNode::VieTrieNode() : flag(false)
+{
+    for(int i = 0; i < 89; ++i)
+        links[i] = nullptr;
+}
+
+bool VieTrieNode::containsKey(wchar_t ch)
+{
+    if(ch == 'a')
+        return (links[0] != nullptr);
+    if(ch == L'á')
+        return (links[1] != nullptr);
+    if(ch == L'à')
+        return (links[2] != nullptr);
+    if(ch == L'ả')
+        return (links[3] != nullptr);
+    if(ch == L'ã')
+        return (links[4] != nullptr);
+    if(ch == L'ạ')
+        return (links[5] != nullptr);
+    if(ch == L'â')
+        return (links[6] != nullptr);
+    if(ch == L'ấ')
+        return (links[7] != nullptr);
+    if(ch == L'ầ')
+        return (links[8] != nullptr);
+    if(ch == L'ẩ')
+        return (links[9] != nullptr);
+    if(ch == L'ẫ')
+        return (links[10] != nullptr);
+    if(ch == L'ậ')
+        return (links[11] != nullptr);
+    if(ch == L'ă')
+        return (links[12] != nullptr);
+    if(ch == L'ắ')
+        return (links[13] != nullptr);
+    if(ch == L'ằ')
+        return (links[14] != nullptr);
+    if(ch == L'ẳ')
+        return (links[15] != nullptr);
+    if(ch == L'ẵ')
+        return (links[16] != nullptr);
+    if(ch == L'ặ')
+        return (links[17] != nullptr);
+    if(ch == 'b')
+        return (links[18] != nullptr);
+    if(ch == 'c')
+        return (links[19] != nullptr);
+    if(ch == 'd')
+        return (links[20] != nullptr);
+    if(ch == L'đ')
+        return (links[21] != nullptr);
+    if(ch == 'e')
+        return (links[22] != nullptr);
+    if(ch == L'é')
+        return (links[23] != nullptr);
+    if(ch == L'è')
+        return (links[24] != nullptr);
+    if(ch == L'ẻ')
+        return (links[25] != nullptr);
+    if(ch == L'ẽ')
+        return (links[26] != nullptr);
+    if(ch == L'ẹ')
+        return (links[27] != nullptr);
+    if(ch == L'ê')
+        return (links[28] != nullptr);
+    if(ch == L'ế')
+        return (links[29] != nullptr);
+    if(ch == L'ề')
+        return (links[30] != nullptr);
+    if(ch == L'ể')
+        return (links[31] != nullptr);
+    if(ch == L'ễ')
+        return (links[32] != nullptr);
+    if(ch == L'ệ')
+        return (links[33] != nullptr);
+    if(ch == 'g')
+        return (links[34] != nullptr);
+    if(ch == 'h')
+        return (links[35] != nullptr);
+    if(ch == 'i')
+        return (links[36] != nullptr);
+    if(ch == L'í')
+        return (links[37] != nullptr); 
+    if(ch == L'ì')
+        return (links[38] != nullptr);
+    if(ch == L'ỉ')
+        return (links[39] != nullptr);
+    if(ch == L'ĩ')
+        return (links[40] != nullptr);
+    if(ch == L'ị')
+        return (links[41] != nullptr);
+    if(ch == 'k')
+        return (links[42] != nullptr);
+    if(ch == 'l')
+        return (links[43] != nullptr);
+    if(ch == 'm')
+        return (links[44] != nullptr);
+    if(ch == 'n')
+        return (links[45] != nullptr);
+    if(ch == 'o')
+        return (links[46] != nullptr);
+    if(ch == L'ó')
+        return (links[47] != nullptr);
+    if(ch == L'ò')
+        return (links[48] != nullptr);
+    if(ch == L'ỏ')
+        return (links[49] != nullptr);
+    if(ch == L'õ')
+        return (links[50] != nullptr);
+    if(ch == L'ọ')
+        return (links[51] != nullptr);
+    if(ch == L'ô')
+        return (links[52] != nullptr);
+    if(ch == L'ố')
+        return (links[53] != nullptr);
+    if(ch == L'ồ')
+        return (links[54] != nullptr);
+    if(ch == L'ổ')
+        return (links[55] != nullptr);
+    if(ch == L'ỗ')
+        return (links[56] != nullptr);
+    if(ch == L'ộ')
+        return (links[57] != nullptr);
+    if(ch == L'ơ')
+        return (links[58] != nullptr);
+    if(ch == L'ớ')
+        return (links[59] != nullptr);
+    if(ch == L'ờ')
+        return (links[60] != nullptr);
+    if(ch == L'ở')
+        return (links[61] != nullptr);
+    if(ch == L'ỡ')
+        return (links[62] != nullptr);
+    if(ch == L'ợ')
+        return (links[63] != nullptr);
+    if(ch == 'p')
+        return (links[64] != nullptr);
+    if(ch == 'q')
+        return (links[65] != nullptr);
+    if(ch == 'r')
+        return (links[66] != nullptr);
+    if(ch == 's')
+        return (links[67] != nullptr);
+    if(ch == 't')
+        return (links[68] != nullptr);
+    if(ch == 'u')
+        return (links[69] != nullptr);
+    if(ch == L'ú')
+        return (links[70] != nullptr);
+    if(ch == L'ù')
+        return (links[71] != nullptr);
+    if(ch == L'ủ')
+        return (links[72] != nullptr);
+    if(ch == L'ũ')
+        return (links[73] != nullptr);
+    if(ch == L'ụ')
+        return (links[74] != nullptr);
+    if(ch == L'ư')
+        return (links[75] != nullptr);
+    if(ch == L'ứ')
+        return (links[76] != nullptr);
+    if(ch == L'ừ')
+        return (links[77] != nullptr);
+    if(ch == L'ử')
+        return (links[78] != nullptr);
+    if(ch == L'ữ')
+        return (links[79] != nullptr);
+    if(ch == L'ự')
+        return (links[80] != nullptr);
+    if(ch == 'v')
+        return (links[81] != nullptr);
+    if(ch == 'x')
+        return (links[82] != nullptr);
+    if(ch == 'y')
+        return (links[83] != nullptr);
+    if(ch == L'ý')
+        return (links[84] != nullptr);
+    if(ch == L'ỳ')
+        return (links[85] != nullptr);
+    if(ch == L'ỷ')
+        return (links[86] != nullptr);
+    if(ch == L'ỹ')
+        return (links[87] != nullptr);
+    if(ch == L'ỵ')
+        return (links[88] != nullptr);
+    return false;
+}
+
+void VieTrieNode::put(wchar_t ch, VieTrieNode *node)
+{
+    if(ch == 'a')
+        links[0] = node;
+    else if(ch == L'á')
+        links[1] = node;
+    else if(ch == L'à')
+        links[2] = node;
+    else if(ch == L'ả')
+        links[3] = node;
+    else if(ch == L'ã')
+        links[4] = node;
+    else if(ch == L'ạ')
+        links[5] = node;
+    else if(ch == L'â')
+        links[6] = node;
+    else if(ch == L'ấ')
+        links[7] = node;
+    else if(ch == L'ầ')
+        links[8] = node;
+    else if(ch == L'ẩ')
+        links[9] = node;
+    else if(ch == L'ẫ')
+        links[10] = node;
+    else if(ch == L'ậ')
+        links[11] = node;
+    else if(ch == L'ă')
+        links[12] = node;
+    else if(ch == L'ắ')
+        links[13] = node;
+    else if(ch == L'ằ')
+        links[14] = node;
+    else if(ch == L'ẳ')
+        links[15] = node;
+    else if(ch == L'ẵ')
+        links[16] = node;
+    else if(ch == L'ặ')
+        links[17] = node;
+    else if(ch == 'b')
+        links[18] = node;
+    else if(ch == 'c')
+        links[19] = node;
+    else if(ch == 'd')
+        links[20] = node;
+    else if(ch == L'đ')
+        links[21] = node;
+    else if(ch == 'e')
+        links[22] = node;
+    else if(ch == L'é')
+        links[23] = node;
+    else if(ch == L'è')
+        links[24] = node;
+    else if(ch == L'ẻ')
+        links[25] = node;
+    else if(ch == L'ẽ')
+        links[26] = node;
+    else if(ch == L'ẹ')
+        links[27] = node;
+    else if(ch == L'ê')
+        links[28] = node;
+    else if(ch == L'ế')
+        links[29] = node;
+    else if(ch == L'ề')
+        links[30] = node;
+    else if(ch == L'ể')
+        links[31] = node;
+    else if(ch == L'ễ')
+        links[32] = node;
+    else if(ch == L'ệ')
+        links[33] = node;
+    else if(ch == 'g')
+        links[34] = node;
+    else if(ch == 'h')
+        links[35] = node;
+    else if(ch == 'i')
+        links[36] = node;
+    else if(ch == L'í')
+        links[37] = node; 
+    else if(ch == L'ì')
+        links[38] = node;
+    else if(ch == L'ỉ')
+        links[39] = node;
+    else if(ch == L'ĩ')
+        links[40] = node;
+    else if(ch == L'ị')
+        links[41] = node;
+    else if(ch == 'k')
+        links[42] = node;
+    else if(ch == 'l')
+        links[43] = node;
+    else if(ch == 'm')
+        links[44] = node;
+    else if(ch == 'n')
+        links[45] = node;
+    else if(ch == 'o')
+        links[46] = node;
+    else if(ch == L'ó')
+        links[47] = node;
+    else if(ch == L'ò')
+        links[48] = node;
+    else if(ch == L'ỏ')
+        links[49] = node;
+    else if(ch == L'õ')
+        links[50] = node;
+    else if(ch == L'ọ')
+        links[51] = node;
+    else if(ch == L'ô')
+        links[52] = node;
+    else if(ch == L'ố')
+        links[53] = node;
+    else if(ch == L'ồ')
+        links[54] = node;
+    else if(ch == L'ổ')
+        links[55] = node;
+    else if(ch == L'ỗ')
+        links[56] = node;
+    else if(ch == L'ộ')
+        links[57] = node;
+    else if(ch == L'ơ')
+        links[58] = node;
+    else if(ch == L'ớ')
+        links[59] = node;
+    else if(ch == L'ờ')
+        links[60] = node;
+    else if(ch == L'ở')
+        links[61] = node;
+    else if(ch == L'ỡ')
+        links[62] = node;
+    else if(ch == L'ợ')
+        links[63] = node;
+    else if(ch == 'p')
+        links[64] = node;
+    else if(ch == 'q')
+        links[65] = node;
+    else if(ch == 'r')
+        links[66] = node;
+    else if(ch == 's')
+        links[67] = node;
+    else if(ch == 't')
+        links[68] = node;
+    else if(ch == 'u')
+        links[69] = node;
+    else if(ch == L'ú')
+        links[70] = node;
+    else if(ch == L'ù')
+        links[71] = node;
+    else if(ch == L'ủ')
+        links[72] = node;
+    else if(ch == L'ũ')
+        links[73] = node;
+    else if(ch == L'ụ')
+        links[74] = node;
+    else if(ch == L'ư')
+        links[75] = node;
+    else if(ch == L'ứ')
+        links[76] = node;
+    else if(ch == L'ừ')
+        links[77] = node;
+    else if(ch == L'ử')
+        links[78] = node;
+    else if(ch == L'ữ')
+        links[79] = node;
+    else if(ch == L'ự')
+        links[80] = node;
+    else if(ch == 'v')
+        links[81] = node;
+    else if(ch == 'x')
+        links[82] = node;
+    else if(ch == 'y')
+        links[83] = node;
+    else if(ch == L'ý')
+        links[84] = node;
+    else if(ch == L'ỳ')
+        links[85] = node;
+    else if(ch == L'ỷ')
+        links[86] = node;
+    else if(ch == L'ỹ')
+        links[87] = node;
+    else if(ch == L'ỵ')
+        links[88] = node;
+    else
+        return;
+}
+
+VieTrieNode* VieTrieNode::get(wchar_t ch)
+{
+    if(ch == 'a')
+        return links[0];
+    if(ch == L'á')
+        return links[1];
+    if(ch == L'à')
+        return links[2];
+    if(ch == L'ả')
+        return links[3];
+    if(ch == L'ã')
+        return links[4];
+    if(ch == L'ạ')
+        return links[5];
+    if(ch == L'â')
+        return links[6];
+    if(ch == L'ấ')
+        return links[7];
+    if(ch == L'ầ')
+        return links[8];
+    if(ch == L'ẩ')
+        return links[9];
+    if(ch == L'ẫ')
+        return links[10];
+    if(ch == L'ậ')
+        return links[11];
+    if(ch == L'ă')
+        return links[12];
+    if(ch == L'ắ')
+        return links[13];
+    if(ch == L'ằ')
+        return links[14];
+    if(ch == L'ẳ')
+        return links[15];
+    if(ch == L'ẵ')
+        return links[16];
+    if(ch == L'ặ')
+        return links[17];
+    if(ch == 'b')
+        return links[18];
+    if(ch == 'c')
+        return links[19];
+    if(ch == 'd')
+        return links[20];
+    if(ch == L'đ')
+        return links[21];
+    if(ch == 'e')
+        return links[22];
+    if(ch == L'é')
+        return links[23];
+    if(ch == L'è')
+        return links[24];
+    if(ch == L'ẻ')
+        return links[25];
+    if(ch == L'ẽ')
+        return links[26];
+    if(ch == L'ẹ')
+        return links[27];
+    if(ch == L'ê')
+        return links[28];
+    if(ch == L'ế')
+        return links[29];
+    if(ch == L'ề')
+        return links[30];
+    if(ch == L'ể')
+        return links[31];
+    if(ch == L'ễ')
+        return links[32];
+    if(ch == L'ệ')
+        return links[33];
+    if(ch == 'g')
+        return links[34];
+    if(ch == 'h')
+        return links[35];
+    if(ch == 'i')
+        return links[36];
+    if(ch == L'í')
+        return links[37]; 
+    if(ch == L'ì')
+        return links[38];
+    if(ch == L'ỉ')
+        return links[39];
+    if(ch == L'ĩ')
+        return links[40];
+    if(ch == L'ị')
+        return links[41];
+    if(ch == 'k')
+        return links[42];
+    if(ch == 'l')
+        return links[43];
+    if(ch == 'm')
+        return links[44];
+    if(ch == 'n')
+        return links[45];
+    if(ch == 'o')
+        return links[46];
+    if(ch == L'ó')
+        return links[47];
+    if(ch == L'ò')
+        return links[48];
+    if(ch == L'ỏ')
+        return links[49];
+    if(ch == L'õ')
+        return links[50];
+    if(ch == L'ọ')
+        return links[51];
+    if(ch == L'ô')
+        return links[52];
+    if(ch == L'ố')
+        return links[53];
+    if(ch == L'ồ')
+        return links[54];
+    if(ch == L'ổ')
+        return links[55];
+    if(ch == L'ỗ')
+        return links[56];
+    if(ch == L'ộ')
+        return links[57];
+    if(ch == L'ơ')
+        return links[58];
+    if(ch == L'ớ')
+        return links[59];
+    if(ch == L'ờ')
+        return links[60];
+    if(ch == L'ở')
+        return links[61];
+    if(ch == L'ỡ')
+        return links[62];
+    if(ch == L'ợ')
+        return links[63];
+    if(ch == 'p')
+        return links[64];
+    if(ch == 'q')
+        return links[65];
+    if(ch == 'r')
+        return links[66];
+    if(ch == 's')
+        return links[67];
+    if(ch == 't')
+        return links[68];
+    if(ch == 'u')
+        return links[69];
+    if(ch == L'ú')
+        return links[70];
+    if(ch == L'ù')
+        return links[71];
+    if(ch == L'ủ')
+        return links[72];
+    if(ch == L'ũ')
+        return links[73];
+    if(ch == L'ụ')
+        return links[74];
+    if(ch == L'ư')
+        return links[75];
+    if(ch == L'ứ')
+        return links[76];
+    if(ch == L'ừ')
+        return links[77];
+    if(ch == L'ử')
+        return links[78];
+    if(ch == L'ữ')
+        return links[79];
+    if(ch == L'ự')
+        return links[80];
+    if(ch == 'v')
+        return links[81];
+    if(ch == 'x')
+        return links[82];
+    if(ch == 'y')
+        return links[83];
+    if(ch == L'ý')
+        return links[84];
+    if(ch == L'ỳ')
+        return links[85];
+    if(ch == L'ỷ')
+        return links[86];
+    if(ch == L'ỹ')
+        return links[87];
+    if(ch == L'ỵ')
+        return links[88];
+    return nullptr;
+}
+
