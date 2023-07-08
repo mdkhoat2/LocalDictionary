@@ -7,8 +7,6 @@ int main() {
 
 	Application app;
 
-	app.loadEngEngDict();
-
 	app.run();
 
 	return 0;

@@ -90,14 +90,12 @@ void trieInsert(TrieNode*& root, std::string word, std::string wordInfo)
         root = new TrieNode();
     TrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
-        if(!isValidCharacter(word[i]))
-            return;
         if(!node->containsKey(word[i])) {
             node->put(word[i], new TrieNode());
         }
         node = node->get(word[i]);
     }
-    node->setEnd();
+    node->flag = true;
     node->wordInfo = wordInfo;
 }
 
@@ -106,14 +104,14 @@ std::string trieSearch(TrieNode* root, std::string word)
     TrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
-        if(!isValidCharacter(word[i]))
-            return std::string();
         if(!node->containsKey(word[i]))
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->isEnd())
+    if(node->flag)
         return node->wordInfo;
+    else
+        return std::string();
 }
 
 TrieNode* trieRemove(TrieNode*& root, std::string word, int depth)
@@ -169,6 +167,7 @@ void trieDeleteAll(TrieNode* &root)
         trieDeleteAll(root->links[i]);
     }
     delete root;
+    root = nullptr;
 }
 
 std::string engEngSearch(TrieNode *root, std::string &word)
