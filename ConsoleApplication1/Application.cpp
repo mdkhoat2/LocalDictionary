@@ -9,6 +9,7 @@ Application::Application() :
     searchBar(20, sf::Color::Black, true),
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr)
 {
     initWindow();
@@ -17,6 +18,7 @@ Application::Application() :
     initSearchBar();
     initSearchButton();
     initMenuButton();
+    initAddButton();
 }
 
 Application::~Application()
@@ -172,6 +174,13 @@ void Application::initMenuButton()
     menuButton.button.setOutlineThickness(2);
 }
 
+void Application::initAddButton()
+{
+    addButton.setFont(font);
+    addButton.setPosition({ 972, 253 });
+    addButton.button.setOutlineThickness(2);
+}
+
 void Application::run()
 {
     while(window.isOpen())
@@ -213,6 +222,9 @@ void Application::handleEvent()
                 else
                     std::cout << "Cannot find the word" << "\n";
             }
+            else if (addButton.isMouseOver(window))
+            {
+            }
         }
     }
 }
@@ -228,6 +240,10 @@ void Application::update()
         menuButton.button.setOutlineColor(grey);
     else
         menuButton.button.setOutlineColor(sf::Color::Transparent);
+    if (addButton.isMouseOver(window))
+        addButton.button.setOutlineColor(grey);
+    else
+        addButton.button.setOutlineColor(sf::Color::Transparent);
 }
 
 void Application::render()
@@ -237,6 +253,7 @@ void Application::render()
     searchBar.drawTo(window);
     searchButton.drawTo(window);
     menuButton.drawTo(window);
+    //addButton.drawTo(window);
     history.drawTo(window);
     window.display();
 }

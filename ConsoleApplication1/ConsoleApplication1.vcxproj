@@ -143,6 +143,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="History.cpp" />
+    <ClCompile Include="New word.cpp" />
     <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Trie.cpp" />
     <ClCompile Include="WordData.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="History.h" />
+    <ClInclude Include="New word.h" />
     <ClInclude Include="textbox.h" />
     <ClInclude Include="Trie.h" />
     <ClInclude Include="WordData.h" />
