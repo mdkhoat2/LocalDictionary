@@ -85,27 +85,6 @@ void insertAtEnd(WordDefNode *&head, std::string wordDef)
     cur->next->wordDef = wordDef;
 }
 
-bool isValidCharacter(char ch)
-{
-    if(ch >= 'a' && ch <= 'z')
-        return true;
-    if(ch >= 'A' && ch <= 'Z')
-        return true;
-    if(ch >= '0' && ch <= '9')
-        return true;
-    if(ch == 39) // single quote
-        return true;
-    if(ch == 46) // dot
-        return true;
-    if(ch == 45) // hyphen
-        return true;
-    if(ch == 32) // space
-        return true;
-    if(ch == 47) // forward slash
-        return true;
-    return false;
-}
-
 bool isValidWordType(std::string wordType)
 {
     if(wordType == "n" || wordType == "v" || wordType == "adj" || wordType == "adv")

@@ -85,8 +85,6 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
         root = new EngTrieNode();
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
-        if(!isValidCharacter(word[i]))
-            return;
         if(!node->containsKey(word[i])) {
             node->put(word[i], new EngTrieNode());
         }
@@ -102,8 +100,6 @@ void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
         root = new VieTrieNode();
     VieTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
-        if(!isValidCharacter(word[i]))
-            return;
         if(!node->containsKey(word[i])) {
             node->put(word[i], new VieTrieNode());
         }
@@ -118,8 +114,6 @@ std::string trieSearch(EngTrieNode* root, std::string word)
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
-        if(!isValidCharacter(word[i]))
-            return std::string();
         if(!node->containsKey(word[i]))
             return std::string();
         node = node->get(word[i]);
@@ -135,8 +129,6 @@ std::string trieSearch(VieTrieNode *root, std::wstring word)
     VieTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
-        if(!isValidCharacter(word[i]))
-            return std::string();
         if(!node->containsKey(word[i]))
             return std::string();
         node = node->get(word[i]);
