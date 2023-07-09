@@ -36,7 +36,7 @@
     <ClCompile Include="History.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="New word.cpp">
+    <ClCompile Include="NewWord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="History.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="New word.h">
+    <ClInclude Include="NewWord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

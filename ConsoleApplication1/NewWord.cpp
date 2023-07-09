@@ -1,4 +1,4 @@
-#include "New word.h"
+#include "NewWord.h"
 
 void NewWord::addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord) {
 	trieInsert(root, word, wordInfo);
