@@ -6,6 +6,7 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
+#include "DropDownList.h"
 
 class Application
 {
@@ -39,6 +40,8 @@ private:
 
     EngTrieNode* engEngRoot;
     VieTrieNode* vieEngRoot;
+
+    DropDownList dataSetList;
 private:
     void initWindow();
     void initBackground();
@@ -46,6 +49,7 @@ private:
     void initSearchBar();
     void initSearchButton();
     void initMenuButton();
+    void initDataSetList();
 };
 
 #endif

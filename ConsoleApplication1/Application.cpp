@@ -11,7 +11,8 @@ Application::Application() :
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
     vieEngRoot(nullptr),
-    history()
+    history(),
+    dataSetList(100, 50, 200, 50, {"English-English", "English-Vietnamese", "Vietnamese-English", "Emoji"}, 4)
 {
     initWindow();
     initBackground();
@@ -19,6 +20,7 @@ Application::Application() :
     initSearchBar();
     initSearchButton();
     initMenuButton();
+    initDataSetList();
 }
 
 Application::~Application()
@@ -137,6 +139,11 @@ void Application::initMenuButton()
     menuButton.button.setOutlineThickness(2);
 }
 
+void Application::initDataSetList()
+{
+    dataSetList.setFont(font);
+}
+
 void Application::run()
 {
     // Load dictionaries
@@ -195,15 +202,20 @@ void Application::update()
         menuButton.button.setOutlineColor(grey);
     else
         menuButton.button.setOutlineColor(sf::Color::Transparent);
+    
+    dataSetList.update(window);
 }
 
 void Application::render()
 {
     window.clear(sf::Color::White);
+    // Draw the background
     window.draw(mainScreen);
+
     searchBar.drawTo(window);
     searchButton.drawTo(window);
     menuButton.drawTo(window);
     history.drawTo(window);
+    dataSetList.drawTo(window);
     window.display();
 }
