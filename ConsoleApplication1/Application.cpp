@@ -5,7 +5,7 @@
 
 Application::Application() :
     videoMode(1200, 900),
-    window(videoMode, "Dictionary"),
+    window(videoMode, "Dictionary", sf::Style::Close), //don't clear the close style!!
     searchBar(20, sf::Color::Black, true),
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
@@ -226,6 +226,12 @@ void Application::handleEvent()
                 else
                     std::cout << "Cannot find the word" << "\n";
             }
+            else if (menuButton.isMouseOver(window)) {
+                if (isMainScreen)
+                    isMainScreen = false;
+                else
+                    isMainScreen = true;
+            }
             else if (addButton.isMouseOver(window))
             {
             }
@@ -235,29 +241,24 @@ void Application::handleEvent()
 
 void Application::update()
 {
-    sf::Color grey(0, 0, 0, 120);
-    if (searchButton.isMouseOver(window))
-        searchButton.button.setOutlineColor(grey);
-    else
-        searchButton.button.setOutlineColor(sf::Color::Transparent);
-    if (menuButton.isMouseOver(window))
-        menuButton.button.setOutlineColor(grey);
-    else
-        menuButton.button.setOutlineColor(sf::Color::Transparent);
-    if (addButton.isMouseOver(window))
-        addButton.button.setOutlineColor(grey);
-    else
-        addButton.button.setOutlineColor(sf::Color::Transparent);
+    searchButton.update(window);
+    menuButton.update(window);
+    addButton.update(window);
 }
 
 void Application::render()
 {
     window.clear(sf::Color::White);
-    window.draw(mainScreen);
+    if (isMainScreen) {
+        window.draw(mainScreen);
+        history.drawTo(window);
+    }
+    else {
+        window.draw(screenWithOptions);
+    }
     searchBar.drawTo(window);
     searchButton.drawTo(window);
     menuButton.drawTo(window);
     //addButton.drawTo(window);
-    history.drawTo(window);
     window.display();
 }

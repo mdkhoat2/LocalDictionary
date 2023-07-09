@@ -65,3 +65,14 @@ bool Button::isMouseOver(sf::RenderWindow& window) {
     }
     return false;
 }
+
+void Button::update(sf::RenderWindow& window)
+{
+    sf::Color grey(0, 0, 0, 120);
+    if (isMouseOver(window)) {
+		button.setOutlineColor(grey);
+	}
+    else {
+		button.setOutlineColor(sf::Color::Transparent);
+	}
+}
