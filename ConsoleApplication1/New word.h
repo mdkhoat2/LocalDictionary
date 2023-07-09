@@ -10,9 +10,9 @@ class NewWord
 {
 public:
 	
-	void addNewWord(TrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord);
+	void addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord);
 	void saveAddedWord(std::queue<WordData> addedWord);
-	void loadAddedWord(TrieNode*& root);
+	void loadAddedWord(EngTrieNode*& root);
 
 private:
 	std::queue<WordData> addedWord;
