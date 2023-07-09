@@ -28,6 +28,8 @@ private:
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
 
+    bool isMainScreen = true;
+
     sf::Font font;
 
     sf::Event event;

@@ -32,6 +32,10 @@ void History::drawTo(sf::RenderWindow& window)
 	while (!temp.empty())
 	{
 		text.setString(temp.front());
+		if (temp.front().size() >= 15)
+			text.setCharacterSize(15);
+		else
+			text.setCharacterSize(20);
 		window.draw(text);
 		text.move(0, 30);
 		temp.pop();

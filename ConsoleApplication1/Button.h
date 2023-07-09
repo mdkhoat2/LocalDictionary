@@ -23,6 +23,8 @@ public:
 
 	// Check if the mouse is within the bounds of the button:
 	bool isMouseOver(sf::RenderWindow& window);
+
+	void update(sf::RenderWindow& window);
 	sf::RectangleShape button;
 private:
 	sf::Text text;
