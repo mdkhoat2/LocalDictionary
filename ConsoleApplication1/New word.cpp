@@ -1,6 +1,6 @@
 #include "New word.h"
 
-void NewWord::addNewWord(TrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord) {
+void NewWord::addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord) {
 	trieInsert(root, word, wordInfo);
 	WordData tmp;
 	extractWordData(tmp, word, wordInfo);
@@ -54,7 +54,7 @@ void NewWord::saveAddedWord(std::queue<WordData> addedWord) {
 	fout.close();
 }
 
-void NewWord::loadAddedWord(TrieNode*& root) {
+void NewWord::loadAddedWord(EngTrieNode*& root) {
     std::ifstream fin("data/Added Words.txt");
     
     std::string line, word, wordInfo;
