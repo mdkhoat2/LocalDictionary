@@ -38,7 +38,8 @@ private:
     Button addButton;
     History history;
 
-    TrieNode* engEngRoot;
+    EngTrieNode* engEngRoot;
+    VieTrieNode* vieEngRoot;
 private:
     void initWindow();
     void initBackground();

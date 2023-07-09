@@ -34,7 +34,6 @@ struct WordData
 void insertAtEnd(WordDefNode* &head, std::string wordDef);
 
 // Helper functions
-bool isValidCharacter(char ch);
 bool isValidWordType(std::string wordType);
 bool isNumber(std::string numStr);
 
