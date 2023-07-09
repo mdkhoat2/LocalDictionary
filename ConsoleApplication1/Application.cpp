@@ -10,6 +10,7 @@ Application::Application() :
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
+    vieEngRoot(nullptr),
     history()
 {
     initWindow();
@@ -171,7 +172,7 @@ void Application::handleEvent()
                 std::string inputWord = searchBar.getText();
                 if (inputWord!="")
                     history.add(inputWord);
-                std::string wordInfo = trieSearch(engEngRoot, inputWord);
+                std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
                 if(!wordInfo.empty())
                 {
                     std::cout << wordInfo << std::endl;
