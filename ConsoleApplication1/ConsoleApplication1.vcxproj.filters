@@ -36,6 +36,9 @@
     <ClCompile Include="History.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="New word.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="textbox.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="History.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="New word.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
