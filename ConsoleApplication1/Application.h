@@ -1,6 +1,10 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <locale>
+#include <codecvt>
+#include <io.h>
+#include <fcntl.h>
 #include "Button.h"
 #include "Textbox.h"
 #include "Trie.h"
@@ -13,6 +17,7 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
+    void loadEngVieDict();
     void run();
 public:
     void handleEvent();

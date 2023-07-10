@@ -1,5 +1,10 @@
 #pragma once
+#include <iostream>
 #include <fstream>
+#include <locale>
+#include <codecvt>
+#include <io.h>
+#include <fcntl.h>
 #include "Application.h"
 
 
@@ -112,6 +117,53 @@ void Application::loadEngEngDict()
     fin.close();
 }
 
+void Application::loadEngVieDict()
+{
+    std::wifstream fin("data/EV.txt");
+    if(!fin.is_open())
+        std::cout << "Cannot open EV.txt" << std::endl;
+    std::wstring word, line, wordInfo;
+    int count = 0;
+    while(std::getline(fin, line))
+    {
+        if(count < 15)
+            ++count;
+        else
+        {
+            if(line.empty()) // skip empty line 
+                continue;
+            else if(line[0] == L'@') // this line contains the word
+            {
+                if(count == 15) // read the first word
+                    ++count;
+                else
+                {
+                    // insert previous word
+                    trieInsertVieInfo(engEngRoot, word, wordInfo);
+                    word.clear();
+                    wordInfo.clear();
+                }
+                int i = 1;
+                while(line[i] != L'/' && i < line.length())
+                {
+                    if(isValidEngChar(line[i]))
+                        word += line[i];
+                    ++i;
+                }
+                if(word[word.length()-1] == ' ')
+                    word.pop_back();
+            }
+            else // this line contains word information
+            {   
+                wordInfo += line + L"\n";
+            }
+        } 
+    }
+    trieInsertVieInfo(engEngRoot, word, wordInfo);
+    
+    fin.close();
+}
+
 void Application::initWindow()
 {
     sf::Vector2i centerWindow(
@@ -177,7 +229,8 @@ void Application::initMenuButton()
 void Application::run()
 {
     // Load dictionaries
-    loadEngEngDict();
+    // loadEngEngDict();
+    loadEngVieDict();
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -205,17 +258,25 @@ void Application::handleEvent()
             if(searchButton.isMouseOver(window))
             {
                 std::string inputWord = searchBar.getText();
+                std::wstring wideInputWord(inputWord.begin(), inputWord.end());
                 if (inputWord!="")
                     history.add(inputWord);
-                std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
-                if(!wordInfo.empty())
+                // std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
+                // if(!wordInfo.empty())
+                // {
+                //     WordData theWordData;
+                //     extractWordData(theWordData, inputWord, wordInfo);
+                //     theWordData.consolePrint();
+                // }
+                // else
+                //     std::cout << "Cannot find the word" << "\n";
+                std::wstring vieWordInfo = trieSearchVieInfo(engEngRoot, wideInputWord);
+                if(!vieWordInfo.empty())
                 {
-                    WordData theWordData;
-                    extractWordData(theWordData, inputWord, wordInfo);
-                    theWordData.consolePrint();
+                    std::wcout << vieWordInfo << "\n";
                 }
                 else
-                    std::cout << "Cannot find the word" << "\n";
+                    std::cout << "Cannot find the word\n";
             }
         }
     }
