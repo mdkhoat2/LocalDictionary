@@ -33,6 +33,8 @@ private:
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
 
+    bool isMainScreen = true;
+
     sf::Font font;
 
     sf::Event event;
@@ -40,6 +42,7 @@ private:
     Textbox searchBar;
     Button searchButton;
     Button menuButton;
+    Button addButton;
     History history;
 
     EngTrieNode* engEngRoot;
@@ -51,6 +54,7 @@ private:
     void initSearchBar();
     void initSearchButton();
     void initMenuButton();
+    void initAddButton();
 };
 
 #endif
