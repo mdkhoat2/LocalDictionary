@@ -10,6 +10,7 @@ Application::Application() :
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    favouritebutton("",{153,42},20,sf::Color::Transparent,sf::Color::Transparent),
     engEngRoot(nullptr),
     vieEngRoot(nullptr),
     history()
@@ -21,6 +22,7 @@ Application::Application() :
     initSearchButton();
     initMenuButton();
     initAddButton();
+    initFavouriteButton();
 }
 
 Application::~Application()
@@ -183,6 +185,13 @@ void Application::initAddButton()
     addButton.button.setOutlineThickness(2);
 }
 
+void Application::initFavouriteButton()
+{
+    favouritebutton.setFont(font);
+    favouritebutton.setPosition({ 972, 420 });
+    favouritebutton.button.setOutlineThickness(2);
+}
+
 void Application::run()
 {
     // Load dictionaries
@@ -226,6 +235,10 @@ void Application::handleEvent()
                 else
                     std::cout << "Cannot find the word" << "\n";
             }
+            else if (favouritebutton.isMouseOver(window) && !isMainScreen)
+            {
+                Favourite(window);
+            }
             else if (menuButton.isMouseOver(window)) {
                 if (isMainScreen)
                     isMainScreen = false;
@@ -244,6 +257,7 @@ void Application::update()
     searchButton.update(window);
     menuButton.update(window);
     addButton.update(window);
+    favouritebutton.update(window);
 }
 
 void Application::render()
@@ -255,6 +269,7 @@ void Application::render()
     }
     else {
         window.draw(screenWithOptions);
+        favouritebutton.drawTo(window);
     }
     searchBar.drawTo(window);
     searchButton.drawTo(window);

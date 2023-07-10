@@ -39,6 +39,9 @@
     <ClCompile Include="NewWord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Favourite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="textbox.h">
@@ -62,5 +65,13 @@
     <ClInclude Include="NewWord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Favourite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="favorite_words.txt">
+      <Filter>Header Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

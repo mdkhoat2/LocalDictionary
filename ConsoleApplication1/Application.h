@@ -6,6 +6,7 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
+#include"Favourite.h"
 
 class Application
 {
@@ -35,9 +36,12 @@ private:
     sf::Event event;
 
     Textbox searchBar;
+
     Button searchButton;
     Button menuButton;
     Button addButton;
+    Button favouritebutton;
+
     History history;
 
     EngTrieNode* engEngRoot;
@@ -50,6 +54,7 @@ private:
     void initSearchButton();
     void initMenuButton();
     void initAddButton();
+    void initFavouriteButton();
 };
 
 #endif
