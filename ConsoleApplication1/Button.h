@@ -11,13 +11,15 @@ public:
 	// Pass font by reference:
 	void setFont(sf::Font& fonts);
 
-	void setBackColor(sf::Color color);
+	void setBackColor(const sf::Color &color);
 
-	void setTextColor(sf::Color color);
+	void setTextColor(const sf::Color &color);
 
 	void setPosition(const sf::Vector2f &point);
 
 	void setPosition(float x, float y);
+
+	void setOutlineThickness(float thickness);
 
 	void drawTo(sf::RenderWindow& window);
 
@@ -25,9 +27,9 @@ public:
 	bool isMouseOver(sf::RenderWindow& window);
 
 	void update(sf::RenderWindow& window);
-	sf::RectangleShape button;
 private:
 	sf::Text text;
+	sf::RectangleShape button;
 
 	int btnWidth;
 	int btnHeight;

@@ -1,4 +1,9 @@
 #include <iostream>
+#include <fstream>
+#include <locale>
+#include <codecvt>
+#include <io.h>
+#include <fcntl.h>
 #include "WordData.h"
 
 WordData::WordData() : word()
@@ -85,6 +90,27 @@ void insertAtEnd(WordDefNode *&head, std::string wordDef)
     cur->next->wordDef = wordDef;
 }
 
+bool isValidEngChar(wchar_t ch)
+{
+    if(ch >= 'a' && ch <= 'z')
+        return true;
+    if(ch >= 'A' && ch <= 'Z')
+        return true;
+    if(ch >= '0' && ch <= '9')
+        return true;
+    if(ch == 39) // single quote
+        return true;
+    if(ch == 46) // dot
+        return true;
+    if(ch == 45) // hyphen
+        return true;
+    if(ch == 32) // space
+        return true;
+    if(ch == 47) // forward slash
+        return true;
+    return false;
+}
+
 bool isValidWordType(std::string wordType)
 {
     if(wordType == "n" || wordType == "v" || wordType == "adj" || wordType == "adv")
@@ -100,4 +126,63 @@ bool isNumber(std::string numStr)
             return false;
     }
     return true;
+}
+
+void convertToNormalChar(wchar_t &ch)
+{
+    if(ch == L'á' || ch == L'à' || ch == L'ả' || ch == L'ã' || ch == L'ạ' || ch == L'â'
+    || ch == L'ấ' || ch == L'ầ' || ch == L'ẩ' || ch == L'ẫ' || ch == L'ậ' || ch == L'ă'
+    || ch == L'ắ' || ch == L'ằ' || ch == L'ẳ' || ch == L'ẵ' || ch == L'ặ')
+    {
+        ch = 'a';
+        return;
+    }
+
+    if(ch = L'đ')
+    {
+        ch = 'd';
+        return;
+    }
+
+    if(ch == L'é' || ch == L'è' || ch == L'ẻ' || ch == L'ẽ' || ch == L'ẹ' || ch == L'ê'
+    || ch == L'ế' || ch == L'ề' || ch == L'ể' || ch == L'ễ' || ch == L'ệ')
+    {
+        ch = 'e';
+        return;
+    }
+
+    if(ch == L'í' || ch == L'ì' || ch == L'ỉ' || ch == L'ĩ' || ch == L'ị')
+    {
+        ch = 'i';
+        return;
+    }
+    
+    if(ch == L'ó' || ch == L'ò' || ch == L'ỏ' || ch == L'õ' || ch == L'ọ' || ch == L'ô'
+    || ch == L'ố' || ch == L'ồ' || ch == L'ổ' || ch == L'ỗ' || ch == L'ộ' || ch == L'ơ'
+    || ch == L'ớ' || ch == L'ờ' || ch == L'ở' || ch == L'ỡ' || ch == L'ợ')
+    {
+        ch = 'o';
+        return;
+    }   
+
+    if(ch == L'ú' || ch == L'ù' || ch == L'ủ' || ch == L'ũ' || ch == L'ụ' || ch == L'ư'
+    || ch == L'ứ' || ch == L'ừ' || ch == L'ử' || ch == L'ữ' || ch == L'ự')
+    {
+        ch = 'u';
+        return;
+    }
+    
+    if(ch == L'ý' || ch == L'ỳ' || ch == L'ỷ' || ch == L'ỹ' || ch == L'ỵ')
+    {
+        ch = 'y';
+        return;
+    }
+}
+
+void convertToNormalLine(std::wstring &line)
+{
+    for(int i = 0; i < line.length(); ++i)
+    {
+        convertToNormalChar(line[i]);
+    }
 }

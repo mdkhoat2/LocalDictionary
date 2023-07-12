@@ -1,18 +1,31 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <locale>
+#include <codecvt>
+#include <io.h>
+#include <fcntl.h>
 #include "Button.h"
 #include "Textbox.h"
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
+#include "EditDefinition.h"
 
 class Application
 {
 public:
+    enum class ScreenState
+    {
+        MainScreen,
+        OptionsScreen,
+        EditDefinitionScreen
+    };
+public:
     Application();
     ~Application();
     void loadEngEngDict();
+    void loadEngVieDict();
     void run();
 public:
     void handleEvent();
@@ -28,7 +41,7 @@ private:
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
 
-    bool isMainScreen = true;
+    ScreenState currentScreen;
 
     sf::Font font;
 
@@ -38,10 +51,13 @@ private:
     Button searchButton;
     Button menuButton;
     Button addButton;
+    Button editDefButton;
     History history;
 
     EngTrieNode* engEngRoot;
     VieTrieNode* vieEngRoot;
+
+    EditDefinitionScreen editDefScreen;
 private:
     void initWindow();
     void initBackground();
@@ -50,6 +66,7 @@ private:
     void initSearchButton();
     void initMenuButton();
     void initAddButton();
+    void initEditDefButton();
 };
 
 #endif

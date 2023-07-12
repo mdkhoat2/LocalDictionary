@@ -50,12 +50,14 @@ struct VieTrieNode
 
 // Functions about Trie opearations 
 void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo);
+void trieInsertVieInfo(EngTrieNode*& root, std::wstring word, std::wstring wordInfo);
 void trieInsert(VieTrieNode*& root, std::wstring word, std::string wordInfo);
 
 std::string trieSearch(EngTrieNode* root, std::string word);
+std::wstring trieSearchVieInfo(EngTrieNode* root, std::wstring word);
 std::string trieSearch(VieTrieNode* root, std::wstring word);
 
-EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth = 0);
+EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth = 0);
 VieTrieNode* trieRemove(VieTrieNode*& root, std::wstring word, int depth = 0);
 
 void trieDeleteAll(EngTrieNode* &root);

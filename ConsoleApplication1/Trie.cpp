@@ -45,8 +45,6 @@ void EngTrieNode::put(char ch, EngTrieNode* node)
         links[65] = node;
     else if(ch == 47) // forward slash
         links[66] = node;
-    else
-        return;
 }
 
 EngTrieNode* EngTrieNode::get(char ch) 
@@ -94,6 +92,21 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
     node->wordInfo = wordInfo;
 }
 
+void trieInsertVieInfo(EngTrieNode *&root, std::wstring word, std::wstring wordInfo)
+{
+    if(root == nullptr)
+        root = new EngTrieNode();
+    EngTrieNode* node = root;
+    for(int i = 0; i < word.length(); ++i) {
+        if(!node->containsKey(word[i])) {
+            node->put(word[i], new EngTrieNode());
+        }
+        node = node->get(word[i]);
+    }
+    node->flag = true;
+    node->vieWordInfo = wordInfo;
+}
+
 void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
 {
     if(root == nullptr)
@@ -118,10 +131,25 @@ std::string trieSearch(EngTrieNode* root, std::string word)
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->flag)
+    if(node->flag && !node->wordInfo.empty())
         return node->wordInfo;
     else
         return std::string();
+}
+
+std::wstring trieSearchVieInfo(EngTrieNode *root, std::wstring word)
+{
+    EngTrieNode* node = root;
+    for(int i = 0; i < word.length(); ++i) 
+    {
+        if(!node->containsKey(word[i]))
+            return std::wstring();
+        node = node->get(word[i]);
+    }
+    if(node->flag && !node->vieWordInfo.empty())
+        return node->vieWordInfo;
+    else
+        return std::wstring();
 }
 
 std::string trieSearch(VieTrieNode *root, std::wstring word)
@@ -139,7 +167,7 @@ std::string trieSearch(VieTrieNode *root, std::wstring word)
         return std::string();
 }
 
-EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
+EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth)
 {
     if (!root)
         return nullptr;
@@ -407,7 +435,7 @@ void trieDeleteAll(VieTrieNode *&root)
 {
     if(root == nullptr)
         return;
-    for(int i = 0; i < 67; ++i)
+    for(int i = 0; i < 89; ++i)
     {
         trieDeleteAll(root->links[i]);
     }

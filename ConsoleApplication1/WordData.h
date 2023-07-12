@@ -34,8 +34,11 @@ struct WordData
 void insertAtEnd(WordDefNode* &head, std::string wordDef);
 
 // Helper functions
+bool isValidEngChar(wchar_t ch);
 bool isValidWordType(std::string wordType);
 bool isNumber(std::string numStr);
+void convertToNormalChar(wchar_t &ch);
+void convertToNormalLine(std::wstring &line);
 
 // Function to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);

@@ -19,11 +19,11 @@ void Button::setFont(sf::Font& fonts) {
     text.setFont(fonts);
 }
 
-void Button::setBackColor(sf::Color color) {
+void Button::setBackColor(const sf::Color &color) {
     button.setFillColor(color);
 }
 
-void Button::setTextColor(sf::Color color) {
+void Button::setTextColor(const sf::Color &color) {
     text.setFillColor(color);
 }
 
@@ -42,6 +42,11 @@ void Button::setPosition(float x, float y)
     float xPos = (x + btnWidth / 2) - (text.getLocalBounds().width / 2);
     float yPos = (y + btnHeight / 2.2) - (text.getLocalBounds().height / 2);
     text.setPosition(xPos, yPos);
+}
+
+void Button::setOutlineThickness(float thickness)
+{
+    button.setOutlineThickness(thickness);
 }
 
 void Button::drawTo(sf::RenderWindow& window) {
