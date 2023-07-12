@@ -315,6 +315,17 @@ void Application::handleEvent()
         }
         else if(currentScreen == ScreenState::EditDefinitionScreen)
         {
+            bool endScreen = false;
+            editDefScreen.setEndScreen(endScreen);
+            editDefScreen.handleEvent(event, window, endScreen);
+            if(endScreen)
+            {
+                editDefScreen.setEndScreen(endScreen);
+                currentScreen = ScreenState::MainScreen;
+            }
+        }
+        else
+        {
 
         }
     }
@@ -322,10 +333,22 @@ void Application::handleEvent()
 
 void Application::update()
 {
-    searchButton.update(window);
-    menuButton.update(window);
-    addButton.update(window);
-    editDefButton.update(window);
+    if(currentScreen == ScreenState::MainScreen)
+    {
+        searchButton.update(window);
+        menuButton.update(window);
+    }
+    else if(currentScreen == ScreenState::OptionsScreen)
+    {
+        searchButton.update(window);
+        menuButton.update(window);
+        addButton.update(window);
+        editDefButton.update(window);
+    }
+    else if(currentScreen == ScreenState::EditDefinitionScreen)
+    {
+        editDefScreen.update(window);
+    }
 }
 
 void Application::render()
@@ -345,7 +368,7 @@ void Application::render()
         editDefButton.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
-        
+        editDefScreen.render(window);
     }
     else {
 

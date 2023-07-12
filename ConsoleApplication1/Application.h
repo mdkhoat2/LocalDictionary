@@ -10,6 +10,7 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
+#include "EditDefinition.h"
 
 class Application
 {
@@ -55,6 +56,8 @@ private:
 
     EngTrieNode* engEngRoot;
     VieTrieNode* vieEngRoot;
+
+    EditDefinitionScreen editDefScreen;
 private:
     void initWindow();
     void initBackground();
