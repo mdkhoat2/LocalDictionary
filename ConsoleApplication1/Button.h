@@ -19,15 +19,17 @@ public:
 
 	void setPosition(float x, float y);
 
+	void setOutlineThickness(float thickness);
+
 	void drawTo(sf::RenderWindow& window);
 
 	// Check if the mouse is within the bounds of the button:
 	bool isMouseOver(sf::RenderWindow& window);
 
 	void update(sf::RenderWindow& window);
-	sf::RectangleShape button;
 private:
 	sf::Text text;
+	sf::RectangleShape button;
 
 	int btnWidth;
 	int btnHeight;

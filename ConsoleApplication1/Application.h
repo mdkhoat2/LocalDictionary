@@ -14,6 +14,13 @@
 class Application
 {
 public:
+    enum class ScreenState
+    {
+        MainScreen,
+        OptionsScreen,
+        EditDefinitionScreen
+    };
+public:
     Application();
     ~Application();
     void loadEngEngDict();
@@ -33,7 +40,7 @@ private:
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
 
-    bool isMainScreen = true;
+    ScreenState currentScreen;
 
     sf::Font font;
 
@@ -43,6 +50,7 @@ private:
     Button searchButton;
     Button menuButton;
     Button addButton;
+    Button editDefButton;
     History history;
 
     EngTrieNode* engEngRoot;
@@ -55,6 +63,7 @@ private:
     void initSearchButton();
     void initMenuButton();
     void initAddButton();
+    void initEditDefButton();
 };
 
 #endif

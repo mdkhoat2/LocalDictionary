@@ -44,6 +44,11 @@ void Button::setPosition(float x, float y)
     text.setPosition(xPos, yPos);
 }
 
+void Button::setOutlineThickness(float thickness)
+{
+    button.setOutlineThickness(thickness);
+}
+
 void Button::drawTo(sf::RenderWindow& window) {
     window.draw(button);
     window.draw(text);
