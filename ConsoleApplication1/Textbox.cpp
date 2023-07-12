@@ -1,9 +1,12 @@
 
 #include "Textbox.h"
 
-Textbox::Textbox(int size, sf::Color color, bool sel) {
+Textbox::Textbox(int size, sf::Color textColor, sf::Color boxColor, bool sel) {
     textbox.setCharacterSize(size);
-    textbox.setFillColor(color);
+    textbox.setFillColor(textColor);
+    theBox.setFillColor(boxColor);
+    theBox.setSize({100, 100});
+    theBox.setPosition({100, 100});
     isSelected = sel;
 
     // Check if the textbox is selected upon creation and display it accordingly:
@@ -19,11 +22,13 @@ void Textbox::setFont(sf::Font& fonts) {
 }
 
 void Textbox::setPosition(const sf::Vector2f &point) {
+    theBox.setPosition(point);
     textbox.setPosition(point);
 }
 
 void Textbox::setPosition(float xIn, float yIn)
 {
+    theBox.setPosition(xIn, yIn);
     textbox.setPosition(xIn, yIn);
 }
 
@@ -63,6 +68,7 @@ std::string Textbox::getText() {
 
 void Textbox::drawTo(sf::RenderWindow& window) {
     window.draw(textbox);
+    window.draw(theBox);
 }
 
 // Function for event loop:
@@ -88,6 +94,33 @@ void Textbox::typedOn(sf::Event input) {
             }
         }
     }
+}
+
+void Textbox::setBoxPosition(const sf::Vector2f &pos)
+{
+    theBox.setPosition(pos);
+}
+
+void Textbox::setBoxSize(const sf::Vector2f &pos)
+{
+    theBox.setSize(pos);
+}
+
+bool Textbox::isMouseOver(sf::RenderWindow &window)
+{
+    int mouseX = sf::Mouse::getPosition(window).x;
+    int mouseY = sf::Mouse::getPosition(window).y;
+
+    int btnPosX = theBox.getPosition().x;
+    int btnPosY = theBox.getPosition().y;
+
+    int btnxPosWidth = theBox.getPosition().x + theBox.getSize().x;
+    int btnyPosHeight = theBox.getPosition().y + theBox.getSize().y;
+
+    if (mouseX < btnxPosWidth && mouseX > btnPosX && mouseY < btnyPosHeight && mouseY > btnPosY) {
+        return true;
+    }
+    return false;
 }
 
 void Textbox::deleteLastChar() {

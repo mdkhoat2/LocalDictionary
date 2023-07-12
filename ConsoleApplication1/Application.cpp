@@ -11,7 +11,7 @@
 Application::Application() :
     videoMode(1200, 900),
     window(videoMode, "Dictionary", sf::Style::Close), //don't clear the close style!!
-    searchBar(20, sf::Color::Black, true),
+    searchBar(20, sf::Color::Black, sf::Color::Transparent, true),
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
@@ -209,7 +209,9 @@ void Application::initFont()
 
 void Application::initSearchBar()
 {
-    searchBar.setPosition({ 125, 180 });
+    searchBar.setPosition({125, 180});
+    searchBar.setBoxPosition({74, 158});
+    searchBar.setBoxSize({800, 68});
 	searchBar.setLimit(true, 65); //set limit to 65 characters
 	searchBar.setFont(font);
 }
@@ -270,22 +272,15 @@ void Application::handleEvent()
                 std::wstring wideInputWord(inputWord.begin(), inputWord.end());
                 if (inputWord!="")
                     history.add(inputWord);
-                // std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
-                // if(!wordInfo.empty())
-                // {
-                //     WordData theWordData;
-                //     extractWordData(theWordData, inputWord, wordInfo);
-                //     theWordData.consolePrint();
-                // }
-                // else
-                //     std::cout << "Cannot find the word" << "\n";
-                std::wstring vieWordInfo = trieSearchVieInfo(engEngRoot, wideInputWord);
-                if(!vieWordInfo.empty())
+                std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
+                if(!wordInfo.empty())
                 {
-                    std::wcout << vieWordInfo << "\n";
+                    WordData theWordData;
+                    extractWordData(theWordData, inputWord, wordInfo);
+                    theWordData.consolePrint();
                 }
                 else
-                    std::cout << "Cannot find the word\n";
+                    std::cout << "Cannot find the word" << "\n";
             }
             else if (menuButton.isMouseOver(window)) {
                 if (isMainScreen)
@@ -295,6 +290,10 @@ void Application::handleEvent()
             }
             else if (addButton.isMouseOver(window))
             {
+            }
+            else
+            {
+                
             }
         }
     }

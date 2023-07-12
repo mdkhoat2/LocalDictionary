@@ -11,9 +11,9 @@ public:
 	// Pass font by reference:
 	void setFont(sf::Font& fonts);
 
-	void setBackColor(sf::Color color);
+	void setBackColor(const sf::Color &color);
 
-	void setTextColor(sf::Color color);
+	void setTextColor(const sf::Color &color);
 
 	void setPosition(const sf::Vector2f &point);
 

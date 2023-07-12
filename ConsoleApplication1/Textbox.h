@@ -12,7 +12,7 @@
 
 class Textbox {
 public:
-	Textbox(int size, sf::Color color, bool sel);
+	Textbox(int size, sf::Color textColor, sf::Color boxColor, bool sel);
 
 	// Make sure font is passed by reference:
 	void setFont(sf::Font& fonts);
@@ -38,9 +38,16 @@ public:
 
 	// Function for event loop:
 	void typedOn(sf::Event input);
+
+	void setBoxPosition(const sf::Vector2f& pos);
+	void setBoxSize(const sf::Vector2f& pos);
+
+	bool isMouseOver(sf::RenderWindow& window);
+	
 	
 private:
 	sf::Text textbox;
+	sf::RectangleShape theBox;
 
 	std::ostringstream text;
 	bool isSelected = false;
