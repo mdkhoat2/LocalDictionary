@@ -142,6 +142,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="EditDefinition.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="NewWord.cpp" />
     <ClCompile Include="Textbox.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="button.h" />
+    <ClInclude Include="EditDefinition.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="NewWord.h" />
     <ClInclude Include="textbox.h" />

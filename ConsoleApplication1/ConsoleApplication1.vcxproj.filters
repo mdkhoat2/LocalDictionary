@@ -39,6 +39,9 @@
     <ClCompile Include="NewWord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EditDefinition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="textbox.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NewWord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
