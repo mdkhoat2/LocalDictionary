@@ -57,7 +57,7 @@ private:
     EngTrieNode* engEngRoot;
     VieTrieNode* vieEngRoot;
 
-    EditDefinitionScreen editDefScreen;
+    EditDefinitionScreen* editDefScreen;
 private:
     void initWindow();
     void initBackground();

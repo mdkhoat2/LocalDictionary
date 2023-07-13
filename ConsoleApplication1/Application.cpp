@@ -19,7 +19,8 @@ Application::Application() :
     engEngRoot(nullptr),
     vieEngRoot(nullptr),
     history(),
-    currentScreen(ScreenState::MainScreen)
+    currentScreen(ScreenState::MainScreen),
+    editDefScreen(nullptr)
 {
     initWindow();
     initBackground();
@@ -34,6 +35,8 @@ Application::Application() :
 Application::~Application()
 {
     trieDeleteAll(engEngRoot);
+    trieDeleteAll(vieEngRoot);
+    delete editDefScreen;
 }
 
 void Application::loadEngEngDict()
@@ -305,6 +308,10 @@ void Application::handleEvent()
                 }
                 else if(editDefButton.isMouseOver(window))
                 {
+                    if(editDefScreen == nullptr)
+                    {
+                        editDefScreen = new EditDefinitionScreen();
+                    }
                     currentScreen = ScreenState::EditDefinitionScreen;
                 }
                 else
@@ -316,11 +323,11 @@ void Application::handleEvent()
         else if(currentScreen == ScreenState::EditDefinitionScreen)
         {
             bool endScreen = false;
-            editDefScreen.setEndScreen(endScreen);
-            editDefScreen.handleEvent(event, window, endScreen);
+            editDefScreen->setEndScreen(endScreen);
+            editDefScreen->handleEvent(event, window, endScreen);
             if(endScreen)
             {
-                editDefScreen.setEndScreen(endScreen);
+                editDefScreen->setEndScreen(endScreen);
                 currentScreen = ScreenState::MainScreen;
             }
         }
@@ -347,7 +354,7 @@ void Application::update()
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen)
     {
-        editDefScreen.update(window);
+        editDefScreen->update(window);
     }
 }
 
@@ -368,7 +375,7 @@ void Application::render()
         editDefButton.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
-        editDefScreen.render(window);
+        editDefScreen->render(window);
     }
     else {
 
