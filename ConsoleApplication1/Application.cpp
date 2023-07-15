@@ -1,10 +1,6 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <locale>
-#include <codecvt>
-#include <io.h>
-#include <fcntl.h>
 #include "Application.h"
 
 
@@ -19,7 +15,9 @@ Application::Application() :
     engEngRoot(nullptr),
     vieEngRoot(nullptr),
     history(),
-    currentScreen(ScreenState::MainScreen)
+    currentScreen(ScreenState::MainScreen),
+    editDefScreen(nullptr),
+    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black)
 {
     initWindow();
     initBackground();
@@ -29,11 +27,15 @@ Application::Application() :
     initMenuButton();
     initAddButton();
     initEditDefButton();
+    initDisplayBox();
 }
 
 Application::~Application()
 {
     trieDeleteAll(engEngRoot);
+    trieDeleteAll(vieEngRoot);
+    delete editDefScreen;
+    editDefScreen = nullptr;
 }
 
 void Application::loadEngEngDict()
@@ -217,6 +219,7 @@ void Application::initSearchBar()
     searchBar.setBoxSize({800, 68});
 	searchBar.setLimit(true, 65); //set limit to 65 characters
 	searchBar.setFont(font);
+    
 }
 
 void Application::initSearchButton()
@@ -245,6 +248,12 @@ void Application::initEditDefButton()
     editDefButton.setFont(font);
     editDefButton.setPosition({972, 365});
     editDefButton.setOutlineThickness(2);
+}
+
+void Application::initDisplayBox()
+{
+    displayBox.setFont(font);
+    displayBox.setCharacterSize(30);
 }
 
 void Application::run()
@@ -278,10 +287,13 @@ void Application::handleEvent()
                 searchBar.typedOn(event);
             if(event.type == sf::Event::MouseButtonPressed)
             {
+                if(searchBar.isMouseOver(window))
+                    searchBar.setSelected(true);
+                else
+                    searchBar.setSelected(false);
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
-                    std::wstring wideInputWord(inputWord.begin(), inputWord.end());
                     if (inputWord!="")
                         history.add(inputWord);
                     std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
@@ -290,6 +302,7 @@ void Application::handleEvent()
                         WordData theWordData;
                         extractWordData(theWordData, inputWord, wordInfo);
                         theWordData.consolePrint();
+                        displayBox.setText(wordInfo);
                     }
                     else
                         std::cout << "Cannot find the word" << "\n";
@@ -305,6 +318,10 @@ void Application::handleEvent()
                 }
                 else if(editDefButton.isMouseOver(window))
                 {
+                    if(editDefScreen == nullptr)
+                    {
+                        editDefScreen = new EditDefinitionScreen();
+                    }
                     currentScreen = ScreenState::EditDefinitionScreen;
                 }
                 else
@@ -316,11 +333,11 @@ void Application::handleEvent()
         else if(currentScreen == ScreenState::EditDefinitionScreen)
         {
             bool endScreen = false;
-            editDefScreen.setEndScreen(endScreen);
-            editDefScreen.handleEvent(event, window, endScreen);
+            editDefScreen->setEndScreen(endScreen);
+            editDefScreen->handleEvent(event, window, endScreen);
             if(endScreen)
             {
-                editDefScreen.setEndScreen(endScreen);
+                editDefScreen->setEndScreen(endScreen);
                 currentScreen = ScreenState::MainScreen;
             }
         }
@@ -337,6 +354,7 @@ void Application::update()
     {
         searchButton.update(window);
         menuButton.update(window);
+        displayBox.update(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen)
     {
@@ -344,10 +362,11 @@ void Application::update()
         menuButton.update(window);
         addButton.update(window);
         editDefButton.update(window);
+        displayBox.update(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen)
     {
-        editDefScreen.update(window);
+        editDefScreen->update(window);
     }
 }
 
@@ -357,24 +376,26 @@ void Application::render()
     if (currentScreen == ScreenState::MainScreen) {
         window.draw(mainScreen);
         searchBar.drawTo(window);
+        searchButton.drawTo(window);
         history.drawTo(window);
         menuButton.drawTo(window);
+        displayBox.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
         window.draw(screenWithOptions);
         searchBar.drawTo(window);
+        searchButton.drawTo(window);
         menuButton.drawTo(window);
         addButton.drawTo(window);
         editDefButton.drawTo(window);
+        displayBox.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
-        editDefScreen.render(window);
+        editDefScreen->render(window);
     }
     else {
 
     }
-    
-    searchButton.drawTo(window);
     
     window.display();
 }

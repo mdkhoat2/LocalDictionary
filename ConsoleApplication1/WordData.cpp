@@ -1,9 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <locale>
-#include <codecvt>
-#include <io.h>
-#include <fcntl.h>
 #include "WordData.h"
 
 WordData::WordData() : word()

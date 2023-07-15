@@ -41,6 +41,7 @@ public:
 
 	void setBoxPosition(const sf::Vector2f& pos);
 	void setBoxSize(const sf::Vector2f& pos);
+	void setOutlineThickness(float thickness);
 
 	bool isMouseOver(sf::RenderWindow& window);
 	

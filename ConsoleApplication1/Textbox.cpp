@@ -60,6 +60,9 @@ void Textbox::setSelected(bool sel) {
         }
         textbox.setString(newT);    
     }
+    else {
+        textbox.setString(text.str() + "_");
+    }
 }
 
 std::string Textbox::getText() {
@@ -104,6 +107,11 @@ void Textbox::setBoxPosition(const sf::Vector2f &pos)
 void Textbox::setBoxSize(const sf::Vector2f &pos)
 {
     theBox.setSize(pos);
+}
+
+void Textbox::setOutlineThickness(float thickness)
+{
+    theBox.setOutlineThickness(thickness);
 }
 
 bool Textbox::isMouseOver(sf::RenderWindow &window)

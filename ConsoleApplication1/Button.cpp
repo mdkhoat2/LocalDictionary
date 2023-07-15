@@ -12,6 +12,15 @@ Button::Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::C
     text.setString(btnText);
     text.setCharacterSize(charSize);
     text.setFillColor(textColor);
+
+    buttonTex = nullptr;
+    buttonSprite = nullptr;
+}
+
+Button::~Button()
+{
+    delete buttonTex;
+    delete buttonSprite;
 }
 
 // Pass font by reference:
