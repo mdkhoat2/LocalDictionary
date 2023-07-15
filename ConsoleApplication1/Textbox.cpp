@@ -60,6 +60,9 @@ void Textbox::setSelected(bool sel) {
         }
         textbox.setString(newT);    
     }
+    else {
+        textbox.setString(text.str() + "_");
+    }
 }
 
 std::string Textbox::getText() {

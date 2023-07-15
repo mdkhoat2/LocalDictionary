@@ -7,7 +7,7 @@
 class Button {
 public:
 	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
-
+	~Button();
 	// Pass font by reference:
 	void setFont(sf::Font& fonts);
 
@@ -30,6 +30,10 @@ public:
 private:
 	sf::Text text;
 	sf::RectangleShape button;
+	
+	// For buttons with texture
+	sf::Texture* buttonTex;
+	sf::Sprite* buttonSprite;
 
 	int btnWidth;
 	int btnHeight;

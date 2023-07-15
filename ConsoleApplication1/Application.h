@@ -1,16 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <locale>
-#include <codecvt>
-#include <io.h>
-#include <fcntl.h>
 #include "Button.h"
 #include "Textbox.h"
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
 #include "EditDefinition.h"
+#include "DisplayDefinition.h"
 
 class Application
 {
@@ -53,6 +50,7 @@ private:
     Button addButton;
     Button editDefButton;
     History history;
+    DisplayBox displayBox;
 
     EngTrieNode* engEngRoot;
     VieTrieNode* vieEngRoot;
@@ -67,6 +65,7 @@ private:
     void initMenuButton();
     void initAddButton();
     void initEditDefButton();
+    void initDisplayBox();
 };
 
 #endif
