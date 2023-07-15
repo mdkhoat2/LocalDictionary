@@ -109,6 +109,11 @@ void Textbox::setBoxSize(const sf::Vector2f &pos)
     theBox.setSize(pos);
 }
 
+void Textbox::setOutlineThickness(float thickness)
+{
+    theBox.setOutlineThickness(thickness);
+}
+
 bool Textbox::isMouseOver(sf::RenderWindow &window)
 {
     int mouseX = sf::Mouse::getPosition(window).x;

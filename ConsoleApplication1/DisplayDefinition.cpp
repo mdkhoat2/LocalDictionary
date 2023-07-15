@@ -124,7 +124,13 @@ void DisplayBox::setCharacterSize(unsigned int size)
 
 void DisplayBox::update(sf::RenderWindow &window)
 {
-
+    sf::Color grey(0, 0, 0, 120);
+    if (isMouseOver(window)) {
+		theBox.setOutlineColor(grey);
+	}
+    else {
+		theBox.setOutlineColor(sf::Color::Transparent);
+	}
 }
 
 void DisplayBox::drawTo(sf::RenderWindow &window)
@@ -180,7 +186,7 @@ void DisplayBox::wrapText()
 
     while (iss >> word) {
         definitionText.setString(line + " " + word);
-        if (definitionText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+        if (definitionText.getLocalBounds().width > theBox.getLocalBounds().width - 40.f) {
             wrappedStr += line + '\n';
             line = word;
         } else {

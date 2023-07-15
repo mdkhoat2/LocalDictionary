@@ -219,6 +219,7 @@ void Application::initSearchBar()
     searchBar.setBoxSize({800, 68});
 	searchBar.setLimit(true, 65); //set limit to 65 characters
 	searchBar.setFont(font);
+    
 }
 
 void Application::initSearchButton()
@@ -252,7 +253,7 @@ void Application::initEditDefButton()
 void Application::initDisplayBox()
 {
     displayBox.setFont(font);
-    displayBox.setCharacterSize(20);
+    displayBox.setCharacterSize(30);
 }
 
 void Application::run()
