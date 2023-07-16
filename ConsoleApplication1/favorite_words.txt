@@ -1,7 +1,7 @@
 hi
 memory
-current
 before
 after
 hello
 what
+which
