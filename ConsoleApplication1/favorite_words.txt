@@ -2,7 +2,6 @@ hi
 application
 data
 history
-stored
 memory
 current
 before
