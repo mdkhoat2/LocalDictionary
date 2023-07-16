@@ -13,7 +13,6 @@ Application::Application() :
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
-    vieEngRoot(nullptr),
     history(),
     currentScreen(ScreenState::MainScreen),
     editDefScreen(nullptr),
@@ -34,7 +33,6 @@ Application::Application() :
 Application::~Application()
 {
     trieDeleteAll(engEngRoot);
-    trieDeleteAll(vieEngRoot);
     delete editDefScreen;
     editDefScreen = nullptr;
     delete newWord;
@@ -124,53 +122,6 @@ void Application::loadEngEngDict()
         }
     }
     trieInsert(engEngRoot, word, wordInfo); // Insert last word
-    fin.close();
-}
-
-void Application::loadEngVieDict()
-{
-    std::wifstream fin("data/EV.txt");
-    if(!fin.is_open())
-        std::cout << "Cannot open EV.txt" << std::endl;
-    std::wstring word, line, wordInfo;
-    int count = 0;
-    while(std::getline(fin, line))
-    {
-        if(count < 15)
-            ++count;
-        else
-        {
-            if(line.empty()) // skip empty line 
-                continue;
-            else if(line[0] == L'@') // this line contains the word
-            {
-                if(count == 15) // read the first word
-                    ++count;
-                else
-                {
-                    // insert previous word
-                    trieInsertVieInfo(engEngRoot, word, wordInfo);
-                    word.clear();
-                    wordInfo.clear();
-                }
-                int i = 1;
-                while(line[i] != L'/' && i < line.length())
-                {
-                    if(isValidEngChar(line[i]))
-                        word += line[i];
-                    ++i;
-                }
-                if(word[word.length()-1] == ' ')
-                    word.pop_back();
-            }
-            else // this line contains word information
-            {   
-                wordInfo += line + L"\n";
-            }
-        } 
-    }
-    trieInsertVieInfo(engEngRoot, word, wordInfo);
-    
     fin.close();
 }
 
@@ -302,13 +253,20 @@ void Application::handleEvent()
                     std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
                     if(!wordInfo.empty())
                     {
+                        // Console
                         WordData theWordData;
                         extractWordData(theWordData, inputWord, wordInfo);
                         theWordData.consolePrint();
-                        displayBox.setText(wordInfo);
+                        // UI
+                        displayBox.getWordData(inputWord, wordInfo);
+
                     }
                     else
+                    {
                         std::cout << "Cannot find the word" << "\n";
+                        displayBox.showNoDefinitions();
+                    }
+                        
                 }
                 else if (menuButton.isMouseOver(window)) {
                     if (currentScreen == ScreenState::MainScreen)
@@ -332,9 +290,13 @@ void Application::handleEvent()
                     }
                     currentScreen = ScreenState::EditDefinitionScreen;
                 }
-                else
+                else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
-
+                    displayBox.showNextDef();
+                }
+                else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
+                {
+                    displayBox.showPrevDef();
                 }
             }
         }

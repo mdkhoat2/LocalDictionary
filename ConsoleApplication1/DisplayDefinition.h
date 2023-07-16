@@ -15,29 +15,44 @@ public:
     void setBackColor(const sf::Color& color);
     void setSize(const sf::Vector2f& size);
     void setFont(const sf::Font& font);
-    void setText(const sf::String& str);
-    void setText(WordData& theWordData);
     void setCharacterSize(unsigned int size);
 
     void update(sf::RenderWindow& window);
     void drawTo(sf::RenderWindow& window);
 
-    bool isMouseOver(sf::RenderWindow& window);
+    void getWordData(std::string& inputWord, std::string& wordInfo);
 
-    void showNextDefButton();
-    void showPrevDefButton();
-    void wrapText();
+    void wrapText(sf::Text& theText);
+    void initFirstDef();
+    void setUIText();
+    void showNextDef();
+    void showPrevDef();
+    void showNoDefinitions();
 
+    void setButtonTextFont(const sf::Font& font);
+    bool isMouseOverNextButton(sf::RenderWindow& window);
+    bool isMouseOverPrevButton(sf::RenderWindow& window);
+    bool nextButtonDrawn();
+    bool prevButtonDrawn();
+    
 private:
     sf::RectangleShape theBox;
-    sf::Text definitionText;
-    std::vector<sf::Text*> wordTypes;
-    std::vector<sf::Text*> wordDefs[4]; 
-    unsigned int wordTypeSize;
-    unsigned int wordDefSize;
     
+    sf::Text word;
+    sf::Text wordType;
+    sf::Text wordDef;
+
+    int curWordTypeID;
+    int curWordDefID;
+    WordDefNode* curWordDefPtr;
+
+    WordData* curWordData;
+    int numOfDefs;
+
     Button* nextDefButton;
     Button* prevDefButton;
+    bool showNextButton;
+    bool showPrevButton;
 };
 
 

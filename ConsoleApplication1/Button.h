@@ -9,7 +9,7 @@ public:
 	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
 	~Button();
 	// Pass font by reference:
-	void setFont(sf::Font& fonts);
+	void setFont(const sf::Font& font);
 
 	void setBackColor(const sf::Color &color);
 

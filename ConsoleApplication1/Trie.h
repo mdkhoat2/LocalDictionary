@@ -20,7 +20,6 @@ struct EngTrieNode
     EngTrieNode* links[67];
     bool flag;
     std::string wordInfo;
-    std::wstring vieWordInfo;
 
     // Constructor
     EngTrieNode();
@@ -49,12 +48,10 @@ struct VieTrieNode
 };
 
 // Functions about Trie opearations 
-void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo);
-void trieInsertVieInfo(EngTrieNode*& root, std::wstring word, std::wstring wordInfo);
+void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo);\
 void trieInsert(VieTrieNode*& root, std::wstring word, std::string wordInfo);
 
 std::string trieSearch(EngTrieNode* root, std::string word);
-std::wstring trieSearchVieInfo(EngTrieNode* root, std::wstring word);
 std::string trieSearch(VieTrieNode* root, std::wstring word);
 
 EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth = 0);
@@ -64,7 +61,6 @@ void trieDeleteAll(EngTrieNode* &root);
 void trieDeleteAll(VieTrieNode* &root);
 
 // Search functions
-std::string filterAndSearch(EngTrieNode* root, std::string &word);
 std::string filterAndSearch(EngTrieNode* root, std::string &word);
 
 #endif // TRIE_H

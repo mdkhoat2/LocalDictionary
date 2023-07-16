@@ -8,7 +8,6 @@ Button::Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::C
     // Get these for later use:
     btnWidth = buttonSize.x;
     btnHeight = buttonSize.y;
-
     text.setString(btnText);
     text.setCharacterSize(charSize);
     text.setFillColor(textColor);
@@ -24,8 +23,8 @@ Button::~Button()
 }
 
 // Pass font by reference:
-void Button::setFont(sf::Font& fonts) {
-    text.setFont(fonts);
+void Button::setFont(const sf::Font& font) {
+    text.setFont(font);
 }
 
 void Button::setBackColor(const sf::Color &color) {
