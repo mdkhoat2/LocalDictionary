@@ -1,7 +1,9 @@
 hi
-hello
 application
-button
-history
 data
-trie
+history
+stored
+memory
+current
+before
+after
