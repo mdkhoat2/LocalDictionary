@@ -22,7 +22,6 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
-    void loadEngVieDict();
     void run();
 public:
     void handleEvent();
@@ -53,7 +52,6 @@ private:
     DisplayBox displayBox;
 
     EngTrieNode* engEngRoot;
-    VieTrieNode* vieEngRoot;
 
     EditDefinitionScreen* editDefScreen;
 private:

@@ -13,7 +13,7 @@ struct WordDefNode
 struct WordData
 {
     WordData();
-    WordData(std::string wordIn);
+    ~WordData();
     
     // Member functions
     void consolePrint();
@@ -32,6 +32,8 @@ struct WordData
 };
 
 void insertAtEnd(WordDefNode* &head, std::string wordDef);
+void deleteAllList(WordDefNode* &head);
+int countNumOfDefs(WordData& theWordData);
 
 // Helper functions
 bool isValidEngChar(wchar_t ch);

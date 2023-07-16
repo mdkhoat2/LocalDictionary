@@ -8,10 +8,12 @@ WordData::WordData() : word()
         defListHead[i] = nullptr;
 }
 
-WordData::WordData(std::string wordIn) : word(wordIn)
+WordData::~WordData()
 {
     for(int i = 0; i < 4; ++i)
-        defListHead[i] = nullptr;
+    {
+        deleteAllList(defListHead[i]);
+    }
 }
 
 void WordData::consolePrint()
@@ -84,6 +86,35 @@ void insertAtEnd(WordDefNode *&head, std::string wordDef)
         cur = cur->next;
     cur->next = new WordDefNode();
     cur->next->wordDef = wordDef;
+}
+
+void deleteAllList(WordDefNode *&head)
+{
+    WordDefNode* temp;
+    while(head != nullptr)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+        temp = nullptr;
+    }
+}
+
+int countNumOfDefs(WordData &theWordData)
+{
+    int count = 0;
+    for(int i = 0; i < 4; ++i)
+    {
+        if(theWordData.defListHead[i] == nullptr)
+            continue;
+        WordDefNode* cur = theWordData.defListHead[i];
+        while(cur != nullptr)
+        {
+            ++count;
+            cur = cur->next;
+        }
+    }
+    return count;
 }
 
 bool isValidEngChar(wchar_t ch)
