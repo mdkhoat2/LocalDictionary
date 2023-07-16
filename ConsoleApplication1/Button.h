@@ -8,6 +8,10 @@ class Button {
 public:
 	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
 	~Button();
+
+	// Accessors
+	const std::string getText();
+	
 	// Pass font by reference:
 	void setFont(const sf::Font& font);
 
@@ -22,11 +26,17 @@ public:
 	void setOutlineThickness(float thickness);
 
 	void drawTo(sf::RenderWindow& window);
+	void setText(const std::string theText);
 
 	// Check if the mouse is within the bounds of the button:
 	bool isMouseOver(sf::RenderWindow& window);
 
 	void update(sf::RenderWindow& window);
+	bool isPressed(sf::RenderWindow& window);
+	sf::RectangleShape button;
+
+	// Functions
+	void drawTo(sf::RenderWindow& window);
 private:
 	sf::Text text;
 	sf::RectangleShape button;

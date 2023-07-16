@@ -22,6 +22,11 @@ Button::~Button()
     delete buttonSprite;
 }
 
+const std::string Button::getText()
+{
+    return text.getString();
+}
+
 // Pass font by reference:
 void Button::setFont(const sf::Font& font) {
     text.setFont(font);
@@ -62,6 +67,11 @@ void Button::drawTo(sf::RenderWindow& window) {
     window.draw(text);
 }
 
+void Button::setText(const std::string theText)
+{
+    text.setString(theText);
+}
+
 // Check if the mouse is within the bounds of the button:
 bool Button::isMouseOver(sf::RenderWindow& window) {
     int mouseX = sf::Mouse::getPosition(window).x;
@@ -88,4 +98,9 @@ void Button::update(sf::RenderWindow& window)
     else {
 		button.setOutlineColor(sf::Color::Transparent);
 	}
+bool Button::isPressed(sf::RenderWindow& window)
+{
+    if(isMouseOver(window) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        return true;
+    return false;
 }

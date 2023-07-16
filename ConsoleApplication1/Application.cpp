@@ -19,6 +19,9 @@ Application::Application() :
     editDefScreen(nullptr),
     newWord(nullptr),
     displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black)
+    vieEngRoot(nullptr),
+    history(),
+    dataSetList(100, 50, 200, 50, {"English-English", "English-Vietnamese", "Vietnamese-English", "Emoji"}, 4)
 {
     initWindow();
     initBackground();
@@ -30,6 +33,7 @@ Application::Application() :
     initEditDefButton();
     initDisplayBox();
     initFavouriteButton();
+    initDataSetList();
 }
 
 Application::~Application()
@@ -46,9 +50,9 @@ void Application::loadEngEngDict()
     std::ifstream fin("data/EE.txt");
     // Skip the first 59 lines (unnecessary lines)
     std::string line, word, wordInfo;
-    bool moreThan1Def = false;
+    bool wordInfo1stLine = true;
     int count = 0;
-    while(count < 59)
+    while(count < 11584)
     {
         std::getline(fin, line);
         ++count;
@@ -58,72 +62,35 @@ void Application::loadEngEngDict()
     {
         if(line[0] != ' ') // this is a word
         {
-            if(count == 59) // Read first word
+            if(count == 11584) // Read first word
             {   
                 ++count;
                 word = line;
             }
             else
             {
-                // insert the previous word with its definition
+                // Insert the previous word with its definition
                 trieInsert(engEngRoot, word, wordInfo);
                 word = line;
                 wordInfo.clear();
-                moreThan1Def = false;
+                wordInfo1stLine = true;
             }
         }
-        else
+        else // this is word information
         {
-            // Skip leading spaces
-            int i = 0;
-            while(line[i] == ' ')
-                ++i;
-            // Read the word's information
-            // The first line will definitely contain the word type
-            if(wordInfo.empty()) 
+            if(wordInfo1stLine)
             {
-                std::string wordType;
-                while(line[i] != ' ')
-                    wordType += line[i++];
-                if(isdigit(line[i+1]))
-                    moreThan1Def = true;
-                wordInfo += wordType + "\n" + line.substr(i+1);
+                wordInfo += line;
+                wordInfo1stLine = false;
             }
             else
             {
-                // Check for "X:" which indicates another meaning of the same word type
-                int j  = i;
-                std::string numStr;
-                while(line[j] != ':' && j < line.length())
-                    numStr += line[j++];
-                if(isNumber(numStr) && moreThan1Def)
-                    wordInfo += "\n" + line.substr(i);
-                else
-                {
-                    // Check for any other word type
-                    std::string wordType;
-                    while(line[i] != ' ' && i < line.length())
-                        wordType += line[i++];
-                    // If the word has another word type
-                    if(isValidWordType(wordType))
-                    {
-                        wordInfo += "\n" + wordType + "\n" + line.substr(i+1);
-                    }
-                    // If it is a normal line
-                    else if(line[i] == ' ')
-                    {
-                        wordInfo += " " + wordType + line.substr(i);
-                    }
-                    // If the line contains only 1 word that is not a word type
-                    else
-                    {   
-                        wordInfo += " " + wordType;
-                    }
-                }
+                wordInfo += "\n" + line;
             }
         }
     }
-    trieInsert(engEngRoot, word, wordInfo); // Insert last word
+    // Insert the last word and its definition
+    trieInsert(engEngRoot, word, wordInfo); 
     fin.close();
 }
 
@@ -219,11 +186,18 @@ void Application::initFavouriteButton()
     favouritebutton.button.setOutlineThickness(2);
 }
 
+void Application::initDataSetList()
+{
+    dataSetList.setFont(font);
+}
+
 void Application::run()
 {
     // Load dictionaries
     loadEngEngDict();
     // loadEngVieDict();
+
+    // Application loop
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -252,6 +226,14 @@ void Application::handleEvent()
             {
                 if(searchBar.isMouseOver(window))
                     searchBar.setSelected(true);
+                std::string inputWord = searchBar.getText();
+                if (inputWord!="")
+                    history.add(inputWord);
+                std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
+                if(!wordInfo.empty())
+                {
+                    std::cout << wordInfo << std::endl;
+                }
                 else
                     searchBar.setSelected(false);
                 if(searchButton.isMouseOver(window))
@@ -372,6 +354,17 @@ void Application::update()
     menuButton.update(window);
     addButton.update(window);
     favouritebutton.update(window);
+    sf::Color grey(0, 0, 0, 120);
+    if (searchButton.isMouseOver(window))
+        searchButton.button.setOutlineColor(grey);
+    else
+        searchButton.button.setOutlineColor(sf::Color::Transparent);
+    if (menuButton.isMouseOver(window))
+        menuButton.button.setOutlineColor(grey);
+    else
+        menuButton.button.setOutlineColor(sf::Color::Transparent);
+    
+    dataSetList.update(window);
 }
 
 void Application::render()
@@ -403,5 +396,13 @@ void Application::render()
         favouritebutton.drawTo(window);
     }
     
+    // Draw the background
+    window.draw(mainScreen);
+
+    searchBar.drawTo(window);
+    searchButton.drawTo(window);
+    menuButton.drawTo(window);
+    history.drawTo(window);
+    dataSetList.drawTo(window);
     window.display();
 }

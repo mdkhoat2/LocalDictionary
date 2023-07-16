@@ -10,6 +10,7 @@
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
 #include"Favourite.h"
+#include "DropDownList.h"
 
 class Application
 {
@@ -61,6 +62,9 @@ private:
 
     EditDefinitionScreen* editDefScreen;
     NewWord* newWord;
+    VieTrieNode* vieEngRoot;
+
+    DropDownList dataSetList;
 private:
     void initWindow();
     void initBackground();
@@ -72,6 +76,7 @@ private:
     void initEditDefButton();
     void initDisplayBox();
     void initFavouriteButton();
+    void initDataSetList();
 };
 
 #endif
