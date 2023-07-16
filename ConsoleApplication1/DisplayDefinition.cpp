@@ -182,10 +182,10 @@ void DisplayBox::initFirstDef()
     if(numOfDefs > 1)
     {
         nextDefButton = new Button("NEXT", {100, 60}, 20, sf::Color::Green, sf::Color::Red);
-        nextDefButton->setPosition(800, 600);
+        nextDefButton->setPosition(800, 700);
         showNextButton = true;
         prevDefButton = new Button("BACK", {100, 60}, 20, sf::Color::Green, sf::Color::Red);
-        prevDefButton->setPosition(690, 600);
+        prevDefButton->setPosition(690, 700);
         showPrevButton = false;
     }
     setUIText();
