@@ -216,7 +216,7 @@ void Application::initFavouriteButton()
 {
     favouritebutton.setFont(font);
     favouritebutton.setPosition({ 972, 420 });
-    favouritebutton.button.setOutlineThickness(2);
+    favouritebutton.setOutlineThickness(2);
 }
 
 void Application::run()
@@ -299,6 +299,10 @@ void Application::handleEvent()
                     }
                     currentScreen = ScreenState::EditDefinitionScreen;
                 }
+                else if (favouritebutton.isMouseOver(window))
+                {
+                    Favourite(window);
+                }
                 else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
                     displayBox.showNextDef();
@@ -315,23 +319,12 @@ void Application::handleEvent()
             editDefScreen->setEndScreen(endScreen);
             editDefScreen->handleEvent(event, window, endScreen);
             if(endScreen)
-            else if (favouritebutton.isMouseOver(window) && !isMainScreen)
-            {
-                Favourite(window);
-            }
-            else if (menuButton.isMouseOver(window)) {
-                if (isMainScreen)
-                    isMainScreen = false;
-                else
-                    isMainScreen = true;
-            }
-            else if (addButton.isMouseOver(window))
             {
                 editDefScreen->setEndScreen(endScreen);
                 currentScreen = ScreenState::OptionsScreen;
             }
         }
-        else
+        else if(currentScreen == ScreenState::AddScreen)
         {
             bool endScreen = false;
             newWord->setEndScreen(endScreen);
@@ -341,6 +334,10 @@ void Application::handleEvent()
                 newWord->setEndScreen(endScreen);
                 currentScreen = ScreenState::OptionsScreen;
             }
+        }
+        else
+        {
+
         }
     }
 }
@@ -359,19 +356,20 @@ void Application::update()
         menuButton.update(window);
         addButton.update(window);
         editDefButton.update(window);
+        favouritebutton.update(window);
         displayBox.update(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen)
     {
         editDefScreen->update(window);
     }
-    else {
+    else if(currentScreen == ScreenState::AddScreen) {
         newWord->update(window);
     }
-    searchButton.update(window);
-    menuButton.update(window);
-    addButton.update(window);
-    favouritebutton.update(window);
+    else
+    {
+
+    }
 }
 
 void Application::render()
@@ -392,15 +390,18 @@ void Application::render()
         menuButton.drawTo(window);
         addButton.drawTo(window);
         editDefButton.drawTo(window);
+        favouritebutton.drawTo(window);
         displayBox.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
         editDefScreen->render(window);
     }
-    else {
+    else if(currentScreen == ScreenState::AddScreen) {
         newWord->render(window);
-        window.draw(screenWithOptions);
-        favouritebutton.drawTo(window);
+    }
+    else
+    {
+        
     }
     
     window.display();
