@@ -133,3 +133,94 @@ void NewWord::loadAddedWord(EngTrieNode*& root) {
     trieInsert(root, word, wordInfo); // Insert last word
     fin.close();
 }
+
+// UI
+
+NewWord::NewWord() :
+    backButton("", { 50, 50 }, 20, sf::Color::Red, sf::Color::Transparent),
+    addButton("", { 50, 50 }, 20, sf::Color::Green, sf::Color::Transparent),
+    wordBar(20, sf::Color::Black, sf::Color::Blue, true),
+    defBar(20, sf::Color::Black, sf::Color::Blue, true),
+    isEndScreen(false)
+{
+    initFont();
+    initBackButton();
+    initAddButton();
+    initWordBar();
+    initDefBar();
+}
+
+void NewWord::initFont() {
+    // Load font from file
+    if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
+        std::cout << "Font not found!\n";
+}
+
+void NewWord::initWordBar() {
+    wordBar.setPosition({ 101, 172 });
+    wordBar.setBoxPosition({ 50, 150 });
+    wordBar.setBoxSize({ 800, 68 });
+    wordBar.setLimit(true, 65); //set limit to 65 characters
+    wordBar.setFont(font);
+}
+
+void NewWord::initDefBar() {
+    defBar.setPosition({ 101, 322 });
+    defBar.setBoxPosition({ 50, 300 });
+    defBar.setBoxSize({ 800, 400 });
+    defBar.setLimit(true, 1000); //set limit to 1000 characters
+    defBar.setFont(font);
+}
+
+void NewWord::initBackButton() {
+    backButton.setFont(font);
+    backButton.setPosition({ 50, 50 });
+    backButton.setOutlineThickness(2);
+}
+
+void NewWord::initAddButton() {
+    backButton.setFont(font);
+    addButton.setPosition({ 150, 50 });
+    addButton.setOutlineThickness(2);
+}
+
+void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen) {
+    if (event.type == sf::Event::TextEntered) {
+        wordBar.typedOn(event);
+        defBar.typedOn(event);
+    }
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (wordBar.isMouseOver(window))
+            wordBar.setSelected(true);
+        else
+            wordBar.setSelected(false);
+        if (defBar.isMouseOver(window))
+            defBar.setSelected(true);
+        else
+            defBar.setSelected(false);
+        if (backButton.isMouseOver(window)) {
+            endScreen = true;
+            isEndScreen = endScreen;
+        }
+    }
+}
+
+void NewWord::update(sf::RenderWindow& window) {
+    if (!isEndScreen) {
+        backButton.update(window);
+        addButton.update(window);
+    }
+}
+
+void NewWord::render(sf::RenderWindow& window) {
+    if (!isEndScreen) {
+        wordBar.drawTo(window);
+        defBar.drawTo(window);
+        backButton.drawTo(window);
+        addButton.drawTo(window);
+    }
+}
+
+void NewWord::setEndScreen(bool value) {
+    isEndScreen = value;
+}
