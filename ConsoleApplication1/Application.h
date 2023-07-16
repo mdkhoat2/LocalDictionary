@@ -6,6 +6,7 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "History.h"
+#include "NewWord.h"
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
 
@@ -16,6 +17,7 @@ public:
     {
         MainScreen,
         OptionsScreen,
+        AddScreen,
         EditDefinitionScreen
     };
 public:
@@ -56,6 +58,7 @@ private:
     VieTrieNode* vieEngRoot;
 
     EditDefinitionScreen* editDefScreen;
+    NewWord* newWord;
 private:
     void initWindow();
     void initBackground();

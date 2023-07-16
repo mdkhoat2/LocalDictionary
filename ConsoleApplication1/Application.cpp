@@ -11,12 +11,13 @@ Application::Application() :
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    editDefButton("", {153, 42}, 20, sf::Color::Transparent, sf::Color::Transparent),
+    editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
     vieEngRoot(nullptr),
     history(),
     currentScreen(ScreenState::MainScreen),
     editDefScreen(nullptr),
+    newWord(nullptr),
     displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black)
 {
     initWindow();
@@ -36,6 +37,8 @@ Application::~Application()
     trieDeleteAll(vieEngRoot);
     delete editDefScreen;
     editDefScreen = nullptr;
+    delete newWord;
+    newWord = nullptr;
 }
 
 void Application::loadEngEngDict()
@@ -315,6 +318,11 @@ void Application::handleEvent()
                 }
                 else if (addButton.isMouseOver(window))
                 {
+                    if (newWord == nullptr)
+                    {
+                        newWord = new NewWord();
+                    }
+                    currentScreen = ScreenState::AddScreen;
                 }
                 else if(editDefButton.isMouseOver(window))
                 {
@@ -338,12 +346,19 @@ void Application::handleEvent()
             if(endScreen)
             {
                 editDefScreen->setEndScreen(endScreen);
-                currentScreen = ScreenState::MainScreen;
+                currentScreen = ScreenState::OptionsScreen;
             }
         }
         else
         {
-
+            bool endScreen = false;
+            newWord->setEndScreen(endScreen);
+            newWord->handleEvent(event, window, endScreen);
+            if (endScreen)
+            {
+                newWord->setEndScreen(endScreen);
+                currentScreen = ScreenState::OptionsScreen;
+            }
         }
     }
 }
@@ -367,6 +382,9 @@ void Application::update()
     else if(currentScreen == ScreenState::EditDefinitionScreen)
     {
         editDefScreen->update(window);
+    }
+    else {
+        newWord->update(window);
     }
 }
 
@@ -394,7 +412,7 @@ void Application::render()
         editDefScreen->render(window);
     }
     else {
-
+        newWord->render(window);
     }
     
     window.display();

@@ -1,4 +1,3 @@
-
 #include "Textbox.h"
 
 Textbox::Textbox(int size, sf::Color textColor, sf::Color boxColor, bool sel) {
