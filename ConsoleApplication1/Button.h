@@ -7,7 +7,7 @@
 class Button {
 public:
 	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
-	~Button();
+
 	// Pass font by reference:
 	void setFont(const sf::Font& font);
 
@@ -21,6 +21,10 @@ public:
 
 	void setOutlineThickness(float thickness);
 
+	void setTexture(const sf::Texture *texture);
+
+	const sf::Vector2f& getSize();
+
 	void drawTo(sf::RenderWindow& window);
 
 	// Check if the mouse is within the bounds of the button:
@@ -30,10 +34,6 @@ public:
 private:
 	sf::Text text;
 	sf::RectangleShape button;
-	
-	// For buttons with texture
-	sf::Texture* buttonTex;
-	sf::Sprite* buttonSprite;
 
 	int btnWidth;
 	int btnHeight;

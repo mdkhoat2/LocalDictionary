@@ -11,15 +11,6 @@ Button::Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::C
     text.setString(btnText);
     text.setCharacterSize(charSize);
     text.setFillColor(textColor);
-
-    buttonTex = nullptr;
-    buttonSprite = nullptr;
-}
-
-Button::~Button()
-{
-    delete buttonTex;
-    delete buttonSprite;
 }
 
 // Pass font by reference:
@@ -55,6 +46,16 @@ void Button::setPosition(float x, float y)
 void Button::setOutlineThickness(float thickness)
 {
     button.setOutlineThickness(thickness);
+}
+
+void Button::setTexture(const sf::Texture *texture)
+{
+    button.setTexture(texture);
+}
+
+const sf::Vector2f& Button::getSize()
+{
+    return button.getSize();
 }
 
 void Button::drawTo(sf::RenderWindow& window) {

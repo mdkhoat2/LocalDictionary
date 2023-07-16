@@ -4,10 +4,10 @@
 
 DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size, 
     const sf::Color& backColor, const sf::Color& textColor) : 
-    nextDefButton(nullptr),
-    prevDefButton(nullptr),
     curWordData(nullptr),
     curWordDefPtr(nullptr),
+    nextButton(nullptr),
+    prevButton(nullptr),
     curWordTypeID(0),
     curWordDefID(1),
     wordType(),
@@ -38,8 +38,10 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
 
 DisplayBox::~DisplayBox()
 {
-    delete nextDefButton;
-    delete prevDefButton;
+    delete nextButtonTex;
+    delete prevButtonTex;
+    delete nextButtonSprite;
+    delete prevButtonSprite;
     delete curWordDefPtr;
     delete curWordData;
 }
@@ -79,7 +81,6 @@ void DisplayBox::setFont(const sf::Font &font)
     word.setFont(font);
     wordType.setFont(font);
     wordDef.setFont(font);
-    setButtonTextFont(font);
 }
 
 void DisplayBox::setCharacterSize(unsigned int size)
@@ -91,10 +92,7 @@ void DisplayBox::setCharacterSize(unsigned int size)
 
 void DisplayBox::update(sf::RenderWindow &window)
 {
-    if(showNextButton)
-        nextDefButton->update(window);
-    if(showPrevButton)
-        prevDefButton->update(window);
+    
 }
 
 void DisplayBox::drawTo(sf::RenderWindow &window)
@@ -103,10 +101,16 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
     window.draw(word);
     window.draw(wordType);
     window.draw(wordDef);
-    if(nextDefButton && showNextButton)
-        nextDefButton->drawTo(window);
-    if(prevDefButton && showPrevButton)
-        prevDefButton->drawTo(window);
+    if(nextButtonSprite && showNextButton)
+    {
+        window.draw(*nextButtonSprite);
+    }
+        
+    if(prevButtonSprite && showPrevButton)
+    {
+        window.draw(*prevButtonSprite);
+    }
+        
 }
 
 void DisplayBox::getWordData(std::string &inputWord, std::string &wordInfo)
@@ -119,16 +123,12 @@ void DisplayBox::getWordData(std::string &inputWord, std::string &wordInfo)
     else // delete old word data
     {
         delete curWordData;
-        if(nextDefButton)
+        if(nextButtonSprite)
         {
-            delete nextDefButton;
-            nextDefButton = nullptr;
             showNextButton = false;
         }
-        if(prevDefButton)
+        if(prevButtonSprite)
         {
-            delete prevDefButton;
-            prevDefButton = nullptr;
             showPrevButton = false;
         }
         curWordData = new WordData;
@@ -181,12 +181,30 @@ void DisplayBox::initFirstDef()
     // initialize the buttons
     if(numOfDefs > 1)
     {
-        nextDefButton = new Button("NEXT", {100, 60}, 20, sf::Color::Green, sf::Color::Red);
-        nextDefButton->setPosition(800, 700);
+        nextButtonTex = new sf::Texture();
+        if(!nextButtonTex->loadFromFile("background/next-button.png"))
+            std::cout << "Cannot load next button texture" << std::endl;
+        nextButtonTex->setSmooth(true);
+        prevButtonTex = new sf::Texture();
+        if(!prevButtonTex->loadFromFile("background/prev-button.png"))
+            std::cout << "Cannot load prev button texture" << std::endl;
+        prevButtonTex->setSmooth(true);
+        nextButtonSprite = new sf::Sprite();
+        nextButtonSprite->setTexture(*nextButtonTex);
+        prevButtonSprite = new sf::Sprite();
+        prevButtonSprite->setTexture(*prevButtonTex);
+        
+        // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
+        // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
+
+        nextButtonSprite->setPosition(700, 600);
+        nextButtonSprite->setScale(0.3f, 0.3f);
         showNextButton = true;
-        prevDefButton = new Button("BACK", {100, 60}, 20, sf::Color::Green, sf::Color::Red);
-        prevDefButton->setPosition(690, 700);
+
+        prevButtonSprite->setPosition(560, 600);
+        prevButtonSprite->setScale(0.3f, 0.3f);
         showPrevButton = false;
+        
     }
     setUIText();
 }
@@ -264,6 +282,7 @@ void DisplayBox::showPrevDef()
         }
     }
     setUIText();
+    // Change status of buttons
     if(curWordDefID < numOfDefs)
         showNextButton = true;
     if(curWordDefID == 1)
@@ -283,16 +302,12 @@ void DisplayBox::showNoDefinitions()
         curWordData = nullptr;
     }
     
-    if(nextDefButton)
+    if(nextButtonSprite)
     {
-        delete nextDefButton;
-        nextDefButton = nullptr;
         showNextButton = false;
     }
-    if(prevDefButton)
+    if(prevButtonSprite)
     {
-        delete prevDefButton;
-        prevDefButton = nullptr;
         showPrevButton = false;
     }
     word.setString("No Definitions Found!");
@@ -300,22 +315,20 @@ void DisplayBox::showNoDefinitions()
     wordDef.setString("");
 }
 
-void DisplayBox::setButtonTextFont(const sf::Font &font)
-{
-    if(nextDefButton)
-        nextDefButton->setFont(font);
-    if(prevDefButton)
-        prevDefButton->setFont(font);
-}
-
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
 {
-    return nextDefButton->isMouseOver(window);
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    if(nextButtonSprite)
+        return nextButtonSprite->getGlobalBounds().contains(mousePos.x, mousePos.y);
+    return false;
 }
 
 bool DisplayBox::isMouseOverPrevButton(sf::RenderWindow &window)
 {
-    return prevDefButton->isMouseOver(window);
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    if(prevButtonSprite)
+        return prevButtonSprite->getGlobalBounds().contains(mousePos.x, mousePos.y);
+    return false;
 }
 
 bool DisplayBox::nextButtonDrawn()

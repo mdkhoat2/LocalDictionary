@@ -79,6 +79,8 @@ bool EngTrieNode::hasNoChildren()
 
 void trieInsertEngEng(EngTrieNode*& root, std::string& word, std::string& wordInfo)
 {
+    if(word.empty())
+        return;
     if(root == nullptr)
         root = new EngTrieNode();
     EngTrieNode* node = root;
@@ -94,6 +96,8 @@ void trieInsertEngEng(EngTrieNode*& root, std::string& word, std::string& wordIn
 
 void trieInsertEngVie(EngTrieNode *&root, std::string &word, std::string &wordInfo)
 {
+    if(word.empty())
+        return;
     if(root == nullptr)
         root = new EngTrieNode();
     EngTrieNode* node = root;
@@ -109,6 +113,8 @@ void trieInsertEngVie(EngTrieNode *&root, std::string &word, std::string &wordIn
 
 void trieInsertVieEng(EngTrieNode *&root, std::string &word, std::string &wordInfo)
 {
+    if(word.empty())
+        return;
     if(root == nullptr)
         root = new EngTrieNode();
     EngTrieNode* node = root;
@@ -124,6 +130,8 @@ void trieInsertVieEng(EngTrieNode *&root, std::string &word, std::string &wordIn
 
 std::string trieSearchEngEng(EngTrieNode* root, std::string& word)
 {
+    if(word.empty())
+        return std::string();
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
@@ -138,6 +146,8 @@ std::string trieSearchEngEng(EngTrieNode* root, std::string& word)
 
 std::string trieSearchEngVie(EngTrieNode *root, std::string &word)
 {
+    if(word.empty())
+        return std::string();
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
@@ -152,6 +162,8 @@ std::string trieSearchEngVie(EngTrieNode *root, std::string &word)
 
 std::string trieSearchVieEng(EngTrieNode *root, std::string &word)
 {
+    if(word.empty())
+        return std::string();
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
@@ -430,6 +442,8 @@ void trieDeleteAll(EngTrieNode* &root)
 
 std::string filterAndSearchEngEng(EngTrieNode *root, std::string &word)
 {
+    if(word.empty())
+        return std::string();
     std::string result = trieSearchEngEng(root, word);
     // If there is a word looks the same as inputWord
     if(!result.empty())
@@ -485,6 +499,8 @@ std::string filterAndSearchEngEng(EngTrieNode *root, std::string &word)
 
 std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
 {
+    if(word.empty())
+        return std::string();
     std::string result = trieSearchEngVie(root, word);
     // If there is a word looks the same as inputWord
     if(!result.empty())
@@ -540,6 +556,8 @@ std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
 
 std::string filterAndSearchVieEng(EngTrieNode *root, std::string &word)
 {
+    if(word.empty())
+        return std::string();
     std::string result = trieSearchVieEng(root, word);
     // If there is a word looks the same as inputWord
     if(!result.empty())
