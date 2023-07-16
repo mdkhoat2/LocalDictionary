@@ -72,54 +72,55 @@ void Application::loadEngEngDict()
                 moreThan1Def = false;
             }
         }
-        else
+        else // this is the definition area
         {
-            // Skip leading spaces
+            // Count leading spaces
             int i = 0;
             while(line[i] == ' ')
                 ++i;
             // Read the word's information
-            // The first line will definitely contain the word type
-            if(wordInfo.empty()) 
+            // If there are 5 blanks then this line is the start of a new definition
+            if(i == 5)
             {
+                // Check if there is any word type
+                int j = i;
                 std::string wordType;
-                while(line[i] != ' ')
-                    wordType += line[i++];
-                if(isdigit(line[i+1]))
-                    moreThan1Def = true;
-                wordInfo += wordType + "\n" + line.substr(i+1);
-            }
-            else
-            {
-                // Check for "X:" which indicates another meaning of the same word type
-                int j  = i;
-                std::string numStr;
-                while(line[j] != ':' && j < line.length())
-                    numStr += line[j++];
-                if(isNumber(numStr) && moreThan1Def)
-                    wordInfo += "\n" + line.substr(i);
+                while(line[j] != ' ' && j < line.length())
+                {
+                    wordType += line[j];
+                    ++j;
+                }
+                // If it is a word type
+                if(isValidWordType(wordType))
+                {
+                    // If it is the first word type
+                    if(wordInfo.empty())
+                        wordInfo += wordType + "\n";
+                    // If it is not the first word type
+                    else
+                        wordInfo += "\n" + wordType + "\n";
+                    // If that word type has more than 1 definition
+                    if(line[j+1] == '1')
+                        wordInfo += line.substr(i+4);
+                    // If that word type has only 1 definition
+                    else
+                        wordInfo += line.substr(i+3);
+                }
+                    
+                // If it is the word "See"
+                else if(wordType == "See")
+                    wordInfo += line.substr(i);
+                // If it is a number (which means that the word has more than 1 definition for a word type)
                 else
                 {
-                    // Check for any other word type
-                    std::string wordType;
-                    while(line[i] != ' ' && i < line.length())
-                        wordType += line[i++];
-                    // If the word has another word type
-                    if(isValidWordType(wordType))
-                    {
-                        wordInfo += "\n" + wordType + "\n" + line.substr(i+1);
-                    }
-                    // If it is a normal line
-                    else if(line[i] == ' ')
-                    {
-                        wordInfo += " " + wordType + line.substr(i);
-                    }
-                    // If the line contains only 1 word that is not a word type
-                    else
-                    {   
-                        wordInfo += " " + wordType;
-                    }
+                    wordInfo += "\n" + line.substr(i);
                 }
+                
+            }
+            // If there are more than 5 blanks then it is just a normal line of a definition
+            else
+            {
+                wordInfo += " " + line.substr(i);
             }
         }
     }
