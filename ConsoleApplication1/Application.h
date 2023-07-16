@@ -9,6 +9,7 @@
 #include "NewWord.h"
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
+#include"Favourite.h"
 
 class Application
 {
@@ -46,10 +47,13 @@ private:
     sf::Event event;
 
     Textbox searchBar;
+
     Button searchButton;
     Button menuButton;
     Button addButton;
     Button editDefButton;
+    Button favouritebutton;
+
     History history;
     DisplayBox displayBox;
 
@@ -67,6 +71,7 @@ private:
     void initAddButton();
     void initEditDefButton();
     void initDisplayBox();
+    void initFavouriteButton();
 };
 
 #endif

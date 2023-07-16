@@ -12,6 +12,7 @@ Application::Application() :
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    favouritebutton("",{153,42},20,sf::Color::Transparent,sf::Color::Transparent),
     engEngRoot(nullptr),
     history(),
     currentScreen(ScreenState::MainScreen),
@@ -28,6 +29,7 @@ Application::Application() :
     initAddButton();
     initEditDefButton();
     initDisplayBox();
+    initFavouriteButton();
 }
 
 Application::~Application()
@@ -210,6 +212,13 @@ void Application::initDisplayBox()
     displayBox.setCharacterSize(30);
 }
 
+void Application::initFavouriteButton()
+{
+    favouritebutton.setFont(font);
+    favouritebutton.setPosition({ 972, 420 });
+    favouritebutton.button.setOutlineThickness(2);
+}
+
 void Application::run()
 {
     // Load dictionaries
@@ -306,6 +315,17 @@ void Application::handleEvent()
             editDefScreen->setEndScreen(endScreen);
             editDefScreen->handleEvent(event, window, endScreen);
             if(endScreen)
+            else if (favouritebutton.isMouseOver(window) && !isMainScreen)
+            {
+                Favourite(window);
+            }
+            else if (menuButton.isMouseOver(window)) {
+                if (isMainScreen)
+                    isMainScreen = false;
+                else
+                    isMainScreen = true;
+            }
+            else if (addButton.isMouseOver(window))
             {
                 editDefScreen->setEndScreen(endScreen);
                 currentScreen = ScreenState::OptionsScreen;
@@ -348,6 +368,10 @@ void Application::update()
     else {
         newWord->update(window);
     }
+    searchButton.update(window);
+    menuButton.update(window);
+    addButton.update(window);
+    favouritebutton.update(window);
 }
 
 void Application::render()
@@ -375,6 +399,8 @@ void Application::render()
     }
     else {
         newWord->render(window);
+        window.draw(screenWithOptions);
+        favouritebutton.drawTo(window);
     }
     
     window.display();
