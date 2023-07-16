@@ -135,7 +135,7 @@ void Favourite(sf::RenderWindow &window)
                                 saveWords(favoriteWords);
                                 posY = 220;
                                 for (WordItem& wordItem : wordItems) {
-                                    wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 50, posY);
+                                    wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 150, posY);
                                     posY += 50;
                                 }
                                 break;

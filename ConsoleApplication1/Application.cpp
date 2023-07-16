@@ -183,7 +183,7 @@ void Application::initFavouriteButton()
 {
     favouritebutton.setFont(font);
     favouritebutton.setPosition({ 972, 420 });
-    favouritebutton.button.setOutlineThickness(2);
+    favouritebutton.setOutlineThickness(2);
 }
 
 void Application::initDataSetList()

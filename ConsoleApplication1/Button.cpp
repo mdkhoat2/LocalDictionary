@@ -93,11 +93,12 @@ void Button::update(sf::RenderWindow& window)
 {
     sf::Color grey(0, 0, 0, 120);
     if (isMouseOver(window)) {
-		button.setOutlineColor(grey);
-	}
+        button.setOutlineColor(grey);
+    }
     else {
-		button.setOutlineColor(sf::Color::Transparent);
-	}
+        button.setOutlineColor(sf::Color::Transparent);
+    }
+}
 bool Button::isPressed(sf::RenderWindow& window)
 {
     if(isMouseOver(window) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
