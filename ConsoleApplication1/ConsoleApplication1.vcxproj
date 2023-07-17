@@ -147,6 +147,7 @@
     <ClCompile Include="Favourite.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="NewWord.cpp" />
+    <ClCompile Include="SwitchDataSet.cpp" />
     <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Trie.cpp" />
     <ClCompile Include="WordData.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Favourite.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="NewWord.h" />
+    <ClInclude Include="SwitchDataSet.h" />
     <ClInclude Include="textbox.h" />
     <ClInclude Include="Trie.h" />
     <ClInclude Include="WordData.h" />
