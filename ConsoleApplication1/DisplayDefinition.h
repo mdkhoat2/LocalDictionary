@@ -48,8 +48,6 @@ private:
     WordData* curWordData;
     int numOfDefs;
 
-    Button* nextButton;
-    Button* prevButton;
     bool showNextButton;
     bool showPrevButton;
     sf::Texture* nextButtonTex;

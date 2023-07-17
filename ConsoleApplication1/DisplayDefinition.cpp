@@ -6,8 +6,6 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     const sf::Color& backColor, const sf::Color& textColor) : 
     curWordData(nullptr),
     curWordDefPtr(nullptr),
-    nextButton(nullptr),
-    prevButton(nullptr),
     curWordTypeID(0),
     curWordDefID(1),
     wordType(),

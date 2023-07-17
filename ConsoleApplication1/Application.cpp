@@ -18,7 +18,8 @@ Application::Application() :
     currentScreen(ScreenState::MainScreen),
     editDefScreen(nullptr),
     newWord(nullptr),
-    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black)
+    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black),
+    dataSetBar()
 {
     initWindow();
     initBackground();
@@ -36,9 +37,7 @@ Application::~Application()
 {
     trieDeleteAll(engEngRoot);
     delete editDefScreen;
-    editDefScreen = nullptr;
     delete newWord;
-    newWord = nullptr;
 }
 
 void Application::loadEngEngDict()
@@ -125,13 +124,6 @@ void Application::loadEngEngDict()
         }
     }
     trieInsertEngEng(engEngRoot, word, wordInfo); // Insert last word
-    fin.close();
-}
-
-void Application::loadEngVieDict()
-{
-    std::ifstream fin("data/EV_nonaccent.txt");
-    
     fin.close();
 }
 
@@ -390,6 +382,7 @@ void Application::render()
         history.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
+        dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
         window.draw(screenWithOptions);
@@ -400,6 +393,7 @@ void Application::render()
         editDefButton.drawTo(window);
         favouritebutton.drawTo(window);
         displayBox.drawTo(window);
+        dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
         editDefScreen->render(window);
