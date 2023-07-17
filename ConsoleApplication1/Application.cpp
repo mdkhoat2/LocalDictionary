@@ -65,7 +65,7 @@ void Application::loadEngEngDict()
             else
             {
                 // insert the previous word with its definition
-                trieInsertEngEng(engEngRoot, word, wordInfo);
+                trieInsert(engEngRoot, word, wordInfo);
                 word = line;
                 wordInfo.clear();
                 moreThan1Def = false;
@@ -123,7 +123,7 @@ void Application::loadEngEngDict()
             }
         }
     }
-    trieInsertEngEng(engEngRoot, word, wordInfo); // Insert last word
+    trieInsert(engEngRoot, word, wordInfo); // Insert last word
     fin.close();
 }
 
@@ -259,7 +259,7 @@ void Application::handleEvent()
                     std::string inputWord = searchBar.getText();
                     if (inputWord!="")
                         history.add(inputWord);
-                    std::string wordInfo = filterAndSearchEngEng(engEngRoot, inputWord);
+                    std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
                     if(!wordInfo.empty())
                     {
                         // Console

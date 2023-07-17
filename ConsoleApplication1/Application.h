@@ -26,8 +26,6 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
-    void loadEngVieDict();
-    void loadVieEngDict();
     void run();
 public:
     void handleEvent();

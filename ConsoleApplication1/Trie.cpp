@@ -77,7 +77,7 @@ bool EngTrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsertEngEng(EngTrieNode*& root, std::string& word, std::string& wordInfo)
+void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
 {
     if(word.empty())
         return;
@@ -91,44 +91,27 @@ void trieInsertEngEng(EngTrieNode*& root, std::string& word, std::string& wordIn
         node = node->get(word[i]);
     }
     node->flag = true;
-    node->engEngWordInfo = wordInfo;
+    node->wordInfo = wordInfo;
 }
 
-void trieInsertEngVie(EngTrieNode *&root, std::string &word, std::string &wordInfo)
+void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
 {
     if(word.empty())
         return;
     if(root == nullptr)
-        root = new EngTrieNode();
-    EngTrieNode* node = root;
+        root = new VieTrieNode();
+    VieTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) {
         if(!node->containsKey(word[i])) {
-            node->put(word[i], new EngTrieNode());
+            node->put(word[i], new VieTrieNode());
         }
         node = node->get(word[i]);
     }
     node->flag = true;
-    node->engVieWordInfo = wordInfo;
+    node->wordInfo = wordInfo;
 }
 
-void trieInsertVieEng(EngTrieNode *&root, std::string &word, std::string &wordInfo)
-{
-    if(word.empty())
-        return;
-    if(root == nullptr)
-        root = new EngTrieNode();
-    EngTrieNode* node = root;
-    for(int i = 0; i < word.length(); ++i) {
-        if(!node->containsKey(word[i])) {
-            node->put(word[i], new EngTrieNode());
-        }
-        node = node->get(word[i]);
-    }
-    node->flag = true;
-    node->vieEngWordInfo = wordInfo;
-}
-
-std::string trieSearchEngEng(EngTrieNode* root, std::string& word)
+std::string trieSearch(EngTrieNode* root, std::string word)
 {
     if(word.empty())
         return std::string();
@@ -139,44 +122,27 @@ std::string trieSearchEngEng(EngTrieNode* root, std::string& word)
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->flag && !node->engEngWordInfo.empty())
-        return node->engEngWordInfo;
+    if(node->flag && !node->wordInfo.empty())
+        return node->wordInfo;
     return std::string();
 }
 
-std::string trieSearchEngVie(EngTrieNode *root, std::string &word)
+std::string trieSearch(VieTrieNode *root, std::wstring word)
 {
-    if(word.empty())
-        return std::string();
-    EngTrieNode* node = root;
+    VieTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
         if(!node->containsKey(word[i]))
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->flag && !node->engEngWordInfo.empty())
-        return node->engVieWordInfo;
-    return std::string();
-}
-
-std::string trieSearchVieEng(EngTrieNode *root, std::string &word)
-{
-    if(word.empty())
+    if(node->flag)
+        return node->wordInfo;
+    else
         return std::string();
-    EngTrieNode* node = root;
-    for(int i = 0; i < word.length(); ++i) 
-    {
-        if(!node->containsKey(word[i]))
-            return std::string();
-        node = node->get(word[i]);
-    }
-    if(node->flag && !node->engEngWordInfo.empty())
-        return node->vieEngWordInfo;
-    return std::string();
 }
 
-EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
+EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth)
 {
     if (!root)
         return nullptr;
@@ -440,68 +406,21 @@ void trieDeleteAll(EngTrieNode* &root)
     root = nullptr;
 }
 
-std::string filterAndSearchEngEng(EngTrieNode *root, std::string &word)
+void trieDeleteAll(VieTrieNode *&root)
 {
-    if(word.empty())
-        return std::string();
-    std::string result = trieSearchEngEng(root, word);
-    // If there is a word looks the same as inputWord
-    if(!result.empty())
-        return result;
-    // Uppercase all characters
-    for(int i = 0; i < word.length(); ++i)
+    if(root == nullptr)
+        return;
+    for(int i = 0; i < 89; ++i)
     {
-        if(word[i] >= 'a' && word[i] <= 'z')
-            word[i] = toupper(word[i]);
+        trieDeleteAll(root->links[i]);
     }
-    result = trieSearchEngEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters of inputWord
-    for(int i = 0; i < word.length(); ++i)
-    {
-        word[i] = tolower(word[i]);
-    }
-    result = trieSearchEngEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase first character of first single word
-    word[0] = toupper(word[0]);
-    result = trieSearchEngEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase first character of second single word
-    word[0] = tolower(word[0]);
-    int i = 0;
-    while(word[i] != ' ' && i < word.length())
-        ++i;
-    if(i < word.length() && word[i] == ' ')
-    {
-        if(word[i+1] >= 'a' && word[i+1] <= 'z')
-            word[i+1] = toupper(word[i+1]);
-    }
-    result = trieSearchEngEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase all first characters of each single word
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(i == 0)
-            word[0] = toupper(word[0]);
-        if(word[i-1] == ' ')
-            word[i] = toupper(word[i]);
-    }
-    result = trieSearchEngEng(root, word);
-    if(!result.empty())
-        return result;
-    return std::string();
+    delete root;
+    root = nullptr;
 }
 
-std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
+std::string filterAndSearch(EngTrieNode *root, std::string &word)
 {
-    if(word.empty())
-        return std::string();
-    std::string result = trieSearchEngVie(root, word);
+    std::string result = trieSearch(root, word);
     // If there is a word looks the same as inputWord
     if(!result.empty())
         return result;
@@ -511,7 +430,7 @@ std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
         if(word[i] >= 'a' && word[i] <= 'z')
             word[i] = toupper(word[i]);
     }
-    result = trieSearchEngVie(root, word);
+    result = trieSearch(root, word);
     if(!result.empty())
         return result;
     // Lowercase all characters of inputWord
@@ -519,12 +438,12 @@ std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
     {
         word[i] = tolower(word[i]);
     }
-    result = trieSearchEngVie(root, word);
+    result = trieSearch(root, word);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase first character of first single word
     word[0] = toupper(word[0]);
-    result = trieSearchEngVie(root, word);
+    result = trieSearch(root, word);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase first character of second single word
@@ -537,7 +456,7 @@ std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
         if(word[i+1] >= 'a' && word[i+1] <= 'z')
             word[i+1] = toupper(word[i+1]);
     }
-    result = trieSearchEngVie(root, word);
+    result = trieSearch(root, word);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase all first characters of each single word
@@ -548,64 +467,7 @@ std::string filterAndSearchEngVie(EngTrieNode *root, std::string &word)
         if(word[i-1] == ' ')
             word[i] = toupper(word[i]);
     }
-    result = trieSearchEngVie(root, word);
-    if(!result.empty())
-        return result;
-    return std::string();
-}
-
-std::string filterAndSearchVieEng(EngTrieNode *root, std::string &word)
-{
-    if(word.empty())
-        return std::string();
-    std::string result = trieSearchVieEng(root, word);
-    // If there is a word looks the same as inputWord
-    if(!result.empty())
-        return result;
-    // Uppercase all characters
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(word[i] >= 'a' && word[i] <= 'z')
-            word[i] = toupper(word[i]);
-    }
-    result = trieSearchVieEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters of inputWord
-    for(int i = 0; i < word.length(); ++i)
-    {
-        word[i] = tolower(word[i]);
-    }
-    result = trieSearchVieEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase first character of first single word
-    word[0] = toupper(word[0]);
-    result = trieSearchVieEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase first character of second single word
-    word[0] = tolower(word[0]);
-    int i = 0;
-    while(word[i] != ' ' && i < word.length())
-        ++i;
-    if(i < word.length() && word[i] == ' ')
-    {
-        if(word[i+1] >= 'a' && word[i+1] <= 'z')
-            word[i+1] = toupper(word[i+1]);
-    }
-    result = trieSearchVieEng(root, word);
-    if(!result.empty())
-        return result;
-    // Lowercase all characters and uppercase all first characters of each single word
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(i == 0)
-            word[0] = toupper(word[0]);
-        if(word[i-1] == ' ')
-            word[i] = toupper(word[i]);
-    }
-    result = trieSearchVieEng(root, word);
+    result = trieSearch(root, word);
     if(!result.empty())
         return result;
     return std::string();

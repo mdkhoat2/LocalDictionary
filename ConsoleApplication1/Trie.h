@@ -19,9 +19,7 @@ struct EngTrieNode
     // Member variables
     EngTrieNode* links[67];
     bool flag;
-    std::string engEngWordInfo;
-    std::string engVieWordInfo;
-    std::string vieEngWordInfo;
+    std::string wordInfo;
 
     // Constructor
     EngTrieNode();
@@ -50,21 +48,19 @@ struct VieTrieNode
 };
 
 // Functions about Trie opearations 
-void trieInsertEngEng(EngTrieNode*& root, std::string& word, std::string& wordInfo);
-void trieInsertEngVie(EngTrieNode*& root, std::string& word, std::string& wordInfo);
-void trieInsertVieEng(EngTrieNode*& root, std::string& word, std::string& wordInfo);
+void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo);\
+void trieInsert(VieTrieNode*& root, std::wstring word, std::string wordInfo);
 
-std::string trieSearchEngEng(EngTrieNode* root, std::string& word);
-std::string trieSearchEngVie(EngTrieNode* root, std::string& word);
-std::string trieSearchVieEng(EngTrieNode* root, std::string& word);
+std::string trieSearch(EngTrieNode* root, std::string word);
+std::string trieSearch(VieTrieNode* root, std::wstring word);
 
-EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth = 0);
+EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth = 0);
+VieTrieNode* trieRemove(VieTrieNode*& root, std::wstring word, int depth = 0);
 
 void trieDeleteAll(EngTrieNode* &root);
+void trieDeleteAll(VieTrieNode* &root);
 
 // Search functions
-std::string filterAndSearchEngEng(EngTrieNode* root, std::string &word);
-std::string filterAndSearchEngVie(EngTrieNode* root, std::string &word);
-std::string filterAndSearchVieEng(EngTrieNode* root, std::string &word);
+std::string filterAndSearch(EngTrieNode* root, std::string &word);
 
 #endif // TRIE_H
