@@ -50,10 +50,10 @@ private:
 
     bool showNextButton;
     bool showPrevButton;
-    sf::Texture* nextButtonTex;
-    sf::Texture* prevButtonTex;
-    sf::Sprite* nextButtonSprite;
-    sf::Sprite* prevButtonSprite;
+    sf::Texture nextButtonTex;
+    sf::Texture prevButtonTex;
+    sf::Sprite nextButtonSprite;
+    sf::Sprite prevButtonSprite;
 };
 
 

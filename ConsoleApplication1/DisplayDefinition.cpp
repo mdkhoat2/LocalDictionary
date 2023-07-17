@@ -15,10 +15,10 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     numOfDefs(0),
     showNextButton(false),
     showPrevButton(false),
-    nextButtonTex(nullptr),
-    prevButtonTex(nullptr),
-    nextButtonSprite(nullptr),
-    prevButtonSprite(nullptr)
+    nextButtonTex(),
+    prevButtonTex(),
+    nextButtonSprite(),
+    prevButtonSprite()
 {
     theBox.setPosition(pos);
     float xText = pos.x + 20.f;
@@ -37,15 +37,35 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setStyle(sf::Text::Bold);
     wordType.setStyle(sf::Text::Bold | sf::Text::Italic);
     wordDef.setStyle(sf::Text::Regular);
+
+    if(!nextButtonTex.loadFromFile("background/next-button.png"))
+        std::cout << "Cannot load next button texture" << std::endl;
+    nextButtonTex.setSmooth(true);
+
+    if(!prevButtonTex.loadFromFile("background/prev-button.png"))
+        std::cout << "Cannot load prev button texture" << std::endl;
+    prevButtonTex.setSmooth(true);
+
+    nextButtonSprite.setTexture(nextButtonTex);
+    nextButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
+
+    prevButtonSprite.setTexture(prevButtonTex);
+    prevButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
+    
+    // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
+    // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
+
+    nextButtonSprite.setPosition(700, 700);
+    nextButtonSprite.setScale(0.3f, 0.3f);
+    showNextButton = false;
+
+    prevButtonSprite.setPosition(560, 700);
+    prevButtonSprite.setScale(0.3f, 0.3f);
+    showPrevButton = false;
 }
 
 DisplayBox::~DisplayBox()
 {
-    delete nextButtonTex;
-    delete prevButtonTex;
-    delete nextButtonSprite;
-    delete prevButtonSprite;
-    delete curWordDefPtr;
     delete curWordData;
 }
 
@@ -104,14 +124,14 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
     window.draw(word);
     window.draw(wordType);
     window.draw(wordDef);
-    if(nextButtonSprite && showNextButton)
+    if(showNextButton)
     {
-        window.draw(*nextButtonSprite);
+        window.draw(nextButtonSprite);
     }
         
-    if(prevButtonSprite && showPrevButton)
+    if(showPrevButton)
     {
-        window.draw(*prevButtonSprite);
+        window.draw(prevButtonSprite);
     }
         
 }
@@ -126,14 +146,8 @@ void DisplayBox::getWordData(std::string &inputWord, std::string &wordInfo)
     else // delete old word data
     {
         delete curWordData;
-        if(nextButtonSprite)
-        {
-            showNextButton = false;
-        }
-        if(prevButtonSprite)
-        {
-            showPrevButton = false;
-        }
+        showNextButton = false;
+        showPrevButton = false;
         curWordData = new WordData;
         extractWordData(*curWordData, inputWord, wordInfo);
     }
@@ -145,7 +159,6 @@ void DisplayBox::wrapText(sf::Text& theText)
 {
     std::string str = theText.getString();
     std::string wrappedStr;
-    unsigned int charSize = theText.getCharacterSize();
 
     std::string word;
     std::istringstream iss(str);
@@ -184,32 +197,7 @@ void DisplayBox::initFirstDef()
     // initialize the buttons
     if(numOfDefs > 1)
     {
-        nextButtonTex = new sf::Texture();
-        if(!nextButtonTex->loadFromFile("background/next-button.png"))
-            std::cout << "Cannot load next button texture" << std::endl;
-        nextButtonTex->setSmooth(true);
-        prevButtonTex = new sf::Texture();
-        if(!prevButtonTex->loadFromFile("background/prev-button.png"))
-            std::cout << "Cannot load prev button texture" << std::endl;
-        prevButtonTex->setSmooth(true);
-        nextButtonSprite = new sf::Sprite();
-        nextButtonSprite->setTexture(*nextButtonTex);
-        nextButtonSprite->setTextureRect(sf::IntRect(280, 320, 380, 150));
-        prevButtonSprite = new sf::Sprite();
-        prevButtonSprite->setTexture(*prevButtonTex);
-        prevButtonSprite->setTextureRect(sf::IntRect(280, 320, 380, 150));
-        
-        // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
-        // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
-
-        nextButtonSprite->setPosition(700, 700);
-        nextButtonSprite->setScale(0.3f, 0.3f);
         showNextButton = true;
-
-        prevButtonSprite->setPosition(560, 700);
-        prevButtonSprite->setScale(0.3f, 0.3f);
-        showPrevButton = false;
-        
     }
     setUIText();
 }
@@ -301,15 +289,9 @@ void DisplayBox::showNoDefinitions()
         delete curWordData;
         curWordData = nullptr;
     }
-    
-    if(nextButtonSprite)
-    {
-        showNextButton = false;
-    }
-    if(prevButtonSprite)
-    {
-        showPrevButton = false;
-    }
+    showNextButton = false;
+    showPrevButton = false;
+
     word.setString("No Definitions Found!");
     wordType.setString("");
     wordDef.setString("");
@@ -318,17 +300,13 @@ void DisplayBox::showNoDefinitions()
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    if(nextButtonSprite)
-        return nextButtonSprite->getGlobalBounds().contains(mousePos.x, mousePos.y);
-    return false;
+    return nextButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
 }
 
 bool DisplayBox::isMouseOverPrevButton(sf::RenderWindow &window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    if(prevButtonSprite)
-        return prevButtonSprite->getGlobalBounds().contains(mousePos.x, mousePos.y);
-    return false;
+    return prevButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
 }
 
 bool DisplayBox::nextButtonDrawn()
