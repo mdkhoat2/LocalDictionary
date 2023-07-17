@@ -191,17 +191,19 @@ void DisplayBox::initFirstDef()
         prevButtonTex->setSmooth(true);
         nextButtonSprite = new sf::Sprite();
         nextButtonSprite->setTexture(*nextButtonTex);
+        nextButtonSprite->setTextureRect(sf::IntRect(280, 320, 380, 150));
         prevButtonSprite = new sf::Sprite();
         prevButtonSprite->setTexture(*prevButtonTex);
+        prevButtonSprite->setTextureRect(sf::IntRect(280, 320, 380, 150));
         
         // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
         // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
 
-        nextButtonSprite->setPosition(700, 600);
+        nextButtonSprite->setPosition(700, 700);
         nextButtonSprite->setScale(0.3f, 0.3f);
         showNextButton = true;
 
-        prevButtonSprite->setPosition(560, 600);
+        prevButtonSprite->setPosition(560, 700);
         prevButtonSprite->setScale(0.3f, 0.3f);
         showPrevButton = false;
         
