@@ -18,7 +18,8 @@ Application::Application() :
     currentScreen(ScreenState::MainScreen),
     editDefScreen(nullptr),
     newWord(nullptr),
-    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black)
+    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black),
+    dataSetBar()
 {
     initWindow();
     initBackground();
@@ -36,9 +37,7 @@ Application::~Application()
 {
     trieDeleteAll(engEngRoot);
     delete editDefScreen;
-    editDefScreen = nullptr;
     delete newWord;
-    newWord = nullptr;
 }
 
 void Application::loadEngEngDict()
@@ -46,7 +45,6 @@ void Application::loadEngEngDict()
     std::ifstream fin("data/EE.txt");
     // Skip the first 59 lines (unnecessary lines)
     std::string line, word, wordInfo;
-    bool moreThan1Def = false;
     int count = 0;
     while(count < 59)
     {
@@ -69,7 +67,6 @@ void Application::loadEngEngDict()
                 trieInsert(engEngRoot, word, wordInfo);
                 word = line;
                 wordInfo.clear();
-                moreThan1Def = false;
             }
         }
         else // this is the definition area
@@ -312,6 +309,10 @@ void Application::handleEvent()
                 {
                     displayBox.showPrevDef();
                 }
+                else if(dataSetBar.isMouseOverSwitchButton(window))
+                {
+                    dataSetBar.changeCurDataSet();
+                }
             }
         }
         else if(currentScreen == ScreenState::EditDefinitionScreen)
@@ -383,6 +384,7 @@ void Application::render()
         history.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
+        dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
         window.draw(screenWithOptions);
@@ -393,6 +395,7 @@ void Application::render()
         editDefButton.drawTo(window);
         favouritebutton.drawTo(window);
         displayBox.drawTo(window);
+        dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
         editDefScreen->render(window);

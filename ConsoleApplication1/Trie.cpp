@@ -79,6 +79,8 @@ bool EngTrieNode::hasNoChildren()
 
 void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
 {
+    if(word.empty())
+        return;
     if(root == nullptr)
         root = new EngTrieNode();
     EngTrieNode* node = root;
@@ -94,6 +96,8 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
 
 void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
 {
+    if(word.empty())
+        return;
     if(root == nullptr)
         root = new VieTrieNode();
     VieTrieNode* node = root;
@@ -109,6 +113,8 @@ void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
 
 std::string trieSearch(EngTrieNode* root, std::string word)
 {
+    if(word.empty())
+        return std::string();
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {

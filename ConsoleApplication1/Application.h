@@ -10,6 +10,7 @@
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
 #include"Favourite.h"
+#include "SwitchDataSet.h"
 
 class Application
 {
@@ -56,6 +57,7 @@ private:
 
     History history;
     DisplayBox displayBox;
+    DataSetBar dataSetBar;
 
     EngTrieNode* engEngRoot;
 

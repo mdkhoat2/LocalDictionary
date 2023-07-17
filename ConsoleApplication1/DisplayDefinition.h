@@ -29,7 +29,6 @@ public:
     void showPrevDef();
     void showNoDefinitions();
 
-    void setButtonTextFont(const sf::Font& font);
     bool isMouseOverNextButton(sf::RenderWindow& window);
     bool isMouseOverPrevButton(sf::RenderWindow& window);
     bool nextButtonDrawn();
@@ -49,10 +48,12 @@ private:
     WordData* curWordData;
     int numOfDefs;
 
-    Button* nextDefButton;
-    Button* prevDefButton;
     bool showNextButton;
     bool showPrevButton;
+    sf::Texture nextButtonTex;
+    sf::Texture prevButtonTex;
+    sf::Sprite nextButtonSprite;
+    sf::Sprite prevButtonSprite;
 };
 
 
