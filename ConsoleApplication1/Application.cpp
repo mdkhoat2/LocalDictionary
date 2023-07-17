@@ -45,7 +45,6 @@ void Application::loadEngEngDict()
     std::ifstream fin("data/EE.txt");
     // Skip the first 59 lines (unnecessary lines)
     std::string line, word, wordInfo;
-    bool moreThan1Def = false;
     int count = 0;
     while(count < 59)
     {
@@ -68,7 +67,6 @@ void Application::loadEngEngDict()
                 trieInsert(engEngRoot, word, wordInfo);
                 word = line;
                 wordInfo.clear();
-                moreThan1Def = false;
             }
         }
         else // this is the definition area
@@ -310,6 +308,10 @@ void Application::handleEvent()
                 else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
                 {
                     displayBox.showPrevDef();
+                }
+                else if(dataSetBar.isMouseOverSwitchButton(window))
+                {
+                    dataSetBar.changeCurDataSet();
                 }
             }
         }

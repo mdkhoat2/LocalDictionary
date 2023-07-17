@@ -4,16 +4,21 @@
 
 DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size, 
     const sf::Color& backColor, const sf::Color& textColor) : 
-    curWordData(nullptr),
-    curWordDefPtr(nullptr),
-    curWordTypeID(0),
-    curWordDefID(1),
+    theBox(),
+    word(),
     wordType(),
     wordDef(),
-    word(),
+    curWordTypeID(0),
+    curWordDefID(1),
+    curWordDefPtr(nullptr),
+    curWordData(nullptr),
+    numOfDefs(0),
     showNextButton(false),
     showPrevButton(false),
-    numOfDefs(0)
+    nextButtonTex(nullptr),
+    prevButtonTex(nullptr),
+    nextButtonSprite(nullptr),
+    prevButtonSprite(nullptr)
 {
     theBox.setPosition(pos);
     float xText = pos.x + 20.f;
@@ -113,7 +118,7 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
 
 void DisplayBox::getWordData(std::string &inputWord, std::string &wordInfo)
 {
-    if(!curWordData)
+    if(curWordData == nullptr)
     {
         curWordData = new WordData;
         extractWordData(*curWordData, inputWord, wordInfo);
@@ -291,11 +296,6 @@ void DisplayBox::showPrevDef()
 
 void DisplayBox::showNoDefinitions()
 {
-    if(curWordDefPtr)
-    {
-        delete curWordDefPtr;
-        curWordDefPtr = nullptr;
-    }
     if(curWordData)
     {
         delete curWordData;
