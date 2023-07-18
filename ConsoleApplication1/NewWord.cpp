@@ -1,7 +1,7 @@
 #include "NewWord.h"
 
 void NewWord::addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord) {
-	trieInsert(root, word, wordInfo);
+	trieInsert(root, word, wordInfo, 0);
 	WordData tmp;
 	extractWordData(tmp, word, wordInfo);
 	addedWord.push(tmp);
@@ -73,7 +73,7 @@ void NewWord::loadAddedWord(EngTrieNode*& root) {
             else
             {
                 // insert the previous word with its definition
-                trieInsert(root, word, wordInfo);
+                trieInsert(root, word, wordInfo, 0);
                 word = line;
                 wordInfo.clear();
                 moreThan1Def = false;
@@ -130,7 +130,7 @@ void NewWord::loadAddedWord(EngTrieNode*& root) {
             }
         }
     }
-    trieInsert(root, word, wordInfo); // Insert last word
+    trieInsert(root, word, wordInfo, 0); // Insert last word
     fin.close();
 }
 

@@ -63,11 +63,9 @@ void DataSetBar::setFont(const sf::Font &font)
         curDataSetText->setFont(font);
 }
 
-const sf::String& DataSetBar::getCurrentDataSet()
+int DataSetBar::getCurrentDataSetID()
 {
-    if(curDataSetText)
-        return curDataSetText->getString();
-    return sf::String();
+    return curDataSetID;
 }
 
 void DataSetBar::drawTo(sf::RenderWindow &window)

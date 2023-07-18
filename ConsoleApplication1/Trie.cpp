@@ -3,7 +3,7 @@
 
 EngTrieNode::EngTrieNode() : flag(false) 
 {
-    for(int i = 0; i < 67; ++i) 
+    for(int i = 0; i < 71; ++i) 
       links[i] = nullptr;
 }
 
@@ -25,6 +25,14 @@ bool EngTrieNode::containsKey(char ch)
         return (links[65] != nullptr);
     if(ch == 47) // forward slash
         return (links[66] != nullptr);
+    if(ch == ',')
+        return (links[67] != nullptr);
+    if(ch == '&')
+        return (links[68] != nullptr);
+    if(ch == '!')
+        return (links[69] != nullptr);
+    if(ch == ':')
+        return (links[70] != nullptr);
 }
 
 void EngTrieNode::put(char ch, EngTrieNode* node) 
@@ -45,6 +53,14 @@ void EngTrieNode::put(char ch, EngTrieNode* node)
         links[65] = node;
     else if(ch == 47) // forward slash
         links[66] = node;
+    else if(ch == ',')
+        links[67] = node;
+    else if(ch == '&')
+        links[68] = node;
+    else if(ch == '!')
+        links[69] = node;
+    else if(ch == ':')
+        links[70] = node;
 }
 
 EngTrieNode* EngTrieNode::get(char ch) 
@@ -65,11 +81,19 @@ EngTrieNode* EngTrieNode::get(char ch)
         return links[65];
     if(ch == 47) // forward slash
         return links[66];
+    if(ch == ',')
+        return links[67];
+    if(ch == '&')
+        return links[68];
+    if(ch == '!')
+        return links[69];
+    if(ch == ':')
+        return links[70];
 }
 
 bool EngTrieNode::hasNoChildren()
 {
-    for (int i = 0; i < 67; i++)
+    for (int i = 0; i < 71; i++)
     {
         if (links[i])
             return false;
@@ -77,7 +101,7 @@ bool EngTrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
+void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int curDataSetID)
 {
     if(word.empty())
         return;
@@ -91,7 +115,12 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo)
         node = node->get(word[i]);
     }
     node->flag = true;
-    node->wordInfo = wordInfo;
+    if(curDataSetID == 0)
+        node->engEngWordInfo = wordInfo;
+    else if(curDataSetID == 1)
+        node->engVieWordInfo = wordInfo;
+    else if(curDataSetID == 2)
+        node->vieEngWordInfo = wordInfo;
 }
 
 void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
@@ -111,7 +140,7 @@ void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
     node->wordInfo = wordInfo;
 }
 
-std::string trieSearch(EngTrieNode* root, std::string word)
+std::string trieSearch(EngTrieNode* root, std::string word, int curDataSetID)
 {
     if(word.empty())
         return std::string();
@@ -122,8 +151,21 @@ std::string trieSearch(EngTrieNode* root, std::string word)
             return std::string();
         node = node->get(word[i]);
     }
-    if(node->flag && !node->wordInfo.empty())
-        return node->wordInfo;
+    if(curDataSetID == 0)
+    {
+        if(node->flag && !node->engEngWordInfo.empty())
+            return node->engEngWordInfo;
+    }
+    else if(curDataSetID == 1)
+    {
+        if(node->flag && !node->engVieWordInfo.empty())
+            return node->engVieWordInfo;
+    }
+    else if(curDataSetID == 2)
+    {
+        if(node->flag && !node->vieEngWordInfo.empty())
+            return node->vieEngWordInfo;
+    }
     return std::string();
 }
 
@@ -142,7 +184,7 @@ std::string trieSearch(VieTrieNode *root, std::wstring word)
         return std::string();
 }
 
-EngTrieNode* trieRemove(EngTrieNode*& root, std::wstring word, int depth)
+EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
 {
     if (!root)
         return nullptr;
@@ -398,7 +440,7 @@ void trieDeleteAll(EngTrieNode* &root)
 {
     if(root == nullptr)
         return;
-    for(int i = 0; i < 67; ++i)
+    for(int i = 0; i < 71; ++i)
     {
         trieDeleteAll(root->links[i]);
     }
@@ -418,9 +460,9 @@ void trieDeleteAll(VieTrieNode *&root)
     root = nullptr;
 }
 
-std::string filterAndSearch(EngTrieNode *root, std::string &word)
+std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSetID)
 {
-    std::string result = trieSearch(root, word);
+    std::string result = trieSearch(root, word, curDataSetID);
     // If there is a word looks the same as inputWord
     if(!result.empty())
         return result;
@@ -430,7 +472,7 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word)
         if(word[i] >= 'a' && word[i] <= 'z')
             word[i] = toupper(word[i]);
     }
-    result = trieSearch(root, word);
+    result = trieSearch(root, word, curDataSetID);
     if(!result.empty())
         return result;
     // Lowercase all characters of inputWord
@@ -438,12 +480,12 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word)
     {
         word[i] = tolower(word[i]);
     }
-    result = trieSearch(root, word);
+    result = trieSearch(root, word, curDataSetID);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase first character of first single word
     word[0] = toupper(word[0]);
-    result = trieSearch(root, word);
+    result = trieSearch(root, word, curDataSetID);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase first character of second single word
@@ -456,7 +498,7 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word)
         if(word[i+1] >= 'a' && word[i+1] <= 'z')
             word[i+1] = toupper(word[i+1]);
     }
-    result = trieSearch(root, word);
+    result = trieSearch(root, word, curDataSetID);
     if(!result.empty())
         return result;
     // Lowercase all characters and uppercase all first characters of each single word
@@ -467,7 +509,7 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word)
         if(word[i-1] == ' ')
             word[i] = toupper(word[i]);
     }
-    result = trieSearch(root, word);
+    result = trieSearch(root, word, curDataSetID);
     if(!result.empty())
         return result;
     return std::string();

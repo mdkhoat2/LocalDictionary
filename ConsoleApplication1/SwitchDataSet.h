@@ -12,7 +12,7 @@ public:
     void initVariables();
     bool isMouseOverSwitchButton(sf::RenderWindow& window);
     void setFont(const sf::Font& font);
-    const sf::String& getCurrentDataSet();
+    int getCurrentDataSetID();
 
     void update(sf::RenderWindow& window);
     void drawTo(sf::RenderWindow& window);
