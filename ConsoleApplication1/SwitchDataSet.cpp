@@ -1,84 +1,57 @@
 
 #include "SwitchDataSet.h"
 
-DataSetBar::DataSetBar() :
-    dataSetBarTex(nullptr),
-    dataSetBar(nullptr),
-    switchButton(nullptr),
-    curDataSetText(nullptr),
-    textFont(nullptr),
+DataSetBox::DataSetBox() :
+    dataSetButton(nullptr),
+    dataSetText(nullptr),
     curDataSetID(0)
 {
     initVariables();
 }
 
-DataSetBar::~DataSetBar()
+DataSetBox::~DataSetBox()
 {
-    delete dataSetBarTex;
-    delete dataSetBar;
-    delete switchButton;
-    delete curDataSetText;
-    delete textFont;
+    delete dataSetButton;
+    delete dataSetText;
 }
 
-void DataSetBar::initVariables()
+void DataSetBox::initVariables()
 {
-    dataSetBarTex = new sf::Texture();
-    if(!dataSetBarTex->loadFromFile("background/data-set.png"))
-        std::cout << "Cannot load data set texture" << std::endl;
-    dataSetBarTex->setSmooth(true);
-    dataSetBar = new sf::Sprite();
-    dataSetBar->setTexture(*dataSetBarTex);
-    dataSetBar->setScale(1.f, 1.f);
-    dataSetBar->setPosition(sf::Vector2f(420.f, 60.f));
     // Initialize switch button;
-    switchButton = new sf::CircleShape(22.f);
-    switchButton->setFillColor(sf::Color::Transparent);
-    switchButton->setPosition(sf::Vector2f(748.f, 75.f));
+    dataSetButton = new Button("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black);
+    dataSetButton->setPosition(sf::Vector2f(972, 72));
     // Initialize text
-    curDataSetText = new sf::Text;
-    curDataSetText->setString("EN - EN");
-    curDataSetText->setCharacterSize(25);
-    float xText = dataSetBar->getPosition().x + 44.f;
-    float yText = dataSetBar->getPosition().y + 22.f;
-    curDataSetText->setPosition(xText, yText);
-    curDataSetText->setFillColor(sf::Color::Black);
-    textFont = new sf::Font;
-    if(!textFont->loadFromFile("font/SF-Pro-Display-Medium.otf"))
-        std::cout << "Cannot load text for data set bar" << std::endl;
-    curDataSetText->setFont(*textFont);
+    dataSetText = new sf::Text;
+    dataSetText->setString("EN - EN");
+    dataSetText->setCharacterSize(25);
+    dataSetText->setFillColor(sf::Color::Black);
 }
 
-bool DataSetBar::isMouseOverSwitchButton(sf::RenderWindow &window)
+bool DataSetBox::isMouseOverSwitchButton(sf::RenderWindow &window)
 {
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    if(switchButton)
-        return switchButton->getGlobalBounds().contains(mousePos.x, mousePos.y);
-    return false;
+    
 }
 
-void DataSetBar::setFont(const sf::Font &font)
+void DataSetBox::setFont(const sf::Font &font)
 {
-    if(curDataSetText)
-        curDataSetText->setFont(font);
+    if(dataSetText)
+        dataSetText->setFont(font);
 }
 
-int DataSetBar::getCurrentDataSetID()
+int DataSetBox::getCurrentDataSetID()
 {
     return curDataSetID;
 }
 
-void DataSetBar::drawTo(sf::RenderWindow &window)
+void DataSetBox::drawTo(sf::RenderWindow &window)
 {
-    if(dataSetBar)
-        window.draw(*dataSetBar);
-    if(switchButton)
-        window.draw(*switchButton);
-    if(curDataSetText)
-        window.draw(*curDataSetText);
+    if(dataSetButton)
+        dataSetButton->drawTo(window);
+    if(dataSetText)
+        window.draw(*dataSetText);
 }
 
-void DataSetBar::changeCurDataSet()
+void DataSetBox::changeCurDataSet()
 {
     if(curDataSetID == 3)
         curDataSetID = 0;
@@ -86,18 +59,18 @@ void DataSetBar::changeCurDataSet()
         ++curDataSetID;
     if(curDataSetID == 0)
     {
-        curDataSetText->setString("EN - EN");
+        dataSetText->setString("EN - EN");
     }
     else if(curDataSetID == 1)
     {
-        curDataSetText->setString("EN - VI");
+        dataSetText->setString("EN - VI");
     }
     else if(curDataSetID == 2)
     {
-        curDataSetText->setString("VI - EN");
+        dataSetText->setString("VI - EN");
     }
     else if(curDataSetID == 3)
     {
-        curDataSetText->setString("EMOJI");
+        dataSetText->setString("EMOJI");
     }
 }

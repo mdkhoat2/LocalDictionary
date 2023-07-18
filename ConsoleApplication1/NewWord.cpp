@@ -1,7 +1,7 @@
 #include "NewWord.h"
 
 void NewWord::addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
-	trieInsert(root, word, wordInfo);
+	trieInsert(root, word, wordInfo, 0);
 	WordData tmp;
 	extractWordData(tmp, word, wordInfo);
 	addedWord.push(tmp);
@@ -291,7 +291,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         }
         if (addButton.isMouseOver(window)) {
             std::string inputWord = wordBar.getText();
-            std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
+            std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
             if (!wordInfo.empty()) {
                 // Console
                 std::cout << "The word has already existed" << "\n";

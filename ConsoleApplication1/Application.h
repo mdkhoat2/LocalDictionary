@@ -47,7 +47,7 @@ private:
 
     ScreenState currentScreen;
 
-    int currentDataSet = 0;
+    int currentDataSetID;
         /*
             0: EngEng
             1: EngVie
@@ -71,7 +71,6 @@ private:
 
     History history;
     DisplayBox displayBox;
-    //DataSetBar dataSetBar;
 
     EngTrieNode* engEngRoot;
 

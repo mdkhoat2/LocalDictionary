@@ -19,8 +19,8 @@ Application::Application() :
     editDefScreen(nullptr),
     newWord(nullptr),
     displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
-    dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black)
-    //dataSetBar()
+    dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+    currentDataSetID(0)
 {
     initWindow();
     initBackground();
@@ -328,16 +328,15 @@ void Application::initFavouriteButton()
 
 void Application::changeDataSet()
 {
-    if (currentDataSet != 3)
-		++currentDataSet;
+    if (currentDataSetID != 3)
+		++currentDataSetID;
 	else
-		currentDataSet = 0;
-    std::cout << currentDataSet << std::endl;
-    if (currentDataSet == 0)
+		currentDataSetID = 0;
+    if (currentDataSetID == 0)
         dataSetButton.setString("      EN - EN");
-    else if (currentDataSet == 1)
+    else if (currentDataSetID == 1)
         dataSetButton.setString("      EN - VI");
-	else if (currentDataSet == 2)
+	else if (currentDataSetID == 2)
         dataSetButton.setString("      VI - EN");
 	else
         dataSetButton.setString("      Emoji");
@@ -383,10 +382,9 @@ void Application::handleEvent()
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
-                    int curDataSetID = dataSetBar.getCurrentDataSetID();
-                    if(curDataSetID == 0)
+                    if(currentDataSetID == 0)
                         searchInEngEngDict(inputWord);
-                    else if(curDataSetID == 1)
+                    else if(currentDataSetID == 1)
                         searchInEngVieDict(inputWord);
                     
                 }

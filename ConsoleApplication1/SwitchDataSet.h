@@ -4,11 +4,11 @@
 #include <string>
 #include "Button.h"
 
-class DataSetBar
+class DataSetBox
 {
 public:
-    DataSetBar();
-    ~DataSetBar();
+    DataSetBox();
+    ~DataSetBox();
     void initVariables();
     bool isMouseOverSwitchButton(sf::RenderWindow& window);
     void setFont(const sf::Font& font);
@@ -20,11 +20,8 @@ public:
     void changeCurDataSet();
 
 private:
-    sf::Text* curDataSetText;
-    sf::Font* textFont;
-    sf::Texture* dataSetBarTex;
-    sf::Sprite* dataSetBar;
-    sf::CircleShape* switchButton;
+    sf::Text* dataSetText;
+    Button* dataSetButton;
     /*
         Data set ID:
         0: English - English
