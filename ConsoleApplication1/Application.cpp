@@ -257,6 +257,7 @@ void Application::handleEvent()
                     std::string inputWord = searchBar.getText();
                     if (inputWord!="")
                         history.add(inputWord);
+                    favouriteMain.add(inputWord);
                     std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
                     if(!wordInfo.empty())
                     {
@@ -299,7 +300,8 @@ void Application::handleEvent()
                 }
                 else if (favouritebutton.isMouseOver(window))
                 {
-                    Favourite(window);
+                    favouriteMain.addtoFile();
+                    favourite(window);
                 }
                 else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
@@ -313,6 +315,11 @@ void Application::handleEvent()
                 {
                     dataSetBar.changeCurDataSet();
                 }
+                else if (currentScreen == ScreenState::MainScreen)
+                {
+                    favouriteMain.likeOrNot(window);
+                }
+               
             }
         }
         else if(currentScreen == ScreenState::EditDefinitionScreen)
@@ -382,6 +389,7 @@ void Application::render()
         searchBar.drawTo(window);
         searchButton.drawTo(window);
         history.drawTo(window);
+        favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
         dataSetBar.drawTo(window);
