@@ -29,7 +29,7 @@ void DataSetBox::initVariables()
 
 bool DataSetBox::isMouseOverSwitchButton(sf::RenderWindow &window)
 {
-    
+    return dataSetButton->isMouseOver(window);
 }
 
 void DataSetBox::setFont(const sf::Font &font)

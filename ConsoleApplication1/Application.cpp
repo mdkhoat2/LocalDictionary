@@ -382,9 +382,9 @@ void Application::handleEvent()
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
-                    if (inputWord!="")
-                        history.add(inputWord);
-                    favouriteMain.add(inputWord);
+                    //if (inputWord!="")
+                    //    history.add(inputWord);
+                    //favouriteMain.add(inputWord);
                         
                     if(currentDataSetID == 0)
                         searchInEngEngDict(inputWord);
@@ -505,7 +505,7 @@ void Application::render()
         dataSetButton.drawTo(window);
 
         history.drawTo(window);
-        favouriteMain.drawTo(window);
+        //favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
         //dataSetBar.drawTo(window);
