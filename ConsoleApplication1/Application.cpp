@@ -362,7 +362,7 @@ void Application::handleEvent()
                 {
                     if (newWord == nullptr)
                     {
-                        newWord = new NewWord();
+                        newWord = new NewWord(font, window);
                     }
                     currentScreen = ScreenState::AddScreen;
                 }
@@ -407,7 +407,7 @@ void Application::handleEvent()
         {
             bool endScreen = false;
             newWord->setEndScreen(endScreen);
-            newWord->handleEvent(event, window, endScreen);
+            newWord->handleEvent(event, window, endScreen, engEngRoot);
             if (endScreen)
             {
                 newWord->setEndScreen(endScreen);
