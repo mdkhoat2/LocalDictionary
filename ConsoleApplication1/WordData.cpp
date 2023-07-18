@@ -145,6 +145,18 @@ bool isValidWordType(std::string wordType)
     return false;
 }
 
+bool isValidWord(std::string word)
+{
+    if(word.empty())
+        return false;
+    for(int i = 0; i < word.length(); ++i)
+    {
+        if(!(word[i] >= 0 && word[i] < 128))
+            return false;
+    }
+    return true;
+}
+
 bool isNumber(std::string numStr)
 {
     for(int i = 0; i < numStr.length(); ++i)

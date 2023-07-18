@@ -9,7 +9,7 @@
 #include "NewWord.h"
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
-#include"Favourite.h"
+#include "Favourite.h"
 #include "SwitchDataSet.h"
 
 class Application
@@ -26,11 +26,15 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
+    void loadEngVieDict();
     void run();
 public:
     void handleEvent();
     void update();
     void render();
+public:
+    void searchInEngEngDict(std::string& inputWord);
+    void searchInEngVieDict(std::string& inputWord);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
@@ -43,14 +47,24 @@ private:
 
     ScreenState currentScreen;
 
+    int currentDataSetID;
+        /*
+            0: EngEng
+            1: EngVie
+            2: VieEng
+            3: Emoji
+        */
+
     sf::Font font;
 
     sf::Event event;
 
     Textbox searchBar;
+    sf::Text dataSetText;
 
     Button searchButton;
     Button menuButton;
+    Button dataSetButton;
     Button addButton;
     Button editDefButton;
     Button favouritebutton;
@@ -58,7 +72,6 @@ private:
     Favourite favouriteMain;
     History history;
     DisplayBox displayBox;
-    DataSetBar dataSetBar;
 
     EngTrieNode* engEngRoot;
 
@@ -70,11 +83,14 @@ private:
     void initFont();
     void initSearchBar();
     void initSearchButton();
+    void initDataSetText();
+    void initDataSetButton();
     void initMenuButton();
     void initAddButton();
     void initEditDefButton();
     void initDisplayBox();
     void initFavouriteButton();
+    void changeDataSet();
 };
 
 #endif

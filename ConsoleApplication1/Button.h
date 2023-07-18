@@ -31,6 +31,10 @@ public:
 	bool isMouseOver(sf::RenderWindow& window);
 
 	void update(sf::RenderWindow& window);
+
+	void setString(std::string text);
+
+	void setStyle(sf::Text::Style style);
 private:
 	sf::Text text;
 	sf::RectangleShape button;

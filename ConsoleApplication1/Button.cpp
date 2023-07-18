@@ -30,16 +30,16 @@ void Button::setPosition(const sf::Vector2f &point) {
     button.setPosition(point);
 
     // Center text on button:
-    float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
-    float yPos = (point.y + btnHeight / 2.2) - (text.getLocalBounds().height / 2);
+    float xPos = (point.x + btnWidth / 2.0) - (text.getLocalBounds().width / 2);
+    float yPos = (point.y + btnHeight / 2.5) - (text.getLocalBounds().height / 2);
     text.setPosition(xPos, yPos);
 }
 
 void Button::setPosition(float x, float y)
 {
     button.setPosition(x, y);
-    float xPos = (x + btnWidth / 2) - (text.getLocalBounds().width / 2);
-    float yPos = (y + btnHeight / 2.2) - (text.getLocalBounds().height / 2);
+    float xPos = (x + btnWidth / 2.0) - (text.getLocalBounds().width / 2);
+    float yPos = (y + btnHeight / 2.5) - (text.getLocalBounds().height / 2);
     text.setPosition(xPos, yPos);
 }
 
@@ -89,4 +89,14 @@ void Button::update(sf::RenderWindow& window)
     else {
 		button.setOutlineColor(sf::Color::Transparent);
 	}
+}
+
+void Button::setString(std::string text)
+{
+    this->text.setString(text);
+}
+
+void Button::setStyle(sf::Text::Style style)
+{
+    text.setStyle(style);
 }

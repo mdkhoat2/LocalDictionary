@@ -12,20 +12,22 @@ Application::Application() :
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    favouritebutton("",{153,42},20,sf::Color::Transparent,sf::Color::Transparent),
+    favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
     history(),
     currentScreen(ScreenState::MainScreen),
     editDefScreen(nullptr),
     newWord(nullptr),
-    displayBox({72, 240}, {880, 610}, sf::Color::Transparent, sf::Color::Black),
-    dataSetBar()
+    displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
+    dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+    currentDataSetID(0)
 {
     initWindow();
     initBackground();
     initFont();
     initSearchBar();
     initSearchButton();
+    initDataSetButton();
     initMenuButton();
     initAddButton();
     initEditDefButton();
@@ -37,6 +39,7 @@ Application::~Application()
 {
     trieDeleteAll(engEngRoot);
     delete editDefScreen;
+    newWord->saveAddedWord();
     delete newWord;
 }
 
@@ -64,7 +67,7 @@ void Application::loadEngEngDict()
             else
             {
                 // insert the previous word with its definition
-                trieInsert(engEngRoot, word, wordInfo);
+                trieInsert(engEngRoot, word, wordInfo, 0);
                 word = line;
                 wordInfo.clear();
             }
@@ -121,8 +124,98 @@ void Application::loadEngEngDict()
             }
         }
     }
-    trieInsert(engEngRoot, word, wordInfo); // Insert last word
+    trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
     fin.close();
+}
+
+void Application::loadEngVieDict()
+{
+    std::ifstream fin("data/EV_nonaccent.txt");
+    int count = 0;
+    std::string line, word, wordInfo;
+    // Skip the first unnecessary 15 lines
+    while(count < 15)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+    while(std::getline(fin, line))
+    {
+        if(line.empty())
+            continue;
+        // this is the line containing the word
+        if(line[0] == '@')
+        {   
+            // If it is the first word
+            if(count == 15)
+                ++count;
+            else
+            {   
+                // insert previous word and its information
+                if(isValidWord(word))
+                    trieInsert(engEngRoot, word, wordInfo, 1);
+                word.clear();
+                wordInfo.clear();
+            }
+            int i = 1;
+            while(line[i] != '/' && line[i] != '=' && line[i] != '(' && line[i] != ')'
+            && line[i] != '[' && line[i] != ']' && line[i] != '&' && i < line.length())
+            {
+                word += line[i];
+                ++i;
+            }
+            // Pop the space at the end of the current word
+            if(word[word.length()-1] == ' ')
+                word.pop_back();
+            // If there is an open parenthesis at the middle of the word
+            if(line[i] == '(')
+            {
+                while(line[i] != ')')
+                    ++i;
+                if(i < line.length()-2)
+                {
+                    ++i;
+                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
+                    && line[i] != '=' && i < line.length())
+                    {
+                        word += line[i];
+                        ++i;
+                    }
+                }
+            }
+            // If there is an open bracket at the middle of the word
+            if(line[i] == '[')
+            {
+                while(line[i] != ']')
+                    ++i;
+                if(i < line.length()-2)
+                {
+                    ++i;
+                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
+                    && line[i] != '=' && i < line.length())
+                    {
+                        word += line[i];
+                        ++i;
+                    }
+                }
+            }
+            // Pop the space at the end of the current word
+            if(word[word.length()-1] == ' ')
+                word.pop_back();
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if(wordInfo.empty())
+                wordInfo += line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    // Insert the last word
+    trieInsert(engEngRoot, word, wordInfo, 1);
+    fin.close();
+    newWord->loadAddedWord(engEngRoot);
 }
 
 void Application::initWindow()
@@ -183,6 +276,22 @@ void Application::initSearchButton()
     searchButton.setOutlineThickness(2);
 }
 
+void Application::initDataSetText()
+{
+    dataSetText.setFont(font);
+	dataSetText.setPosition({ 972, 50 });
+	dataSetText.setCharacterSize(20);
+	dataSetText.setFillColor(sf::Color::Black);
+}
+
+void Application::initDataSetButton()
+{
+	dataSetButton.setFont(font);
+	dataSetButton.setPosition({ 972, 72 });
+	dataSetButton.setOutlineThickness(2);
+    dataSetButton.setStyle(sf::Text::Style::Bold);
+}
+
 void Application::initMenuButton()
 {
 	menuButton.setFont(font);
@@ -217,9 +326,26 @@ void Application::initFavouriteButton()
     favouritebutton.setOutlineThickness(2);
 }
 
+void Application::changeDataSet()
+{
+    if (currentDataSetID != 3)
+		++currentDataSetID;
+	else
+		currentDataSetID = 0;
+    if (currentDataSetID == 0)
+        dataSetButton.setString("      EN - EN");
+    else if (currentDataSetID == 1)
+        dataSetButton.setString("      EN - VI");
+	else if (currentDataSetID == 2)
+        dataSetButton.setString("      VI - EN");
+	else
+        dataSetButton.setString("      Emoji");
+}
+
 void Application::run()
 {
     // Load dictionaries
+    newWord = new NewWord(font, window);
     loadEngEngDict();
     // loadEngVieDict();
     while(window.isOpen())
@@ -252,6 +378,7 @@ void Application::handleEvent()
                     searchBar.setSelected(true);
                 else
                     searchBar.setSelected(false);
+                // Start searching when search button is pressed
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
@@ -275,6 +402,11 @@ void Application::handleEvent()
                         displayBox.showNoDefinitions();
                     }
                         
+                    if(currentDataSetID == 0)
+                        searchInEngEngDict(inputWord);
+                    else if(currentDataSetID == 1)
+                        searchInEngVieDict(inputWord);
+                    
                 }
                 else if (menuButton.isMouseOver(window)) {
                     if (currentScreen == ScreenState::MainScreen)
@@ -282,15 +414,11 @@ void Application::handleEvent()
                     else
                         currentScreen = ScreenState::MainScreen;
                 }
-                else if (addButton.isMouseOver(window))
+                else if (addButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
                 {
-                    if (newWord == nullptr)
-                    {
-                        newWord = new NewWord();
-                    }
                     currentScreen = ScreenState::AddScreen;
                 }
-                else if(editDefButton.isMouseOver(window))
+                else if(editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
                 {
                     if(editDefScreen == nullptr)
                     {
@@ -298,7 +426,7 @@ void Application::handleEvent()
                     }
                     currentScreen = ScreenState::EditDefinitionScreen;
                 }
-                else if (favouritebutton.isMouseOver(window))
+                else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
                 {
                     favouriteMain.addtoFile();
                     favourite(window);
@@ -311,9 +439,9 @@ void Application::handleEvent()
                 {
                     displayBox.showPrevDef();
                 }
-                else if(dataSetBar.isMouseOverSwitchButton(window))
+                else if(dataSetButton.isMouseOver(window))
                 {
-                    dataSetBar.changeCurDataSet();
+                    changeDataSet();
                 }
                 else if (currentScreen == ScreenState::MainScreen)
                 {
@@ -337,7 +465,7 @@ void Application::handleEvent()
         {
             bool endScreen = false;
             newWord->setEndScreen(endScreen);
-            newWord->handleEvent(event, window, endScreen);
+            newWord->handleEvent(event, window, endScreen, engEngRoot);
             if (endScreen)
             {
                 newWord->setEndScreen(endScreen);
@@ -356,12 +484,14 @@ void Application::update()
     if(currentScreen == ScreenState::MainScreen)
     {
         searchButton.update(window);
+        dataSetButton.update(window);
         menuButton.update(window);
         displayBox.update(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen)
     {
         searchButton.update(window);
+        dataSetButton.update(window);
         menuButton.update(window);
         addButton.update(window);
         editDefButton.update(window);
@@ -388,22 +518,26 @@ void Application::render()
         window.draw(mainScreen);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
+        dataSetButton.drawTo(window);
+
         history.drawTo(window);
         favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
-        dataSetBar.drawTo(window);
+        //dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
         window.draw(screenWithOptions);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
+        dataSetButton.drawTo(window);
+
         menuButton.drawTo(window);
         addButton.drawTo(window);
         editDefButton.drawTo(window);
         favouritebutton.drawTo(window);
         displayBox.drawTo(window);
-        dataSetBar.drawTo(window);
+        //dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::EditDefinitionScreen) {
         editDefScreen->render(window);
@@ -417,4 +551,42 @@ void Application::render()
     }
     
     window.display();
+}
+
+void Application::searchInEngEngDict(std::string& inputWord)
+{
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
+    if(!wordInfo.empty())
+    {
+        // Console
+        WordData theWordData;
+        extractWordData(theWordData, inputWord, wordInfo);
+        theWordData.consolePrint();
+        // UI
+        displayBox.getWordData(inputWord, wordInfo);
+
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoDefinitions();
+    }
+}
+
+void Application::searchInEngVieDict(std::string &inputWord)
+{
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
+    if(!wordInfo.empty())
+    {
+        // Console
+        std::cout << wordInfo << std::endl;
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+    }
 }
