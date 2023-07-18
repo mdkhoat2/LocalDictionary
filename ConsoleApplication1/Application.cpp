@@ -37,6 +37,7 @@ Application::~Application()
 {
     trieDeleteAll(engEngRoot);
     delete editDefScreen;
+    newWord->saveAddedWord();
     delete newWord;
 }
 
@@ -123,6 +124,7 @@ void Application::loadEngEngDict()
     }
     trieInsert(engEngRoot, word, wordInfo); // Insert last word
     fin.close();
+    newWord->loadAddedWord(engEngRoot);
 }
 
 void Application::initWindow()
@@ -220,6 +222,7 @@ void Application::initFavouriteButton()
 void Application::run()
 {
     // Load dictionaries
+    newWord = new NewWord(font, window);
     loadEngEngDict();
     // loadEngVieDict();
     while(window.isOpen())
@@ -283,10 +286,6 @@ void Application::handleEvent()
                 }
                 else if (addButton.isMouseOver(window))
                 {
-                    if (newWord == nullptr)
-                    {
-                        newWord = new NewWord(font, window);
-                    }
                     currentScreen = ScreenState::AddScreen;
                 }
                 else if(editDefButton.isMouseOver(window))
