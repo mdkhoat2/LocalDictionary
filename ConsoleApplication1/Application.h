@@ -43,21 +43,31 @@ private:
 
     ScreenState currentScreen;
 
+    int currentDataSet = 0;
+        /*
+            0: EngEng
+            1: EngVie
+            2: VieEng
+            3: Emoji
+        */
+
     sf::Font font;
 
     sf::Event event;
 
     Textbox searchBar;
+    sf::Text dataSetText;
 
     Button searchButton;
     Button menuButton;
+    Button dataSetButton;
     Button addButton;
     Button editDefButton;
     Button favouritebutton;
 
     History history;
     DisplayBox displayBox;
-    DataSetBar dataSetBar;
+    //DataSetBar dataSetBar;
 
     EngTrieNode* engEngRoot;
 
@@ -69,11 +79,14 @@ private:
     void initFont();
     void initSearchBar();
     void initSearchButton();
+    void initDataSetText();
+    void initDataSetButton();
     void initMenuButton();
     void initAddButton();
     void initEditDefButton();
     void initDisplayBox();
     void initFavouriteButton();
+    void changeDataSet();
 };
 
 #endif

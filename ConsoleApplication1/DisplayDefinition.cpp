@@ -47,20 +47,20 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonTex.setSmooth(true);
 
     nextButtonSprite.setTexture(nextButtonTex);
-    nextButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
+    //nextButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
 
     prevButtonSprite.setTexture(prevButtonTex);
-    prevButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
+    //prevButtonSprite.setTextureRect(sf::IntRect(280, 320, 380, 150));
     
     // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
     // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
 
     nextButtonSprite.setPosition(700, 700);
-    nextButtonSprite.setScale(0.3f, 0.3f);
+    nextButtonSprite.setScale(0.5f, 0.5f);
     showNextButton = false;
 
-    prevButtonSprite.setPosition(560, 700);
-    prevButtonSprite.setScale(0.3f, 0.3f);
+    prevButtonSprite.setPosition(620, 700);
+    prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
 }
 
