@@ -9,7 +9,7 @@
 #include "NewWord.h"
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
-#include"Favourite.h"
+#include "Favourite.h"
 #include "SwitchDataSet.h"
 
 class Application
