@@ -12,13 +12,13 @@
 
 class NewWord {
 public:
-	void addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo);
-	void addFromTextFile(EngTrieNode*& root, std::string inputWord);
+	void addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
+	void addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
 	void saveAddedWord();
 	void loadAddedWord(EngTrieNode*& root);
 public:
 	NewWord(sf::Font& font, sf::RenderWindow& window);
-	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode* engEngRoot);
+	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
