@@ -26,11 +26,15 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
+    void loadEngVieDict();
     void run();
 public:
     void handleEvent();
     void update();
     void render();
+public:
+    void searchInEngEngDict(std::string& inputWord);
+    void searchInEngVieDict(std::string& inputWord);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
