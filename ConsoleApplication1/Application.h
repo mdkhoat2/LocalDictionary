@@ -26,11 +26,15 @@ public:
     Application();
     ~Application();
     void loadEngEngDict();
+    void loadEngVieDict();
     void run();
 public:
     void handleEvent();
     void update();
     void render();
+public:
+    void searchInEngEngDict(std::string& inputWord);
+    void searchInEngVieDict(std::string& inputWord);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
@@ -43,7 +47,7 @@ private:
 
     ScreenState currentScreen;
 
-    int currentDataSet = 0;
+    int currentDataSetID;
         /*
             0: EngEng
             1: EngVie
@@ -67,7 +71,6 @@ private:
 
     History history;
     DisplayBox displayBox;
-    //DataSetBar dataSetBar;
 
     EngTrieNode* engEngRoot;
 

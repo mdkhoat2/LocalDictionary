@@ -19,8 +19,8 @@ Application::Application() :
     editDefScreen(nullptr),
     newWord(nullptr),
     displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
-    dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black)
-    //dataSetBar()
+    dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+    currentDataSetID(0)
 {
     initWindow();
     initBackground();
@@ -67,7 +67,7 @@ void Application::loadEngEngDict()
             else
             {
                 // insert the previous word with its definition
-                trieInsert(engEngRoot, word, wordInfo);
+                trieInsert(engEngRoot, word, wordInfo, 0);
                 word = line;
                 wordInfo.clear();
             }
@@ -124,7 +124,96 @@ void Application::loadEngEngDict()
             }
         }
     }
-    trieInsert(engEngRoot, word, wordInfo); // Insert last word
+    trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
+    fin.close();
+}
+
+void Application::loadEngVieDict()
+{
+    std::ifstream fin("data/EV_nonaccent.txt");
+    int count = 0;
+    std::string line, word, wordInfo;
+    // Skip the first unnecessary 15 lines
+    while(count < 15)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+    while(std::getline(fin, line))
+    {
+        if(line.empty())
+            continue;
+        // this is the line containing the word
+        if(line[0] == '@')
+        {   
+            // If it is the first word
+            if(count == 15)
+                ++count;
+            else
+            {   
+                // insert previous word and its information
+                if(isValidWord(word))
+                    trieInsert(engEngRoot, word, wordInfo, 1);
+                word.clear();
+                wordInfo.clear();
+            }
+            int i = 1;
+            while(line[i] != '/' && line[i] != '=' && line[i] != '(' && line[i] != ')'
+            && line[i] != '[' && line[i] != ']' && line[i] != '&' && i < line.length())
+            {
+                word += line[i];
+                ++i;
+            }
+            // Pop the space at the end of the current word
+            if(word[word.length()-1] == ' ')
+                word.pop_back();
+            // If there is an open parenthesis at the middle of the word
+            if(line[i] == '(')
+            {
+                while(line[i] != ')')
+                    ++i;
+                if(i < line.length()-2)
+                {
+                    ++i;
+                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
+                    && line[i] != '=' && i < line.length())
+                    {
+                        word += line[i];
+                        ++i;
+                    }
+                }
+            }
+            // If there is an open bracket at the middle of the word
+            if(line[i] == '[')
+            {
+                while(line[i] != ']')
+                    ++i;
+                if(i < line.length()-2)
+                {
+                    ++i;
+                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
+                    && line[i] != '=' && i < line.length())
+                    {
+                        word += line[i];
+                        ++i;
+                    }
+                }
+            }
+            // Pop the space at the end of the current word
+            if(word[word.length()-1] == ' ')
+                word.pop_back();
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if(wordInfo.empty())
+                wordInfo += line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    // Insert the last word
+    trieInsert(engEngRoot, word, wordInfo, 1);
     fin.close();
     newWord->loadAddedWord(engEngRoot);
 }
@@ -239,16 +328,15 @@ void Application::initFavouriteButton()
 
 void Application::changeDataSet()
 {
-    if (currentDataSet != 3)
-		++currentDataSet;
+    if (currentDataSetID != 3)
+		++currentDataSetID;
 	else
-		currentDataSet = 0;
-    std::cout << currentDataSet << std::endl;
-    if (currentDataSet == 0)
+		currentDataSetID = 0;
+    if (currentDataSetID == 0)
         dataSetButton.setString("      EN - EN");
-    else if (currentDataSet == 1)
+    else if (currentDataSetID == 1)
         dataSetButton.setString("      EN - VI");
-	else if (currentDataSet == 2)
+	else if (currentDataSetID == 2)
         dataSetButton.setString("      VI - EN");
 	else
         dataSetButton.setString("      Emoji");
@@ -290,28 +378,15 @@ void Application::handleEvent()
                     searchBar.setSelected(true);
                 else
                     searchBar.setSelected(false);
+                // Start searching when search button is pressed
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
-                    if (inputWord!="")
-                        history.add(inputWord);
-                    std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
-                    if(!wordInfo.empty())
-                    {
-                        // Console
-                        WordData theWordData;
-                        extractWordData(theWordData, inputWord, wordInfo);
-                        theWordData.consolePrint();
-                        // UI
-                        displayBox.getWordData(inputWord, wordInfo);
-
-                    }
-                    else
-                    {
-                        std::cout << "Cannot find the word" << "\n";
-                        displayBox.showNoDefinitions();
-                    }
-                        
+                    if(currentDataSetID == 0)
+                        searchInEngEngDict(inputWord);
+                    else if(currentDataSetID == 1)
+                        searchInEngVieDict(inputWord);
+                    
                 }
                 else if (menuButton.isMouseOver(window)) {
                     if (currentScreen == ScreenState::MainScreen)
@@ -449,4 +524,42 @@ void Application::render()
     }
     
     window.display();
+}
+
+void Application::searchInEngEngDict(std::string& inputWord)
+{
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
+    if(!wordInfo.empty())
+    {
+        // Console
+        WordData theWordData;
+        extractWordData(theWordData, inputWord, wordInfo);
+        theWordData.consolePrint();
+        // UI
+        displayBox.getWordData(inputWord, wordInfo);
+
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoDefinitions();
+    }
+}
+
+void Application::searchInEngVieDict(std::string &inputWord)
+{
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
+    if(!wordInfo.empty())
+    {
+        // Console
+        std::cout << wordInfo << std::endl;
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+    }
 }
