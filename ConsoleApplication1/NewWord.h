@@ -8,32 +8,40 @@
 #include "Textbox.h"
 #include "Trie.h"
 #include "WordData.h"
+#include "DisplayDefinition.h"
 
 class NewWord {
 public:
-	void addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo, std::queue<WordData> addedWord);
-	void saveAddedWord(std::queue<WordData> addedWord);
+	void addNewWord(EngTrieNode*& root, std::string word, std::string wordInfo);
+	void addFromTextFile(EngTrieNode*& root, std::string inputWord);
+	void saveAddedWord();
 	void loadAddedWord(EngTrieNode*& root);
 public:
-	NewWord();
-	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen);
+	NewWord(sf::Font& font, sf::RenderWindow& window);
+	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode* engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
 private:
 	std::queue<WordData> addedWord;
-	sf::Font font;
+	//sf::RenderWindow addWindow;
+	//sf::Font addFont;
+	sf::Texture addScreenTex;
+	sf::Sprite addScreen;
 	Textbox wordBar;
-	Textbox defBar;
+	//Textbox defBar;
+	DisplayBox displayBox;
 	Button backButton;
 	Button addButton;
 	bool isEndScreen;
 private:
-	void initFont();
-	void initBackButton();
-	void initAddButton();
-	void initWordBar();
-	void initDefBar();
+	void initBackground(sf::RenderWindow& window);
+	//void initFont(sf::Font font);
+	void initWordBar(sf::Font& font);
+	//void initDefBar(sf::Font& font);
+	void initBackButton(sf::Font& font);
+	void initAddButton(sf::Font& font);
+	void initDisplayBox(sf::Font& font);
 };
 
 #endif
