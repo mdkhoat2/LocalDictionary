@@ -27,7 +27,33 @@ std::vector<std::string> loadWords() {
     return words;
 }
 
-void Favourite(sf::RenderWindow &window)
+bool checkStringInFile(const std::string& file_path, const std::string& target_string) {
+    std::ifstream file(file_path);
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line == target_string) {
+            file.close();
+            return true;
+        }
+    }
+    file.close();
+    return false;
+}
+
+void appendStringToFile(const std::string& file_path, const std::string& target_string) {
+    std::ofstream file(file_path, std::ios::app);
+    if (file.is_open()) {
+        file << target_string << std::endl;
+        file.close();
+       // std::cout << "String has been appended to the file." << std::endl;
+    }
+    else {
+        std::cout << "Unable to open the file." << std::endl;
+    }
+}
+
+
+void favourite(sf::RenderWindow &window)
 {
     window.setKeyRepeatEnabled(false);
 
@@ -41,13 +67,13 @@ void Favourite(sf::RenderWindow &window)
     std::vector<std::string> favoriteWords = loadWords();
     std::vector<WordItem> wordItems;
 
-    sf::RectangleShape addButton(sf::Vector2f(116, 52));
+    sf::RectangleShape addButton(sf::Vector2f(35,35));
     addButton.setFillColor(sf::Color::Transparent);
-    addButton.setPosition(112, 146);
+    addButton.setPosition(882,175);
 
-    sf::RectangleShape backButton(sf::Vector2f(141, 53));
+    sf::RectangleShape backButton(sf::Vector2f(153, 62));
     backButton.setFillColor(sf::Color::Transparent);
-    backButton.setPosition(55, 32);
+    backButton.setPosition(972, 163);
 
     sf::RectangleShape addButtonfake(sf::Vector2f(40, 40));
     sf::Texture deletebuttonTexture;
@@ -67,15 +93,15 @@ void Favourite(sf::RenderWindow &window)
         wordItems.push_back(wordItem);
     }
 
-    float posY = 220;
+    float posY = 260;
     for (WordItem& wordItem : wordItems) {
-        wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 150, posY);
+        wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
         posY += 50;
     }
 
     sf::Texture backgroundTexture;
     sf::Sprite backgroundImage;
-    if (!backgroundTexture.loadFromFile("background/backgroundfavourite.jpg"))
+    if (!backgroundTexture.loadFromFile("background/favourite.jpg"))
     {
         std::cout << "Failed to load image!" << std::endl;
         return;
@@ -88,7 +114,7 @@ void Favourite(sf::RenderWindow &window)
     std::string newWord;
     bool isTyping = false;
     bool isHoveringButton = false;
-    sf::RectangleShape hoverButton(sf::Vector2f(116, 52));
+    sf::RectangleShape hoverButton(sf::Vector2f(35, 35));
     hoverButton.setFillColor(sf::Color::Transparent);
     hoverButton.setOutlineThickness(2);
     hoverButton.setOutlineColor(sf::Color::Black);
@@ -100,10 +126,15 @@ void Favourite(sf::RenderWindow &window)
     hoverdeleteButton.setOutlineColor(sf::Color::Black);
     //
     bool isHoveringBackButton = false;
-    sf::RectangleShape hoverBackButton(sf::Vector2f(141, 53));
+    sf::RectangleShape hoverBackButton(sf::Vector2f(153, 62));
     hoverBackButton.setFillColor(sf::Color::Transparent);
     hoverBackButton.setOutlineThickness(2);
     hoverBackButton.setOutlineColor(sf::Color::Black);
+
+    sf::RectangleShape typeBar(sf::Vector2f(861, 64));
+    typeBar.setFillColor(sf::Color::Transparent);
+    typeBar.setPosition(74, 161);
+
 
     //
     while (window.isOpen())
@@ -120,12 +151,27 @@ void Favourite(sf::RenderWindow &window)
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (addButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
                     {
-                        isAddingWord = true;
-                        isTyping = true;
+                        favoriteWords.push_back(newWord);
+                        WordItem wordItem;
+                        wordItem.word = newWord;
+                        wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
+                        wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
+                        wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
+                        wordItems.push_back(wordItem);
+                        posY += 50;
+                        saveWords(favoriteWords);
+                        isAddingWord = false;
+                        newWord = "";
+                        isTyping = false;
                     }
                     else if (backButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
                     {
                         return;
+                    }
+                    else if (typeBar.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                    {
+                        isAddingWord = true;
+                        isTyping = true;
                     }
                     else {
                         for (auto it = wordItems.begin(); it != wordItems.end(); ++it) {
@@ -133,9 +179,9 @@ void Favourite(sf::RenderWindow &window)
                                 favoriteWords.erase(std::remove(favoriteWords.begin(), favoriteWords.end(), it->word), favoriteWords.end());
                                 wordItems.erase(it);
                                 saveWords(favoriteWords);
-                                posY = 220;
+                                posY = 260;
                                 for (WordItem& wordItem : wordItems) {
-                                    wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 50, posY);
+                                    wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
                                     posY += 50;
                                 }
                                 break;
@@ -146,22 +192,7 @@ void Favourite(sf::RenderWindow &window)
             }
             else if (event.type == sf::Event::TextEntered && isTyping)
             {
-                if (event.text.unicode == 13)
-                {
-                    favoriteWords.push_back(newWord);
-                    WordItem wordItem;
-                    wordItem.word = newWord;
-                    wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
-                    wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
-                    wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 150, posY);
-                    wordItems.push_back(wordItem);
-                    posY += 50;
-                    saveWords(favoriteWords);
-                    isAddingWord = false;
-                    newWord = "";
-                    isTyping = false;
-                }
-                else if (event.text.unicode == 8)
+                if (event.text.unicode == 8)
                 {
                     if (!newWord.empty()) {
                         newWord.pop_back();
@@ -207,13 +238,14 @@ void Favourite(sf::RenderWindow &window)
         window.draw(backgroundImage);
         window.draw(addButton);
         window.draw(backButton);
+        window.draw(typeBar);
         for (const WordItem& wordItem : wordItems) {
             window.draw(wordItem.deleteButton);
             deleteButtonImage.setPosition(wordItem.deleteButton.getPosition().x, wordItem.deleteButton.getPosition().y);
             window.draw(deleteButtonImage);
             sf::Text wordText(wordItem.word, font, 20);
             wordText.setFillColor(sf::Color::Black);
-            wordText.setPosition(150, wordItem.deleteButton.getPosition().y + 10);
+            wordText.setPosition(140, wordItem.deleteButton.getPosition().y + 10);
             window.draw(wordText);
         }
         //
@@ -242,14 +274,14 @@ void Favourite(sf::RenderWindow &window)
         if (isAddingWord) {
             sf::Text newText(newWord, font, 20);
             newText.setFillColor(sf::Color::Black);
-            newText.setPosition(addButton.getPosition().x + addButton.getSize().x + 40, addButton.getPosition().y + 20);
+            newText.setPosition(typeBar.getPosition().x + 15, typeBar.getPosition().y +30);
             window.draw(newText);
         }
 
         if (isTyping) {
             sf::Text underlineText(newWord + "_", font, 20);
             underlineText.setFillColor(sf::Color::Black);
-            underlineText.setPosition(addButton.getPosition().x + addButton.getSize().x + 40, addButton.getPosition().y + 20);
+            underlineText.setPosition(typeBar.getPosition().x + 15, typeBar.getPosition().y +30);
             window.draw(underlineText);
         }
 
@@ -258,4 +290,92 @@ void Favourite(sf::RenderWindow &window)
 
     return;
 }
+
+Favourite::Favourite()
+{
+    font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
+
+    //chua thich
+    if (!favouriteTexture1.loadFromFile("background/favourite2Button.png"))
+    {
+        std::cout << "Falied to load image ";
+    }
+    favouriteTexture1.setSmooth(true);
+    favouriteImage1.setTexture(favouriteTexture1);
+    favouriteImage1.setScale(sf::Vector2f(30.f/favouriteTexture1.getSize().x,30.f/favouriteTexture1.getSize().y));
+    if (!favouriteTexture2.loadFromFile("background/favouriteButton.png"))
+    {
+        std::cout << "Falied to load image ";
+    }
+    favouriteTexture2.setSmooth(true);
+    favouriteImage2.setTexture(favouriteTexture2);
+    favouriteImage2.setScale(sf::Vector2f(30.f / favouriteTexture2.getSize().x, 30.f / favouriteTexture2.getSize().y));
+    posX = 1052;
+    posY = 320;
+}
+
+void Favourite::add(std::string word)
+{
+    WordFavouriteButton newWord;
+    newWord.word = word;
+    newWord.favouriteButton.setSize(sf::Vector2f(30, 30));
+    newWord.favouriteButton.setFillColor(sf::Color::Red);
+    newWord.favouriteButton.setPosition(posX, posY);
+    posY += 30;
+    favourite.push_back(newWord);
+}
+
+void Favourite::drawTo(sf::RenderWindow& window)
+{
+    for (const WordFavouriteButton& cur : favourite)
+    {
+        window.draw(cur.favouriteButton);
+        if (cur.liked == true)
+        {
+            favouriteImage2.setPosition(cur.favouriteButton.getPosition().x, cur.favouriteButton.getPosition().y);
+            window.draw(favouriteImage2);
+        }
+        else
+        {
+            favouriteImage1.setPosition(cur.favouriteButton.getPosition().x, cur.favouriteButton.getPosition().y);
+            window.draw(favouriteImage1);
+        }
+    }
+}
+
+void Favourite::addtoFile()
+{
+    std::ofstream fo;
+    std::ifstream fi;
+    std::string filePath = "favorite_words.txt";
+    for (auto it = favourite.begin(); it != favourite.end(); it++)
+    {
+        if (!checkStringInFile(filePath,it->word ) && it->liked == true)
+        {
+            appendStringToFile(filePath, it->word);
+        }
+    }
+
+}
+
+void Favourite::likeOrNot(sf::RenderWindow& window)
+{
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    for (auto it = favourite.begin(); it != favourite.end(); it++)
+    {
+        if (it->favouriteButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+        {
+            if (it->liked == false)
+            {
+                it->liked = true;
+            }
+            else
+            {
+                it->liked = false;
+            }
+        }
+    }
+}
+
+
 

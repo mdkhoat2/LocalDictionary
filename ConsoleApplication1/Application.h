@@ -69,6 +69,7 @@ private:
     Button editDefButton;
     Button favouritebutton;
 
+    Favourite favouriteMain;
     History history;
     DisplayBox displayBox;
 

@@ -382,6 +382,26 @@ void Application::handleEvent()
                 if(searchButton.isMouseOver(window))
                 {
                     std::string inputWord = searchBar.getText();
+                    if (inputWord!="")
+                        history.add(inputWord);
+                    favouriteMain.add(inputWord);
+                    std::string wordInfo = filterAndSearch(engEngRoot, inputWord);
+                    if(!wordInfo.empty())
+                    {
+                        // Console
+                        WordData theWordData;
+                        extractWordData(theWordData, inputWord, wordInfo);
+                        theWordData.consolePrint();
+                        // UI
+                        displayBox.getWordData(inputWord, wordInfo);
+
+                    }
+                    else
+                    {
+                        std::cout << "Cannot find the word" << "\n";
+                        displayBox.showNoDefinitions();
+                    }
+                        
                     if(currentDataSetID == 0)
                         searchInEngEngDict(inputWord);
                     else if(currentDataSetID == 1)
@@ -408,7 +428,8 @@ void Application::handleEvent()
                 }
                 else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
                 {
-                    Favourite(window);
+                    favouriteMain.addtoFile();
+                    favourite(window);
                 }
                 else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
@@ -422,6 +443,11 @@ void Application::handleEvent()
                 {
                     changeDataSet();
                 }
+                else if (currentScreen == ScreenState::MainScreen)
+                {
+                    favouriteMain.likeOrNot(window);
+                }
+               
             }
         }
         else if(currentScreen == ScreenState::EditDefinitionScreen)
@@ -495,6 +521,7 @@ void Application::render()
         dataSetButton.drawTo(window);
 
         history.drawTo(window);
+        favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
         //dataSetBar.drawTo(window);

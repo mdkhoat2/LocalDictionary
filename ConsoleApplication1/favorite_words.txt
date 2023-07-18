@@ -1,7 +1,7 @@
 hi
+remove
+magic
+hello
 application
-history
-memory
-current
+want
 before
-after
