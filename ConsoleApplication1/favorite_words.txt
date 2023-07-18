@@ -1,6 +1,5 @@
 hi
 application
-data
 history
 memory
 current

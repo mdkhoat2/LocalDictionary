@@ -29,7 +29,7 @@ void DataSetBar::initVariables()
     dataSetBarTex->setSmooth(true);
     dataSetBar = new sf::Sprite();
     dataSetBar->setTexture(*dataSetBarTex);
-    dataSetBar->setScale(0.5f, 0.5f);
+    dataSetBar->setScale(1.f, 1.f);
     dataSetBar->setPosition(sf::Vector2f(420.f, 60.f));
     // Initialize switch button;
     switchButton = new sf::CircleShape(22.f);
@@ -37,7 +37,7 @@ void DataSetBar::initVariables()
     switchButton->setPosition(sf::Vector2f(748.f, 75.f));
     // Initialize text
     curDataSetText = new sf::Text;
-    curDataSetText->setString("ENGLISH - ENGLISH");
+    curDataSetText->setString("EN - EN");
     curDataSetText->setCharacterSize(25);
     float xText = dataSetBar->getPosition().x + 44.f;
     float yText = dataSetBar->getPosition().y + 22.f;
@@ -86,18 +86,18 @@ void DataSetBar::changeCurDataSet()
         ++curDataSetID;
     if(curDataSetID == 0)
     {
-        curDataSetText->setString("ENGLISH - ENGLISH");
+        curDataSetText->setString("EN - EN");
     }
     else if(curDataSetID == 1)
     {
-        curDataSetText->setString("ENGLISH - VIETNAMESE");
+        curDataSetText->setString("EN - VI");
     }
     else if(curDataSetID == 2)
     {
-        curDataSetText->setString("VIETNAMESE - ENGLISH");
+        curDataSetText->setString("VI - EN");
     }
     else if(curDataSetID == 3)
     {
-        curDataSetText->setString("EMOJIS");
+        curDataSetText->setString("EMOJI");
     }
 }
