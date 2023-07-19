@@ -256,13 +256,16 @@ void favourite(sf::RenderWindow &window)
                                     wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
                                     posY += 50;
                                 }
-                                if (wordItems.size() % 7 == 0)
+                                if (wordItems.size() != 0)
                                 {
-                                    if (currentPage == numberPage)
+                                    if (wordItems.size() % 7 == 0)
                                     {
-                                        currentPage -= 1;
+                                        if (currentPage == numberPage)
+                                        {
+                                            currentPage -= 1;
+                                        }
+                                        numberPage -= 1;
                                     }
-                                    numberPage -= 1;
                                 }
                                 break;
                             }
