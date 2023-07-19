@@ -141,15 +141,20 @@ void Application::loadEngVieDict()
     }
     while(std::getline(fin, line))
     {
+        ++count;
+        // not read further because overlapping words
+        if(count == 493598) 
+        {
+            fin.close();
+            return;
+        }
         if(line.empty())
             continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
-            // If it is the first word
-            if(count == 15)
-                ++count;
-            else
+            // If it is not the first word
+            if(count > 16)
             {   
                 // insert previous word and its information
                 if(isValidWord(word))
@@ -567,8 +572,10 @@ void Application::searchInEngVieDict(std::string &inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        std::cout << wordInfo << std::endl;
-        displayBox.getWordDataEngVie(inputWord, wordInfo);
+        WordDataEngVie engVieData;
+        extractEngVieData(engVieData, inputWord, wordInfo);
+        engVieData.consolePrint();
+
     }
     else
     {

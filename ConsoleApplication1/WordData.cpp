@@ -79,29 +79,79 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
+    int countDef = 0;
     while(std::getline(stream, line))
+    // We will display 3 definitions on the screen at a time, so this variable will count 3 definitions
+    // then reset to 0
     {
-        // this is a word type or a noun phrase that contains the word
-        // We display the noun phrase like the word type on screen
-        if(line[0] == '*' || line[0] == '!') 
+        // this is a word type
+        if(line[0] == '*') 
         {
             if(!theDef.empty()) // need to push the previous word data
             {
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
+                countDef = 0;
             }
             int i = 1;
+            // Skip spaces
             while(line[i] == ' ' && i < line.length())
                 ++i;
             theDef.wordType = line.substr(i);
         }
-        // this is the definition of the word or noun phrase
+        // this is a phrase containing the word
+        // We will display it like the word type
+        if(line[0] == '!')
+        {
+            if(!theDef.empty())
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.clear();
+                countDef = 0;
+            }
+            theDef.wordType = line.substr(1);
+        }
+        // this is the definition of the word/phrase
         else if(line[0] == '-')
         {
-            int i = 0;
-            
+            // If there have been 3 definitions so far, push theDef to the defList
+            // Clear definition and example but not the word type
+            if(countDef == 3)
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.definition.clear();
+                theDef.example.clear();
+                countDef = 0;
+            }
+            ++countDef;
+            if(theDef.definition.empty())
+                theDef.definition += line.substr(0);
+            else
+                theDef.definition += "\n" + line.substr(0);  
         }
+        // this is the example
+        else if(line[0] == '=')
+        {
+            int i = 1;
+            // If there are more than 1 example
+            if(!theDef.example.empty())
+                theDef.example += "\n";
+            while(line[i] != '+' && i < line.length())
+            {
+                theDef.example += line[i];
+                ++i;
+            }
+            theDef.example += " = ";
+            ++i;
+            while(line[i] == ' ' && i < line.length())
+                ++i;
+            theDef.example += line.substr(i);
+        }
+        else
+            continue;
     }
+    if(!theDef.empty())
+        engVieData.defList.push_back(theDef);
 }
 
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
@@ -259,6 +309,23 @@ void convertToNormalLine(std::wstring &line)
 
 WordDataEngVie::WordDataEngVie() : word(), defList()
 {
+}
+
+void WordDataEngVie::consolePrint()
+{
+    std::cout << "Word: " << word << std::endl;
+    for(int i = 0; i < defList.size(); ++i)
+    {
+        if(!defList[i].wordType.empty())
+            std::cout << "Word type/Phrase: " << defList[i].wordType << std::endl;
+        std::cout << defList[i].definition << std::endl;
+        if(!defList[i].example.empty())
+        {
+            std::cout << "Example:" << std::endl;
+            std::cout << defList[i].example << std::endl;
+        }
+        std::cout << std::endl;
+    }
 }
 
 void EngVieDef::clear()

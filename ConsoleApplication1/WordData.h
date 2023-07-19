@@ -13,12 +13,13 @@ struct WordDefNode
 
 struct WordData
 {
+public:
     WordData();
     ~WordData();
     
     // Member functions
     void consolePrint();
-
+public:
     // Member variables
     std::string word;
     /*
@@ -47,6 +48,7 @@ struct WordDataEngVie
 {
 public:
     WordDataEngVie();
+    void consolePrint();
 public:
     std::string word;
     std::vector<EngVieDef> defList;

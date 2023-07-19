@@ -162,20 +162,6 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
     initFirstDef();
 }
 
-void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
-{
-    if(engVieData == nullptr)
-    {
-        engVieData = new WordDataEngVie;
-    }
-    else // delete old word data
-    {
-        delete engVieData;
-
-
-    }
-}
-
 void DisplayBox::wrapText(sf::Text& theText)
 {
     std::string str = theText.getString();
