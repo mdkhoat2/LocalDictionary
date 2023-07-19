@@ -26,11 +26,11 @@ void DataSetBox::initVariables()
     dataSetText->setCharacterSize(25);
     dataSetText->setFillColor(sf::Color::Black);
 }
-//
-//bool DataSetBox::isMouseOverSwitchButton(sf::RenderWindow &window)
-//{
-//    
-//}
+
+bool DataSetBox::isMouseOverSwitchButton(sf::RenderWindow &window)
+{
+    return dataSetButton->isMouseOver(window);
+}
 
 void DataSetBox::setFont(const sf::Font &font)
 {
