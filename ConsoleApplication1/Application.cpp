@@ -347,7 +347,7 @@ void Application::run()
     // Load dictionaries
     newWord = new NewWord(font, window);
     loadEngEngDict();
-    // loadEngVieDict();
+    loadEngVieDict();
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -549,7 +549,7 @@ void Application::searchInEngEngDict(std::string& inputWord)
         extractWordData(theWordData, inputWord, wordInfo);
         theWordData.consolePrint();
         // UI
-        displayBox.getWordData(inputWord, wordInfo);
+        displayBox.getWordDataEngEng(inputWord, wordInfo);
 
     }
     else
@@ -568,6 +568,7 @@ void Application::searchInEngVieDict(std::string &inputWord)
     {
         // Console
         std::cout << wordInfo << std::endl;
+        displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
     else
     {

@@ -73,6 +73,37 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
     }
 }
 
+void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::string &wordInfo)
+{
+    engVieData.word = word;
+    std::stringstream stream(wordInfo);
+    std::string line;
+    EngVieDef theDef;
+    while(std::getline(stream, line))
+    {
+        // this is a word type or a noun phrase that contains the word
+        // We display the noun phrase like the word type on screen
+        if(line[0] == '*' || line[0] == '!') 
+        {
+            if(!theDef.empty()) // need to push the previous word data
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.clear();
+            }
+            int i = 1;
+            while(line[i] == ' ' && i < line.length())
+                ++i;
+            theDef.wordType = line.substr(i);
+        }
+        // this is the definition of the word or noun phrase
+        else if(line[0] == '-')
+        {
+            int i = 0;
+            
+        }
+    }
+}
+
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
 {
     if(head == nullptr)
@@ -224,4 +255,23 @@ void convertToNormalLine(std::wstring &line)
     {
         convertToNormalChar(line[i]);
     }
+}
+
+WordDataEngVie::WordDataEngVie() : word(), defList()
+{
+}
+
+void EngVieDef::clear()
+{
+    if(!wordType.empty())
+        wordType.clear();
+    if(!definition.empty())
+        definition.clear();
+    if(!example.empty())
+        example.clear();
+}
+
+bool EngVieDef::empty()
+{
+    return (wordType.empty() && definition.empty() && example.empty());
 }

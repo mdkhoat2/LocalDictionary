@@ -8,17 +8,21 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word(),
     wordType(),
     wordDef(),
-    curWordTypeID(0),
-    curWordDefID(1),
-    curWordDefPtr(nullptr),
-    curWordData(nullptr),
-    numOfDefs(0),
+    engEngTypeID(0),
+    engEngDefID(1),
+    engEngPtr(nullptr),
+    engEngData(nullptr),
+    engEngDefNum(0),
+    engVieData(nullptr),
+    engVieDefID(0),
     showNextButton(false),
     showPrevButton(false),
     nextButtonTex(),
     prevButtonTex(),
     nextButtonSprite(),
-    prevButtonSprite()
+    prevButtonSprite(),
+    wordExample(),
+    showExample(false)
 {
     theBox.setPosition(pos);
     float xText = pos.x + 20.f;
@@ -62,11 +66,14 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite.setPosition(620, 700);
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
+
+    // Eng Vie word data
 }
 
 DisplayBox::~DisplayBox()
 {
-    delete curWordData;
+    delete engEngData;
+    delete engVieData;
 }
 
 void DisplayBox::setPosition(const sf::Vector2f &pos)
@@ -136,23 +143,37 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
         
 }
 
-void DisplayBox::getWordData(std::string &inputWord, std::string &wordInfo)
+void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo)
 {
-    if(curWordData == nullptr)
+    if(engEngData == nullptr)
     {
-        curWordData = new WordData;
-        extractWordData(*curWordData, inputWord, wordInfo);
+        engEngData = new WordData;
+        extractWordData(*engEngData, inputWord, wordInfo);
     }
     else // delete old word data
     {
-        delete curWordData;
+        delete engEngData;
         showNextButton = false;
         showPrevButton = false;
-        curWordData = new WordData;
-        extractWordData(*curWordData, inputWord, wordInfo);
+        engEngData = new WordData;
+        extractWordData(*engEngData, inputWord, wordInfo);
     }
-    numOfDefs = countNumOfDefs(*curWordData);
+    engEngDefNum = countNumOfDefs(*engEngData);
     initFirstDef();
+}
+
+void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
+{
+    if(engVieData == nullptr)
+    {
+        engVieData = new WordDataEngVie;
+    }
+    else // delete old word data
+    {
+        delete engVieData;
+
+
+    }
 }
 
 void DisplayBox::wrapText(sf::Text& theText)
@@ -182,20 +203,20 @@ void DisplayBox::wrapText(sf::Text& theText)
 void DisplayBox::initFirstDef()
 {
     // initialize the text to display
-    word.setString(curWordData->word);
+    word.setString(engEngData->word);
 
-    curWordDefID = 1;
+    engEngDefID = 1;
     for(int i = 0; i < 4; ++i)
     {
-        if(curWordData->defListHead[i] != nullptr)
+        if(engEngData->defListHead[i] != nullptr)
         {
-            curWordTypeID = i;
-            curWordDefPtr = curWordData->defListHead[i];
+            engEngTypeID = i;
+            engEngPtr = engEngData->defListHead[i];
             break;
         }
     }
     // initialize the buttons
-    if(numOfDefs > 1)
+    if(engEngDefNum > 1)
     {
         showNextButton = true;
     }
@@ -205,89 +226,89 @@ void DisplayBox::initFirstDef()
 void DisplayBox::setUIText()
 {
     // Word type
-    if(curWordTypeID == 0)
+    if(engEngTypeID == 0)
         wordType.setString("noun");
-    else if(curWordTypeID == 1)
+    else if(engEngTypeID == 1)
         wordType.setString("verb");
-    else if(curWordTypeID == 2)
+    else if(engEngTypeID == 2)
         wordType.setString("adjective");
     else
         wordType.setString("adverb");
     // Word definition corresponding to that word type
-    wordDef.setString(curWordDefPtr->wordDef);
+    wordDef.setString(engEngPtr->wordDef);
     wrapText(wordDef);
 }
 
 void DisplayBox::showNextDef()
 {
-    ++curWordDefID;
+    ++engEngDefID;
     // If there are another definitions of the current word type
-    if(curWordDefPtr->next != nullptr)
+    if(engEngPtr->next != nullptr)
     {
-        curWordDefPtr = curWordDefPtr->next;
+        engEngPtr = engEngPtr->next;
     }
     // Need to search for definition of other word types
     else 
     {
-        for(int i = curWordTypeID + 1; i < 4; ++i)
+        for(int i = engEngTypeID + 1; i < 4; ++i)
         {
-            if(curWordData->defListHead[i] != nullptr)
+            if(engEngData->defListHead[i] != nullptr)
             {
-                curWordTypeID = i;
-                curWordDefPtr = curWordData->defListHead[curWordTypeID];
+                engEngTypeID = i;
+                engEngPtr = engEngData->defListHead[engEngTypeID];
                 break;
             }
         }
     }
     setUIText();
-    if(curWordDefID > 1)
+    if(engEngDefID > 1)
         showPrevButton = true;
-    if(curWordDefID == numOfDefs)
+    if(engEngDefID == engEngDefNum)
         showNextButton = false;
 }
 
 void DisplayBox::showPrevDef()
 {
-    --curWordDefID;
+    --engEngDefID;
     // If it is not the first definition of the current word type
-    if(curWordDefPtr != curWordData->defListHead[curWordTypeID])
+    if(engEngPtr != engEngData->defListHead[engEngTypeID])
     {
-        WordDefNode* targetPtr = curWordData->defListHead[curWordTypeID];
-        while(targetPtr->next != curWordDefPtr)
+        WordDefNode* targetPtr = engEngData->defListHead[engEngTypeID];
+        while(targetPtr->next != engEngPtr)
             targetPtr = targetPtr->next;
-        curWordDefPtr = targetPtr;
+        engEngPtr = targetPtr;
     }
     // Need to search for definitions of previous word types
     else
     {
-        for(int i = curWordTypeID - 1; i >= 0; --i)
+        for(int i = engEngTypeID - 1; i >= 0; --i)
         {
-            if(curWordData->defListHead[i] != nullptr)
+            if(engEngData->defListHead[i] != nullptr)
             {
                 // Get the last definition in this list
-                curWordTypeID = i;
-                WordDefNode* targetPtr = curWordData->defListHead[curWordTypeID];
+                engEngTypeID = i;
+                WordDefNode* targetPtr = engEngData->defListHead[engEngTypeID];
                 while(targetPtr->next != nullptr)
                     targetPtr = targetPtr->next;
-                curWordDefPtr = targetPtr;
+                engEngPtr = targetPtr;
                 break;
             }
         }
     }
     setUIText();
     // Change status of buttons
-    if(curWordDefID < numOfDefs)
+    if(engEngDefID < engEngDefNum)
         showNextButton = true;
-    if(curWordDefID == 1)
+    if(engEngDefID == 1)
         showPrevButton = false;
 }
 
 void DisplayBox::showNoDefinitions()
 {
-    if(curWordData)
+    if(engEngData)
     {
-        delete curWordData;
-        curWordData = nullptr;
+        delete engEngData;
+        engEngData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;

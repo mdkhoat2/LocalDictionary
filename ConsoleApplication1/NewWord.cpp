@@ -299,7 +299,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 extractWordData(theWordData, inputWord, wordInfo);
                 theWordData.consolePrint();
                 // UI
-                displayBox.getWordData(inputWord, wordInfo);
+                displayBox.getWordDataEngEng(inputWord, wordInfo);
 
             }
             else {
@@ -310,7 +310,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 extractWordData(theWordData, inputWord, wordInfo);
                 theWordData.consolePrint();
                 // UI
-                displayBox.getWordData(inputWord, wordInfo);
+                displayBox.getWordDataEngEng(inputWord, wordInfo);
             }
         }
     }

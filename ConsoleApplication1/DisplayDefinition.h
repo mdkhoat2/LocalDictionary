@@ -1,6 +1,7 @@
 #ifndef DISPLAYDEFINITION_H
 #define DISPLAYDEFINITION_H
 
+#include <vector>
 #include "Button.h"
 #include "WordData.h"
 
@@ -20,7 +21,8 @@ public:
     void update(sf::RenderWindow& window);
     void drawTo(sf::RenderWindow& window);
 
-    void getWordData(std::string& inputWord, std::string& wordInfo);
+    void getWordDataEngEng(std::string& inputWord, std::string& wordInfo);
+    void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
 
     void wrapText(sf::Text& theText);
     void initFirstDef();
@@ -40,13 +42,17 @@ private:
     sf::Text word;
     sf::Text wordType;
     sf::Text wordDef;
+    sf::Text wordExample;
+    bool showExample;
 
-    int curWordTypeID;
-    int curWordDefID;
-    WordDefNode* curWordDefPtr;
+    int engEngTypeID;
+    int engEngDefID;
+    WordDefNode* engEngPtr;
+    WordData* engEngData; // for Eng-Eng data set only
+    int engEngDefNum;
 
-    WordData* curWordData;
-    int numOfDefs;
+    WordDataEngVie* engVieData; // for Eng-Vie data set only
+    int engVieDefID;
 
     bool showNextButton;
     bool showPrevButton;

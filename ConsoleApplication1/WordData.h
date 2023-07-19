@@ -3,6 +3,7 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
 struct WordDefNode
 {
@@ -31,6 +32,26 @@ struct WordData
     WordDefNode* defListHead[4];
 };
 
+struct EngVieDef
+{
+public:
+    void clear();
+    bool empty();
+public:
+    std::string wordType;
+    std::string definition;
+    std::string example;
+};
+
+struct WordDataEngVie
+{
+public:
+    WordDataEngVie();
+public:
+    std::string word;
+    std::vector<EngVieDef> defList;
+};
+
 void insertAtEnd(WordDefNode* &head, std::string wordDef);
 void deleteAllList(WordDefNode* &head);
 int countNumOfDefs(WordData& theWordData);
@@ -45,5 +66,6 @@ void convertToNormalLine(std::wstring &line);
 
 // Function to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
+void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::string& wordInfo);
 
 #endif
