@@ -94,7 +94,12 @@ void favourite(sf::RenderWindow &window)
     }
 
     float posY = 260;
-    for (WordItem& wordItem : wordItems) {
+    for (WordItem& wordItem : wordItems) 
+    {
+        if (posY==610)
+        {
+            posY = 260;
+        }
         wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
         posY += 50;
     }
@@ -114,6 +119,7 @@ void favourite(sf::RenderWindow &window)
     std::string newWord;
     bool isTyping = false;
     bool isHoveringButton = false;
+    //
     sf::RectangleShape hoverButton(sf::Vector2f(35, 35));
     hoverButton.setFillColor(sf::Color::Transparent);
     hoverButton.setOutlineThickness(2);
@@ -134,6 +140,43 @@ void favourite(sf::RenderWindow &window)
     sf::RectangleShape typeBar(sf::Vector2f(861, 64));
     typeBar.setFillColor(sf::Color::Transparent);
     typeBar.setPosition(74, 161);
+    //Next button
+    sf::RectangleShape nextButton(sf::Vector2f(80, 80));
+    nextButton.setFillColor(sf::Color::Transparent);
+    nextButton.setPosition(800, 700);
+    //Prev button
+    sf::RectangleShape prevButton(sf::Vector2f(80, 80));
+    prevButton.setFillColor(sf::Color::Transparent);
+    prevButton.setPosition(150, 700);
+    //
+    sf::Texture prevButtonTexture, nextButtonTexture;
+    sf::Sprite prevButtonImage, nextButtonImage;
+    //
+    if (!prevButtonTexture.loadFromFile("background/prev-button.png"))
+    {
+        std::cout << "Falied to load from file"<<std::endl;
+    }
+    prevButtonTexture.setSmooth(true);
+    prevButtonImage.setTexture(prevButtonTexture);
+    prevButtonImage.setScale(sf::Vector2f(80.f/prevButtonTexture.getSize().x, 80.f/ prevButtonTexture.getSize().y));
+    if (!nextButtonTexture.loadFromFile("background/next-button.png"))
+    {
+        std::cout << "Falied to load from file" << std::endl;
+    }
+    nextButtonTexture.setSmooth(true);
+    nextButtonImage.setTexture(nextButtonTexture);
+    nextButtonImage.setScale(sf::Vector2f(80.f/ nextButtonTexture.getSize().x, 80.f/ nextButtonTexture.getSize().y));
+    //Xu ly neu danh sach qua nhieu tu;
+    int currentPage = 1;
+    int numberPage;
+    if (wordItems.size() % 7 == 0)
+    {
+        numberPage = wordItems.size() / 7;
+    }
+    else
+    {
+        numberPage = (wordItems.size() / 7) + 1;
+    }
 
 
     //
@@ -151,18 +194,38 @@ void favourite(sf::RenderWindow &window)
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (addButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
                     {
-                        favoriteWords.push_back(newWord);
-                        WordItem wordItem;
-                        wordItem.word = newWord;
-                        wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
-                        wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
-                        wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
-                        wordItems.push_back(wordItem);
-                        posY += 50;
-                        saveWords(favoriteWords);
-                        isAddingWord = false;
-                        newWord = "";
-                        isTyping = false;
+                        if (newWord != "")
+                        {
+                            favoriteWords.push_back(newWord);
+                            if (posY==610)
+                            {
+                                posY = 260;        
+                            }
+                            WordItem wordItem;
+                            wordItem.word = newWord;
+                            wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
+                            wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
+                            wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
+                            wordItems.push_back(wordItem);
+                            posY += 50;
+                            saveWords(favoriteWords);
+                            if (wordItems.size() % 7 == 1)
+                            {
+                                numberPage += 1;
+                            }
+                            isAddingWord = false;
+                            newWord = "";
+                            isTyping = false;
+                        }
+                    
+                    }
+                    else if (nextButton.getGlobalBounds().contains(mousePos.x, mousePos.y)&&currentPage<numberPage)
+                    {
+                        currentPage += 1;
+                    }
+                    else if (prevButton.getGlobalBounds().contains(mousePos.x, mousePos.y)&&currentPage!=1)
+                    {
+                        currentPage -= 1;
                     }
                     else if (backButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
                     {
@@ -174,15 +237,35 @@ void favourite(sf::RenderWindow &window)
                         isTyping = true;
                     }
                     else {
+                        int p= 0;
+                        int first3 = (currentPage - 1) * 7;
+                        int last3= currentPage * 7;
                         for (auto it = wordItems.begin(); it != wordItems.end(); ++it) {
-                            if (it->deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            p++;
+                            if (it->deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y)&&first3<p&&p<=last3) {
                                 favoriteWords.erase(std::remove(favoriteWords.begin(), favoriteWords.end(), it->word), favoriteWords.end());
                                 wordItems.erase(it);
                                 saveWords(favoriteWords);
                                 posY = 260;
-                                for (WordItem& wordItem : wordItems) {
+                                for (WordItem& wordItem : wordItems) 
+                                {
+                                    if (posY==610)
+                                    {
+                                        posY = 260;
+                                    }
                                     wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
                                     posY += 50;
+                                }
+                                if (wordItems.size() != 0)
+                                {
+                                    if (wordItems.size() % 7 == 0)
+                                    {
+                                        if (currentPage == numberPage)
+                                        {
+                                            currentPage -= 1;
+                                        }
+                                        numberPage -= 1;
+                                    }
                                 }
                                 break;
                             }
@@ -205,9 +288,13 @@ void favourite(sf::RenderWindow &window)
         }
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         std::string word1 = "";
+        int m= 0;
+        int first1 = (currentPage - 1) * 7;
+        int last1 = currentPage * 7;
         for (const WordItem& meo : wordItems)
         {
-            if (meo.deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+            m++;
+            if (meo.deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y)&&first1<m&&m<=last1)
             {
                 isHoveringDeleteButton = true;
                 word1 = meo.word;
@@ -239,21 +326,50 @@ void favourite(sf::RenderWindow &window)
         window.draw(addButton);
         window.draw(backButton);
         window.draw(typeBar);
-        for (const WordItem& wordItem : wordItems) {
-            window.draw(wordItem.deleteButton);
-            deleteButtonImage.setPosition(wordItem.deleteButton.getPosition().x, wordItem.deleteButton.getPosition().y);
-            window.draw(deleteButtonImage);
-            sf::Text wordText(wordItem.word, font, 20);
-            wordText.setFillColor(sf::Color::Black);
-            wordText.setPosition(140, wordItem.deleteButton.getPosition().y + 10);
-            window.draw(wordText);
+        if (currentPage == 1 && numberPage > 1)
+        {
+            window.draw(nextButton);
+            nextButtonImage.setPosition(nextButton.getPosition().x, nextButton.getPosition().y);
+            window.draw(nextButtonImage);
+        }
+        if (currentPage > 1 && currentPage < numberPage)
+        {
+            window.draw(nextButton);
+            nextButtonImage.setPosition(nextButton.getPosition().x, nextButton.getPosition().y);
+            window.draw(nextButtonImage);
+            window.draw(prevButton);
+            prevButtonImage.setPosition(prevButton.getPosition().x, prevButton.getPosition().y);
+            window.draw(prevButtonImage);
+        }
+        if (currentPage == numberPage&&currentPage!=1)
+        {
+            window.draw(prevButton);
+            prevButtonImage.setPosition(prevButton.getPosition().x, prevButton.getPosition().y);
+            window.draw(prevButtonImage);
+        }
+        m = 0;
+        for (WordItem& wordItem : wordItems) 
+        {
+            m++;
+            if (first1 < m&&m <=last1&&m<=wordItems.size())
+            {
+                window.draw(wordItem.deleteButton);
+                deleteButtonImage.setPosition(wordItem.deleteButton.getPosition().x, wordItem.deleteButton.getPosition().y);
+                window.draw(deleteButtonImage);
+                sf::Text wordText(wordItem.word, font, 20);
+                wordText.setFillColor(sf::Color::Black);
+                wordText.setPosition(140, wordItem.deleteButton.getPosition().y + 10);
+                window.draw(wordText);
+            }
         }
         //
         if (isHoveringDeleteButton)
         {
+            int h = 0;
             for (const WordItem meo : wordItems)
             {
-                if (meo.word == word1)
+                h++;
+                if (meo.word == word1&&first1<h&&h<=last1)
                 {
                     word1 = "";
                     hoverdeleteButton.setPosition(meo.deleteButton.getPosition());
