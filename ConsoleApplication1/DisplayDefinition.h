@@ -29,6 +29,9 @@ public:
     void showPrevDef();
     void showNoDefinitions();
 
+    void showExistedDefinitions();
+    void showNewDefinitions();
+
     bool isMouseOverNextButton(sf::RenderWindow& window);
     bool isMouseOverPrevButton(sf::RenderWindow& window);
     bool nextButtonDrawn();
