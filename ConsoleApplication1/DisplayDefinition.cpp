@@ -484,10 +484,10 @@ void DisplayBox::clearEngVieData()
 }
 
 void DisplayBox::showExistedDefinitions() {
-    if (curWordData)
+    if (engEngData)
     {
-        delete curWordData;
-        curWordData = nullptr;
+        delete engEngData;
+        engEngData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -498,10 +498,10 @@ void DisplayBox::showExistedDefinitions() {
 }
 
 void DisplayBox::showNewDefinitions() {
-    if (curWordData)
+    if (engEngData)
     {
-        delete curWordData;
-        curWordData = nullptr;
+        delete engEngData;
+        engEngData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
