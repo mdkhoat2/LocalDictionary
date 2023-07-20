@@ -11,6 +11,7 @@ Application::Application() :
     searchButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     menuButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    deleteButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     engEngRoot(nullptr),
@@ -30,6 +31,7 @@ Application::Application() :
     initDataSetButton();
     initMenuButton();
     initAddButton();
+    initDeleteButton();
     initEditDefButton();
     initDisplayBox();
     initFavouriteButton();
@@ -311,6 +313,13 @@ void Application::initAddButton()
     addButton.setOutlineThickness(2);
 }
 
+void Application::initDeleteButton()
+{
+    deleteButton.setFont(font);
+    deleteButton.setPosition({ 972, 310 });
+    deleteButton.setOutlineThickness(2);
+}
+
 void Application::initEditDefButton()
 {
     editDefButton.setFont(font);
@@ -417,6 +426,10 @@ void Application::handleEvent()
                 {
                     currentScreen = ScreenState::AddScreen;
                 }
+                else if (deleteButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
+                {
+                    
+                }
                 else if(editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
                 {
                     if(editDefScreen == nullptr)
@@ -499,6 +512,7 @@ void Application::update()
         dataSetButton.update(window);
         menuButton.update(window);
         addButton.update(window);
+        deleteButton.update(window);
         editDefButton.update(window);
         favouritebutton.update(window);
         displayBox.update(window);
@@ -539,6 +553,7 @@ void Application::render()
 
         menuButton.drawTo(window);
         addButton.drawTo(window);
+        deleteButton.drawTo(window);
         editDefButton.drawTo(window);
         favouritebutton.drawTo(window);
         displayBox.drawTo(window);

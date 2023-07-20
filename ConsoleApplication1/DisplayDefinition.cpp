@@ -483,6 +483,34 @@ void DisplayBox::clearEngVieData()
     wordExample.setString("");  
 }
 
+void DisplayBox::showExistedDefinitions() {
+    if (curWordData)
+    {
+        delete curWordData;
+        curWordData = nullptr;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("The Word Has Already Existed!");
+    wordType.setString("");
+    wordDef.setString("");
+}
+
+void DisplayBox::showNewDefinitions() {
+    if (curWordData)
+    {
+        delete curWordData;
+        curWordData = nullptr;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("New Word Imported Successfully!");
+    wordType.setString("");
+    wordDef.setString("");
+}
+
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
