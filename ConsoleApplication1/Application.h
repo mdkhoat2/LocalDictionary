@@ -27,6 +27,7 @@ public:
     ~Application();
     void loadEngEngDict();
     void loadEngVieDict();
+    void loadVieEngDict();
     void run();
 public:
     void handleEvent();
@@ -35,6 +36,7 @@ public:
 public:
     void searchInEngEngDict(std::string& inputWord);
     void searchInEngVieDict(std::string& inputWord);
+    void searchInVieEngDict(std::string& inputWord);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;

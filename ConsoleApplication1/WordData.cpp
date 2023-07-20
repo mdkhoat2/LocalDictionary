@@ -153,6 +153,66 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
         engVieData.defList.push_back(theDef);
 }
 
+void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::string &wordInfo)
+{
+    vieEngData.word = word;
+    std::stringstream stream(wordInfo);
+    std::string line;
+    EngVieDef theDef;
+    while(std::getline(stream, line))
+    // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
+    // We store definition and example in a pair to display it close to each other
+    {
+        // this is a word type
+        if(line[0] == '*') 
+        {
+            if(!theDef.empty()) // need to push the previous word data
+            {
+                vieEngData.defList.push_back(theDef);
+                theDef.clear();
+            }
+            int i = 1;
+            // Skip spaces
+            while(line[i] == ' ' && i < line.length())
+                ++i;
+            theDef.wordType = line.substr(i);
+        }
+        // this is the definition of the word
+        else if(line[0] == '-')
+        {
+            if(!theDef.defAndExample.first.empty())
+            {
+                vieEngData.defList.push_back(theDef);
+                theDef.defAndExample.first.clear();
+                theDef.defAndExample.second.clear();
+            }
+            theDef.defAndExample.first = line;
+        }
+        // this is the example
+        else if(line[0] == '=')
+        {
+            if(!theDef.defAndExample.second.empty())
+                theDef.defAndExample.second += "\n";
+            int i = 1;
+            while(line[i] != '+' && i < line.length())
+            {
+                theDef.defAndExample.second += line[i];
+                ++i;
+            }
+            if(i < line.length()-1)
+            {
+                theDef.defAndExample.second += " = ";
+                theDef.defAndExample.second += line.substr(i+1);
+            }
+        }
+        else
+            continue;
+    }
+    // Push the last definition
+    if(!theDef.empty())
+        vieEngData.defList.push_back(theDef);
+}
+
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
 {
     if(head == nullptr)

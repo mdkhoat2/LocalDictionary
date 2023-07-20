@@ -128,6 +128,7 @@ void Application::loadEngEngDict()
     }
     trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
     fin.close();
+    newWord->loadAddedWord(engEngRoot);
 }
 
 void Application::loadEngVieDict()
@@ -222,7 +223,51 @@ void Application::loadEngVieDict()
     // Insert the last word
     trieInsert(engEngRoot, word, wordInfo, 1);
     fin.close();
-    newWord->loadAddedWord(engEngRoot);
+}
+
+void Application::loadVieEngDict()
+{
+    std::ifstream fin("data/VE_nonaccent.txt");
+    int count = 0;
+    std::string line, word, wordInfo;
+    // Skip the first unnecessary 12 lines
+    while(count < 12)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+    while(std::getline(fin, line))
+    {
+        if(line.empty())
+            continue;
+        // this is the line containing the word
+        if(line[0] == '@')
+        {   
+            // If it is the first word
+            if(count == 12)
+                ++count;
+            else
+            {   
+                // insert previous word and its information
+                if(isValidWord(word))
+                    trieInsert(engEngRoot, word, wordInfo, 2);
+                word.clear();
+                wordInfo.clear();
+            }
+            word += line.substr(1);
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if(wordInfo.empty())
+                wordInfo += line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    // Insert the last word
+    trieInsert(engEngRoot, word, wordInfo, 2);
+    fin.close();
 }
 
 void Application::initWindow()
@@ -372,6 +417,7 @@ void Application::run()
     newWord = new NewWord(font, window);
     loadEngEngDict();
     loadEngVieDict();
+    loadVieEngDict();
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -414,6 +460,8 @@ void Application::handleEvent()
                         searchInEngEngDict(inputWord);
                     else if(currentDataSetID == 1)
                         searchInEngVieDict(inputWord);
+                    else if(currentDataSetID == 2)
+                        searchInVieEngDict(inputWord);
                     
                 }
                 else if (menuButton.isMouseOver(window)) {
@@ -613,5 +661,26 @@ void Application::searchInEngVieDict(std::string &inputWord)
     {
         std::cout << "Cannot find the word" << "\n";
         displayBox.showNoEngVieDefinitions();
+    }
+}
+
+void Application::searchInVieEngDict(std::string &inputWord)
+{
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
+    if(!wordInfo.empty())
+    {
+        // Console
+        WordDataEngVie vieEngData;
+        extractVieEngData(vieEngData, inputWord, wordInfo);
+        vieEngData.consolePrint();
+        // UI
+        
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        
     }
 }
