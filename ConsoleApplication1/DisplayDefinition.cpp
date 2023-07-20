@@ -219,6 +219,29 @@ void DisplayBox::wrapText(sf::Text& theText)
     theText.setString(wrappedStr);
 }
 
+void DisplayBox::wrapExampleText(sf::Text &exampleText)
+{
+    std::string exampleStr = exampleText.getString();
+    std::stringstream stream(exampleStr);
+    std::string line;
+    std::string wrappedStr;
+    sf::Text temp;
+    while(std::getline(stream, line))
+    {
+        temp.setString(line);
+        wrapText(temp);
+        if(wrappedStr.empty())
+            wrappedStr = "  " + temp.getString();
+        else
+        {
+            wrappedStr += "\n";
+            wrappedStr += "  " + temp.getString();
+        }
+            
+    }
+    exampleText.setString(wrappedStr);
+}
+
 void DisplayBox::initFirstDef()
 {
     // initialize the text to display
@@ -373,7 +396,7 @@ void DisplayBox::initEngVieFirstDef()
     if(!engVieData->defList[0].defAndExample.second.empty())
     {
         wordExample.setString(engVieData->defList[0].defAndExample.second);
-        wrapText(wordExample);
+        wrapExampleText(wordExample);
     }
     else
         wordExample.setString("");

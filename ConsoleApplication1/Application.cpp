@@ -435,7 +435,9 @@ void Application::handleEvent()
                 }
                 else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
                 {
-                    displayBox.showPrevDef();
+                    if(currentDataSetID == 0)
+                        displayBox.showPrevDef();
+                    
                 }
                 else if(dataSetButton.isMouseOver(window))
                 {
