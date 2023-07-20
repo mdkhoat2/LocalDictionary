@@ -79,10 +79,9 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
-    int countDef = 0;
     while(std::getline(stream, line))
-    // We will display 3 definitions on the screen at a time, so this variable will count 3 definitions
-    // then reset to 0
+    // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
+    // We store definition and example in a pair to display it close to each other
     {
         // this is a word type
         if(line[0] == '*') 
@@ -91,7 +90,6 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             {
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
-                countDef = 0;
             }
             int i = 1;
             // Skip spaces
@@ -103,53 +101,46 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
         // We will display it like the word type
         if(line[0] == '!')
         {
+            // Push the previous eng vie def
             if(!theDef.empty())
             {
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
-                countDef = 0;
             }
             theDef.wordType = line.substr(1);
         }
         // this is the definition of the word/phrase
         else if(line[0] == '-')
         {
-            // If there have been 3 definitions so far, push theDef to the defList
-            // Clear definition and example but not the word type
-            if(countDef == 3)
+            if(!theDef.defAndExample.first.empty())
             {
                 engVieData.defList.push_back(theDef);
-                theDef.definition.clear();
-                theDef.example.clear();
-                countDef = 0;
+                theDef.defAndExample.first.clear();
+                theDef.defAndExample.second.clear();
             }
-            ++countDef;
-            if(theDef.definition.empty())
-                theDef.definition += line.substr(0);
-            else
-                theDef.definition += "\n" + line.substr(0);  
+            theDef.defAndExample.first = line.substr(0);
         }
         // this is the example
         else if(line[0] == '=')
         {
+            if(!theDef.defAndExample.second.empty())
+                theDef.defAndExample.second += "\n";
             int i = 1;
-            // If there are more than 1 example
-            if(!theDef.example.empty())
-                theDef.example += "\n";
             while(line[i] != '+' && i < line.length())
             {
-                theDef.example += line[i];
+                theDef.defAndExample.second += line[i];
                 ++i;
             }
-            theDef.example += " = ";
+            theDef.defAndExample.second += " = ";
             ++i;
             while(line[i] == ' ' && i < line.length())
                 ++i;
-            theDef.example += line.substr(i);
+            theDef.defAndExample.second += line.substr(i);
         }
         else
             continue;
     }
+    // Push the last definition
     if(!theDef.empty())
         engVieData.defList.push_back(theDef);
 }
@@ -318,27 +309,31 @@ void WordDataEngVie::consolePrint()
     {
         if(!defList[i].wordType.empty())
             std::cout << "Word type/Phrase: " << defList[i].wordType << std::endl;
-        std::cout << defList[i].definition << std::endl;
-        if(!defList[i].example.empty())
+        std::cout << defList[i].defAndExample.first << std::endl;
+        if(!defList[i].defAndExample.second.empty())
         {
             std::cout << "Example:" << std::endl;
-            std::cout << defList[i].example << std::endl;
+            std::cout << defList[i].defAndExample.second << std::endl;
         }
         std::cout << std::endl;
     }
+}
+
+EngVieDef::EngVieDef() : wordType(), defAndExample()
+{
 }
 
 void EngVieDef::clear()
 {
     if(!wordType.empty())
         wordType.clear();
-    if(!definition.empty())
-        definition.clear();
-    if(!example.empty())
-        example.clear();
+    if(!defAndExample.first.empty())
+        defAndExample.first.clear();
+    if(!defAndExample.second.empty())
+        defAndExample.second.clear();
 }
 
 bool EngVieDef::empty()
 {
-    return (wordType.empty() && definition.empty() && example.empty());
+    return (wordType.empty() && defAndExample.first.empty() && defAndExample.second.empty());
 }

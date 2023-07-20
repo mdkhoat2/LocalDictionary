@@ -36,12 +36,12 @@ public:
 struct EngVieDef
 {
 public:
+    EngVieDef();
     void clear();
     bool empty();
 public:
     std::string wordType;
-    std::string definition;
-    std::string example;
+    std::pair<std::string, std::string> defAndExample;
 };
 
 struct WordDataEngVie

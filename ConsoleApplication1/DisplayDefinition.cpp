@@ -8,21 +8,21 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word(),
     wordType(),
     wordDef(),
+    wordExample(),
     engEngTypeID(0),
     engEngDefID(1),
     engEngPtr(nullptr),
     engEngData(nullptr),
     engEngDefNum(0),
     engVieData(nullptr),
-    engVieDefID(0),
+    engVieDefID(1),
+    engVieDefNum(0),
     showNextButton(false),
     showPrevButton(false),
     nextButtonTex(),
     prevButtonTex(),
     nextButtonSprite(),
-    prevButtonSprite(),
-    wordExample(),
-    showExample(false)
+    prevButtonSprite()
 {
     theBox.setPosition(pos);
     float xText = pos.x + 20.f;
@@ -30,6 +30,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
+    wordExample.setPosition(xText, yText + 130.f);
 
     theBox.setSize(size);
 
@@ -37,10 +38,12 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setFillColor(textColor);
     wordType.setFillColor(textColor);
     wordDef.setFillColor(textColor);
+    wordExample.setFillColor(sf::Color(128, 128, 128));
 
     word.setStyle(sf::Text::Bold);
     wordType.setStyle(sf::Text::Bold | sf::Text::Italic);
     wordDef.setStyle(sf::Text::Regular);
+    wordExample.setStyle(sf::Text::Regular);
 
     if(!nextButtonTex.loadFromFile("background/next-button.png"))
         std::cout << "Cannot load next button texture" << std::endl;
@@ -68,6 +71,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     showPrevButton = false;
 
     // Eng Vie word data
+
 }
 
 DisplayBox::~DisplayBox()
@@ -84,6 +88,7 @@ void DisplayBox::setPosition(const sf::Vector2f &pos)
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
+    wordExample.setPosition(xText, yText + 130.f);
 }
 
 void DisplayBox::setPosition(float xIn, float yIn)
@@ -94,6 +99,7 @@ void DisplayBox::setPosition(float xIn, float yIn)
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
+    wordExample.setPosition(xText, yText + 130.f);
 }
 
 void DisplayBox::setBackColor(const sf::Color &color)
@@ -111,6 +117,7 @@ void DisplayBox::setFont(const sf::Font &font)
     word.setFont(font);
     wordType.setFont(font);
     wordDef.setFont(font);
+    wordExample.setFont(font);
 }
 
 void DisplayBox::setCharacterSize(unsigned int size)
@@ -118,6 +125,7 @@ void DisplayBox::setCharacterSize(unsigned int size)
     word.setCharacterSize(size + 10);
     wordType.setCharacterSize(size);
     wordDef.setCharacterSize(size);
+    wordExample.setCharacterSize(size);
 }
 
 void DisplayBox::update(sf::RenderWindow &window)
@@ -131,6 +139,7 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
     window.draw(word);
     window.draw(wordType);
     window.draw(wordDef);
+    window.draw(wordExample);
     if(showNextButton)
     {
         window.draw(nextButtonSprite);
@@ -160,6 +169,30 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
     }
     engEngDefNum = countNumOfDefs(*engEngData);
     initFirstDef();
+}
+
+void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
+{
+    if(engEngData != nullptr)
+    {
+        delete engEngData;
+        engEngData = nullptr;
+    }
+    if(engVieData == nullptr)
+    {
+        engVieData = new WordDataEngVie;
+        extractEngVieData(*engVieData, inputWord, wordInfo);
+    }
+    else // delete old word data
+    {
+        delete engVieData;
+        showNextButton = false;
+        showPrevButton = false;
+        engVieData = new WordDataEngVie;
+        extractEngVieData(*engVieData, inputWord, wordInfo);
+    }
+    engVieDefNum = engVieData->defList.size();
+    initEngVieFirstDef();
 }
 
 void DisplayBox::wrapText(sf::Text& theText)
@@ -295,6 +328,7 @@ void DisplayBox::showNoDefinitions()
     {
         delete engEngData;
         engEngData = nullptr;
+        engEngPtr = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -302,6 +336,50 @@ void DisplayBox::showNoDefinitions()
     word.setString("No Definitions Found!");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::clearEngEngData()
+{
+    if(engEngData)
+    {
+        delete engEngData;
+        engEngData = nullptr;
+        engEngPtr = nullptr;
+    }
+
+    word.setString("");
+    wordType.setString("");
+    wordDef.setString("");
+
+    showNextButton = false;
+    showPrevButton = false;
+}
+
+void DisplayBox::initEngVieFirstDef()
+{
+    word.setString(engVieData->word);
+
+    engVieDefID = 1;
+    if(!engVieData->defList[0].wordType.empty())
+    {
+        wordType.setString(engVieData->defList[0].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(engVieData->defList[0].defAndExample.first);
+    wrapText(wordType);
+    if(!engVieData->defList[0].defAndExample.second.empty())
+    {
+        wordExample.setString(engVieData->defList[0].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Initialize the buttons
+    if(engVieDefNum > 1)
+        showNextButton = true;
 }
 
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)

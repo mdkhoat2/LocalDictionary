@@ -333,6 +333,12 @@ void Application::initFavouriteButton()
 
 void Application::changeDataSet()
 {
+    // Clear word data before change data set
+    if(currentDataSetID == 0)
+    {
+        displayBox.clearEngEngData();
+    }
+    // Start changing data set
     if (currentDataSetID != 3)
 		++currentDataSetID;
 	else
@@ -422,7 +428,10 @@ void Application::handleEvent()
                 }
                 else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
-                    displayBox.showNextDef();
+                    if(currentDataSetID == 0)
+                        displayBox.showNextDef();
+                    // else if(currentDataSetID == 1)
+                    //     displayBox.showNextEngVieDef();
                 }
                 else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
                 {
@@ -575,7 +584,8 @@ void Application::searchInEngVieDict(std::string &inputWord)
         WordDataEngVie engVieData;
         extractEngVieData(engVieData, inputWord, wordInfo);
         engVieData.consolePrint();
-
+        // UI
+        displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
     else
     {

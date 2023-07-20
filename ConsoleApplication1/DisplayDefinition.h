@@ -25,11 +25,16 @@ public:
     void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
 
     void wrapText(sf::Text& theText);
+    // For Eng-Eng
     void initFirstDef();
     void setUIText();
     void showNextDef();
     void showPrevDef();
     void showNoDefinitions();
+    void clearEngEngData();
+
+    // For Eng-Vie
+    void initEngVieFirstDef();
 
     bool isMouseOverNextButton(sf::RenderWindow& window);
     bool isMouseOverPrevButton(sf::RenderWindow& window);
@@ -43,7 +48,6 @@ private:
     sf::Text wordType;
     sf::Text wordDef;
     sf::Text wordExample;
-    bool showExample;
 
     int engEngTypeID;
     int engEngDefID;
@@ -53,6 +57,7 @@ private:
 
     WordDataEngVie* engVieData; // for Eng-Vie data set only
     int engVieDefID;
+    int engVieDefNum;
 
     bool showNextButton;
     bool showPrevButton;
