@@ -19,5 +19,3 @@ take
 apart
 after
 before
-because
-amazing

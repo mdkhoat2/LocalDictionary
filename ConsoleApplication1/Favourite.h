@@ -4,20 +4,20 @@
 #include <queue>
 #include <SFML/Graphics.hpp>
 struct WordItem {
-    std::string word;
-    sf::RectangleShape deleteButton;
+	std::string word;
+	sf::RectangleShape deleteButton;
 };
 struct WordFavouriteButton
 {
 	std::string word;
 	sf::RectangleShape favouriteButton;
-	bool liked=false;
+	bool liked = false;
 };
 void saveWords(const std::vector<std::string>& words);
 
 std::vector<std::string> loadWords();
 
-void favourite(sf::RenderWindow&window);
+void favourite(sf::RenderWindow& window);
 
 bool checkStringInFile(const std::string& file_path, const std::string& target_string);
 
@@ -33,7 +33,7 @@ public:
 
 	void addtoFile();
 
-	void likeOrNot(sf::RenderWindow&window);
+	void likeOrNot(sf::RenderWindow& window);
 
 	int posX;
 	int posY;
