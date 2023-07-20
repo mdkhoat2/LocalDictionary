@@ -66,6 +66,7 @@ private:
     Button menuButton;
     Button dataSetButton;
     Button addButton;
+    Button deleteButton;
     Button editDefButton;
     Button favouritebutton;
 
@@ -87,6 +88,7 @@ private:
     void initDataSetButton();
     void initMenuButton();
     void initAddButton();
+    void initDeleteButton();
     void initEditDefButton();
     void initDisplayBox();
     void initFavouriteButton();

@@ -206,7 +206,8 @@ NewWord::NewWord(sf::Font& font, sf::RenderWindow& window) :
     //defBar(20, sf::Color::Black, sf::Color::Transparent, true),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
+    noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
+    displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     isEndScreen(false)
 {
     initBackground(window);
@@ -214,6 +215,8 @@ NewWord::NewWord(sf::Font& font, sf::RenderWindow& window) :
     initBackButton(font);
     initAddButton(font);
     initWordBar(font);
+    initDisplayBox(font);
+    initNoteBox(font);
     //initDefBar(font);
 }
 
@@ -271,6 +274,11 @@ void NewWord::initDisplayBox(sf::Font& font) {
     displayBox.setCharacterSize(30);
 }
 
+void NewWord::initNoteBox(sf::Font& font) {
+    noteBox.setFont(font);
+    noteBox.setCharacterSize(30);
+}
+
 void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
@@ -289,20 +297,22 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
             endScreen = true;
             isEndScreen = endScreen;
         }
-        if (addButton.isMouseOver(window)) {
+        else if (addButton.isMouseOver(window)) {
             std::string inputWord = wordBar.getText();
-            std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-            if (!wordInfo.empty()) {
-                // Console
-                std::cout << "The word has already existed" << "\n";
-                WordData theWordData;
-                extractWordData(theWordData, inputWord, wordInfo);
-                theWordData.consolePrint();
-                // UI
-                displayBox.getWordData(inputWord, wordInfo);
+            std::string wordInfo;
+            //std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
+            //if (!wordInfo.empty()) {
+            //    // Console
+            //    std::cout << "The word has already existed" << "\n";
+            //    WordData theWordData;
+            //    extractWordData(theWordData, inputWord, wordInfo);
+            //    theWordData.consolePrint();
+            //    // UI
+            //    noteBox.showExistedDefinitions();
+            //    displayBox.getWordData(inputWord, wordInfo);
 
-            }
-            else {
+            //}
+            //else {
                 addFromTextFile(engEngRoot, inputWord, wordInfo);
                 // Console
                 std::cout << "The word has been imported" << "\n";
@@ -310,8 +320,17 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 extractWordData(theWordData, inputWord, wordInfo);
                 theWordData.consolePrint();
                 // UI
+                noteBox.showNewDefinitions();
                 displayBox.getWordData(inputWord, wordInfo);
-            }
+            //}
+        }
+        else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
+        {
+            displayBox.showNextDef();
+        }
+        else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
+        {
+            displayBox.showPrevDef();
         }
     }
 }
@@ -320,6 +339,7 @@ void NewWord::update(sf::RenderWindow& window) {
     if (!isEndScreen) {
         backButton.update(window);
         addButton.update(window);
+        noteBox.update(window);
         displayBox.update(window);
     }
 }
@@ -331,6 +351,7 @@ void NewWord::render(sf::RenderWindow& window) {
         //defBar.drawTo(window);
         backButton.drawTo(window);
         addButton.drawTo(window);
+        noteBox.drawTo(window);
         displayBox.drawTo(window);
     }
 }

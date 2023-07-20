@@ -30,6 +30,7 @@ private:
 	sf::Sprite addScreen;
 	Textbox wordBar;
 	//Textbox defBar;
+	DisplayBox noteBox;
 	DisplayBox displayBox;
 	Button backButton;
 	Button addButton;
@@ -42,6 +43,7 @@ private:
 	void initBackButton(sf::Font& font);
 	void initAddButton(sf::Font& font);
 	void initDisplayBox(sf::Font& font);
+	void initNoteBox(sf::Font& font);
 };
 
 #endif
