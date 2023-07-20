@@ -107,7 +107,7 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
             }
-            theDef.wordType = line.substr(1);
+            theDef.wordType = "Phrase: " + line.substr(1);
         }
         // this is the definition of the word/phrase
         else if(line[0] == '-')
@@ -136,6 +136,14 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             while(line[i] == ' ' && i < line.length())
                 ++i;
             theDef.defAndExample.second += line.substr(i);
+        }
+        // This is the explanation to a technical word
+        // We display it like word example
+        else if(line[0] == '+')
+        {
+            if(!theDef.defAndExample.second.empty())
+                theDef.defAndExample.second += "\n";
+            theDef.defAndExample.second += line.substr(1);
         }
         else
             continue;

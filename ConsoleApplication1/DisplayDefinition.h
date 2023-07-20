@@ -36,6 +36,10 @@ public:
 
     // For Eng-Vie
     void initEngVieFirstDef();
+    void showNextEngVieDef();
+    void showPrevEngVieDef();
+    void showNoEngVieDefinitions();
+    void clearEngVieData();
 
     bool isMouseOverNextButton(sf::RenderWindow& window);
     bool isMouseOverPrevButton(sf::RenderWindow& window);

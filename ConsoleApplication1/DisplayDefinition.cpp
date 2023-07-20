@@ -15,7 +15,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     engEngData(nullptr),
     engEngDefNum(0),
     engVieData(nullptr),
-    engVieDefID(1),
+    engVieDefID(0),
     engVieDefNum(0),
     showNextButton(false),
     showPrevButton(false),
@@ -30,7 +30,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 130.f);
+    wordExample.setPosition(xText, yText + 160.f);
 
     theBox.setSize(size);
 
@@ -200,46 +200,40 @@ void DisplayBox::wrapText(sf::Text& theText)
     std::string str = theText.getString();
     std::string wrappedStr;
 
-    std::string word;
     std::istringstream iss(str);
+    std::string word;
     std::string line;
+
+    // Clear theText before wrapping
     theText.setString("");
 
-    while (iss >> word) {
-        theText.setString(line + " " + word);
-        if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 40.f) {
+    while (std::getline(iss, word, '\n')) {
+        // Process each line separately
+        if (!line.empty()) {
+            // Add the previous line to the wrapped text and start a new line
             wrappedStr += line + '\n';
-            line = word;
-        } else {
-            line += (line.empty() ? "" : " ") + word;
+            line.clear();
+        }
+        std::istringstream lineIss(word);
+        while (lineIss >> word) {
+            // Set theText with the current line + the next word
+            theText.setString(line + (line.empty() ? "" : " ") + word);
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 40.f) {
+                // Add the current line to the wrapped text and start a new line
+                wrappedStr += line + '\n';
+                line = word;
+            } else {
+                // Continue adding words to the current line
+                line += (line.empty() ? "" : " ") + word;
+            }
         }
     }
 
+    // Add the last line to the wrapped text
     wrappedStr += line;
-    theText.setString(wrappedStr);
-}
 
-void DisplayBox::wrapExampleText(sf::Text &exampleText)
-{
-    std::string exampleStr = exampleText.getString();
-    std::stringstream stream(exampleStr);
-    std::string line;
-    std::string wrappedStr;
-    sf::Text temp;
-    while(std::getline(stream, line))
-    {
-        temp.setString(line);
-        wrapText(temp);
-        if(wrappedStr.empty())
-            wrappedStr = "  " + temp.getString();
-        else
-        {
-            wrappedStr += "\n";
-            wrappedStr += "  " + temp.getString();
-        }
-            
-    }
-    exampleText.setString(wrappedStr);
+    // Set theText with the wrapped text
+    theText.setString(wrappedStr);
 }
 
 void DisplayBox::initFirstDef()
@@ -383,7 +377,7 @@ void DisplayBox::initEngVieFirstDef()
 {
     word.setString(engVieData->word);
 
-    engVieDefID = 1;
+    engVieDefID = 0;
     if(!engVieData->defList[0].wordType.empty())
     {
         wordType.setString(engVieData->defList[0].wordType);
@@ -392,17 +386,101 @@ void DisplayBox::initEngVieFirstDef()
     else
         wordType.setString("");
     wordDef.setString(engVieData->defList[0].defAndExample.first);
-    wrapText(wordType);
+    wrapText(wordDef);
     if(!engVieData->defList[0].defAndExample.second.empty())
     {
         wordExample.setString(engVieData->defList[0].defAndExample.second);
-        wrapExampleText(wordExample);
+        wrapText(wordExample);
     }
     else
         wordExample.setString("");
     // Initialize the buttons
     if(engVieDefNum > 1)
         showNextButton = true;
+}
+
+void DisplayBox::showNextEngVieDef()
+{
+    ++engVieDefID;
+    if(!engVieData->defList[engVieDefID].wordType.empty())
+    {
+        wordType.setString(engVieData->defList[engVieDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(engVieData->defList[engVieDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(engVieDefID > 0)
+        showPrevButton = true;
+    if(engVieDefID == engVieDefNum-1)
+        showNextButton = false;
+}
+
+void DisplayBox::showPrevEngVieDef()
+{
+    --engVieDefID;
+    if(!engVieData->defList[engVieDefID].wordType.empty())
+    {
+        wordType.setString(engVieData->defList[engVieDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(engVieData->defList[engVieDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(engVieDefID < engVieDefNum-1)
+        showNextButton = true;
+    if(engVieDefID == 0)
+        showPrevButton = false;
+}
+
+void DisplayBox::showNoEngVieDefinitions()
+{
+    if(engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+    word.setString("Khong tim thay dinh nghia!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");  
+}
+
+void DisplayBox::clearEngVieData()
+{
+    if(engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+    word.setString("");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");  
 }
 
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)

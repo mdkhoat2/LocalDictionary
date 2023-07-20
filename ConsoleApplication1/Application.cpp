@@ -338,6 +338,10 @@ void Application::changeDataSet()
     {
         displayBox.clearEngEngData();
     }
+    if(currentDataSetID == 1)
+    {
+        displayBox.clearEngVieData();
+    }
     // Start changing data set
     if (currentDataSetID != 3)
 		++currentDataSetID;
@@ -430,14 +434,15 @@ void Application::handleEvent()
                 {
                     if(currentDataSetID == 0)
                         displayBox.showNextDef();
-                    // else if(currentDataSetID == 1)
-                    //     displayBox.showNextEngVieDef();
+                    else if(currentDataSetID == 1)
+                        displayBox.showNextEngVieDef();
                 }
                 else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
                 {
                     if(currentDataSetID == 0)
                         displayBox.showPrevDef();
-                    
+                    else if(currentDataSetID == 1)
+                        displayBox.showPrevEngVieDef();
                 }
                 else if(dataSetButton.isMouseOver(window))
                 {
@@ -592,5 +597,6 @@ void Application::searchInEngVieDict(std::string &inputWord)
     else
     {
         std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoEngVieDefinitions();
     }
 }
