@@ -321,7 +321,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 theWordData.consolePrint();
                 // UI
                 noteBox.showNewDefinitions();
-                displayBox.getWordData(inputWord, wordInfo);
+                displayBox.getWordDataEngEng(inputWord, wordInfo);
             //}
         }
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))

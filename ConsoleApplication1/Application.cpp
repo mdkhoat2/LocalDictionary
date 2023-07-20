@@ -143,15 +143,20 @@ void Application::loadEngVieDict()
     }
     while(std::getline(fin, line))
     {
+        ++count;
+        // not read further because overlapping words
+        if(count == 493598) 
+        {
+            fin.close();
+            return;
+        }
         if(line.empty())
             continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
-            // If it is the first word
-            if(count == 15)
-                ++count;
-            else
+            // If it is not the first word
+            if(count > 16)
             {   
                 // insert previous word and its information
                 if(isValidWord(word))
@@ -337,6 +342,16 @@ void Application::initFavouriteButton()
 
 void Application::changeDataSet()
 {
+    // Clear word data before change data set
+    if(currentDataSetID == 0)
+    {
+        displayBox.clearEngEngData();
+    }
+    if(currentDataSetID == 1)
+    {
+        displayBox.clearEngVieData();
+    }
+    // Start changing data set
     if (currentDataSetID != 3)
 		++currentDataSetID;
 	else
@@ -356,7 +371,7 @@ void Application::run()
     // Load dictionaries
     newWord = new NewWord(font, window);
     loadEngEngDict();
-    // loadEngVieDict();
+    loadEngVieDict();
     while(window.isOpen())
     {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -430,11 +445,17 @@ void Application::handleEvent()
                 }
                 else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
                 {
-                    displayBox.showNextDef();
+                    if(currentDataSetID == 0)
+                        displayBox.showNextDef();
+                    else if(currentDataSetID == 1)
+                        displayBox.showNextEngVieDef();
                 }
                 else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
                 {
-                    displayBox.showPrevDef();
+                    if(currentDataSetID == 0)
+                        displayBox.showPrevDef();
+                    else if(currentDataSetID == 1)
+                        displayBox.showPrevEngVieDef();
                 }
                 else if(dataSetButton.isMouseOver(window))
                 {
@@ -564,7 +585,7 @@ void Application::searchInEngEngDict(std::string& inputWord)
         extractWordData(theWordData, inputWord, wordInfo);
         theWordData.consolePrint();
         // UI
-        displayBox.getWordData(inputWord, wordInfo);
+        displayBox.getWordDataEngEng(inputWord, wordInfo);
 
     }
     else
@@ -582,10 +603,15 @@ void Application::searchInEngVieDict(std::string &inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        std::cout << wordInfo << std::endl;
+        WordDataEngVie engVieData;
+        extractEngVieData(engVieData, inputWord, wordInfo);
+        engVieData.consolePrint();
+        // UI
+        displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
     else
     {
         std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoEngVieDefinitions();
     }
 }

@@ -73,6 +73,86 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
     }
 }
 
+void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::string &wordInfo)
+{
+    engVieData.word = word;
+    std::stringstream stream(wordInfo);
+    std::string line;
+    EngVieDef theDef;
+    while(std::getline(stream, line))
+    // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
+    // We store definition and example in a pair to display it close to each other
+    {
+        // this is a word type
+        if(line[0] == '*') 
+        {
+            if(!theDef.empty()) // need to push the previous word data
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.clear();
+            }
+            int i = 1;
+            // Skip spaces
+            while(line[i] == ' ' && i < line.length())
+                ++i;
+            theDef.wordType = line.substr(i);
+        }
+        // this is a phrase containing the word
+        // We will display it like the word type
+        if(line[0] == '!')
+        {
+            // Push the previous eng vie def
+            if(!theDef.empty())
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.clear();
+            }
+            theDef.wordType = "Phrase: " + line.substr(1);
+        }
+        // this is the definition of the word/phrase
+        else if(line[0] == '-')
+        {
+            if(!theDef.defAndExample.first.empty())
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.defAndExample.first.clear();
+                theDef.defAndExample.second.clear();
+            }
+            theDef.defAndExample.first = line.substr(0);
+        }
+        // this is the example
+        else if(line[0] == '=')
+        {
+            if(!theDef.defAndExample.second.empty())
+                theDef.defAndExample.second += "\n";
+            int i = 1;
+            while(line[i] != '+' && i < line.length())
+            {
+                theDef.defAndExample.second += line[i];
+                ++i;
+            }
+            theDef.defAndExample.second += " = ";
+            ++i;
+            while(line[i] == ' ' && i < line.length())
+                ++i;
+            theDef.defAndExample.second += line.substr(i);
+        }
+        // This is the explanation to a technical word
+        // We display it like word example
+        else if(line[0] == '+')
+        {
+            if(!theDef.defAndExample.second.empty())
+                theDef.defAndExample.second += "\n";
+            theDef.defAndExample.second += line.substr(1);
+        }
+        else
+            continue;
+    }
+    // Push the last definition
+    if(!theDef.empty())
+        engVieData.defList.push_back(theDef);
+}
+
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
 {
     if(head == nullptr)
@@ -224,4 +304,44 @@ void convertToNormalLine(std::wstring &line)
     {
         convertToNormalChar(line[i]);
     }
+}
+
+WordDataEngVie::WordDataEngVie() : word(), defList()
+{
+}
+
+void WordDataEngVie::consolePrint()
+{
+    std::cout << "Word: " << word << std::endl;
+    for(int i = 0; i < defList.size(); ++i)
+    {
+        if(!defList[i].wordType.empty())
+            std::cout << "Word type/Phrase: " << defList[i].wordType << std::endl;
+        std::cout << defList[i].defAndExample.first << std::endl;
+        if(!defList[i].defAndExample.second.empty())
+        {
+            std::cout << "Example:" << std::endl;
+            std::cout << defList[i].defAndExample.second << std::endl;
+        }
+        std::cout << std::endl;
+    }
+}
+
+EngVieDef::EngVieDef() : wordType(), defAndExample()
+{
+}
+
+void EngVieDef::clear()
+{
+    if(!wordType.empty())
+        wordType.clear();
+    if(!defAndExample.first.empty())
+        defAndExample.first.clear();
+    if(!defAndExample.second.empty())
+        defAndExample.second.clear();
+}
+
+bool EngVieDef::empty()
+{
+    return (wordType.empty() && defAndExample.first.empty() && defAndExample.second.empty());
 }
