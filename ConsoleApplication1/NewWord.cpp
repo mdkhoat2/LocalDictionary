@@ -346,6 +346,7 @@ void NewWord::update(sf::RenderWindow& window) {
 
 void NewWord::render(sf::RenderWindow& window) {
     if (!isEndScreen) {
+        window.clear(sf::Color::White);
         window.draw(addScreen);
         wordBar.drawTo(window);
         //defBar.drawTo(window);

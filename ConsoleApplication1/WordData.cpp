@@ -46,7 +46,8 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
 {
     theWordData.word = word;
     std::stringstream stream(wordInfo);
-    std::string line;
+    std::string line, definition, example;
+    WordDefNode* theNode;
     int index;
     while(std::getline(stream, line, '\n'))
     {
@@ -62,13 +63,31 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
             else
                 index = 3;
         }
+        // the line contains example, synonym or antonym
+        else if(line[0] == ';' || line[0] == '[')
+        {
+            if(example.empty())
+                example = line;
+            else
+                example += "\n" + line;
+        }
         // the line that contains the definition
         else
         {
-            int i = 0;
-            while(line[i] != ' ')
-                ++i;
-            insertAtEnd(theWordData.defListHead[index], line.substr(i+1));
+            if(definition.empty())
+            {
+                definition = line;
+            }
+            // insert previous definition along with examples, synonyms, antonyms
+            else
+            {
+                theNode = new WordDefNode();
+                theNode->wordDef = definition;
+                theNode->wordExample = example;
+                insertAtEnd(theWordData.defListHead[index], theNode);
+                definition = line;
+                example.clear();
+            }
         }
     }
 }
@@ -79,7 +98,7 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
-    while(std::getline(stream, line))
+    while(std::getline(stream, line, '\n'))
     // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
     // We store definition and example in a pair to display it close to each other
     {
@@ -91,19 +110,14 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
             }
-            int i = 1;
-            // Skip spaces
-            while(line[i] == ' ' && i < line.length())
-                ++i;
-            while(line[i] != '/' && i < line.length())
+            if(line.length() >= 2)
             {
-                theDef.wordType += line[i];
-                ++i;
+                theDef.wordType = line.substr(1);
             }
         }
         // this is a phrase containing the word
         // We will display it like the word type
-        if(line[0] == '!')
+        else if(line[0] == '!')
         {
             // Push the previous eng vie def
             if(!theDef.empty())
@@ -111,7 +125,8 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
                 engVieData.defList.push_back(theDef);
                 theDef.clear();
             }
-            theDef.wordType = "Phrase: " + line.substr(1);
+            if(line.length() >= 2)
+                theDef.wordType = "Phrase: " + line.substr(1);
         }
         // this is the definition of the word/phrase
         else if(line[0] == '-')
@@ -122,7 +137,7 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
                 theDef.defAndExample.first.clear();
                 theDef.defAndExample.second.clear();
             }
-            theDef.defAndExample.first = line.substr(0);
+            theDef.defAndExample.first = line;
         }
         // this is the example
         else if(line[0] == '=')
@@ -130,16 +145,20 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             if(!theDef.defAndExample.second.empty())
                 theDef.defAndExample.second += "\n";
             int i = 1;
-            while(line[i] != '+' && i < line.length())
+            while(i < line.length())
             {
-                theDef.defAndExample.second += line[i];
-                ++i;
+                if(line[i] == '+')
+                    break;
+                else
+                {
+                    theDef.defAndExample.second += line[i];
+                    ++i;
+                }
             }
-            theDef.defAndExample.second += " = ";
-            ++i;
-            while(line[i] == ' ' && i < line.length())
-                ++i;
-            theDef.defAndExample.second += line.substr(i);
+            if(i < line.length()-1 && line[i] == '+')
+            {
+                theDef.defAndExample.second += " = " + line.substr(i+1);
+            }
         }
         // This is the explanation to a technical word
         // We display it like word example
@@ -147,7 +166,8 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
         {
             if(!theDef.defAndExample.second.empty())
                 theDef.defAndExample.second += "\n";
-            theDef.defAndExample.second += line.substr(1);
+            if(line.length() >= 2)
+                theDef.defAndExample.second += line.substr(1);
         }
         // This is the sign we add to delete old word type
         // Because a word appears at many places in the dictionary
@@ -160,7 +180,10 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             }
         }
         else
+        {
+            std::cout << "What is this line?" << line << std::endl;
             continue;
+        }   
     }
     // Push the last definition
     if(!theDef.empty())
@@ -173,7 +196,7 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
-    while(std::getline(stream, line))
+    while(std::getline(stream, line, '\n'))
     // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
     // We store definition and example in a pair to display it close to each other
     {
@@ -185,11 +208,10 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
                 vieEngData.defList.push_back(theDef);
                 theDef.clear();
             }
-            int i = 1;
-            // Skip spaces
-            while(line[i] == ' ' && i < line.length())
-                ++i;
-            theDef.wordType = line.substr(i);
+            if(line.length() >= 2)
+            {
+                theDef.wordType = line.substr(1);
+            }
         }
         // this is the definition of the word
         else if(line[0] == '-')
@@ -208,15 +230,19 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
             if(!theDef.defAndExample.second.empty())
                 theDef.defAndExample.second += "\n";
             int i = 1;
-            while(line[i] != '+' && i < line.length())
+            while(i < line.length())
             {
-                theDef.defAndExample.second += line[i];
-                ++i;
+                if(line[i] == '+')
+                    break;
+                else
+                {
+                    theDef.defAndExample.second += line[i];
+                    ++i;
+                }
             }
-            if(i < line.length()-1)
+            if(i < line.length()-1 && line[i] == '+')
             {
-                theDef.defAndExample.second += " = ";
-                theDef.defAndExample.second += line.substr(i+1);
+                theDef.defAndExample.second += " = " + line.substr(i+1);
             }
         }
         // This is the sign we add to delete old word type
@@ -230,11 +256,45 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
             }
         }
         else
+        {
+            std::cout << "What is this line?" << line << std::endl;
             continue;
+        }   
     }
     // Push the last definition
     if(!theDef.empty())
         vieEngData.defList.push_back(theDef);
+}
+
+void separateEngEngExample(std::string &wordInfo)
+{
+    std::stringstream stream(wordInfo);
+    std::string newWordInfo;
+    std::string line;
+    while(std::getline(stream, line, '\n'))
+    {
+        if(isValidWordType(line))
+        {
+            if(newWordInfo.empty())
+                newWordInfo = line;
+            else
+                newWordInfo += "\n" + line;
+        }
+        else
+        {
+            if(!newWordInfo.empty())
+                newWordInfo += "\n";
+            int i = 0;
+            while(i < line.length())
+            {
+                if(line[i] == ';' || line[i] == '[')
+                    newWordInfo += "\n";
+                newWordInfo += line[i];
+                ++i;
+            }
+        }
+    }
+    wordInfo = newWordInfo;
 }
 
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
@@ -250,6 +310,19 @@ void insertAtEnd(WordDefNode *&head, std::string wordDef)
         cur = cur->next;
     cur->next = new WordDefNode();
     cur->next->wordDef = wordDef;
+}
+
+void insertAtEnd(WordDefNode *&head, WordDefNode *theNode)
+{
+    if(head == nullptr)
+    {
+        head = theNode;
+        return;
+    }
+    WordDefNode* cur = head;
+    while(cur->next != nullptr)
+        cur = cur->next;
+    cur->next = theNode;
 }
 
 void deleteAllList(WordDefNode *&head)
@@ -307,18 +380,6 @@ bool isValidWordType(std::string wordType)
     if(wordType == "n" || wordType == "v" || wordType == "adj" || wordType == "adv")
         return true;
     return false;
-}
-
-bool isValidWord(std::string word)
-{
-    if(word.empty())
-        return false;
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(!(word[i] >= 0 && word[i] < 128))
-            return false;
-    }
-    return true;
 }
 
 bool isNumber(std::string numStr)

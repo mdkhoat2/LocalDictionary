@@ -102,27 +102,31 @@ void Application::loadEngEngDict()
                     else
                         wordInfo += "\n" + wordType + "\n";
                     // If that word type has more than 1 definition
-                    if(line[j+1] == '1')
-                        wordInfo += line.substr(i+4);
+                    if(line[j+1] == '1' && j+4 < line.length())
+                        wordInfo += line.substr(j+4);
                     // If that word type has only 1 definition
-                    else
-                        wordInfo += line.substr(i+3);
+                    else if(j+3 < line.length())
+                        wordInfo += line.substr(j+3);
                 }
                     
                 // If it is the word "See"
-                else if(wordType == "See")
+                else if(wordType == "See" && i < line.length())
                     wordInfo += line.substr(i);
                 // If it is a number (which means that the word has more than 1 definition for a word type)
-                else
+                else if(isdigit(line[i]) && i+3 < line.length())
                 {
-                    wordInfo += "\n" + line.substr(i);
+                    wordInfo += "\n" + line.substr(i+3);
                 }
                 
             }
             // If there are more than 5 blanks then it is just a normal line of a definition
-            else
+            else if(i < line.length())
             {
                 wordInfo += " " + line.substr(i);
+            }
+            else
+            {
+                std::cout << "Something goes wrong!" << std::endl;
             }
         }
     }
@@ -144,8 +148,6 @@ void Application::loadEngVieDict()
     }
     while(std::getline(fin, line))
     {
-        if(line.empty())
-            continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
@@ -155,51 +157,21 @@ void Application::loadEngVieDict()
             else
             {   
                 // insert previous word and its information
-                if(isValidWord(word))
-                    trieInsert(engEngRoot, word, wordInfo, 1);
+                trieInsert(engEngRoot, word, wordInfo, 1);
+                    
                 word.clear();
                 wordInfo.clear();
             }
             int i = 1;
-            while(line[i] != '/' && line[i] != '=' && line[i] != '(' && line[i] != ')'
-            && line[i] != '[' && line[i] != ']' && line[i] != '&' && i < line.length())
+            while(i < line.length())
             {
-                word += line[i];
-                ++i;
-            }
-            // Pop the space at the end of the current word
-            if(word[word.length()-1] == ' ')
-                word.pop_back();
-            // If there is an open parenthesis at the middle of the word
-            if(line[i] == '(')
-            {
-                while(line[i] != ')')
-                    ++i;
-                if(i < line.length()-2)
+                if(line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
+                || line[i] == '[' || line[i] == ']' || line[i] == '&')
+                    break;
+                else
                 {
+                    word += line[i];
                     ++i;
-                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
-                    && line[i] != '=' && i < line.length())
-                    {
-                        word += line[i];
-                        ++i;
-                    }
-                }
-            }
-            // If there is an open bracket at the middle of the word
-            if(line[i] == '[')
-            {
-                while(line[i] != ']')
-                    ++i;
-                if(i < line.length()-2)
-                {
-                    ++i;
-                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
-                    && line[i] != '=' && i < line.length())
-                    {
-                        word += line[i];
-                        ++i;
-                    }
                 }
             }
             // Pop the space at the end of the current word
@@ -210,7 +182,7 @@ void Application::loadEngVieDict()
         else
         {
             if(wordInfo.empty())
-                wordInfo += line;
+                wordInfo = line;
             else
                 wordInfo += "\n" + line;
         }
@@ -233,8 +205,6 @@ void Application::loadVieEngDict()
     }
     while(std::getline(fin, line))
     {
-        if(line.empty())
-            continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
@@ -244,18 +214,18 @@ void Application::loadVieEngDict()
             else
             {   
                 // insert previous word and its information
-                if(isValidWord(word))
-                    trieInsert(engEngRoot, word, wordInfo, 2);
+                trieInsert(engEngRoot, word, wordInfo, 2);
                 word.clear();
                 wordInfo.clear();
             }
-            word += line.substr(1);
+            if(line.length() >= 2)
+                word = line.substr(1);
         }
         // this is the line containing the word type, word definitions, ...
         else
         {
             if(wordInfo.empty())
-                wordInfo += line;
+                wordInfo = line;
             else
                 wordInfo += "\n" + line;
         }
@@ -583,8 +553,8 @@ void Application::update()
 
 void Application::render()
 {
-    window.clear(sf::Color::White);
     if (currentScreen == ScreenState::MainScreen) {
+		window.clear(sf::Color::White);
         window.draw(mainScreen);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
@@ -597,6 +567,7 @@ void Application::render()
         //dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
+		window.clear(sf::Color::White);
         window.draw(screenWithOptions);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
@@ -632,9 +603,8 @@ void Application::searchInEngEngDict(std::string& inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        WordData theWordData;
-        extractWordData(theWordData, inputWord, wordInfo);
-        theWordData.consolePrint();
+        separateEngEngExample(wordInfo);
+        std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataEngEng(inputWord, wordInfo);
 
@@ -655,9 +625,6 @@ void Application::searchInEngVieDict(std::string &inputWord)
     {
         // Console
         std::cout << wordInfo << std::endl;
-        WordDataEngVie engVieData;
-        extractEngVieData(engVieData, inputWord, wordInfo);
-        engVieData.consolePrint();
         // UI
         displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
@@ -676,9 +643,7 @@ void Application::searchInVieEngDict(std::string &inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        WordDataEngVie vieEngData;
-        extractVieEngData(vieEngData, inputWord, wordInfo);
-        vieEngData.consolePrint();
+        std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataVieEng(inputWord, wordInfo);
     }

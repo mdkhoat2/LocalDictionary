@@ -122,7 +122,9 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
     }
     node->flag = true;
     if(curDataSetID == 0)
+    {
         node->engEngWordInfo = wordInfo;
+    }
     else if(curDataSetID == 1)
     {
         // In the EV dictionary, a word appears at many places with different meanings, so we need to
