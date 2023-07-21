@@ -46,7 +46,8 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
 {
     theWordData.word = word;
     std::stringstream stream(wordInfo);
-    std::string line;
+    std::string line, definition, example;
+    WordDefNode* theNode;
     int index;
     while(std::getline(stream, line, '\n'))
     {
@@ -62,10 +63,31 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
             else
                 index = 3;
         }
+        // the line contains example, synonym or antonym
+        else if(line[0] == ';' || line[0] == '[')
+        {
+            if(example.empty())
+                example = line;
+            else
+                example += "\n" + line;
+        }
         // the line that contains the definition
         else
         {
-            insertAtEnd(theWordData.defListHead[index], line);
+            if(definition.empty())
+            {
+                definition = line;
+            }
+            // insert previous definition along with examples, synonyms, antonyms
+            else
+            {
+                theNode = new WordDefNode();
+                theNode->wordDef = definition;
+                theNode->wordExample = example;
+                insertAtEnd(theWordData.defListHead[index], theNode);
+                definition = line;
+                example.clear();
+            }
         }
     }
 }
@@ -244,6 +266,37 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
         vieEngData.defList.push_back(theDef);
 }
 
+void separateEngEngExample(std::string &wordInfo)
+{
+    std::stringstream stream(wordInfo);
+    std::string newWordInfo;
+    std::string line;
+    while(std::getline(stream, line, '\n'))
+    {
+        if(isValidWordType(line))
+        {
+            if(newWordInfo.empty())
+                newWordInfo = line;
+            else
+                newWordInfo += "\n" + line;
+        }
+        else
+        {
+            if(!newWordInfo.empty())
+                newWordInfo += "\n";
+            int i = 0;
+            while(i < line.length())
+            {
+                if(line[i] == ';' || line[i] == '[')
+                    newWordInfo += "\n";
+                newWordInfo += line[i];
+                ++i;
+            }
+        }
+    }
+    wordInfo = newWordInfo;
+}
+
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
 {
     if(head == nullptr)
@@ -257,6 +310,19 @@ void insertAtEnd(WordDefNode *&head, std::string wordDef)
         cur = cur->next;
     cur->next = new WordDefNode();
     cur->next->wordDef = wordDef;
+}
+
+void insertAtEnd(WordDefNode *&head, WordDefNode *theNode)
+{
+    if(head == nullptr)
+    {
+        head = theNode;
+        return;
+    }
+    WordDefNode* cur = head;
+    while(cur->next != nullptr)
+        cur = cur->next;
+    cur->next = theNode;
 }
 
 void deleteAllList(WordDefNode *&head)

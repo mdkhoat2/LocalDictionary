@@ -113,13 +113,9 @@ void Application::loadEngEngDict()
                 else if(wordType == "See" && i < line.length())
                     wordInfo += line.substr(i);
                 // If it is a number (which means that the word has more than 1 definition for a word type)
-                else if(i < line.length())
+                else if(isdigit(line[i]) && i+3 < line.length())
                 {
-                    wordInfo += "\n" + line.substr(i);
-                }
-                else
-                {
-                    std::cout << "Something goes wrong!" << std::endl;
+                    wordInfo += "\n" + line.substr(i+3);
                 }
                 
             }
@@ -607,6 +603,7 @@ void Application::searchInEngEngDict(std::string& inputWord)
     if(!wordInfo.empty())
     {
         // Console
+        separateEngEngExample(wordInfo);
         std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataEngEng(inputWord, wordInfo);

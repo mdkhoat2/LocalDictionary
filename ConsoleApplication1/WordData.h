@@ -8,6 +8,7 @@
 struct WordDefNode
 {
     std::string wordDef;
+    std::string wordExample;
     WordDefNode* next = nullptr;
 };
 
@@ -55,6 +56,7 @@ public:
 };
 
 void insertAtEnd(WordDefNode* &head, std::string wordDef);
+void insertAtEnd(WordDefNode* &head, WordDefNode* theNode);
 void deleteAllList(WordDefNode* &head);
 int countNumOfDefs(WordData& theWordData);
 
@@ -69,5 +71,7 @@ void convertToNormalLine(std::wstring &line);
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
 void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::string& wordInfo);
 void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::string& wordInfo);
+
+void separateEngEngExample(std::string& wordInfo);
 
 #endif

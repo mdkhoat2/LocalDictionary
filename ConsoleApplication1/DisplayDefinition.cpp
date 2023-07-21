@@ -73,8 +73,6 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
 
-    // Eng Vie word data
-
 }
 
 DisplayBox::~DisplayBox()
@@ -324,6 +322,8 @@ void DisplayBox::setUIText()
     // Word definition corresponding to that word type
     wordDef.setString(engEngPtr->wordDef);
     wrapText(wordDef);
+    wordExample.setString(engEngPtr->wordExample);
+    wrapText(wordExample);
 }
 
 void DisplayBox::showNextDef()
@@ -419,6 +419,7 @@ void DisplayBox::clearEngEngData()
     word.setString("");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 
     showNextButton = false;
     showPrevButton = false;
