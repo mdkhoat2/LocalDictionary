@@ -20,7 +20,8 @@ public:
         MainScreen,
         OptionsScreen,
         AddScreen,
-        EditDefinitionScreen
+        EditDefinitionScreen,
+        FavouriteScreen
     };
 public:
     Application();
@@ -70,7 +71,7 @@ private:
     Button editDefButton;
     Button favouritebutton;
 
-    Favourite favouriteMain;
+    Favourite *favourite;
     History history;
     DisplayBox displayBox;
 

@@ -1,32 +1,14 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <fstream>
-#include <vector>
 #include"Favourite.h"
 
-void saveWords(const std::vector<std::string>& words) {
+void saveWords(const std::vector<WordItem>& words) {
 	std::ofstream file("favorite_words.txt");
 	if (file.is_open()) {
-		for (const std::string& word : words) {
-			file << word << std::endl;
+		for (const WordItem& word : words) {
+			file << word.word << std::endl;
 		}
 		file.close();
 	}
 }
-
-std::vector<std::string> loadWords() {
-	std::vector<std::string> words;
-	std::ifstream file("favorite_words.txt");
-	if (file.is_open()) {
-		std::string word;
-		while (std::getline(file, word)) {
-			words.push_back(word);
-		}
-		file.close();
-	}
-	return words;
-}
-
 bool checkStringInFile(const std::string& file_path, const std::string& target_string) {
 	std::ifstream file(file_path);
 	std::string line;
@@ -53,394 +35,76 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 }
 
 
-void favourite(sf::RenderWindow& window)
+Favourite::Favourite(sf::RenderWindow&window):
+	addBar(20, sf::Color::Black, sf::Color::Transparent, true),
+	backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	prevButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	nextButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	isEndScreen(false),
+	isExist(false),
+	numberPage(0),
+	currentPage(1)
 {
-	window.setKeyRepeatEnabled(true);
+	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
+	initAddButton(font);
+	initBackButton(font);
+	initBackground(window);
+	initnextButton(font);
+	initprevButton(font);
+	initAddBar(font);
+	initExistedText();
+	posY = 320;
+	posY1 = 260;
+	filePath = "favourite_words.txt";
+	t1 = sf::seconds(1.5f);
+}
 
-	sf::Font font;
-	if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
-	{
-		std::cout << "Failed to load font!" << std::endl;
-		return;
-	}
-	std::string filePath = "favorite_words.txt";
-	std::vector<std::string> favoriteWords = loadWords();
-	std::vector<WordItem> wordItems;
-
-	sf::RectangleShape addButton(sf::Vector2f(35, 35));
-	addButton.setFillColor(sf::Color::Transparent);
-	addButton.setPosition(882, 175);
-
-	sf::RectangleShape backButton(sf::Vector2f(153, 62));
-	backButton.setFillColor(sf::Color::Transparent);
-	backButton.setPosition(972, 163);
-
-	sf::RectangleShape addButtonfake(sf::Vector2f(40, 40));
-	sf::Texture deletebuttonTexture;
-	sf::Sprite deleteButtonImage;
-	if (!deletebuttonTexture.loadFromFile("background/buttondelete.jpg"))
-	{
-		std::cout << "Falied to load image";
-		return;
-	}
-	deleteButtonImage.setTexture(deletebuttonTexture);
-	deleteButtonImage.setScale(static_cast<float>(addButtonfake.getSize().x / deletebuttonTexture.getSize().x), static_cast<float>(addButtonfake.getSize().y / deletebuttonTexture.getSize().y));
-	for (const std::string& word : favoriteWords) {
-		WordItem wordItem;
-		wordItem.word = word;
-		wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
-		wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
-		wordItems.push_back(wordItem);
-	}
-
-	float posY = 260;
-	for (WordItem& wordItem : wordItems)
-	{
-		if (posY == 610)
-		{
-			posY = 260;
-		}
-		wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
-		posY += 50;
-	}
-	//handle if user adds the word already in existence.
-	sf::Time t1 = sf::seconds(1.5f);
-	sf::Clock clock;
-	sf::Time elapse;
-	sf::Text existed;
+void Favourite::initExistedText()
+{
 	existed.setFont(font);
 	existed.setString("This word has been added before !");
 	existed.setFillColor(sf::Color::Black);
 	existed.setCharacterSize(33);
 	existed.setPosition(270, 630);
-	bool exist = false;
-	// 
-	sf::Texture backgroundTexture;
-	sf::Sprite backgroundImage;
-	if (!backgroundTexture.loadFromFile("background/favourite.jpg"))
-	{
-		std::cout << "Failed to load image!" << std::endl;
-		return;
-	}
-	backgroundTexture.setSmooth(true);
-	backgroundImage.setTexture(backgroundTexture);
-	backgroundImage.setScale(static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x, static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y);
-
-	bool isAddingWord = false;
-	std::string newWord;
-	bool isTyping = false;
-	bool isHoveringButton = false;
-	//
-	sf::RectangleShape hoverButton(sf::Vector2f(35, 35));
-	hoverButton.setFillColor(sf::Color::Transparent);
-	hoverButton.setOutlineThickness(2);
-	hoverButton.setOutlineColor(sf::Color(0, 0, 0, 120));
-	//
-	bool isHoveringDeleteButton = false;
-	sf::RectangleShape hoverdeleteButton(sf::Vector2f(40, 40));
-	hoverdeleteButton.setFillColor(sf::Color::Transparent);
-	hoverdeleteButton.setOutlineThickness(2);
-	hoverdeleteButton.setOutlineColor(sf::Color(0, 0, 0, 120));
-	//
-	bool isHoveringBackButton = false;
-	sf::RectangleShape hoverBackButton(sf::Vector2f(153, 62));
-	hoverBackButton.setFillColor(sf::Color::Transparent);
-	hoverBackButton.setOutlineThickness(2);
-	hoverBackButton.setOutlineColor(sf::Color(0, 0, 0, 120));
-
-	sf::RectangleShape typeBar(sf::Vector2f(800, 68));
-	typeBar.setFillColor(sf::Color::Transparent);
-	typeBar.setPosition(74, 158);
-	//Next button
-	sf::RectangleShape nextButton(sf::Vector2f(80, 80));
-	nextButton.setFillColor(sf::Color::Transparent);
-	nextButton.setPosition(800, 700);
-	//Prev button
-	sf::RectangleShape prevButton(sf::Vector2f(80, 80));
-	prevButton.setFillColor(sf::Color::Transparent);
-	prevButton.setPosition(150, 700);
-	//
-	sf::Texture prevButtonTexture, nextButtonTexture;
-	sf::Sprite prevButtonImage, nextButtonImage;
-	//
-	if (!prevButtonTexture.loadFromFile("background/prev-button.png"))
-	{
-		std::cout << "Falied to load from file" << std::endl;
-	}
-	prevButtonTexture.setSmooth(true);
-	prevButtonImage.setTexture(prevButtonTexture);
-	prevButtonImage.setScale(sf::Vector2f(80.f / prevButtonTexture.getSize().x, 80.f / prevButtonTexture.getSize().y));
-	if (!nextButtonTexture.loadFromFile("background/next-button.png"))
-	{
-		std::cout << "Falied to load from file" << std::endl;
-	}
-	nextButtonTexture.setSmooth(true);
-	nextButtonImage.setTexture(nextButtonTexture);
-	nextButtonImage.setScale(sf::Vector2f(80.f / nextButtonTexture.getSize().x, 80.f / nextButtonTexture.getSize().y));
-	//Xu ly neu danh sach qua nhieu tu;
-	int currentPage = 1;
-	int numberPage;
-	if (wordItems.size() % 7 == 0)
-	{
-		numberPage = wordItems.size() / 7;
-	}
-	else
-	{
-		numberPage = (wordItems.size() / 7) + 1;
-	}
-
-
-	//
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-			else if (event.type == sf::Event::MouseButtonPressed)
-			{
-				if (event.mouseButton.button == sf::Mouse::Left)
-				{
-					sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-					if (addButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-					{
-						if (checkStringInFile(filePath, newWord) && newWord != "")
-						{
-							exist = true;
-						}
-						if (newWord != "" && !checkStringInFile(filePath, newWord))
-						{
-							favoriteWords.push_back(newWord);
-							if (posY == 610)
-							{
-								posY = 260;
-							}
-							WordItem wordItem;
-							wordItem.word = newWord;
-							wordItem.deleteButton.setSize(sf::Vector2f(40, 40));
-							wordItem.deleteButton.setFillColor(sf::Color(28, 199, 54));
-							wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
-							wordItems.push_back(wordItem);
-							posY += 50;
-							saveWords(favoriteWords);
-							if (wordItems.size() % 7 == 1)
-							{
-								numberPage += 1;
-							}
-
-						}
-						clock.restart();
-						isAddingWord = false;
-						newWord = "";
-						isTyping = false;
-
-					}
-					else if (nextButton.getGlobalBounds().contains(mousePos.x, mousePos.y) && currentPage < numberPage)
-					{
-						currentPage += 1;
-					}
-					else if (prevButton.getGlobalBounds().contains(mousePos.x, mousePos.y) && currentPage != 1)
-					{
-						currentPage -= 1;
-					}
-					else if (backButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-					{
-						return;
-					}
-					else if (typeBar.getGlobalBounds().contains(mousePos.x, mousePos.y))
-					{
-						isAddingWord = true;
-						isTyping = true;
-					}
-					else {
-						int p = 0;
-						int first3 = (currentPage - 1) * 7;
-						int last3 = currentPage * 7;
-						for (auto it = wordItems.begin(); it != wordItems.end(); ++it) {
-							p++;
-							if (it->deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y) && first3 < p && p <= last3) {
-								favoriteWords.erase(std::remove(favoriteWords.begin(), favoriteWords.end(), it->word), favoriteWords.end());
-								wordItems.erase(it);
-								saveWords(favoriteWords);
-								posY = 260;
-								for (WordItem& wordItem : wordItems)
-								{
-									if (posY == 610)
-									{
-										posY = 260;
-									}
-									wordItem.deleteButton.setPosition(window.getSize().x - wordItem.deleteButton.getSize().x - 280, posY);
-									posY += 50;
-								}
-								if (wordItems.size() != 0)
-								{
-									if (wordItems.size() % 7 == 0)
-									{
-										if (currentPage == numberPage)
-										{
-											currentPage -= 1;
-										}
-										numberPage -= 1;
-									}
-								}
-								break;
-							}
-						}
-					}
-				}
-			}
-			else if (event.type == sf::Event::TextEntered && isTyping)
-			{
-				if (event.text.unicode == 8)
-				{
-					if (!newWord.empty()) {
-						newWord.pop_back();
-					}
-				}
-				else {
-					newWord += event.text.unicode;
-				}
-			}
-		}
-		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-		std::string word1 = "";
-		int m = 0;
-		int first1 = (currentPage - 1) * 7;
-		int last1 = currentPage * 7;
-		for (const WordItem& meo : wordItems)
-		{
-			m++;
-			if (meo.deleteButton.getGlobalBounds().contains(mousePos.x, mousePos.y) && first1 < m && m <= last1)
-			{
-				isHoveringDeleteButton = true;
-				word1 = meo.word;
-			}
-		}
-		if (word1 == "")
-		{
-			isHoveringDeleteButton = false;
-		}
-		if (addButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-		{
-			isHoveringButton = true;
-		}
-		else
-		{
-			isHoveringButton = false;
-		}
-
-		if (backButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-		{
-			isHoveringBackButton = true;
-		}
-		else
-		{
-			isHoveringBackButton = false;
-		}
-		if (exist == true)
-		{
-			if (clock.getElapsedTime() >= t1 && exist)
-			{
-				exist = false;
-			}
-		}
-		window.clear();
-		window.draw(backgroundImage);
-		window.draw(addButton);
-		window.draw(backButton);
-		window.draw(typeBar);
-		if (currentPage == 1 && numberPage > 1)
-		{
-			window.draw(nextButton);
-			nextButtonImage.setPosition(nextButton.getPosition().x, nextButton.getPosition().y);
-			window.draw(nextButtonImage);
-		}
-		if (currentPage > 1 && currentPage < numberPage)
-		{
-			window.draw(nextButton);
-			nextButtonImage.setPosition(nextButton.getPosition().x, nextButton.getPosition().y);
-			window.draw(nextButtonImage);
-			window.draw(prevButton);
-			prevButtonImage.setPosition(prevButton.getPosition().x, prevButton.getPosition().y);
-			window.draw(prevButtonImage);
-		}
-		if (currentPage == numberPage && currentPage != 1)
-		{
-			window.draw(prevButton);
-			prevButtonImage.setPosition(prevButton.getPosition().x, prevButton.getPosition().y);
-			window.draw(prevButtonImage);
-		}
-		m = 0;
-		for (WordItem& wordItem : wordItems)
-		{
-			m++;
-			if (first1 < m && m <= last1 && m <= wordItems.size())
-			{
-				window.draw(wordItem.deleteButton);
-				deleteButtonImage.setPosition(wordItem.deleteButton.getPosition().x, wordItem.deleteButton.getPosition().y);
-				window.draw(deleteButtonImage);
-				sf::Text wordText(wordItem.word, font, 20);
-				wordText.setFillColor(sf::Color::Black);
-				wordText.setPosition(140, wordItem.deleteButton.getPosition().y + 10);
-				window.draw(wordText);
-			}
-		}
-		//
-		if (exist == true)
-		{
-			window.draw(existed);
-		}
-		//
-		if (isHoveringDeleteButton)
-		{
-			int h = 0;
-			for (const WordItem meo : wordItems)
-			{
-				h++;
-				if (meo.word == word1 && first1 < h && h <= last1)
-				{
-					word1 = "";
-					hoverdeleteButton.setPosition(meo.deleteButton.getPosition());
-					window.draw(hoverdeleteButton);
-				}
-			}
-		}
-		if (isHoveringButton)
-		{
-			hoverButton.setPosition(addButton.getPosition());
-			window.draw(hoverButton);
-		}
-		if (isHoveringBackButton)
-		{
-			hoverBackButton.setPosition(backButton.getPosition());
-			window.draw(hoverBackButton);
-		}
-		if (isAddingWord) {
-			sf::Text newText(newWord, font, 20);
-			newText.setFillColor(sf::Color::Black);
-			newText.setPosition(125, 180);
-			window.draw(newText);
-		}
-
-		if (isTyping) {
-			sf::Text underlineText(newWord + "_", font, 20);
-			underlineText.setFillColor(sf::Color::Black);
-			underlineText.setPosition(125, 180);
-			window.draw(underlineText);
-		}
-
-		window.display();
-	}
-
-	return;
 }
 
-Favourite::Favourite()
+void Favourite::initAddBar(sf::Font& font)
 {
-	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
+	addBar.setPosition({ 125, 180 });
+	addBar.setBoxPosition({ 74, 158 });
+	addBar.setBoxSize({ 800, 68 });
+	addBar.setLimit(true, 65); //set limit to 65 characters
+	addBar.setFont(font);
 
-	//chua thich
+}
+
+void Favourite::initAddButton(sf::Font& font)
+{
+	addButton.setFont(font);
+	addButton.setPosition({ 882, 175 });
+	addButton.setOutlineThickness(2);
+}
+
+void Favourite::initBackButton(sf::Font& font)
+{
+	backButton.setFont(font);
+	backButton.setPosition({ 972, 163 });
+	backButton.setOutlineThickness(2);
+}
+
+void Favourite::initprevButton(sf::Font& font)
+{
+	prevButton.setPosition(150, 700);
+}
+
+void Favourite::initnextButton(sf::Font& font)
+{
+	nextButton.setPosition(150, 700);
+}
+
+void Favourite::initBackground(sf::RenderWindow&window)
+{
 	if (!favouriteTexture1.loadFromFile("background/favourite2Button.png"))
 	{
 		std::cout << "Falied to load image ";
@@ -455,17 +119,49 @@ Favourite::Favourite()
 	favouriteTexture2.setSmooth(true);
 	favouriteImage2.setTexture(favouriteTexture2);
 	favouriteImage2.setScale(sf::Vector2f(30.f / favouriteTexture2.getSize().x, 30.f / favouriteTexture2.getSize().y));
-	posX = 1052;
-	posY = 320;
-}
 
+	if (!deleteButtonTexture.loadFromFile("background/buttondelete.jpg"))
+	{
+		std::cout << "Falied to load image";
+		return;
+	}
+	deleteButtonTexture.setSmooth(true);
+	deleteButtonImage.setTexture(deleteButtonTexture);
+	deleteButtonImage.setScale(sf::Vector2f(40.f / deleteButtonTexture.getSize().x, 40.f / deleteButtonTexture.getSize().y));
+
+	if (!backgroundTexture.loadFromFile("background/favourite.jpg"))
+	{
+		std::cout << "Failed to load image!" << std::endl;
+		return;
+	}
+	backgroundTexture.setSmooth(true);
+	backgroundImage.setTexture(backgroundTexture);
+	backgroundImage.setScale(static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x, static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y);
+
+	if (!prevButtonTexture.loadFromFile("background/prev-button.png"))
+	{
+		std::cout << "Falied to load from file" << std::endl;
+	}
+	prevButtonTexture.setSmooth(true);
+	prevButtonImage.setTexture(prevButtonTexture);
+	prevButtonImage.setScale(sf::Vector2f(80.f / prevButtonTexture.getSize().x, 80.f / prevButtonTexture.getSize().y));
+	prevButtonImage.setPosition(150, 700);
+	if (!nextButtonTexture.loadFromFile("background/next-button.png"))
+	{
+		std::cout << "Falied to load from file" << std::endl;
+	}
+	nextButtonTexture.setSmooth(true);
+	nextButtonImage.setTexture(nextButtonTexture);
+	nextButtonImage.setScale(sf::Vector2f(80.f / nextButtonTexture.getSize().x, 80.f / nextButtonTexture.getSize().y));
+	nextButtonImage.setPosition(800, 700);
+}
 void Favourite::add(std::string word)
 {
 	WordFavouriteButton newWord;
 	newWord.word = word;
 	newWord.favouriteButton.setSize(sf::Vector2f(30, 30));
 	newWord.favouriteButton.setFillColor(sf::Color::Red);
-	newWord.favouriteButton.setPosition(posX, posY);
+	newWord.favouriteButton.setPosition(1052, posY);
 	posY += 30;
 	favourite.push_back(newWord);
 }
@@ -492,7 +188,6 @@ void Favourite::addtoFile()
 {
 	std::ofstream fo;
 	std::ifstream fi;
-	std::string filePath = "favorite_words.txt";
 	for (auto it = favourite.begin(); it != favourite.end(); it++)
 	{
 		if (!checkStringInFile(filePath, it->word) && it->liked == true)
@@ -522,5 +217,213 @@ void Favourite::likeOrNot(sf::RenderWindow& window)
 	}
 }
 
+void Favourite::loadWordsList()
+{
+	std::ifstream fi;
+	fi.open(filePath);
+	if (fi.is_open())
+	{
+		std::string word;
+		while (std::getline(fi, word))
+		{
+			if (posY1 == 610)
+			{
+				posY1 = 260;
+			}
+			WordItem newItem;
+			newItem.word = word;
+			newItem.deleteButton.setPosition(880, posY1);
+			newItem.deleteButton.setOutlineThickness(2);
+			wordItems.push_back(newItem);
+			posY1 += 50;
+		}
+	}
+	if (wordItems.size() % 7 == 0)
+	{
+		numberPage = wordItems.size() / 7;
+	}
+	else
+	{
+		numberPage = (wordItems.size() / 7) + 1;
+	}
+}
+void Favourite::resavePositionDeleteButton()
+{
+	for (WordItem& wordItem : wordItems)
+	{
+		if (posY1 == 610)
+		{
+			posY1 = 260;
+		}
+		wordItem.deleteButton.setPosition(880, posY1);
+		posY1 += 50;
+	}
+}
 
+void Favourite::addWord(std::string inputword)
+{
+	if (checkStringInFile(filePath, inputword) && inputword != "")
+	{
+		isExist = true;
+	}
+	if (inputword != "" && !checkStringInFile(filePath, inputword))
+	{
+		if (posY1 == 610)
+		{
+			posY1 = 260;
+		}
+		WordItem wordItem;
+		wordItem.word = inputword;
+		wordItem.deleteButton.setPosition(880, posY);
+		wordItems.push_back(wordItem);
+		posY += 50;
+		saveWords(wordItems);
+		if (wordItems.size() % 7 == 1)
+		{
+			numberPage += 1;
+		}
 
+	}
+	clock.restart();
+}
+
+void Favourite::removeWord(sf::RenderWindow& window)
+{
+	int p = 0;
+	int first3 = (currentPage - 1) * 7;
+	int last3 = currentPage * 7;
+	for (auto it = wordItems.begin(); it != wordItems.end(); ++it) {
+		p++;
+		if (it->deleteButton.isMouseOver(window) && first3 < p && p <= last3) {
+			wordItems.erase(it);
+			saveWords(wordItems);
+			posY = 260;
+			resavePositionDeleteButton();
+			if (wordItems.size() != 0)
+			{
+				if (wordItems.size() % 7 == 0)
+				{
+					if (currentPage == numberPage)
+					{
+						currentPage -= 1;
+					}
+					numberPage -= 1;
+				}
+			}
+			break;
+		}
+	}
+}
+
+////////////////////
+void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window,bool &endScreen)
+{
+	if (event.type == sf::Event::TextEntered) {
+		addBar.typedOn(event);
+	}
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		if (addBar.isMouseOver(window))
+		{
+			addBar.setSelected(true);
+		}
+		else
+		{
+			addBar.setSelected(false);
+		}
+		if (addButton.isMouseOver(window))
+		{
+			std::string word = addBar.getText();
+			addWord(word);
+		}
+		else if (backButton.isMouseOver(window))
+		{
+			endScreen = true;
+			isEndScreen = endScreen;
+		}
+		else if (nextButton.isMouseOver(window)&& currentPage < numberPage)
+		{
+			currentPage += 1;
+		}
+		else if (prevButton.isMouseOver(window) && currentPage != 1)
+		{
+			currentPage -= 1;
+		}
+		else
+		{
+			removeWord(window);
+		}
+	}
+}
+void Favourite::update(sf::RenderWindow& window)
+{
+	if (!isEndScreen)
+	{
+		addButton.update(window);
+		backButton.update(window);
+		int m = 0;
+		for (WordItem& wordItem : wordItems)
+		{
+			m++;
+			if (((currentPage-1)*7) < m && m <= (currentPage*7) && m <= wordItems.size())
+			{
+				wordItem.deleteButton.update(window);
+			}
+		}
+	}
+}
+
+void Favourite::render(sf::RenderWindow& window)
+{
+	if (!isEndScreen)
+	{
+		window.draw(backgroundImage);
+		addButton.drawTo(window);
+		backButton.drawTo(window);
+		addBar.drawTo(window);
+		if (currentPage == 1 && numberPage > 1)
+		{
+			nextButton.drawTo(window);
+			window.draw(nextButtonImage);
+		}
+		if (currentPage > 1 && currentPage < numberPage)
+		{
+			nextButton.drawTo(window);
+			window.draw(nextButtonImage);
+			prevButton.drawTo(window);
+			window.draw(prevButtonImage);
+		}
+		if (currentPage == numberPage && currentPage != 1)
+		{
+			prevButton.drawTo(window);
+			window.draw(prevButtonImage);
+		}
+		int m = 0;
+		int y = 260;
+		for (WordItem& wordItem : wordItems)
+		{
+			m++;
+			if (((currentPage - 1) * 7) < m && m <= (currentPage * 7) && m <= wordItems.size())
+			{
+				deleteButtonImage.setPosition(880, y);
+				window.draw(deleteButtonImage);
+				sf::Text wordText(wordItem.word, font, 20);
+				wordText.setFillColor(sf::Color::Black);
+				wordText.setPosition(140, y + 10);
+				window.draw(wordText);
+				y += 50;
+			}
+		}
+		if (isExist == true)
+		{
+			if (clock.getElapsedTime() >= t1 && isExist)
+			{
+				isExist = false;
+			}
+			window.draw(existed);
+		}
+	}
+}
+void Favourite::setEndScreen(bool value) {
+	isEndScreen = value;
+}
