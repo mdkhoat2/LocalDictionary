@@ -102,27 +102,35 @@ void Application::loadEngEngDict()
                     else
                         wordInfo += "\n" + wordType + "\n";
                     // If that word type has more than 1 definition
-                    if(line[j+1] == '1')
-                        wordInfo += line.substr(i+4);
+                    if(line[j+1] == '1' && j+4 < line.length())
+                        wordInfo += line.substr(j+4);
                     // If that word type has only 1 definition
-                    else
-                        wordInfo += line.substr(i+3);
+                    else if(j+3 < line.length())
+                        wordInfo += line.substr(j+3);
                 }
                     
                 // If it is the word "See"
-                else if(wordType == "See")
+                else if(wordType == "See" && i < line.length())
                     wordInfo += line.substr(i);
                 // If it is a number (which means that the word has more than 1 definition for a word type)
-                else
+                else if(i < line.length())
                 {
                     wordInfo += "\n" + line.substr(i);
+                }
+                else
+                {
+                    std::cout << "Something goes wrong!" << std::endl;
                 }
                 
             }
             // If there are more than 5 blanks then it is just a normal line of a definition
-            else
+            else if(i < line.length())
             {
                 wordInfo += " " + line.substr(i);
+            }
+            else
+            {
+                std::cout << "Something goes wrong!" << std::endl;
             }
         }
     }
@@ -156,7 +164,10 @@ void Application::loadEngVieDict()
             {   
                 // insert previous word and its information
                 if(isValidWord(word))
+                {
                     trieInsert(engEngRoot, word, wordInfo, 1);
+                }
+                    
                 word.clear();
                 wordInfo.clear();
             }
@@ -604,9 +615,7 @@ void Application::searchInEngEngDict(std::string& inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        WordData theWordData;
-        extractWordData(theWordData, inputWord, wordInfo);
-        theWordData.consolePrint();
+        std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataEngEng(inputWord, wordInfo);
 
@@ -627,9 +636,6 @@ void Application::searchInEngVieDict(std::string &inputWord)
     {
         // Console
         std::cout << wordInfo << std::endl;
-        WordDataEngVie engVieData;
-        extractEngVieData(engVieData, inputWord, wordInfo);
-        engVieData.consolePrint();
         // UI
         displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
@@ -648,9 +654,7 @@ void Application::searchInVieEngDict(std::string &inputWord)
     if(!wordInfo.empty())
     {
         // Console
-        WordDataEngVie vieEngData;
-        extractVieEngData(vieEngData, inputWord, wordInfo);
-        vieEngData.consolePrint();
+        std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataVieEng(inputWord, wordInfo);
     }
