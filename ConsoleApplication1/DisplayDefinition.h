@@ -23,9 +23,9 @@ public:
 
     void getWordDataEngEng(std::string& inputWord, std::string& wordInfo);
     void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
+    void getWordDataVieEng(std::string& inputWord, std::string& wordInfo);
 
     void wrapText(sf::Text& theText);
-    void wrapExampleText(sf::Text& exampleText);
     // For Eng-Eng
     void initFirstDef();
     void setUIText();
@@ -34,6 +34,9 @@ public:
     void showNoDefinitions();
     void clearEngEngData();
 
+    void showExistedDefinitions();
+    void showNewDefinitions();
+
     // For Eng-Vie
     void initEngVieFirstDef();
     void showNextEngVieDef();
@@ -41,8 +44,12 @@ public:
     void showNoEngVieDefinitions();
     void clearEngVieData();
 
-    void showExistedDefinitions();
-    void showNewDefinitions();
+    // For Vie-Eng
+    void initVieEngFirstDef();
+    void showNextVieEngDef();
+    void showPrevVieEngDef();
+    void showNoVieEngDefinitions();
+    void clearVieEngData();
 
     bool isMouseOverNextButton(sf::RenderWindow& window);
     bool isMouseOverPrevButton(sf::RenderWindow& window);
@@ -66,6 +73,10 @@ private:
     WordDataEngVie* engVieData; // for Eng-Vie data set only
     int engVieDefID;
     int engVieDefNum;
+
+    WordDataEngVie* vieEngData; // for Vie-Eng data set only
+    int vieEngDefID;
+    int vieEngDefNum;
 
     bool showNextButton;
     bool showPrevButton;

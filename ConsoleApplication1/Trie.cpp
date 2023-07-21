@@ -3,7 +3,7 @@
 
 EngTrieNode::EngTrieNode() : flag(false) 
 {
-    for(int i = 0; i < 71; ++i) 
+    for(int i = 0; i < 72; ++i) 
       links[i] = nullptr;
 }
 
@@ -33,6 +33,8 @@ bool EngTrieNode::containsKey(char ch)
         return (links[69] != nullptr);
     if(ch == ':')
         return (links[70] != nullptr);
+    if(ch == '?')
+        return (links[71] != nullptr);
 }
 
 void EngTrieNode::put(char ch, EngTrieNode* node) 
@@ -61,6 +63,8 @@ void EngTrieNode::put(char ch, EngTrieNode* node)
         links[69] = node;
     else if(ch == ':')
         links[70] = node;
+    else if(ch == '?')
+        links[71] = node;
 }
 
 EngTrieNode* EngTrieNode::get(char ch) 
@@ -89,11 +93,13 @@ EngTrieNode* EngTrieNode::get(char ch)
         return links[69];
     if(ch == ':')
         return links[70];
+    if(ch == '?')
+        return links[71];
 }
 
 bool EngTrieNode::hasNoChildren()
 {
-    for (int i = 0; i < 71; i++)
+    for (int i = 0; i < 72; i++)
     {
         if (links[i])
             return false;
@@ -118,9 +124,32 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
     if(curDataSetID == 0)
         node->engEngWordInfo = wordInfo;
     else if(curDataSetID == 1)
-        node->engVieWordInfo = wordInfo;
+    {
+        // In the EV dictionary, a word appears at many places with different meanings, so we need to
+        // check if it is already inserted or not
+        if(node->engVieWordInfo.empty())
+            node->engVieWordInfo = wordInfo;
+        else
+        {
+            // Add the sign "@" to delete old word type
+            node->engVieWordInfo += "\n@\n" + wordInfo;
+        }
+            
+    }
+        
     else if(curDataSetID == 2)
-        node->vieEngWordInfo = wordInfo;
+    {
+        // Because of non-accent so we need to add more meanings to the word
+        // if it is already inserted but appears again in the dictionary
+        if(node->vieEngWordInfo.empty())
+            node->vieEngWordInfo = wordInfo;
+        else
+        {
+            // Add the sign "@" to delete old word type
+            node->vieEngWordInfo += "\n@\n" + wordInfo;
+        }
+            
+    }
 }
 
 void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
@@ -218,6 +247,16 @@ EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
         index = 65;
     else if(word[depth] == 47) // forward slash
         index = 66;
+    else if(word[depth] == ',')
+        index = 67;
+    else if(word[depth] == '&')
+        index = 68;
+    else if(word[depth] == '!')
+        index = 69;
+    else if(word[depth] == ':')
+        index = 70;
+    else if(word[depth] == '?')
+        index = 71;
     root->links[index] = trieRemove(root->links[index], word, depth + 1);
 
     if (root->hasNoChildren() && root->flag == false) {
@@ -440,7 +479,7 @@ void trieDeleteAll(EngTrieNode* &root)
 {
     if(root == nullptr)
         return;
-    for(int i = 0; i < 71; ++i)
+    for(int i = 0; i < 72; ++i)
     {
         trieDeleteAll(root->links[i]);
     }

@@ -19,9 +19,10 @@ struct EngTrieNode
         68: &
         69: !
         70: :
+        71: ?
     */
     // Member variables
-    EngTrieNode* links[71];
+    EngTrieNode* links[72];
     bool flag;
     std::string engEngWordInfo;
     std::string engVieWordInfo;

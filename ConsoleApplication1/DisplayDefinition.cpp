@@ -17,6 +17,9 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     engVieData(nullptr),
     engVieDefID(0),
     engVieDefNum(0),
+    vieEngData(nullptr),
+    vieEngDefID(0),
+    vieEngDefNum(0),
     showNextButton(false),
     showPrevButton(false),
     nextButtonTex(),
@@ -78,6 +81,7 @@ DisplayBox::~DisplayBox()
 {
     delete engEngData;
     delete engVieData;
+    delete vieEngData;
 }
 
 void DisplayBox::setPosition(const sf::Vector2f &pos)
@@ -154,6 +158,17 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
 
 void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo)
 {
+    // delete old data of other data sets
+    if(engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+    }
+    if(vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+    }
     if(engEngData == nullptr)
     {
         engEngData = new WordData;
@@ -173,10 +188,16 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
 
 void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
 {
-    if(engEngData != nullptr)
+    // delete old data of other data sets
+    if(engEngData)
     {
         delete engEngData;
         engEngData = nullptr;
+    }
+    if(vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
     }
     if(engVieData == nullptr)
     {
@@ -193,6 +214,36 @@ void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo
     }
     engVieDefNum = engVieData->defList.size();
     initEngVieFirstDef();
+}
+
+void DisplayBox::getWordDataVieEng(std::string &inputWord, std::string &wordInfo)
+{
+    // delete old data of other data sets
+    if(engEngData)
+    {
+        delete engEngData;
+        engEngData = nullptr;
+    }
+    if(engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+    }
+    if(vieEngData == nullptr)
+    {
+        vieEngData = new WordDataEngVie;
+        extractVieEngData(*vieEngData, inputWord, wordInfo);
+    }
+    else // delete old word data
+    {
+        delete vieEngData;
+        showNextButton = false;
+        showPrevButton = false;
+        vieEngData = new WordDataEngVie;
+        extractVieEngData(*vieEngData, inputWord, wordInfo);
+    }
+    vieEngDefNum = vieEngData->defList.size();
+    initVieEngFirstDef();
 }
 
 void DisplayBox::wrapText(sf::Text& theText)
@@ -483,11 +534,121 @@ void DisplayBox::clearEngVieData()
     wordExample.setString("");  
 }
 
-void DisplayBox::showExistedDefinitions() {
-    if (curWordData)
+void DisplayBox::initVieEngFirstDef()
+{
+    word.setString(vieEngData->word);
+
+    vieEngDefID = 0;
+    if(!vieEngData->defList[0].wordType.empty())
     {
-        delete curWordData;
-        curWordData = nullptr;
+        wordType.setString(vieEngData->defList[0].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(vieEngData->defList[0].defAndExample.first);
+    wrapText(wordDef);
+    if(!vieEngData->defList[0].defAndExample.second.empty())
+    {
+        wordExample.setString(vieEngData->defList[0].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Initialize the buttons
+    if(vieEngDefNum > 1)
+        showNextButton = true;
+}
+
+void DisplayBox::showNextVieEngDef()
+{
+    ++vieEngDefID;
+    if(!vieEngData->defList[vieEngDefID].wordType.empty())
+    {
+        wordType.setString(vieEngData->defList[vieEngDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(vieEngData->defList[vieEngDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(vieEngDefID > 0)
+        showPrevButton = true;
+    if(vieEngDefID == vieEngDefNum-1)
+        showNextButton = false;
+}
+
+void DisplayBox::showPrevVieEngDef()
+{
+    --vieEngDefID;
+    if(!vieEngData->defList[vieEngDefID].wordType.empty())
+    {
+        wordType.setString(vieEngData->defList[vieEngDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(vieEngData->defList[vieEngDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(vieEngDefID < vieEngDefNum-1)
+        showNextButton = true;
+    if(vieEngDefID == 0)
+        showPrevButton = false;
+}
+
+void DisplayBox::showNoVieEngDefinitions()
+{
+    if(vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+    word.setString("No Definitions Found!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");  
+}
+
+void DisplayBox::clearVieEngData()
+{
+    if(vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+    word.setString("");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");  
+}
+
+void DisplayBox::showExistedDefinitions() {
+    if (engEngData)
+    {
+        delete engEngData;
+        engEngData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -498,10 +659,10 @@ void DisplayBox::showExistedDefinitions() {
 }
 
 void DisplayBox::showNewDefinitions() {
-    if (curWordData)
+    if (engEngData)
     {
-        delete curWordData;
-        curWordData = nullptr;
+        delete engEngData;
+        engEngData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
