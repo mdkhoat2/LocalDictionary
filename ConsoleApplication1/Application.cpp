@@ -489,7 +489,12 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					if(favourite==nullptr)
+					{
+						favourite = new Favourite(window);
+					}
 					favourite->addtoFile();
+					favourite->loadWordsList();
 					currentScreen = ScreenState::FavouriteScreen;
 				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
@@ -498,8 +503,8 @@ void Application::handleEvent()
 						displayBox.showNextDef();
 					else if (currentDataSetID == 1)
 						displayBox.showNextEngVieDef();
-					//else if (currentDataSetID == 2)
-					//	displayBox.showNextVieEngDef();
+					else if (currentDataSetID == 2)
+					displayBox.showNextVieEngDef();
 				}
 				else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
 				{
@@ -507,8 +512,8 @@ void Application::handleEvent()
 						displayBox.showPrevDef();
 					else if (currentDataSetID == 1)
 						displayBox.showPrevEngVieDef();
-					//else if (currentDataSetID == 2)
-					//	displayBox.showPrevVieEngDef();
+					else if (currentDataSetID == 2)
+					displayBox.showPrevVieEngDef();
 				}
 				else if (dataSetButton.isMouseOver(window))
 				{
@@ -611,7 +616,7 @@ void Application::render()
 		dataSetButton.drawTo(window);
 
 		history.drawTo(window);
-		//favouriteMain.drawTo(window);
+		favourite->drawTo(window);
 		menuButton.drawTo(window);
 		displayBox.drawTo(window);
 		//dataSetBar.drawTo(window);
@@ -698,14 +703,14 @@ void Application::searchInVieEngDict(std::string& inputWord)
 	{
 		// Console
 		WordDataEngVie vieEngData;
-	//	extractVieEngData(vieEngData, inputWord, wordInfo);
+	    extractVieEngData(vieEngData, inputWord, wordInfo);
 		vieEngData.consolePrint();
 		// UI
-	//	displayBox.getWordDataVieEng(inputWord, wordInfo);
+	 	displayBox.getWordDataVieEng(inputWord, wordInfo);
 	}
 	else
 	{
 		std::cout << "Cannot find the word" << "\n";
-		//displayBox.showNoVieEngDefinitions();
+		displayBox.showNoVieEngDefinitions();
 	}
 }
