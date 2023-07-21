@@ -161,45 +161,15 @@ void Application::loadEngVieDict()
                 wordInfo.clear();
             }
             int i = 1;
-            while(line[i] != '/' && line[i] != '=' && line[i] != '(' && line[i] != ')'
-            && line[i] != '[' && line[i] != ']' && line[i] != '&' && i < line.length())
+            while(i < line.length())
             {
-                word += line[i];
-                ++i;
-            }
-            // Pop the space at the end of the current word
-            if(word[word.length()-1] == ' ')
-                word.pop_back();
-            // If there is an open parenthesis at the middle of the word
-            if(line[i] == '(')
-            {
-                while(line[i] != ')')
-                    ++i;
-                if(i < line.length()-2)
+                if(line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
+                || line[i] == '[' || line[i] == ']' || line[i] == '&')
+                    break;
+                else
                 {
+                    word += line[i];
                     ++i;
-                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
-                    && line[i] != '=' && i < line.length())
-                    {
-                        word += line[i];
-                        ++i;
-                    }
-                }
-            }
-            // If there is an open bracket at the middle of the word
-            if(line[i] == '[')
-            {
-                while(line[i] != ']')
-                    ++i;
-                if(i < line.length()-2)
-                {
-                    ++i;
-                    while(line[i] != '/' && line[i] != '(' && line[i] != '[' 
-                    && line[i] != '=' && i < line.length())
-                    {
-                        word += line[i];
-                        ++i;
-                    }
                 }
             }
             // Pop the space at the end of the current word
@@ -210,7 +180,7 @@ void Application::loadEngVieDict()
         else
         {
             if(wordInfo.empty())
-                wordInfo += line;
+                wordInfo = line;
             else
                 wordInfo += "\n" + line;
         }
@@ -249,13 +219,14 @@ void Application::loadVieEngDict()
                 word.clear();
                 wordInfo.clear();
             }
-            word += line.substr(1);
+            if(line.length() >= 2)
+                word = line.substr(1);
         }
         // this is the line containing the word type, word definitions, ...
         else
         {
             if(wordInfo.empty())
-                wordInfo += line;
+                wordInfo = line;
             else
                 wordInfo += "\n" + line;
         }
