@@ -583,8 +583,8 @@ void Application::update()
 
 void Application::render()
 {
-    window.clear(sf::Color::White);
     if (currentScreen == ScreenState::MainScreen) {
+		window.clear(sf::Color::White);
         window.draw(mainScreen);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
@@ -597,6 +597,7 @@ void Application::render()
         //dataSetBar.drawTo(window);
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
+		window.clear(sf::Color::White);
         window.draw(screenWithOptions);
         searchBar.drawTo(window);
         searchButton.drawTo(window);
