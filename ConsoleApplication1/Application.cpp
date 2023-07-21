@@ -152,8 +152,6 @@ void Application::loadEngVieDict()
     }
     while(std::getline(fin, line))
     {
-        if(line.empty())
-            continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
@@ -163,10 +161,7 @@ void Application::loadEngVieDict()
             else
             {   
                 // insert previous word and its information
-                if(isValidWord(word))
-                {
-                    trieInsert(engEngRoot, word, wordInfo, 1);
-                }
+                trieInsert(engEngRoot, word, wordInfo, 1);
                     
                 word.clear();
                 wordInfo.clear();
@@ -214,8 +209,6 @@ void Application::loadVieEngDict()
     }
     while(std::getline(fin, line))
     {
-        if(line.empty())
-            continue;
         // this is the line containing the word
         if(line[0] == '@')
         {   
@@ -225,8 +218,7 @@ void Application::loadVieEngDict()
             else
             {   
                 // insert previous word and its information
-                if(isValidWord(word))
-                    trieInsert(engEngRoot, word, wordInfo, 2);
+                trieInsert(engEngRoot, word, wordInfo, 2);
                 word.clear();
                 wordInfo.clear();
             }

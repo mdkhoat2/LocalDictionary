@@ -76,7 +76,7 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
-    while(std::getline(stream, line))
+    while(std::getline(stream, line, '\n'))
     // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
     // We store definition and example in a pair to display it close to each other
     {
@@ -95,7 +95,7 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
         }
         // this is a phrase containing the word
         // We will display it like the word type
-        if(line[0] == '!')
+        else if(line[0] == '!')
         {
             // Push the previous eng vie def
             if(!theDef.empty())
@@ -158,7 +158,10 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             }
         }
         else
+        {
+            std::cout << "What is this line?" << line << std::endl;
             continue;
+        }   
     }
     // Push the last definition
     if(!theDef.empty())
@@ -171,7 +174,7 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
     std::stringstream stream(wordInfo);
     std::string line;
     EngVieDef theDef;
-    while(std::getline(stream, line))
+    while(std::getline(stream, line, '\n'))
     // Each of "theDef" will contain a word type, a word definition and example(s) (if exist)
     // We store definition and example in a pair to display it close to each other
     {
@@ -231,7 +234,10 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
             }
         }
         else
+        {
+            std::cout << "What is this line?" << line << std::endl;
             continue;
+        }   
     }
     // Push the last definition
     if(!theDef.empty())
@@ -308,18 +314,6 @@ bool isValidWordType(std::string wordType)
     if(wordType == "n" || wordType == "v" || wordType == "adj" || wordType == "adv")
         return true;
     return false;
-}
-
-bool isValidWord(std::string word)
-{
-    if(word.empty())
-        return false;
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(!(word[i] >= 0 && word[i] < 128))
-            return false;
-    }
-    return true;
 }
 
 bool isNumber(std::string numStr)

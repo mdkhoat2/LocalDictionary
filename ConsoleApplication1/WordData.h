@@ -61,7 +61,6 @@ int countNumOfDefs(WordData& theWordData);
 // Helper functions
 bool isValidEngChar(wchar_t ch);
 bool isValidWordType(std::string wordType);
-bool isValidWord(std::string word);
 bool isNumber(std::string numStr);
 void convertToNormalChar(wchar_t &ch);
 void convertToNormalLine(std::wstring &line);
