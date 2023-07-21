@@ -61,7 +61,7 @@ private:
     sf::Font font;
 
     sf::Event event;
-
+    
     Textbox searchBar;
     sf::Text dataSetText;
 
