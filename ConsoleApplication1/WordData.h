@@ -69,5 +69,6 @@ void convertToNormalLine(std::wstring &line);
 // Function to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
 void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::string& wordInfo);
+void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::string& wordInfo);
 
 #endif
