@@ -95,7 +95,11 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             // Skip spaces
             while(line[i] == ' ' && i < line.length())
                 ++i;
-            theDef.wordType = line.substr(i);
+            while(line[i] != '/' && i < line.length())
+            {
+                theDef.wordType += line[i];
+                ++i;
+            }
         }
         // this is a phrase containing the word
         // We will display it like the word type
@@ -144,6 +148,16 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             if(!theDef.defAndExample.second.empty())
                 theDef.defAndExample.second += "\n";
             theDef.defAndExample.second += line.substr(1);
+        }
+        // This is the sign we add to delete old word type
+        // Because a word appears at many places in the dictionary
+        else if(line[0] == '@')
+        {
+            if(!theDef.empty())
+            {
+                engVieData.defList.push_back(theDef);
+                theDef.clear();
+            }
         }
         else
             continue;
@@ -203,6 +217,16 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
             {
                 theDef.defAndExample.second += " = ";
                 theDef.defAndExample.second += line.substr(i+1);
+            }
+        }
+        // This is the sign we add to delete old word type
+        // Because a word appears at many places in the dictionary
+        else if(line[0] == '@')
+        {
+            if(!theDef.empty())
+            {
+                vieEngData.defList.push_back(theDef);
+                theDef.clear();
             }
         }
         else

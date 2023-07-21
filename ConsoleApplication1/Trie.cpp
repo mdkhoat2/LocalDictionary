@@ -124,7 +124,19 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
     if(curDataSetID == 0)
         node->engEngWordInfo = wordInfo;
     else if(curDataSetID == 1)
-        node->engVieWordInfo = wordInfo;
+    {
+        // In the EV dictionary, a word appears at many places with different meanings, so we need to
+        // check if it is already inserted or not
+        if(node->engVieWordInfo.empty())
+            node->engVieWordInfo = wordInfo;
+        else
+        {
+            // Add the sign "@" to delete old word type
+            node->engVieWordInfo += "\n@\n" + wordInfo;
+        }
+            
+    }
+        
     else if(curDataSetID == 2)
     {
         // Because of non-accent so we need to add more meanings to the word
@@ -132,7 +144,11 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
         if(node->vieEngWordInfo.empty())
             node->vieEngWordInfo = wordInfo;
         else
-            node->vieEngWordInfo += "\n" + wordInfo;
+        {
+            // Add the sign "@" to delete old word type
+            node->vieEngWordInfo += "\n@\n" + wordInfo;
+        }
+            
     }
 }
 
