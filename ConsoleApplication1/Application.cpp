@@ -120,7 +120,7 @@ void Application::loadEngEngDict()
                 
             }
             // If there are more than 5 blanks then it is just a normal line of a definition
-            else if(i < line.length())
+            else if(i > 5 && i < line.length())
             {
                 wordInfo += " " + line.substr(i);
             }
@@ -607,7 +607,6 @@ void Application::searchInEngEngDict(std::string& inputWord)
         std::cout << wordInfo << std::endl;
         // UI
         displayBox.getWordDataEngEng(inputWord, wordInfo);
-
     }
     else
     {
