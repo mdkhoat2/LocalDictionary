@@ -33,7 +33,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 160.f);
+    wordExample.setPosition(xText, yText + 250.f);
 
     theBox.setSize(size);
 
@@ -65,15 +65,13 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
     // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
 
-    nextButtonSprite.setPosition(700, 700);
+    nextButtonSprite.setPosition(870, 800);
     nextButtonSprite.setScale(0.5f, 0.5f);
     showNextButton = false;
 
-    prevButtonSprite.setPosition(620, 700);
+    prevButtonSprite.setPosition(100, 800);
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
-
-    // Eng Vie word data
 
 }
 
@@ -324,6 +322,8 @@ void DisplayBox::setUIText()
     // Word definition corresponding to that word type
     wordDef.setString(engEngPtr->wordDef);
     wrapText(wordDef);
+    wordExample.setString(engEngPtr->wordExample);
+    wrapText(wordExample);
 }
 
 void DisplayBox::showNextDef()
@@ -419,6 +419,7 @@ void DisplayBox::clearEngEngData()
     word.setString("");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 
     showNextButton = false;
     showPrevButton = false;

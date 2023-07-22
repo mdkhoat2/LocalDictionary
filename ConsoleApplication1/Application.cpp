@@ -58,212 +58,187 @@ void Application::loadEngEngDict()
 		++count;
 	}
 
-	while (std::getline(fin, line))
-	{
-		if (line[0] != ' ') // this is a word
-		{
-			if (count == 59) // Read first word
-			{
-				++count;
-				word = line;
-			}
-			else
-			{
-				// insert the previous word with its definition
-				trieInsert(engEngRoot, word, wordInfo, 0);
-				word = line;
-				wordInfo.clear();
-			}
-		}
-		else // this is the definition area
-		{
-			// Count leading spaces
-			int i = 0;
-			while (line[i] == ' ')
-				++i;
-			// Read the word's information
-			// If there are 5 blanks then this line is the start of a new definition
-			if (i == 5)
-			{
-				// Check if there is any word type
-				int j = i;
-				std::string wordType;
-				while (line[j] != ' ' && j < line.length())
-				{
-					wordType += line[j];
-					++j;
-				}
-				// If it is a word type
-				if (isValidWordType(wordType))
-				{
-					// If it is the first word type
-					if (wordInfo.empty())
-						wordInfo += wordType + "\n";
-					// If it is not the first word type
-					else
-						wordInfo += "\n" + wordType + "\n";
-					// If that word type has more than 1 definition
-					if (line[j + 1] == '1')
-						wordInfo += line.substr(i + 4);
-					// If that word type has only 1 definition
-					else
-						wordInfo += line.substr(i + 3);
-				}
+    while(std::getline(fin, line))
+    {
+        if(line[0] != ' ') // this is a word
+        {
+            if(count == 59) // Read first word
+            {   
+                ++count;
+                word = line;
+            }
+            else
+            {
+                // insert the previous word with its definition
+                trieInsert(engEngRoot, word, wordInfo, 0);
+                word = line;
+                wordInfo.clear();
+            }
+        }
+        else // this is the definition area
+        {
+            // Count leading spaces
+            int i = 0;
+            while(line[i] == ' ')
+                ++i;
+            // Read the word's information
+            // If there are 5 blanks then this line is the start of a new definition
+            if(i == 5)
+            {
+                // Check if there is any word type
+                int j = i;
+                std::string wordType;
+                while(line[j] != ' ' && j < line.length())
+                {
+                    wordType += line[j];
+                    ++j;
+                }
+                // If it is a word type
+                if(isValidWordType(wordType))
+                {
+                    // If it is the first word type
+                    if(wordInfo.empty())
+                        wordInfo += wordType + "\n";
+                    // If it is not the first word type
+                    else
+                        wordInfo += "\n" + wordType + "\n";
+                    
+                    if(j+3 < line.length())
+                    {
+                        // If that word type has more than 1 definition
+                        if(line[j+1] == '1' && j+4 < line.length())
+                            wordInfo += line.substr(j+4);
+                        // If that word type has only 1 definition
+                        else
+                            wordInfo += line.substr(j+3);
+                    }
 
-				// If it is the word "See"
-				else if (wordType == "See")
-					wordInfo += line.substr(i);
-				// If it is a number (which means that the word has more than 1 definition for a word type)
-				else
-				{
-					wordInfo += "\n" + line.substr(i);
-				}
-
-			}
-			// If there are more than 5 blanks then it is just a normal line of a definition
-			else
-			{
-				wordInfo += " " + line.substr(i);
-			}
-		}
-	}
-	trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
-	fin.close();
-	newWord->loadAddedWord(engEngRoot);
+                }
+                    
+                // If it is the word "See"
+                else if(wordType == "See" && i < line.length())
+                    wordInfo += line.substr(i);
+                // If it is a number (which means that the word has more than 1 definition for a word type)
+                else if(isdigit(line[i]) && i+3 < line.length())
+                {
+                    wordInfo += "\n" + line.substr(i+3);
+                }
+                
+            }
+            // If there are more than 5 blanks then it is just a normal line of a definition
+            else if(i > 5 && i < line.length())
+            {
+                wordInfo += " " + line.substr(i);
+            }
+            else
+            {
+                std::cout << "Something goes wrong!" << std::endl;
+            }
+        }
+    }
+    trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
+    fin.close();
+    newWord->loadAddedWord(engEngRoot);
 }
 
 void Application::loadEngVieDict()
 {
-	std::ifstream fin("data/EV_nonaccent.txt");
-	int count = 0;
-	std::string line, word, wordInfo;
-	// Skip the first unnecessary 15 lines
-	while (count < 15)
-	{
-		std::getline(fin, line);
-		++count;
-	}
-	while (std::getline(fin, line))
-	{
-		if (line.empty())
-			continue;
-		// this is the line containing the word
-		if (line[0] == '@')
-		{
-			// If it is the first word
-			if (count == 15)
-				++count;
-			else
-			{
-				// insert previous word and its information
-				if (isValidWord(word))
-					trieInsert(engEngRoot, word, wordInfo, 1);
-				word.clear();
-				wordInfo.clear();
-			}
-			int i = 1;
-			while (line[i] != '/' && line[i] != '=' && line[i] != '(' && line[i] != ')'
-				&& line[i] != '[' && line[i] != ']' && line[i] != '&' && i < line.length())
-			{
-				word += line[i];
-				++i;
-			}
-			// Pop the space at the end of the current word
-			if (word[word.length() - 1] == ' ')
-				word.pop_back();
-			// If there is an open parenthesis at the middle of the word
-			if (line[i] == '(')
-			{
-				while (line[i] != ')')
-					++i;
-				if (i < line.length() - 2)
-				{
-					++i;
-					while (line[i] != '/' && line[i] != '(' && line[i] != '['
-						&& line[i] != '=' && i < line.length())
-					{
-						word += line[i];
-						++i;
-					}
-				}
-			}
-			// If there is an open bracket at the middle of the word
-			if (line[i] == '[')
-			{
-				while (line[i] != ']')
-					++i;
-				if (i < line.length() - 2)
-				{
-					++i;
-					while (line[i] != '/' && line[i] != '(' && line[i] != '['
-						&& line[i] != '=' && i < line.length())
-					{
-						word += line[i];
-						++i;
-					}
-				}
-			}
-			// Pop the space at the end of the current word
-			if (word[word.length() - 1] == ' ')
-				word.pop_back();
-		}
-		// this is the line containing the word type, word definitions, ...
-		else
-		{
-			if (wordInfo.empty())
-				wordInfo += line;
-			else
-				wordInfo += "\n" + line;
-		}
-	}
-	// Insert the last word
-	trieInsert(engEngRoot, word, wordInfo, 1);
-	fin.close();
+    std::ifstream fin("data/EV_nonaccent.txt");
+    int count = 0;
+    std::string line, word, wordInfo;
+    // Skip the first unnecessary 15 lines
+    while(count < 15)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+    while(std::getline(fin, line))
+    {
+        // this is the line containing the word
+        if(line[0] == '@')
+        {   
+            // If it is the first word
+            if(count == 15)
+                ++count;
+            else
+            {   
+                // insert previous word and its information
+                trieInsert(engEngRoot, word, wordInfo, 1);
+                    
+                word.clear();
+                wordInfo.clear();
+            }
+            int i = 1;
+            while(i < line.length())
+            {
+                if(line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
+                || line[i] == '[' || line[i] == ']' || line[i] == '&')
+                    break;
+                else
+                {
+                    word += line[i];
+                    ++i;
+                }
+            }
+            // Pop the space at the end of the current word
+            if(word[word.length()-1] == ' ')
+                word.pop_back();
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if(wordInfo.empty())
+                wordInfo = line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    // Insert the last word
+    trieInsert(engEngRoot, word, wordInfo, 1);
+    fin.close();
 }
 
 void Application::loadVieEngDict()
 {
-	std::ifstream fin("data/VE_nonaccent.txt");
-	int count = 0;
-	std::string line, word, wordInfo;
-	// Skip the first unnecessary 12 lines
-	while (count < 12)
-	{
-		std::getline(fin, line);
-		++count;
-	}
-	while (std::getline(fin, line))
-	{
-		if (line.empty())
-			continue;
-		// this is the line containing the word
-		if (line[0] == '@')
-		{
-			// If it is the first word
-			if (count == 12)
-				++count;
-			else
-			{
-				// insert previous word and its information
-				if (isValidWord(word))
-					trieInsert(engEngRoot, word, wordInfo, 2);
-				word.clear();
-				wordInfo.clear();
-			}
-			word += line.substr(1);
-		}
-		// this is the line containing the word type, word definitions, ...
-		else
-		{
-			if (wordInfo.empty())
-				wordInfo += line;
-			else
-				wordInfo += "\n" + line;
-		}
-	}
-	// Insert the last word
-	trieInsert(engEngRoot, word, wordInfo, 2);
-	fin.close();
+    std::ifstream fin("data/VE_nonaccent.txt");
+    int count = 0;
+    std::string line, word, wordInfo;
+    // Skip the first unnecessary 12 lines
+    while(count < 12)
+    {
+        std::getline(fin, line);
+        ++count;
+    }
+    while(std::getline(fin, line))
+    {
+        // this is the line containing the word
+        if(line[0] == '@')
+        {   
+            // If it is the first word
+            if(count == 12)
+                ++count;
+            else
+            {   
+                // insert previous word and its information
+                trieInsert(engEngRoot, word, wordInfo, 2);
+                word.clear();
+                wordInfo.clear();
+            }
+            if(line.length() >= 2)
+                word = line.substr(1);
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if(wordInfo.empty())
+                wordInfo = line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    // Insert the last word
+    trieInsert(engEngRoot, word, wordInfo, 2);
+    fin.close();
 }
 
 void Application::initWindow()
@@ -608,24 +583,25 @@ void Application::update()
 
 void Application::render()
 {
-	window.clear(sf::Color::White);
-	if (currentScreen == ScreenState::MainScreen) {
-		window.draw(mainScreen);
-		searchBar.drawTo(window);
-		searchButton.drawTo(window);
-		dataSetButton.drawTo(window);
+    if (currentScreen == ScreenState::MainScreen) {
+		window.clear(sf::Color::White);
+        window.draw(mainScreen);
+        searchBar.drawTo(window);
+        searchButton.drawTo(window);
+        dataSetButton.drawTo(window);
 
-		history.drawTo(window);
-		favourite->drawTo(window);
-		menuButton.drawTo(window);
-		displayBox.drawTo(window);
-		//dataSetBar.drawTo(window);
-	}
-	else if (currentScreen == ScreenState::OptionsScreen) {
-		window.draw(screenWithOptions);
-		searchBar.drawTo(window);
-		searchButton.drawTo(window);
-		dataSetButton.drawTo(window);
+        history.drawTo(window);
+        //favouriteMain.drawTo(window);
+        menuButton.drawTo(window);
+        displayBox.drawTo(window);
+        //dataSetBar.drawTo(window);
+    }
+    else if(currentScreen == ScreenState::OptionsScreen) {
+		window.clear(sf::Color::White);
+        window.draw(screenWithOptions);
+        searchBar.drawTo(window);
+        searchButton.drawTo(window);
+        dataSetButton.drawTo(window);
 
 		menuButton.drawTo(window);
 		addButton.drawTo(window);
@@ -651,66 +627,58 @@ void Application::render()
 
 void Application::searchInEngEngDict(std::string& inputWord)
 {
-	if (inputWord != "")
-		history.add(inputWord);
-	favourite->add(inputWord);
-	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-	if (!wordInfo.empty())
-	{
-		// Console
-		WordData theWordData;
-		extractWordData(theWordData, inputWord, wordInfo);
-		theWordData.consolePrint();
-		// UI
-		displayBox.getWordDataEngEng(inputWord, wordInfo);
-
-	}
-	else
-	{
-		std::cout << "Cannot find the word" << "\n";
-		displayBox.showNoDefinitions();
-	}
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
+    if(!wordInfo.empty())
+    {
+        // Console
+        separateEngEngExample(wordInfo);
+        std::cout << wordInfo << std::endl;
+        // UI
+        displayBox.getWordDataEngEng(inputWord, wordInfo);
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoDefinitions();
+    }
 }
 
 void Application::searchInEngVieDict(std::string& inputWord)
 {
-	if (inputWord != "")
-		history.add(inputWord);
-	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
-	if (!wordInfo.empty())
-	{
-		// Console
-		std::cout << wordInfo << std::endl;
-		WordDataEngVie engVieData;
-		extractEngVieData(engVieData, inputWord, wordInfo);
-		engVieData.consolePrint();
-		// UI
-		displayBox.getWordDataEngVie(inputWord, wordInfo);
-	}
-	else
-	{
-		std::cout << "Cannot find the word" << "\n";
-		displayBox.showNoEngVieDefinitions();
-	}
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
+    if(!wordInfo.empty())
+    {
+        // Console
+        std::cout << wordInfo << std::endl;
+        // UI
+        displayBox.getWordDataEngVie(inputWord, wordInfo);
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoEngVieDefinitions();
+    }
 }
 
 void Application::searchInVieEngDict(std::string& inputWord)
 {
-	if (inputWord != "")
-		history.add(inputWord);
-	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
-	if (!wordInfo.empty())
-	{
-		// Console
-		WordDataEngVie vieEngData;
-	    extractVieEngData(vieEngData, inputWord, wordInfo);
-		vieEngData.consolePrint();
-		// UI
-	 	displayBox.getWordDataVieEng(inputWord, wordInfo);
-	}
-	else
-	{
-		std::cout << "Cannot find the word" << "\n";
-		displayBox.showNoVieEngDefinitions();
-	}
+    if (inputWord!="")
+        history.add(inputWord);
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
+    if(!wordInfo.empty())
+    {
+        // Console
+        std::cout << wordInfo << std::endl;
+        // UI
+        displayBox.getWordDataVieEng(inputWord, wordInfo);
+    }
+    else
+    {
+        std::cout << "Cannot find the word" << "\n";
+        displayBox.showNoVieEngDefinitions();
+    }
 }
