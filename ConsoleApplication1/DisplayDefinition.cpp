@@ -28,10 +28,10 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite()
 {
     theBox.setPosition(pos);
-    float xText = pos.x + 20.f;
-    float yText = pos.y + 20.f;
+    float xText = pos.x + 30.f;
+    float yText = pos.y + 30.f;
     word.setPosition(xText, yText);
-    wordType.setPosition(xText, yText + 50.f);
+    wordType.setPosition(xText, yText + 40.f);
     wordDef.setPosition(xText, yText + 90.f);
     wordExample.setPosition(xText, yText + 250.f);
 
@@ -44,7 +44,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     wordExample.setFillColor(sf::Color(128, 128, 128));
 
     word.setStyle(sf::Text::Bold);
-    wordType.setStyle(sf::Text::Bold | sf::Text::Italic);
+    wordType.setStyle(sf::Text::Italic);
     wordDef.setStyle(sf::Text::Regular);
     wordExample.setStyle(sf::Text::Regular);
 
