@@ -13,6 +13,7 @@
     <ClCompile Include="Trie.cpp" />
     <ClCompile Include="WordData.cpp" />
     <ClCompile Include="SwitchDataSet.cpp" />
+    <ClCompile Include="RemoveWord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="Trie.h" />
     <ClInclude Include="WordData.h" />
     <ClInclude Include="SwitchDataSet.h" />
+    <ClInclude Include="RemoveWord.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="favorite_words.txt" />
