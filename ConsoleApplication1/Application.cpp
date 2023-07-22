@@ -417,7 +417,7 @@ void Application::run()
 	newWord = new NewWord(font, window);
 	favourite = new Favourite(window);
 	loadEngEngDict();
-	loadEngVieDict();
+	//loadEngVieDict();
 	loadVieEngDict();
 	while (window.isOpen())
 	{

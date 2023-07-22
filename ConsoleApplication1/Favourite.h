@@ -49,6 +49,8 @@ public:
 	
 	void removeWord(sf::RenderWindow& window);
 
+	bool filterAndCheck(std::string  wordCheck);
+
 public:
 
 
@@ -75,7 +77,6 @@ private:
 	sf::Texture favouriteTexture1, favouriteTexture2, deleteButtonTexture, prevButtonTexture, nextButtonTexture, backgroundTexture;
 	sf::Sprite favouriteImage1, favouriteImage2, deleteButtonImage, prevButtonImage, nextButtonImage, backgroundImage;
 	sf::Font font;
-	std::string filePath;
 	sf::Time t1;
 	int  posY, posY1;
 	int currentPage;

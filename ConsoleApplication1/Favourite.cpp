@@ -42,9 +42,7 @@ Favourite::Favourite(sf::RenderWindow&window):
 	prevButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	nextButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	isEndScreen(false),
-	isExist(false),
-	numberPage(0),
-	currentPage(1)
+	isExist(false)
 {
 	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
 	initAddButton(font);
@@ -56,7 +54,6 @@ Favourite::Favourite(sf::RenderWindow&window):
 	initExistedText();
 	posY = 320;
 	posY1 = 260;
-	filePath = "favourite_words.txt";
 	t1 = sf::seconds(1.5f);
 }
 
@@ -95,12 +92,16 @@ void Favourite::initBackButton(sf::Font& font)
 
 void Favourite::initprevButton(sf::Font& font)
 {
+	prevButton.setFont(font);
 	prevButton.setPosition(150, 700);
+	prevButton.setOutlineThickness(2);
 }
 
 void Favourite::initnextButton(sf::Font& font)
 {
-	nextButton.setPosition(150, 700);
+	nextButton.setFont(font);
+	nextButton.setPosition(800, 700);
+	nextButton.setOutlineThickness(2);
 }
 
 void Favourite::initBackground(sf::RenderWindow&window)
@@ -188,9 +189,10 @@ void Favourite::addtoFile()
 {
 	std::ofstream fo;
 	std::ifstream fi;
+	std::string filePath = "favorite_words.txt";
 	for (auto it = favourite.begin(); it != favourite.end(); it++)
 	{
-		if (!checkStringInFile(filePath, it->word) && it->liked == true)
+		if (!filterAndCheck(it->word) && it->liked == true)
 		{
 			appendStringToFile(filePath, it->word);
 		}
@@ -220,7 +222,8 @@ void Favourite::likeOrNot(sf::RenderWindow& window)
 void Favourite::loadWordsList()
 {
 	std::ifstream fi;
-	fi.open(filePath);
+	fi.open("favorite_words.txt");
+	currentPage = 1;
 	if (fi.is_open())
 	{
 		std::string word;
@@ -238,6 +241,10 @@ void Favourite::loadWordsList()
 			posY1 += 50;
 		}
 	}
+	else
+	{
+		std::cout << "Meo";
+	}
 	if (wordItems.size() % 7 == 0)
 	{
 		numberPage = wordItems.size() / 7;
@@ -246,9 +253,12 @@ void Favourite::loadWordsList()
 	{
 		numberPage = (wordItems.size() / 7) + 1;
 	}
+	//std::cout << wordItems.size();
+	//std::cout << numberPage;
 }
 void Favourite::resavePositionDeleteButton()
 {
+	posY1 = 260;
 	for (WordItem& wordItem : wordItems)
 	{
 		if (posY1 == 610)
@@ -262,11 +272,12 @@ void Favourite::resavePositionDeleteButton()
 
 void Favourite::addWord(std::string inputword)
 {
-	if (checkStringInFile(filePath, inputword) && inputword != "")
+	std::string meo = "favorite_words.txt";
+	if (filterAndCheck(inputword) && inputword != "")
 	{
 		isExist = true;
 	}
-	if (inputword != "" && !checkStringInFile(filePath, inputword))
+	if (inputword != "" && !filterAndCheck(inputword))
 	{
 		if (posY1 == 610)
 		{
@@ -274,9 +285,10 @@ void Favourite::addWord(std::string inputword)
 		}
 		WordItem wordItem;
 		wordItem.word = inputword;
-		wordItem.deleteButton.setPosition(880, posY);
+		wordItem.deleteButton.setPosition(880, posY1);
+		wordItem.deleteButton.setOutlineThickness(2);
 		wordItems.push_back(wordItem);
-		posY += 50;
+		posY1 += 50;
 		saveWords(wordItems);
 		if (wordItems.size() % 7 == 1)
 		{
@@ -297,7 +309,6 @@ void Favourite::removeWord(sf::RenderWindow& window)
 		if (it->deleteButton.isMouseOver(window) && first3 < p && p <= last3) {
 			wordItems.erase(it);
 			saveWords(wordItems);
-			posY = 260;
 			resavePositionDeleteButton();
 			if (wordItems.size() != 0)
 			{
@@ -405,6 +416,7 @@ void Favourite::render(sf::RenderWindow& window)
 			m++;
 			if (((currentPage - 1) * 7) < m && m <= (currentPage * 7) && m <= wordItems.size())
 			{
+				wordItem.deleteButton.drawTo(window);
 				deleteButtonImage.setPosition(880, y);
 				window.draw(deleteButtonImage);
 				sf::Text wordText(wordItem.word, font, 20);
@@ -426,4 +438,61 @@ void Favourite::render(sf::RenderWindow& window)
 }
 void Favourite::setEndScreen(bool value) {
 	isEndScreen = value;
+}
+
+bool Favourite::filterAndCheck(std::string wordCheck)
+{
+	std::string file = "favorite_words.txt";
+	std::string word = wordCheck;
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		if (word[i] >= 'a' && word[i] <= 'z')
+			word[i] = toupper(word[i]);
+	}
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		word[i] = tolower(word[i]);
+	}
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	word[0] = toupper(word[0]);
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	word[0] = tolower(word[0]);
+	int i = 0;
+	while (word[i] != ' ' && i < word.length())
+		++i;
+	if (i < word.length() && word[i] == ' ')
+	{
+		if (word[i + 1] >= 'a' && word[i + 1] <= 'z')
+			word[i + 1] = toupper(word[i + 1]);
+	}
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		if (i == 0)
+			word[0] = toupper(word[0]);
+		if (word[i - 1] == ' ')
+			word[i] = toupper(word[i]);
+	}
+	if (checkStringInFile(file, word) == true)
+	{
+		return true;
+	}
+	return false;
 }
