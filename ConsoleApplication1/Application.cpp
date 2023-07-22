@@ -101,12 +101,17 @@ void Application::loadEngEngDict()
                     // If it is not the first word type
                     else
                         wordInfo += "\n" + wordType + "\n";
-                    // If that word type has more than 1 definition
-                    if(line[j+1] == '1' && j+4 < line.length())
-                        wordInfo += line.substr(j+4);
-                    // If that word type has only 1 definition
-                    else if(j+3 < line.length())
-                        wordInfo += line.substr(j+3);
+                    
+                    if(j+3 < line.length())
+                    {
+                        // If that word type has more than 1 definition
+                        if(line[j+1] == '1' && j+4 < line.length())
+                            wordInfo += line.substr(j+4);
+                        // If that word type has only 1 definition
+                        else
+                            wordInfo += line.substr(j+3);
+                    }
+
                 }
                     
                 // If it is the word "See"

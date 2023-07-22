@@ -54,6 +54,15 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
         // the line contains word type
         if(isValidWordType(line))
         {
+            if(!definition.empty())
+            {
+                theNode = new WordDefNode();
+                theNode->wordDef = definition;
+                theNode->wordExample = example;
+                insertAtEnd(theWordData.defListHead[index], theNode);
+                definition.clear();
+                example.clear();
+            }
             if(line == "n")
                 index = 0;
             else if(line == "v")
@@ -170,9 +179,10 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
                     ++i;
                 }
             }
-            if(i < line.length()-1 && line[i] == '+')
+            if(i < line.length()-1)
             {
-                theDef.defAndExample.second += " = " + line.substr(i+1);
+                if(line[i] == '+')
+                    theDef.defAndExample.second += " = " + line.substr(i+1);
             }
         }
         // This is the explanation to a technical word
@@ -184,8 +194,8 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
             if(line.length() >= 2)
                 theDef.defAndExample.second += line.substr(1);
         }
-        // This is the sign we add to delete old word type
         // Because a word appears at many places in the dictionary
+        // So we add this sign to add other meanings of the word
         else if(line[0] == '@')
         {
             if(!theDef.empty())
@@ -260,8 +270,8 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
                 theDef.defAndExample.second += " = " + line.substr(i+1);
             }
         }
-        // This is the sign we add to delete old word type
         // Because a word appears at many places in the dictionary
+        // So we add this sign to add other meanings of the word
         else if(line[0] == '@')
         {
             if(!theDef.empty())
@@ -305,8 +315,15 @@ void separateEngEngExample(std::string &wordInfo)
             {
                 if(line[i] == ';' && flag == false)
                 {
-                    newWordInfo += "\n";
-                    flag = true;
+                    if(i+2 < line.length())
+                    {
+                        // If we meet ; " then there will be examples
+                        if(line[i+1] == ' ' && line[i+2] == 34)
+                        {
+                            newWordInfo += "\n";
+                            flag = true;
+                        }
+                    }
                 }
                 if(line[i] == '[')
                     newWordInfo += "\n";
