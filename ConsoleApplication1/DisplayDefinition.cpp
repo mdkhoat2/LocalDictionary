@@ -44,7 +44,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     wordExample.setFillColor(sf::Color(128, 128, 128));
 
     word.setStyle(sf::Text::Bold);
-    wordType.setStyle(sf::Text::Italic);
+    wordType.setStyle(sf::Text::Regular);
     wordDef.setStyle(sf::Text::Regular);
     wordExample.setStyle(sf::Text::Regular);
 

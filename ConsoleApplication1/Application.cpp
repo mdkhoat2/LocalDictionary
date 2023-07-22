@@ -20,7 +20,7 @@ Application::Application() :
 	currentScreen(ScreenState::MainScreen),
 	editDefScreen(nullptr),
 	newWord(nullptr),
-	displayBox({ 72, 240 }, { 850, 610 }, sf::Color::Transparent, sf::Color::Black),
+	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	currentDataSetID(0)
 {
