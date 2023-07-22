@@ -393,7 +393,7 @@ void Application::run()
 	removeWord = new RemoveWord(font, window);
 	favourite = new Favourite(window);
 	loadEngEngDict();
-	//loadEngVieDict();
+	loadEngVieDict();
 	loadVieEngDict();
 	while (window.isOpen())
 	{
