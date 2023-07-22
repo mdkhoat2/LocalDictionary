@@ -33,7 +33,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 160.f);
+    wordExample.setPosition(xText, yText + 200.f);
 
     theBox.setSize(size);
 

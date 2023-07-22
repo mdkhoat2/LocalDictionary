@@ -67,7 +67,13 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
         else if(line[0] == ';' || line[0] == '[')
         {
             if(example.empty())
-                example = line;
+            {
+                // examples exist
+                if(line[0] == ';' && line.length() >= 2)
+                    example = "Example:" + line.substr(1);
+                else
+                    example = line;
+            }
             else
                 example += "\n" + line;
         }
@@ -90,6 +96,15 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
             }
         }
     }
+    if(!definition.empty())
+    {
+        theNode = new WordDefNode();
+        theNode->wordDef = definition;
+        theNode->wordExample = example;
+        insertAtEnd(theWordData.defListHead[index], theNode);
+        definition = line;
+        example.clear();
+    }   
 }
 
 void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::string &wordInfo)
@@ -285,9 +300,15 @@ void separateEngEngExample(std::string &wordInfo)
             if(!newWordInfo.empty())
                 newWordInfo += "\n";
             int i = 0;
+            bool flag = false;
             while(i < line.length())
             {
-                if(line[i] == ';' || line[i] == '[')
+                if(line[i] == ';' && flag == false)
+                {
+                    newWordInfo += "\n";
+                    flag = true;
+                }
+                if(line[i] == '[')
                     newWordInfo += "\n";
                 newWordInfo += line[i];
                 ++i;
