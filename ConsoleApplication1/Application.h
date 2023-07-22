@@ -7,6 +7,7 @@
 #include "WordData.h"
 #include "History.h"
 #include "NewWord.h"
+#include "RemoveWord.h"
 #include "EditDefinition.h"
 #include "DisplayDefinition.h"
 #include "Favourite.h"
@@ -20,6 +21,7 @@ public:
         MainScreen,
         OptionsScreen,
         AddScreen,
+        RemoveScreen,
         EditDefinitionScreen,
         FavouriteScreen
     };
@@ -81,6 +83,7 @@ private:
 
     EditDefinitionScreen* editDefScreen;
     NewWord* newWord;
+    RemoveWord* removeWord;
 private:
     void initWindow();
     void initBackground();

@@ -390,6 +390,7 @@ void Application::run()
 {
 	// Load dictionaries
 	newWord = new NewWord(font, window);
+	removeWord = new RemoveWord(font, window);
 	favourite = new Favourite(window);
 	loadEngEngDict();
 	//loadEngVieDict();
@@ -452,7 +453,7 @@ void Application::handleEvent()
 				}
 				else if (deleteButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-
+					currentScreen = ScreenState::RemoveScreen;
 				}
 				else if (editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
@@ -523,6 +524,17 @@ void Application::handleEvent()
 				currentScreen = ScreenState::OptionsScreen;
 			}
 		}
+		else if (currentScreen == ScreenState::RemoveScreen)
+		{
+			bool endScreen = false;
+			removeWord->setEndScreen(endScreen);
+			removeWord->handleEvent(event, window, endScreen, engEngRoot);
+			if (endScreen)
+			{
+				removeWord->setEndScreen(endScreen);
+				currentScreen = ScreenState::OptionsScreen;
+			}
+		}
 		else if (currentScreen == ScreenState::FavouriteScreen)
 		{
 			bool endScreen = false;
@@ -571,6 +583,9 @@ void Application::update()
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->update(window);
 	}
+	else if (currentScreen == ScreenState::RemoveScreen) {
+		removeWord->update(window);
+	}
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
 		favourite->update(window);
@@ -616,6 +631,9 @@ void Application::render()
 	}
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->render(window);
+	}
+	else if (currentScreen == ScreenState::RemoveScreen) {
+		removeWord->render(window);
 	}
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
