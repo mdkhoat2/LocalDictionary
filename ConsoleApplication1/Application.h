@@ -20,7 +20,8 @@ public:
         MainScreen,
         OptionsScreen,
         AddScreen,
-        EditDefinitionScreen
+        EditDefinitionScreen,
+        FavouriteScreen
     };
 public:
     Application();
@@ -60,7 +61,7 @@ private:
     sf::Font font;
 
     sf::Event event;
-
+    
     Textbox searchBar;
     sf::Text dataSetText;
 
@@ -72,7 +73,7 @@ private:
     Button editDefButton;
     Button favouritebutton;
 
-    Favourite favouriteMain;
+    Favourite *favourite;
     History history;
     DisplayBox displayBox;
 
