@@ -546,6 +546,7 @@ void Application::handleEvent()
 			{
 				favourite->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
+				favourite->eraseWordList();
 
 			}
 		}

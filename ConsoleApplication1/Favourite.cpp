@@ -496,3 +496,11 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 	}
 	return false;
 }
+
+void Favourite::eraseWordList()
+{
+	while(wordItems.size()!=0)
+	{
+		wordItems.pop_back();
+	}
+}
