@@ -388,6 +388,7 @@ void Favourite::render(sf::RenderWindow& window)
 {
 	if (!isEndScreen)
 	{
+		window.clear(sf::Color::White);
 		window.draw(backgroundImage);
 		addButton.drawTo(window);
 		backButton.drawTo(window);
