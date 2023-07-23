@@ -285,6 +285,16 @@ void DisplayBox::wrapText(sf::Text& theText)
     theText.setString(wrappedStr);
 }
 
+void DisplayBox::adjustTextPosition()
+{
+    sf::FloatRect wordBounds = word.getGlobalBounds();
+    wordType.setPosition(wordType.getPosition().x, wordBounds.top + wordBounds.height + 20.f);
+    sf::FloatRect wordTypeBounds = wordType.getGlobalBounds();
+    wordDef.setPosition(wordDef.getPosition().x, wordTypeBounds.top + wordTypeBounds.height + 20.f);
+    sf::FloatRect wordDefBounds = wordDef.getGlobalBounds();
+    wordExample.setPosition(wordExample.getPosition().x, wordDefBounds.top + wordDefBounds.height + 20.f);
+}
+
 void DisplayBox::initFirstDef()
 {
     // initialize the text to display
@@ -324,6 +334,8 @@ void DisplayBox::setUIText()
     wrapText(wordDef);
     wordExample.setString(engEngPtr->wordExample);
     wrapText(wordExample);
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showNextDef()
@@ -449,6 +461,8 @@ void DisplayBox::initEngVieFirstDef()
     // Initialize the buttons
     if(engVieDefNum > 1)
         showNextButton = true;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showNextEngVieDef()
@@ -475,6 +489,8 @@ void DisplayBox::showNextEngVieDef()
         showPrevButton = true;
     if(engVieDefID == engVieDefNum-1)
         showNextButton = false;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showPrevEngVieDef()
@@ -501,6 +517,8 @@ void DisplayBox::showPrevEngVieDef()
         showNextButton = true;
     if(engVieDefID == 0)
         showPrevButton = false;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showNoEngVieDefinitions()
@@ -559,6 +577,8 @@ void DisplayBox::initVieEngFirstDef()
     // Initialize the buttons
     if(vieEngDefNum > 1)
         showNextButton = true;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showNextVieEngDef()
@@ -585,6 +605,8 @@ void DisplayBox::showNextVieEngDef()
         showPrevButton = true;
     if(vieEngDefID == vieEngDefNum-1)
         showNextButton = false;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showPrevVieEngDef()
@@ -611,6 +633,8 @@ void DisplayBox::showPrevVieEngDef()
         showNextButton = true;
     if(vieEngDefID == 0)
         showPrevButton = false;
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showNoVieEngDefinitions()

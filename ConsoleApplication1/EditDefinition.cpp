@@ -28,7 +28,11 @@ void EditDefinitionScreen::update(sf::RenderWindow& window)
 void EditDefinitionScreen::render(sf::RenderWindow &window)
 {
     if(!isEndScreen)
+    {
+        window.clear(sf::Color::White);
         backButton.drawTo(window);
+    }
+        
 }
 
 void EditDefinitionScreen::setEndScreen(bool value)

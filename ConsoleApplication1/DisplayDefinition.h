@@ -26,6 +26,7 @@ public:
     void getWordDataVieEng(std::string& inputWord, std::string& wordInfo);
 
     void wrapText(sf::Text& theText);
+    void adjustTextPosition();
     // For Eng-Eng
     void initFirstDef();
     void setUIText();
