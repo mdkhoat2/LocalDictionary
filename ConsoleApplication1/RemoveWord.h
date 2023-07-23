@@ -1,5 +1,5 @@
-#ifndef NEWWORD_H
-#define NEWWORD_H
+#ifndef REMOVEWORD_H
+#define REMOVEWORD_H
 
 #include <iostream>
 #include <queue>
@@ -10,27 +10,26 @@
 #include "WordData.h"
 #include "DisplayDefinition.h"
 
-class NewWord {
+class RemoveWord {
 public:
-	void addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
-	void addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
-	void saveAddedWord();
-	void loadAddedWord(EngTrieNode*& root);
+	void removeWord(EngTrieNode*& root, std::string word);
+	void saveRemovedWord();
+	void loadRemovedWord(EngTrieNode*& root);
 public:
-	NewWord(sf::Font& font, sf::RenderWindow& window);
+	RemoveWord(sf::Font& font, sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
 public:
-	void addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
+	void removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
+	void removeInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
+	void removeInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 private:
-	std::queue<WordData> addedWord;
+	std::queue<std::string> removedWord;
 
-	sf::Texture addScreenTex, dataSetTex;
-	sf::Sprite addScreen, dataSet;
+	sf::Texture removeScreenTex, dataSetTex;
+	sf::Sprite removeScreen, dataSet;
 
 	Textbox wordBar;
 
@@ -40,7 +39,7 @@ private:
 	sf::Text dataSetText;
 
 	Button backButton;
-	Button addButton;
+	Button removeButton;
 	Button dataSetButton;
 
 	int currentDataSetID;
@@ -56,7 +55,7 @@ private:
 	void initBackground(sf::RenderWindow& window);
 	void initWordBar(sf::Font& font);
 	void initBackButton(sf::Font& font);
-	void initAddButton(sf::Font& font);
+	void initRemoveButton(sf::Font& font);
 	void initDataSetText(sf::Font& font);
 	void initDataSetButton(sf::Font& font);
 	void initDisplayBox(sf::Font& font);

@@ -20,7 +20,7 @@ Application::Application() :
 	currentScreen(ScreenState::MainScreen),
 	editDefScreen(nullptr),
 	newWord(nullptr),
-	displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
+	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	currentDataSetID(0)
 {
@@ -280,6 +280,8 @@ void Application::initFont()
 	// Load font from file
 	if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
 		std::cout << "Font not found!\n";
+	if (!font2.loadFromFile("font/Merriweather-Regular.ttf"))
+		std::cout << "Font not found!\n";
 }
 
 void Application::initSearchBar()
@@ -345,8 +347,8 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
-	displayBox.setFont(font);
-	displayBox.setCharacterSize(30);
+	displayBox.setFont(font2);
+	displayBox.setCharacterSize(25);
 }
 
 void Application::initFavouriteButton()
@@ -390,9 +392,10 @@ void Application::run()
 {
 	// Load dictionaries
 	newWord = new NewWord(font, window);
+	removeWord = new RemoveWord(font, window);
 	favourite = new Favourite(window);
 	loadEngEngDict();
-	//loadEngVieDict();
+	loadEngVieDict();
 	loadVieEngDict();
 	while (window.isOpen())
 	{
@@ -452,7 +455,7 @@ void Application::handleEvent()
 				}
 				else if (deleteButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-
+					currentScreen = ScreenState::RemoveScreen;
 				}
 				else if (editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
@@ -523,6 +526,17 @@ void Application::handleEvent()
 				currentScreen = ScreenState::OptionsScreen;
 			}
 		}
+		else if (currentScreen == ScreenState::RemoveScreen)
+		{
+			bool endScreen = false;
+			removeWord->setEndScreen(endScreen);
+			removeWord->handleEvent(event, window, endScreen, engEngRoot);
+			if (endScreen)
+			{
+				removeWord->setEndScreen(endScreen);
+				currentScreen = ScreenState::OptionsScreen;
+			}
+		}
 		else if (currentScreen == ScreenState::FavouriteScreen)
 		{
 			bool endScreen = false;
@@ -572,6 +586,9 @@ void Application::update()
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->update(window);
 	}
+	else if (currentScreen == ScreenState::RemoveScreen) {
+		removeWord->update(window);
+	}
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
 		favourite->update(window);
@@ -617,6 +634,9 @@ void Application::render()
 	}
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->render(window);
+	}
+	else if (currentScreen == ScreenState::RemoveScreen) {
+		removeWord->render(window);
 	}
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
