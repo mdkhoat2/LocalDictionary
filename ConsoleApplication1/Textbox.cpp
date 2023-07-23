@@ -10,24 +10,22 @@ Textbox::Textbox(int size, sf::Color textColor, sf::Color boxColor, bool sel) {
 
     // Check if the textbox is selected upon creation and display it accordingly:
     if (isSelected)
-        textbox.setString("_");
+        textbox.setString(textbox.getString() + "_");
     else
         textbox.setString("");
 }
 
 // Make sure font is passed by reference:
-void Textbox::setFont(sf::Font& fonts) {
+void Textbox::setFont(const sf::Font& fonts) {
     textbox.setFont(fonts);
 }
 
 void Textbox::setPosition(const sf::Vector2f &point) {
-    theBox.setPosition(point);
     textbox.setPosition(point);
 }
 
 void Textbox::setPosition(float xIn, float yIn)
 {
-    theBox.setPosition(xIn, yIn);
     textbox.setPosition(xIn, yIn);
 }
 
@@ -42,7 +40,7 @@ void Textbox::setLimit(bool ToF, int lim) {
 }
 
 // Set character size
-void Textbox::setCharacterSize(int size) {
+void Textbox::setCharacterSize(unsigned int size) {
     textbox.setCharacterSize(size);
 }
 
@@ -103,6 +101,11 @@ void Textbox::setBoxPosition(const sf::Vector2f &pos)
     theBox.setPosition(pos);
 }
 
+void Textbox::setBoxPosition(float xIn, float yIn)
+{
+    theBox.setPosition(xIn, yIn);
+}
+
 void Textbox::setBoxSize(const sf::Vector2f &pos)
 {
     theBox.setSize(pos);
@@ -111,6 +114,44 @@ void Textbox::setBoxSize(const sf::Vector2f &pos)
 void Textbox::setOutlineThickness(float thickness)
 {
     theBox.setOutlineThickness(thickness);
+}
+
+void Textbox::setOutlineColor(const sf::Color &color)
+{
+    theBox.setOutlineColor(color);
+}
+
+void Textbox::setStyle(sf::Uint32 style)
+{
+    textbox.setStyle(style);
+}
+
+void Textbox::setTextColor(const sf::Color &color)
+{
+    textbox.setFillColor(color);
+}
+
+void Textbox::setText(const sf::String& theText)
+{
+    textbox.setString(theText);
+    text.str("");
+    std::string textStream = theText;
+    text << textStream;
+}
+
+const sf::Vector2f &Textbox::getTextPosition() const
+{
+    return textbox.getPosition();
+}
+
+sf::FloatRect Textbox::getGlobalBounds() const
+{
+    return textbox.getGlobalBounds();
+}
+
+sf::FloatRect Textbox::getBoxGlobalBounds() const
+{
+    return theBox.getGlobalBounds();
 }
 
 bool Textbox::isMouseOver(sf::RenderWindow &window)
@@ -128,6 +169,11 @@ bool Textbox::isMouseOver(sf::RenderWindow &window)
         return true;
     }
     return false;
+}
+
+bool Textbox::isSelect()
+{
+    return isSelected;
 }
 
 void Textbox::deleteLastChar() {

@@ -56,6 +56,12 @@ public:
     bool isMouseOverPrevButton(sf::RenderWindow& window);
     bool nextButtonDrawn();
     bool prevButtonDrawn();
+
+    // Accessors
+    const sf::String& getWord() const;
+    const sf::String& getWordType() const;
+    const sf::String& getWordDef() const;
+    const sf::String& getWordExample() const;
     
 private:
     sf::RectangleShape theBox;
@@ -86,7 +92,6 @@ private:
     sf::Sprite nextButtonSprite;
     sf::Sprite prevButtonSprite;
 };
-
 
 
 

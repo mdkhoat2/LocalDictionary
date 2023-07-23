@@ -396,7 +396,7 @@ void Application::run()
 	newWord = new NewWord(font, window);
 	removeWord = new RemoveWord(font, window);
 	favourite = new Favourite(window);
-	editDefScreen = new EditDefinitionScreen(font, screenWithOptions);
+	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -466,6 +466,8 @@ void Application::handleEvent()
 				else if (editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
 					editDefScreen->setCurrentDataSetID(currentDataSetID);
+					editDefScreen->initTextToEdit(displayBox.getWord(), displayBox.getWordType()
+					, displayBox.getWordDef(), displayBox.getWordExample());
 					currentScreen = ScreenState::EditDefinitionScreen;
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)

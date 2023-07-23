@@ -718,3 +718,23 @@ bool DisplayBox::prevButtonDrawn()
 {
     return showPrevButton;
 }
+
+const sf::String &DisplayBox::getWord() const
+{
+    return word.getString();
+}
+
+const sf::String &DisplayBox::getWordType() const
+{
+    return wordType.getString();
+}
+
+const sf::String &DisplayBox::getWordDef() const
+{
+    return wordDef.getString();
+}
+
+const sf::String &DisplayBox::getWordExample() const
+{
+    return wordExample.getString();
+}
