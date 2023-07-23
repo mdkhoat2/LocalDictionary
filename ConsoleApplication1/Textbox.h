@@ -56,7 +56,7 @@ public:
 
 	bool isMouseOver(sf::RenderWindow& window);
 	bool isSelect();
-	
+	void wrapText(sf::Text& theText);
 private:
 	sf::Text textbox;
 	sf::RectangleShape theBox;

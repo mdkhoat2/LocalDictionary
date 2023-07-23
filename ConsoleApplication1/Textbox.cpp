@@ -176,6 +176,47 @@ bool Textbox::isSelect()
     return isSelected;
 }
 
+void Textbox::wrapText(sf::Text &theText)
+{
+    std::string str = theText.getString();
+    std::string wrappedStr;
+
+    std::istringstream iss(str);
+    std::string word;
+    std::string line;
+
+    // Clear theText before wrapping
+    theText.setString("");
+
+    while (std::getline(iss, word, '\n')) {
+        // Process each line separately
+        if (!line.empty()) {
+            // Add the previous line to the wrapped text and start a new line
+            wrappedStr += line + '\n';
+            line.clear();
+        }
+        std::istringstream lineIss(word);
+        while (lineIss >> word) {
+            // Set theText with the current line + the next word
+            theText.setString(line + (line.empty() ? "" : " ") + word);
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+                // Add the current line to the wrapped text and start a new line
+                wrappedStr += line + '\n';
+                line = word;
+            } else {
+                // Continue adding words to the current line
+                line += (line.empty() ? "" : " ") + word;
+            }
+        }
+    }
+
+    // Add the last line to the wrapped text
+    wrappedStr += line;
+
+    // Set theText with the wrapped text
+    theText.setString(wrappedStr);
+}
+
 void Textbox::deleteLastChar() {
     std::string t = text.str();
     std::string newT = "";
@@ -201,4 +242,12 @@ void Textbox::inputLogic(int charTyped) {
     }
     // Set the textbox text:
     textbox.setString(text.str() + "_");
+    if (textbox.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+        wrapText(textbox);
+        std::string currentText = textbox.getString();
+        if(currentText[currentText.length()-1] == '_')
+            currentText.pop_back();
+        text.str("");
+        text << currentText;
+    }
 }
