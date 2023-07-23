@@ -10,24 +10,22 @@ Textbox::Textbox(int size, sf::Color textColor, sf::Color boxColor, bool sel) {
 
     // Check if the textbox is selected upon creation and display it accordingly:
     if (isSelected)
-        textbox.setString("_");
+        textbox.setString(textbox.getString() + "_");
     else
         textbox.setString("");
 }
 
 // Make sure font is passed by reference:
-void Textbox::setFont(sf::Font& fonts) {
+void Textbox::setFont(const sf::Font& fonts) {
     textbox.setFont(fonts);
 }
 
 void Textbox::setPosition(const sf::Vector2f &point) {
-    theBox.setPosition(point);
     textbox.setPosition(point);
 }
 
 void Textbox::setPosition(float xIn, float yIn)
 {
-    theBox.setPosition(xIn, yIn);
     textbox.setPosition(xIn, yIn);
 }
 
@@ -42,7 +40,7 @@ void Textbox::setLimit(bool ToF, int lim) {
 }
 
 // Set character size
-void Textbox::setCharacterSize(int size) {
+void Textbox::setCharacterSize(unsigned int size) {
     textbox.setCharacterSize(size);
 }
 
@@ -103,6 +101,11 @@ void Textbox::setBoxPosition(const sf::Vector2f &pos)
     theBox.setPosition(pos);
 }
 
+void Textbox::setBoxPosition(float xIn, float yIn)
+{
+    theBox.setPosition(xIn, yIn);
+}
+
 void Textbox::setBoxSize(const sf::Vector2f &pos)
 {
     theBox.setSize(pos);
@@ -111,6 +114,44 @@ void Textbox::setBoxSize(const sf::Vector2f &pos)
 void Textbox::setOutlineThickness(float thickness)
 {
     theBox.setOutlineThickness(thickness);
+}
+
+void Textbox::setOutlineColor(const sf::Color &color)
+{
+    theBox.setOutlineColor(color);
+}
+
+void Textbox::setStyle(sf::Uint32 style)
+{
+    textbox.setStyle(style);
+}
+
+void Textbox::setTextColor(const sf::Color &color)
+{
+    textbox.setFillColor(color);
+}
+
+void Textbox::setText(const sf::String& theText)
+{
+    textbox.setString(theText);
+    text.str("");
+    std::string textStream = theText;
+    text << textStream;
+}
+
+const sf::Vector2f &Textbox::getTextPosition() const
+{
+    return textbox.getPosition();
+}
+
+sf::FloatRect Textbox::getGlobalBounds() const
+{
+    return textbox.getGlobalBounds();
+}
+
+sf::FloatRect Textbox::getBoxGlobalBounds() const
+{
+    return theBox.getGlobalBounds();
 }
 
 bool Textbox::isMouseOver(sf::RenderWindow &window)
@@ -128,6 +169,52 @@ bool Textbox::isMouseOver(sf::RenderWindow &window)
         return true;
     }
     return false;
+}
+
+bool Textbox::isSelect()
+{
+    return isSelected;
+}
+
+void Textbox::wrapText(sf::Text &theText)
+{
+    std::string str = theText.getString();
+    std::string wrappedStr;
+
+    std::istringstream iss(str);
+    std::string word;
+    std::string line;
+
+    // Clear theText before wrapping
+    theText.setString("");
+
+    while (std::getline(iss, word, '\n')) {
+        // Process each line separately
+        if (!line.empty()) {
+            // Add the previous line to the wrapped text and start a new line
+            wrappedStr += line + '\n';
+            line.clear();
+        }
+        std::istringstream lineIss(word);
+        while (lineIss >> word) {
+            // Set theText with the current line + the next word
+            theText.setString(line + (line.empty() ? "" : " ") + word);
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+                // Add the current line to the wrapped text and start a new line
+                wrappedStr += line + '\n';
+                line = word;
+            } else {
+                // Continue adding words to the current line
+                line += (line.empty() ? "" : " ") + word;
+            }
+        }
+    }
+
+    // Add the last line to the wrapped text
+    wrappedStr += line;
+
+    // Set theText with the wrapped text
+    theText.setString(wrappedStr);
 }
 
 void Textbox::deleteLastChar() {
@@ -155,4 +242,12 @@ void Textbox::inputLogic(int charTyped) {
     }
     // Set the textbox text:
     textbox.setString(text.str() + "_");
+    if (textbox.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+        wrapText(textbox);
+        std::string currentText = textbox.getString();
+        if(currentText[currentText.length()-1] == '_')
+            currentText.pop_back();
+        text.str("");
+        text << currentText;
+    }
 }

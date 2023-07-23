@@ -33,6 +33,15 @@
         void showPrevDef();
         void showNoDefinitions();
         void clearEngEngData();
+    void wrapText(sf::Text& theText);
+    void adjustTextPosition();
+    // For Eng-Eng
+    void initFirstDef();
+    void setUIText();
+    void showNextDef();
+    void showPrevDef();
+    void showNoDefinitions();
+    void clearEngEngData();
 
         void showExistedDefinitions();
         void showNewDefinitions();
@@ -61,6 +70,16 @@
         bool nextButtonDrawn();
         bool prevButtonDrawn();
         bool emojiDefinition;
+    bool isMouseOverNextButton(sf::RenderWindow& window);
+    bool isMouseOverPrevButton(sf::RenderWindow& window);
+    bool nextButtonDrawn();
+    bool prevButtonDrawn();
+
+    // Accessors
+    const sf::String& getWord() const;
+    const sf::String& getWordType() const;
+    const sf::String& getWordDef() const;
+    const sf::String& getWordExample() const;
     
     private:
         sf::RectangleShape theBox;
@@ -96,4 +115,5 @@
     sf::Uint32 hexStringToUint32(const std::string& hexString);
 
 
-    #endif
+
+#endif

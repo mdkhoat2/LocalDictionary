@@ -20,6 +20,7 @@ Application::Application() :
 	currentScreen(ScreenState::MainScreen),
 	editDefScreen(nullptr),
 	newWord(nullptr),
+	removeWord(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	currentDataSetID(0)
@@ -42,8 +43,9 @@ Application::~Application()
 {
 	trieDeleteAll(engEngRoot);
 	delete editDefScreen;
-	newWord->saveAddedWord();
 	delete newWord;
+	delete favourite;
+	delete removeWord;
 }
 
 void Application::loadEngEngDict()
@@ -461,7 +463,10 @@ void Application::handleEvent()
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
+		{
+			newWord->saveAddedWord();
 			window.close();
+		}	
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)
 		{
 			if (event.type == sf::Event::TextEntered)
@@ -504,10 +509,9 @@ void Application::handleEvent()
 				}
 				else if (editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-					if (editDefScreen == nullptr)
-					{
-						editDefScreen = new EditDefinitionScreen();
-					}
+					editDefScreen->setCurrentDataSetID(currentDataSetID);
+					editDefScreen->initTextToEdit(displayBox.getWord(), displayBox.getWordType()
+					, displayBox.getWordDef(), displayBox.getWordExample());
 					currentScreen = ScreenState::EditDefinitionScreen;
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
@@ -676,7 +680,7 @@ void Application::render()
 		//dataSetBar.drawTo(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen) {
-		editDefScreen->render(window);
+		editDefScreen->render(window, screenWithOptions);
 	}
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->render(window);
