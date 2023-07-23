@@ -159,7 +159,7 @@ void EditDefinitionScreen::initEditBox(const sf::Font &font)
 }
 
 
-/*-----------EDIT BOX---------------*/
+/*------------------------EDIT BOX-------------------------*/
 EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size, 
     const sf::Color& backColor, const sf::Color& textColor) :
     theBox(),
@@ -312,23 +312,23 @@ void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWor
 void EditBox::adjustSurroundingTextbox()
 {
     // Word type
-    sf::FloatRect wordTypeBounds = wordTypeArea.getGlobalBounds();
-    wordTypeArea.setBoxSize(sf::Vector2f(wordTypeBounds.width + 10, wordTypeBounds.height + 10));
+    sf::FloatRect wordTypeBounds = word.getGlobalBounds();
+    wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordTypeBounds.height + 10));
     wordTypeArea.setOutlineColor(sf::Color::Black);
     wordTypeArea.setOutlineThickness(2.0f);
-    wordTypeArea.setBoxPosition(wordTypeArea.getTextPosition().x, wordTypeArea.getTextPosition().y);
+    wordTypeArea.setBoxPosition(wordTypeArea.getTextPosition().x - 5, wordTypeArea.getTextPosition().y - 5);
     // Word definition
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
-    wordDefArea.setBoxSize(sf::Vector2f(wordDefBounds.width + 10, wordDefBounds.height + 10));
+    wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordDefBounds.height + 10));
     wordDefArea.setOutlineColor(sf::Color::Black);
     wordDefArea.setOutlineThickness(2.0f);
-    wordDefArea.setBoxPosition(wordDefArea.getTextPosition().x, wordDefArea.getTextPosition().y);
+    wordDefArea.setBoxPosition(wordDefArea.getTextPosition().x - 5, wordDefArea.getTextPosition().y - 5);
     // Word example
     sf::FloatRect wordExampleBounds = wordExampleArea.getGlobalBounds();
-    wordExampleArea.setBoxSize(sf::Vector2f(wordExampleBounds.width + 10, wordExampleBounds.height + 10));
+    wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordExampleBounds.height + 10));
     wordExampleArea.setOutlineColor(sf::Color::Black);
     wordExampleArea.setOutlineThickness(2.0f);
-    wordExampleArea.setBoxPosition(wordExampleArea.getTextPosition().x, wordExampleArea.getTextPosition().y);
+    wordExampleArea.setBoxPosition(wordExampleArea.getTextPosition().x - 5, wordExampleArea.getTextPosition().y - 5);
 }
 
 bool EditBox::isMouseOverWordTypeArea(sf::RenderWindow& window)
