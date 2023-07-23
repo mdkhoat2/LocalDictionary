@@ -5,8 +5,3 @@ application
 favourite
 profile
 project
-button
-textbox
-history
-word
-hello

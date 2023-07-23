@@ -150,7 +150,14 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
             // Add the sign "@" to delete old word type
             node->vieEngWordInfo += "\n@\n" + wordInfo;
         }
-            
+  
+    }
+    else
+    {
+        if (node->emojiInfo.empty())
+        {
+            node->emojiInfo= wordInfo;
+        }
     }
 }
 
@@ -196,6 +203,11 @@ std::string trieSearch(EngTrieNode* root, std::string word, int curDataSetID)
     {
         if(node->flag && !node->vieEngWordInfo.empty())
             return node->vieEngWordInfo;
+    }
+    else
+    {
+        if (node->flag && !node->emojiInfo.empty())
+            return node->emojiInfo;
     }
     return std::string();
 }
@@ -1122,3 +1134,11 @@ bool VieTrieNode::hasNoChildren()
     return true;
 }
 
+std::string trim(const std::string& str) {
+    size_t first = str.find_first_not_of(" \t");
+    if (std::string::npos == first) {
+        return str;
+    }
+    size_t last = str.find_last_not_of(" \t");
+    return str.substr(first, (last - first + 1));
+}

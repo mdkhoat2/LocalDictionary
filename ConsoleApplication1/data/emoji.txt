@@ -3835,30 +3835,6 @@
 23F2                                                   ; unqualified         # ⏲ E1.0 timer clock
 1F570 FE0F                                             ; fully-qualified     # 🕰️ E0.7 mantelpiece clock
 1F570                                                  ; unqualified         # 🕰 E0.7 mantelpiece clock
-1F55B                                                  ; fully-qualified     # 🕛 E0.6 twelve o’clock
-1F567                                                  ; fully-qualified     # 🕧 E0.7 twelve-thirty
-1F550                                                  ; fully-qualified     # 🕐 E0.6 one o’clock
-1F55C                                                  ; fully-qualified     # 🕜 E0.7 one-thirty
-1F551                                                  ; fully-qualified     # 🕑 E0.6 two o’clock
-1F55D                                                  ; fully-qualified     # 🕝 E0.7 two-thirty
-1F552                                                  ; fully-qualified     # 🕒 E0.6 three o’clock
-1F55E                                                  ; fully-qualified     # 🕞 E0.7 three-thirty
-1F553                                                  ; fully-qualified     # 🕓 E0.6 four o’clock
-1F55F                                                  ; fully-qualified     # 🕟 E0.7 four-thirty
-1F554                                                  ; fully-qualified     # 🕔 E0.6 five o’clock
-1F560                                                  ; fully-qualified     # 🕠 E0.7 five-thirty
-1F555                                                  ; fully-qualified     # 🕕 E0.6 six o’clock
-1F561                                                  ; fully-qualified     # 🕡 E0.7 six-thirty
-1F556                                                  ; fully-qualified     # 🕖 E0.6 seven o’clock
-1F562                                                  ; fully-qualified     # 🕢 E0.7 seven-thirty
-1F557                                                  ; fully-qualified     # 🕗 E0.6 eight o’clock
-1F563                                                  ; fully-qualified     # 🕣 E0.7 eight-thirty
-1F558                                                  ; fully-qualified     # 🕘 E0.6 nine o’clock
-1F564                                                  ; fully-qualified     # 🕤 E0.7 nine-thirty
-1F559                                                  ; fully-qualified     # 🕙 E0.6 ten o’clock
-1F565                                                  ; fully-qualified     # 🕥 E0.7 ten-thirty
-1F55A                                                  ; fully-qualified     # 🕚 E0.6 eleven o’clock
-1F566                                                  ; fully-qualified     # 🕦 E0.7 eleven-thirty
 
 # subgroup: sky & weather
 1F311                                                  ; fully-qualified     # 🌑 E0.6 new moon
@@ -4011,7 +3987,6 @@
 1F3B2                                                  ; fully-qualified     # 🎲 E0.6 game die
 1F9E9                                                  ; fully-qualified     # 🧩 E11.0 puzzle piece
 1F9F8                                                  ; fully-qualified     # 🧸 E11.0 teddy bear
-1FA85                                                  ; fully-qualified     # 🪅 E13.0 piñata
 1FAA9                                                  ; fully-qualified     # 🪩 E14.0 mirror ball
 1FA86                                                  ; fully-qualified     # 🪆 E13.0 nesting dolls
 2660 FE0F                                              ; fully-qualified     # ♠️ E0.6 spade suit
@@ -4064,7 +4039,6 @@
 1FA72                                                  ; fully-qualified     # 🩲 E12.0 briefs
 1FA73                                                  ; fully-qualified     # 🩳 E12.0 shorts
 1F459                                                  ; fully-qualified     # 👙 E0.6 bikini
-1F45A                                                  ; fully-qualified     # 👚 E0.6 woman’s clothes
 1FAAD                                                  ; fully-qualified     # 🪭 E15.0 folding hand fan
 1F45B                                                  ; fully-qualified     # 👛 E0.6 purse
 1F45C                                                  ; fully-qualified     # 👜 E0.6 handbag
@@ -4073,23 +4047,17 @@
 1F6CD                                                  ; unqualified         # 🛍 E0.7 shopping bags
 1F392                                                  ; fully-qualified     # 🎒 E0.6 backpack
 1FA74                                                  ; fully-qualified     # 🩴 E13.0 thong sandal
-1F45E                                                  ; fully-qualified     # 👞 E0.6 man’s shoe
 1F45F                                                  ; fully-qualified     # 👟 E0.6 running shoe
 1F97E                                                  ; fully-qualified     # 🥾 E11.0 hiking boot
 1F97F                                                  ; fully-qualified     # 🥿 E11.0 flat shoe
 1F460                                                  ; fully-qualified     # 👠 E0.6 high-heeled shoe
-1F461                                                  ; fully-qualified     # 👡 E0.6 woman’s sandal
 1FA70                                                  ; fully-qualified     # 🩰 E12.0 ballet shoes
-1F462                                                  ; fully-qualified     # 👢 E0.6 woman’s boot
 1FAAE                                                  ; fully-qualified     # 🪮 E15.0 hair pick
 1F451                                                  ; fully-qualified     # 👑 E0.6 crown
-1F452                                                  ; fully-qualified     # 👒 E0.6 woman’s hat
 1F3A9                                                  ; fully-qualified     # 🎩 E0.6 top hat
 1F393                                                  ; fully-qualified     # 🎓 E0.6 graduation cap
 1F9E2                                                  ; fully-qualified     # 🧢 E5.0 billed cap
 1FA96                                                  ; fully-qualified     # 🪖 E13.0 military helmet
-26D1 FE0F                                              ; fully-qualified     # ⛑️ E0.7 rescue worker’s helmet
-26D1                                                   ; unqualified         # ⛑ E0.7 rescue worker’s helmet
 1F4FF                                                  ; fully-qualified     # 📿 E1.0 prayer beads
 1F484                                                  ; fully-qualified     # 💄 E0.6 lipstick
 1F48D                                                  ; fully-qualified     # 💍 E0.6 ring
@@ -4399,8 +4367,6 @@
 1F6AE                                                  ; fully-qualified     # 🚮 E1.0 litter in bin sign
 1F6B0                                                  ; fully-qualified     # 🚰 E1.0 potable water
 267F                                                   ; fully-qualified     # ♿ E0.6 wheelchair symbol
-1F6B9                                                  ; fully-qualified     # 🚹 E0.6 men’s room
-1F6BA                                                  ; fully-qualified     # 🚺 E0.6 women’s room
 1F6BB                                                  ; fully-qualified     # 🚻 E0.6 restroom
 1F6BC                                                  ; fully-qualified     # 🚼 E0.6 baby symbol
 1F6BE                                                  ; fully-qualified     # 🚾 E0.6 water closet
@@ -4608,44 +4574,12 @@
 2122 FE0F                                              ; fully-qualified     # ™️ E0.6 trade mark
 2122                                                   ; unqualified         # ™ E0.6 trade mark
 
-# subgroup: keycap
-0023 FE0F 20E3                                         ; fully-qualified     # #️⃣ E0.6 keycap: #
-0023 20E3                                              ; unqualified         # #⃣ E0.6 keycap: #
-002A FE0F 20E3                                         ; fully-qualified     # *️⃣ E2.0 keycap: *
-002A 20E3                                              ; unqualified         # *⃣ E2.0 keycap: *
-0030 FE0F 20E3                                         ; fully-qualified     # 0️⃣ E0.6 keycap: 0
-0030 20E3                                              ; unqualified         # 0⃣ E0.6 keycap: 0
-0031 FE0F 20E3                                         ; fully-qualified     # 1️⃣ E0.6 keycap: 1
-0031 20E3                                              ; unqualified         # 1⃣ E0.6 keycap: 1
-0032 FE0F 20E3                                         ; fully-qualified     # 2️⃣ E0.6 keycap: 2
-0032 20E3                                              ; unqualified         # 2⃣ E0.6 keycap: 2
-0033 FE0F 20E3                                         ; fully-qualified     # 3️⃣ E0.6 keycap: 3
-0033 20E3                                              ; unqualified         # 3⃣ E0.6 keycap: 3
-0034 FE0F 20E3                                         ; fully-qualified     # 4️⃣ E0.6 keycap: 4
-0034 20E3                                              ; unqualified         # 4⃣ E0.6 keycap: 4
-0035 FE0F 20E3                                         ; fully-qualified     # 5️⃣ E0.6 keycap: 5
-0035 20E3                                              ; unqualified         # 5⃣ E0.6 keycap: 5
-0036 FE0F 20E3                                         ; fully-qualified     # 6️⃣ E0.6 keycap: 6
-0036 20E3                                              ; unqualified         # 6⃣ E0.6 keycap: 6
-0037 FE0F 20E3                                         ; fully-qualified     # 7️⃣ E0.6 keycap: 7
-0037 20E3                                              ; unqualified         # 7⃣ E0.6 keycap: 7
-0038 FE0F 20E3                                         ; fully-qualified     # 8️⃣ E0.6 keycap: 8
-0038 20E3                                              ; unqualified         # 8⃣ E0.6 keycap: 8
-0039 FE0F 20E3                                         ; fully-qualified     # 9️⃣ E0.6 keycap: 9
-0039 20E3                                              ; unqualified         # 9⃣ E0.6 keycap: 9
-1F51F                                                  ; fully-qualified     # 🔟 E0.6 keycap: 10
-
 # subgroup: alphanum
 1F520                                                  ; fully-qualified     # 🔠 E0.6 input latin uppercase
 1F521                                                  ; fully-qualified     # 🔡 E0.6 input latin lowercase
 1F522                                                  ; fully-qualified     # 🔢 E0.6 input numbers
 1F523                                                  ; fully-qualified     # 🔣 E0.6 input symbols
 1F524                                                  ; fully-qualified     # 🔤 E0.6 input latin letters
-1F170 FE0F                                             ; fully-qualified     # 🅰️ E0.6 A button (blood type)
-1F170                                                  ; unqualified         # 🅰 E0.6 A button (blood type)
-1F18E                                                  ; fully-qualified     # 🆎 E0.6 AB button (blood type)
-1F171 FE0F                                             ; fully-qualified     # 🅱️ E0.6 B button (blood type)
-1F171                                                  ; unqualified         # 🅱 E0.6 B button (blood type)
 1F191                                                  ; fully-qualified     # 🆑 E0.6 CL button
 1F192                                                  ; fully-qualified     # 🆒 E0.6 COOL button
 1F193                                                  ; fully-qualified     # 🆓 E0.6 FREE button
@@ -4656,35 +4590,12 @@
 24C2                                                   ; unqualified         # Ⓜ E0.6 circled M
 1F195                                                  ; fully-qualified     # 🆕 E0.6 NEW button
 1F196                                                  ; fully-qualified     # 🆖 E0.6 NG button
-1F17E FE0F                                             ; fully-qualified     # 🅾️ E0.6 O button (blood type)
-1F17E                                                  ; unqualified         # 🅾 E0.6 O button (blood type)
 1F197                                                  ; fully-qualified     # 🆗 E0.6 OK button
 1F17F FE0F                                             ; fully-qualified     # 🅿️ E0.6 P button
 1F17F                                                  ; unqualified         # 🅿 E0.6 P button
 1F198                                                  ; fully-qualified     # 🆘 E0.6 SOS button
 1F199                                                  ; fully-qualified     # 🆙 E0.6 UP! button
 1F19A                                                  ; fully-qualified     # 🆚 E0.6 VS button
-1F201                                                  ; fully-qualified     # 🈁 E0.6 Japanese “here” button
-1F202 FE0F                                             ; fully-qualified     # 🈂️ E0.6 Japanese “service charge” button
-1F202                                                  ; unqualified         # 🈂 E0.6 Japanese “service charge” button
-1F237 FE0F                                             ; fully-qualified     # 🈷️ E0.6 Japanese “monthly amount” button
-1F237                                                  ; unqualified         # 🈷 E0.6 Japanese “monthly amount” button
-1F236                                                  ; fully-qualified     # 🈶 E0.6 Japanese “not free of charge” button
-1F22F                                                  ; fully-qualified     # 🈯 E0.6 Japanese “reserved” button
-1F250                                                  ; fully-qualified     # 🉐 E0.6 Japanese “bargain” button
-1F239                                                  ; fully-qualified     # 🈹 E0.6 Japanese “discount” button
-1F21A                                                  ; fully-qualified     # 🈚 E0.6 Japanese “free of charge” button
-1F232                                                  ; fully-qualified     # 🈲 E0.6 Japanese “prohibited” button
-1F251                                                  ; fully-qualified     # 🉑 E0.6 Japanese “acceptable” button
-1F238                                                  ; fully-qualified     # 🈸 E0.6 Japanese “application” button
-1F234                                                  ; fully-qualified     # 🈴 E0.6 Japanese “passing grade” button
-1F233                                                  ; fully-qualified     # 🈳 E0.6 Japanese “vacancy” button
-3297 FE0F                                              ; fully-qualified     # ㊗️ E0.6 Japanese “congratulations” button
-3297                                                   ; unqualified         # ㊗ E0.6 Japanese “congratulations” button
-3299 FE0F                                              ; fully-qualified     # ㊙️ E0.6 Japanese “secret” button
-3299                                                   ; unqualified         # ㊙ E0.6 Japanese “secret” button
-1F23A                                                  ; fully-qualified     # 🈺 E0.6 Japanese “open for business” button
-1F235                                                  ; fully-qualified     # 🈵 E0.6 Japanese “no vacancy” button
 
 # subgroup: geometric
 1F534                                                  ; fully-qualified     # 🔴 E0.6 red circle
@@ -4763,7 +4674,6 @@
 1F1E6 1F1F9                                            ; fully-qualified     # 🇦🇹 E2.0 flag: Austria
 1F1E6 1F1FA                                            ; fully-qualified     # 🇦🇺 E2.0 flag: Australia
 1F1E6 1F1FC                                            ; fully-qualified     # 🇦🇼 E2.0 flag: Aruba
-1F1E6 1F1FD                                            ; fully-qualified     # 🇦🇽 E2.0 flag: Åland Islands
 1F1E6 1F1FF                                            ; fully-qualified     # 🇦🇿 E2.0 flag: Azerbaijan
 1F1E7 1F1E6                                            ; fully-qualified     # 🇧🇦 E2.0 flag: Bosnia & Herzegovina
 1F1E7 1F1E7                                            ; fully-qualified     # 🇧🇧 E2.0 flag: Barbados
@@ -4774,7 +4684,6 @@
 1F1E7 1F1ED                                            ; fully-qualified     # 🇧🇭 E2.0 flag: Bahrain
 1F1E7 1F1EE                                            ; fully-qualified     # 🇧🇮 E2.0 flag: Burundi
 1F1E7 1F1EF                                            ; fully-qualified     # 🇧🇯 E2.0 flag: Benin
-1F1E7 1F1F1                                            ; fully-qualified     # 🇧🇱 E2.0 flag: St. Barthélemy
 1F1E7 1F1F2                                            ; fully-qualified     # 🇧🇲 E2.0 flag: Bermuda
 1F1E7 1F1F3                                            ; fully-qualified     # 🇧🇳 E2.0 flag: Brunei
 1F1E7 1F1F4                                            ; fully-qualified     # 🇧🇴 E2.0 flag: Bolivia
@@ -4787,12 +4696,10 @@
 1F1E7 1F1FE                                            ; fully-qualified     # 🇧🇾 E2.0 flag: Belarus
 1F1E7 1F1FF                                            ; fully-qualified     # 🇧🇿 E2.0 flag: Belize
 1F1E8 1F1E6                                            ; fully-qualified     # 🇨🇦 E2.0 flag: Canada
-1F1E8 1F1E8                                            ; fully-qualified     # 🇨🇨 E2.0 flag: Cocos (Keeling) Islands
 1F1E8 1F1E9                                            ; fully-qualified     # 🇨🇩 E2.0 flag: Congo - Kinshasa
 1F1E8 1F1EB                                            ; fully-qualified     # 🇨🇫 E2.0 flag: Central African Republic
 1F1E8 1F1EC                                            ; fully-qualified     # 🇨🇬 E2.0 flag: Congo - Brazzaville
 1F1E8 1F1ED                                            ; fully-qualified     # 🇨🇭 E2.0 flag: Switzerland
-1F1E8 1F1EE                                            ; fully-qualified     # 🇨🇮 E2.0 flag: Côte d’Ivoire
 1F1E8 1F1F0                                            ; fully-qualified     # 🇨🇰 E2.0 flag: Cook Islands
 1F1E8 1F1F1                                            ; fully-qualified     # 🇨🇱 E2.0 flag: Chile
 1F1E8 1F1F2                                            ; fully-qualified     # 🇨🇲 E2.0 flag: Cameroon
@@ -4802,7 +4709,6 @@
 1F1E8 1F1F7                                            ; fully-qualified     # 🇨🇷 E2.0 flag: Costa Rica
 1F1E8 1F1FA                                            ; fully-qualified     # 🇨🇺 E2.0 flag: Cuba
 1F1E8 1F1FB                                            ; fully-qualified     # 🇨🇻 E2.0 flag: Cape Verde
-1F1E8 1F1FC                                            ; fully-qualified     # 🇨🇼 E2.0 flag: Curaçao
 1F1E8 1F1FD                                            ; fully-qualified     # 🇨🇽 E2.0 flag: Christmas Island
 1F1E8 1F1FE                                            ; fully-qualified     # 🇨🇾 E2.0 flag: Cyprus
 1F1E8 1F1FF                                            ; fully-qualified     # 🇨🇿 E2.0 flag: Czechia
@@ -4899,7 +4805,6 @@
 1F1F2 1F1ED                                            ; fully-qualified     # 🇲🇭 E2.0 flag: Marshall Islands
 1F1F2 1F1F0                                            ; fully-qualified     # 🇲🇰 E2.0 flag: North Macedonia
 1F1F2 1F1F1                                            ; fully-qualified     # 🇲🇱 E2.0 flag: Mali
-1F1F2 1F1F2                                            ; fully-qualified     # 🇲🇲 E2.0 flag: Myanmar (Burma)
 1F1F2 1F1F3                                            ; fully-qualified     # 🇲🇳 E2.0 flag: Mongolia
 1F1F2 1F1F4                                            ; fully-qualified     # 🇲🇴 E2.0 flag: Macao SAR China
 1F1F2 1F1F5                                            ; fully-qualified     # 🇲🇵 E2.0 flag: Northern Mariana Islands
@@ -4941,7 +4846,6 @@
 1F1F5 1F1FC                                            ; fully-qualified     # 🇵🇼 E2.0 flag: Palau
 1F1F5 1F1FE                                            ; fully-qualified     # 🇵🇾 E2.0 flag: Paraguay
 1F1F6 1F1E6                                            ; fully-qualified     # 🇶🇦 E2.0 flag: Qatar
-1F1F7 1F1EA                                            ; fully-qualified     # 🇷🇪 E2.0 flag: Réunion
 1F1F7 1F1F4                                            ; fully-qualified     # 🇷🇴 E2.0 flag: Romania
 1F1F7 1F1F8                                            ; fully-qualified     # 🇷🇸 E2.0 flag: Serbia
 1F1F7 1F1FA                                            ; fully-qualified     # 🇷🇺 E0.6 flag: Russia
@@ -4962,7 +4866,6 @@
 1F1F8 1F1F4                                            ; fully-qualified     # 🇸🇴 E2.0 flag: Somalia
 1F1F8 1F1F7                                            ; fully-qualified     # 🇸🇷 E2.0 flag: Suriname
 1F1F8 1F1F8                                            ; fully-qualified     # 🇸🇸 E2.0 flag: South Sudan
-1F1F8 1F1F9                                            ; fully-qualified     # 🇸🇹 E2.0 flag: São Tomé & Príncipe
 1F1F8 1F1FB                                            ; fully-qualified     # 🇸🇻 E2.0 flag: El Salvador
 1F1F8 1F1FD                                            ; fully-qualified     # 🇸🇽 E2.0 flag: Sint Maarten
 1F1F8 1F1FE                                            ; fully-qualified     # 🇸🇾 E2.0 flag: Syria
@@ -4979,7 +4882,7 @@
 1F1F9 1F1F2                                            ; fully-qualified     # 🇹🇲 E2.0 flag: Turkmenistan
 1F1F9 1F1F3                                            ; fully-qualified     # 🇹🇳 E2.0 flag: Tunisia
 1F1F9 1F1F4                                            ; fully-qualified     # 🇹🇴 E2.0 flag: Tonga
-1F1F9 1F1F7                                            ; fully-qualified     # 🇹🇷 E2.0 flag: Turkey
+1F1F9 1F1F7                                            ; fully-qualified     # 🇹🇷 E2.0 flag: Turkey	
 1F1F9 1F1F9                                            ; fully-qualified     # 🇹🇹 E2.0 flag: Trinidad & Tobago
 1F1F9 1F1FB                                            ; fully-qualified     # 🇹🇻 E2.0 flag: Tuvalu
 1F1F9 1F1FC                                            ; fully-qualified     # 🇹🇼 E2.0 flag: Taiwan

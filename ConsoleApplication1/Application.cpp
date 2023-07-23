@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <fstream>
 #include "Application.h"
@@ -243,6 +243,46 @@ void Application::loadVieEngDict()
     fin.close();
 }
 
+void Application::loadEmojiDict()
+{
+	std::ifstream inputFile("data/emoji.txt"); 
+	if (!inputFile) {
+		std::cerr << "Falied to open file " << std::endl;
+		return ;
+	}
+	std::string line;
+	while (std::getline(inputFile, line)) 
+	{
+		if (line.empty() || line[0] == '#')
+			continue;
+		std::string emojis; 
+		// Find the position of ';' 
+		std::size_t separatorPos = line.find_first_of(';');
+
+		// Tách dòng thành hai phần: mã hex và phần còn lại
+		std::string hexCode = line.substr(0, separatorPos);
+		std::string remainingPart = line.substr(separatorPos + 1);
+
+		// Tìm vị trí của ký tự '#' trong phần còn lại
+		std::size_t hashtagPos = remainingPart.find_first_of('#');
+
+		// Tách phần còn lại thành status và từ
+		std::string status = remainingPart.substr(1, hashtagPos - 2);
+		std::size_t meo = remainingPart.find_first_of(".");
+
+		std::string word = remainingPart.substr(meo + 2);
+
+		//xóa bỏ dấu space
+		hexCode = trim(hexCode);
+		status = trim(status);
+		word = trim(word);
+		emojis = hexCode;
+		trieInsert(engEngRoot, word, emojis, 3);
+	}
+
+	inputFile.close();
+}
+
 void Application::initWindow()
 {
 	sf::Vector2i centerWindow(
@@ -375,6 +415,10 @@ void Application::changeDataSet()
 	{
 	//	displayBox.clearVieEngData();
 	}
+	else
+	{
+		displayBox.clearEmoji();
+	}
 	// Start changing data set
 	if (currentDataSetID != 3)
 		++currentDataSetID;
@@ -395,11 +439,11 @@ void Application::run()
 	// Load dictionaries
 	newWord = new NewWord(font, window);
 	removeWord = new RemoveWord(font, window);
-	favourite = new Favourite(window);
-	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
+	//favourite = new Favourite(window);
 	loadEngEngDict();
-	loadEngVieDict();
+	//loadEngVieDict();
 	loadVieEngDict();
+	loadEmojiDict();
 	while (window.isOpen())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -440,13 +484,13 @@ void Application::handleEvent()
 					//if (inputWord!="")
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
-
 					if (currentDataSetID == 0)
 						searchInEngEngDict(inputWord);
 					else if (currentDataSetID == 1)
 						searchInEngVieDict(inputWord);
 					else if (currentDataSetID == 2)
 						searchInVieEngDict(inputWord);
+					else searchInEmojiDict(inputWord);
 
 				}
 				else if (menuButton.isMouseOver(window)) {
@@ -472,9 +516,10 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					favourite = nullptr;
 					if(favourite==nullptr)
 					{
-						favourite = new Favourite(window);
+						favourite = new Favourite(window,currentDataSetID);
 					}
 					favourite->addtoFile();
 					favourite->loadWordsList();
@@ -552,7 +597,7 @@ void Application::handleEvent()
 				favourite->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 				favourite->eraseWordList();
-
+				//delete favourite;
 			}
 		}
 		else
@@ -708,3 +753,23 @@ void Application::searchInVieEngDict(std::string& inputWord)
         displayBox.showNoVieEngDefinitions();
     }
 }
+void Application::searchInEmojiDict(std::string& inputWord)
+{
+	if (inputWord != "")
+		history.add(inputWord);
+	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 3);
+	if (!wordInfo.empty())
+	{
+		// Console
+		std::cout << wordInfo << std::endl;
+		// UI
+		displayBox.emojiDefinition = true;
+		displayBox.showEmojiDefinition(inputWord, wordInfo);
+	}
+	else
+	{
+		displayBox.showNoEmojiDefinition();
+		std::cout << "Cannot find the word " << "\n";
+	}
+}
+

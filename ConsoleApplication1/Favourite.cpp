@@ -1,7 +1,7 @@
 #include"Favourite.h"
-
-void saveWords(const std::vector<WordItem>& words) {
-	std::ofstream file("favorite_words.txt");
+#include<string>
+void saveWords(const std::vector<WordItem>& words,std::string filePath) {
+	std::ofstream file(filePath);
 	if (file.is_open()) {
 		for (const WordItem& word : words) {
 			file << word.word << std::endl;
@@ -35,7 +35,7 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 }
 
 
-Favourite::Favourite(sf::RenderWindow&window):
+Favourite::Favourite(sf::RenderWindow&window,int currentDataSet):
 	addBar(20, sf::Color::Black, sf::Color::Transparent, true),
 	backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
@@ -55,6 +55,7 @@ Favourite::Favourite(sf::RenderWindow&window):
 	posY = 320;
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
+	filePath = "favorite_words" + std::to_string(currentDataSet) + ".txt";
 }
 
 void Favourite::initExistedText()
@@ -189,7 +190,6 @@ void Favourite::addtoFile()
 {
 	std::ofstream fo;
 	std::ifstream fi;
-	std::string filePath = "favorite_words.txt";
 	for (auto it = favourite.begin(); it != favourite.end(); it++)
 	{
 		if (!filterAndCheck(it->word) && it->liked == true)
@@ -222,7 +222,7 @@ void Favourite::likeOrNot(sf::RenderWindow& window)
 void Favourite::loadWordsList()
 {
 	std::ifstream fi;
-	fi.open("favorite_words.txt");
+	fi.open(filePath);
 	currentPage = 1;
 	if (fi.is_open())
 	{
@@ -272,7 +272,6 @@ void Favourite::resavePositionDeleteButton()
 
 void Favourite::addWord(std::string inputword)
 {
-	std::string meo = "favorite_words.txt";
 	if (filterAndCheck(inputword) && inputword != "")
 	{
 		isExist = true;
@@ -289,7 +288,7 @@ void Favourite::addWord(std::string inputword)
 		wordItem.deleteButton.setOutlineThickness(2);
 		wordItems.push_back(wordItem);
 		posY1 += 50;
-		saveWords(wordItems);
+		saveWords(wordItems,filePath);
 		if (wordItems.size() % 7 == 1)
 		{
 			numberPage += 1;
@@ -308,7 +307,7 @@ void Favourite::removeWord(sf::RenderWindow& window)
 		p++;
 		if (it->deleteButton.isMouseOver(window) && first3 < p && p <= last3) {
 			wordItems.erase(it);
-			saveWords(wordItems);
+			saveWords(wordItems,filePath);
 			resavePositionDeleteButton();
 			if (wordItems.size() != 0)
 			{
@@ -443,9 +442,8 @@ void Favourite::setEndScreen(bool value) {
 
 bool Favourite::filterAndCheck(std::string wordCheck)
 {
-	std::string file = "favorite_words.txt";
 	std::string word = wordCheck;
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}
@@ -454,7 +452,7 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 		if (word[i] >= 'a' && word[i] <= 'z')
 			word[i] = toupper(word[i]);
 	}
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}
@@ -462,12 +460,12 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 	{
 		word[i] = tolower(word[i]);
 	}
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}
 	word[0] = toupper(word[0]);
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}
@@ -480,7 +478,7 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 		if (word[i + 1] >= 'a' && word[i + 1] <= 'z')
 			word[i + 1] = toupper(word[i + 1]);
 	}
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}
@@ -491,7 +489,7 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 		if (word[i - 1] == ' ')
 			word[i] = toupper(word[i]);
 	}
-	if (checkStringInFile(file, word) == true)
+	if (checkStringInFile(filePath, word) == true)
 	{
 		return true;
 	}

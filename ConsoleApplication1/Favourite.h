@@ -20,7 +20,7 @@ struct WordFavouriteButton
 	sf::RectangleShape favouriteButton;
 	bool liked = false;
 };
-void saveWords(const std::vector<WordItem>& words);
+void saveWords(const std::vector<WordItem>& words,std::string filePath);
 
 //void favourite(sf::RenderWindow& window);
 
@@ -31,7 +31,7 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 class Favourite
 {
 public:
-	Favourite(sf::RenderWindow& window);
+	Favourite(sf::RenderWindow& window,int currentDataSet);
 
 	void add(std::string word);
 
@@ -80,6 +80,7 @@ private:
 	sf::Sprite favouriteImage1, favouriteImage2, deleteButtonImage, prevButtonImage, nextButtonImage, backgroundImage;
 	sf::Font font;
 	sf::Time t1;
+	std::string filePath;
 	int  posY, posY1;
 	int currentPage;
 	int numberPage;

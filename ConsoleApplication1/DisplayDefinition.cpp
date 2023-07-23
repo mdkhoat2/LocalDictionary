@@ -22,6 +22,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     vieEngDefNum(0),
     showNextButton(false),
     showPrevButton(false),
+    emojiDefinition(false),
     nextButtonTex(),
     prevButtonTex(),
     nextButtonSprite(),
@@ -72,7 +73,8 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite.setPosition(100, 800);
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
-
+    Font.loadFromFile("font/emoji.woff");
+    setEmoji();
 }
 
 DisplayBox::~DisplayBox()
@@ -142,6 +144,11 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
     window.draw(wordType);
     window.draw(wordDef);
     window.draw(wordExample);
+    if (emojiDefinition==true)
+    {
+        window.draw(emojiText);
+       // emojiDefinition = false;
+    }
     if(showNextButton)
     {
         window.draw(nextButtonSprite);
@@ -719,6 +726,51 @@ bool DisplayBox::prevButtonDrawn()
     return showPrevButton;
 }
 
+void DisplayBox::showEmojiDefinition(std::string& inputWord, std::string& wordInfor)
+{
+  
+    std::string emoji = "0x"+ wordInfor;
+    sf::Uint32 emojiUnicode = hexStringToUint32(emoji);
+    emojiText.setString(sf::String(emojiUnicode));
+    word.setString(inputWord);
+}
+void DisplayBox::clearEmoji()
+{
+    emojiDefinition = false;
+    word.setString("");
+}
+void DisplayBox::showNoEmojiDefinition()
+{
+    word.setString("No emoji matches this definition.");
+    wordType.setString("");
+    wordDef.setString("");
+    emojiText.setString("");
+}
+
+sf::Uint32 hexStringToUint32(const std::string& hexString) {
+    // Check if the input string starts with "0x"
+    if (hexString.substr(0, 2) != "0x") {
+        std::cerr << "Invalid hexadecimal format. Expected a string starting with '0x'" << std::endl;
+        return 0; // Return a default value or handle the error as needed
+    }
+
+    // Convert the hex string to an unsigned long
+    std::stringstream ss;
+    ss << std::hex << hexString;
+    unsigned long hexValue;
+    ss >> hexValue;
+
+    // Convert the unsigned long to sf::Uint32
+    sf::Uint32 result = static_cast<sf::Uint32>(hexValue);
+    return result;
+}
+void::DisplayBox::setEmoji()
+{
+    emojiText.setFont(Font);
+    emojiText.setCharacterSize(100);
+    emojiText.setPosition(120, 320);
+    emojiText.setFillColor(sf::Color(186, 151, 24));
+}
 const sf::String &DisplayBox::getWord() const
 {
     return word.getString();
