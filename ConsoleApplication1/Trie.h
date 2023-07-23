@@ -2,7 +2,6 @@
 #define TRIE_H
 
 #include "WordData.h"
-
 struct EngTrieNode
 {
     /*
@@ -25,9 +24,9 @@ struct EngTrieNode
     EngTrieNode* links[72];
     bool flag;
     std::string engEngWordInfo;
-    std::string engVieWordInfo;
+    std::string engVieWordInfo; 
     std::string vieEngWordInfo;
-
+    std::string emojiInfo;
     // Constructor
     EngTrieNode();
 
@@ -70,5 +69,8 @@ void trieDeleteAll(VieTrieNode* &root);
 
 // Search functions
 std::string filterAndSearch(EngTrieNode* root, std::string &word, int curDataSetID);
+//Remove space
+std::string trim(const std::string& str);
+//
 
 #endif // TRIE_H

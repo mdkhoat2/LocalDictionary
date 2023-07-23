@@ -31,6 +31,7 @@ public:
     void loadEngEngDict();
     void loadEngVieDict();
     void loadVieEngDict();
+    void loadEmojiDict(); 
     void run();
 public:
     void handleEvent();
@@ -40,6 +41,7 @@ public:
     void searchInEngEngDict(std::string& inputWord);
     void searchInEngVieDict(std::string& inputWord);
     void searchInVieEngDict(std::string& inputWord);
+    void searchInEmojiDict(std::string& inputWord);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
@@ -101,5 +103,6 @@ private:
     void initFavouriteButton();
     void changeDataSet();
 };
+
 
 #endif

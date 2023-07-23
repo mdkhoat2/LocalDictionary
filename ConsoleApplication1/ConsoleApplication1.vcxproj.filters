@@ -30,6 +30,9 @@
     <ClInclude Include="RemoveWord.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="favorite_words.txt" />
+    <Text Include="favorite_words0.txt" />
+    <Text Include="favorite_words1.txt" />
+    <Text Include="favorite_words2.txt" />
+    <Text Include="favorite_words3.txt" />
   </ItemGroup>
 </Project>
