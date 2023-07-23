@@ -61,6 +61,7 @@ private:
         */
 
     sf::Font font;
+    sf::Font font2;
 
     sf::Event event;
     

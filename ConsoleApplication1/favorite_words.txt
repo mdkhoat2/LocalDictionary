@@ -1,7 +1,4 @@
-hello
 hi
-remove
-something
 someone
 hihi
 application
@@ -12,3 +9,4 @@ button
 textbox
 history
 word
+hello

@@ -51,6 +51,8 @@ public:
 
 	bool filterAndCheck(std::string  wordCheck);
 
+	void eraseWordList();
+
 public:
 
 

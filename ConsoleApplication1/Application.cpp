@@ -21,7 +21,7 @@ Application::Application() :
 	editDefScreen(nullptr),
 	newWord(nullptr),
 	removeWord(nullptr),
-	displayBox({ 72, 240 }, { 880, 610 }, sf::Color::Transparent, sf::Color::Black),
+	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	currentDataSetID(0)
 {
@@ -282,6 +282,8 @@ void Application::initFont()
 	// Load font from file
 	if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
 		std::cout << "Font not found!\n";
+	if (!font2.loadFromFile("font/Merriweather-Regular.ttf"))
+		std::cout << "Font not found!\n";
 }
 
 void Application::initSearchBar()
@@ -347,8 +349,8 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
-	displayBox.setFont(font);
-	displayBox.setCharacterSize(30);
+	displayBox.setFont(font2);
+	displayBox.setCharacterSize(25);
 }
 
 void Application::initFavouriteButton()
@@ -547,6 +549,7 @@ void Application::handleEvent()
 			{
 				favourite->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
+				favourite->eraseWordList();
 
 			}
 		}
