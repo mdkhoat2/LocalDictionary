@@ -31,7 +31,7 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 class Favourite
 {
 public:
-	Favourite(sf::RenderWindow& window,int currentDataSet);
+	Favourite(sf::RenderWindow& window);
 
 	void add(std::string word);
 
@@ -64,6 +64,8 @@ public:
 
 	void setEndScreen(bool value);
 
+	void setCurrentDataSet(int theID);
+
 private:
 	Button addButton;
 	Button backButton;
@@ -85,6 +87,7 @@ private:
 	int currentPage;
 	int numberPage;
 	bool isEndScreen;
+	int currentDataSetID;
 private:
 	void initExistedText();
 	void initBackground(sf::RenderWindow& window);

@@ -666,7 +666,7 @@ void DisplayBox::clearVieEngData()
     {
         delete vieEngData;
         vieEngData = nullptr;
-        engVieDefID = 0;
+        vieEngDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -738,6 +738,14 @@ void DisplayBox::clearEmoji()
 {
     emojiDefinition = false;
     word.setString("");
+}
+void DisplayBox::setEmojiMode(bool value)
+{
+    emojiDefinition = value;
+}
+bool DisplayBox::getEmojiMode()
+{
+    return emojiDefinition;
 }
 void DisplayBox::showNoEmojiDefinition()
 {
