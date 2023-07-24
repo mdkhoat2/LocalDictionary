@@ -83,6 +83,10 @@ private:
     DisplayBox displayBox;
 
     EngTrieNode* engEngRoot;
+    std::vector<std::string> engEngVector;
+    std::vector<std::string> engVieVector;
+    std::vector<std::string> vieEngVector;
+    std::vector<std::string> emojiVector;
 
     EditDefinitionScreen* editDefScreen;
     NewWord* newWord;

@@ -73,7 +73,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite.setPosition(100, 800);
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
-    Font.loadFromFile("font/emoji.woff");
+    Font.loadFromFile("font/seguiemj.ttf"); //this font is Windows 10 default font for emoji
     setEmoji();
 }
 
