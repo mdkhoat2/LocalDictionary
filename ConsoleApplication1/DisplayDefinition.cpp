@@ -274,7 +274,7 @@ void DisplayBox::wrapText(sf::Text& theText)
         while (lineIss >> word) {
             // Set theText with the current line + the next word
             theText.setString(line + (line.empty() ? "" : " ") + word);
-            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 40.f) {
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
                 // Add the current line to the wrapped text and start a new line
                 wrappedStr += line + '\n';
                 line = word;
@@ -339,7 +339,10 @@ void DisplayBox::setUIText()
     // Word definition corresponding to that word type
     wordDef.setString(engEngPtr->wordDef);
     wrapText(wordDef);
-    wordExample.setString(engEngPtr->wordExample);
+    if(engEngPtr->wordExample[0] != '[')
+        wordExample.setString("Example:" + engEngPtr->wordExample);
+    else
+        wordExample.setString(engEngPtr->wordExample);
     wrapText(wordExample);
     // Adjust text position
     adjustTextPosition();

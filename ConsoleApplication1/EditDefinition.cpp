@@ -120,8 +120,9 @@ void EditDefinitionScreen::initCancelButton(const sf::Font &font)
         std::cout << "Cannot load cancel button texture\n";
     cancelButtonTex.setSmooth(true);
     cancelButton.setTexture(cancelButtonTex);
+    cancelButton.setTextureRect(sf::IntRect(270, 340, 400, 120));
     cancelButton.setScale(0.4f, 0.4f);
-    cancelButton.setPosition(450, 650);
+    cancelButton.setPosition(500, 780);
 }
 
 void EditDefinitionScreen::initSaveButton(const sf::Font &font)
@@ -199,12 +200,16 @@ void EditBox::update(sf::RenderWindow &window)
 void EditBox::drawTo(sf::RenderWindow &window)
 {
     window.draw(theBox);
-    window.draw(word);
-    adjustTextPosition();
-    adjustSurroundingTextbox();
-    wordTypeArea.drawTo(window);
-    wordDefArea.drawTo(window);
-    wordExampleArea.drawTo(window);
+    std::string wordStr = word.getString();
+    if(!wordStr.empty())
+    {
+        window.draw(word);
+        adjustTextPosition();
+        adjustSurroundingTextbox();
+        wordTypeArea.drawTo(window);
+        wordDefArea.drawTo(window);
+        wordExampleArea.drawTo(window);
+    }
 }
 
 void EditBox::setFont(const sf::Font &font)

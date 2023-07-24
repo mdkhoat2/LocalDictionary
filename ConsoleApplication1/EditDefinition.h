@@ -3,6 +3,7 @@
 
 #include "Button.h"
 #include "Textbox.h"
+#include "WordData.h"
 
 class EditBox
 {
