@@ -248,8 +248,8 @@ void Application::loadEmojiDict()
 {
 	std::ifstream inputFile("data/emoji.txt"); 
 	if (!inputFile) {
-		std::cerr << "Falied to open file " << std::endl;
-		return ;
+		std::cout << "Falied to open file " << std::endl;
+		return;
 	}
 	std::string line;
 	while (std::getline(inputFile, line)) 
@@ -408,15 +408,15 @@ void Application::changeDataSet()
 	{
 		displayBox.clearEngEngData();
 	}
-	if (currentDataSetID == 1)
+	else if (currentDataSetID == 1)
 	{
 		displayBox.clearEngVieData();
 	}
-	if (currentDataSetID == 2)
+	else if (currentDataSetID == 2)
 	{
-	//	displayBox.clearVieEngData();
+		displayBox.clearVieEngData();
 	}
-	else
+	else if(currentDataSetID == 3)
 	{
 		displayBox.clearEmoji();
 	}
@@ -440,9 +440,10 @@ void Application::run()
 	// Load dictionaries
 	newWord = new NewWord(font, window);
 	removeWord = new RemoveWord(font, window);
-	//favourite = new Favourite(window);
+	favourite = new Favourite(window);
+	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	loadEngEngDict();
-	//loadEngVieDict();
+	loadEngVieDict();
 	loadVieEngDict();
 	loadEmojiDict();
 	while (window.isOpen())
@@ -491,8 +492,8 @@ void Application::handleEvent()
 						searchInEngVieDict(inputWord);
 					else if (currentDataSetID == 2)
 						searchInVieEngDict(inputWord);
-					else searchInEmojiDict(inputWord);
-
+					else 
+						searchInEmojiDict(inputWord);
 				}
 				else if (menuButton.isMouseOver(window)) {
 					if (currentScreen == ScreenState::MainScreen)
@@ -517,11 +518,7 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-					favourite = nullptr;
-					if(favourite==nullptr)
-					{
-						favourite = new Favourite(window,currentDataSetID);
-					}
+					favourite->setCurrentDataSet(currentDataSetID);
 					favourite->addtoFile();
 					favourite->loadWordsList();
 					currentScreen = ScreenState::FavouriteScreen;
@@ -533,7 +530,7 @@ void Application::handleEvent()
 					else if (currentDataSetID == 1)
 						displayBox.showNextEngVieDef();
 					else if (currentDataSetID == 2)
-					displayBox.showNextVieEngDef();
+						displayBox.showNextVieEngDef();
 				}
 				else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
 				{
@@ -542,7 +539,7 @@ void Application::handleEvent()
 					else if (currentDataSetID == 1)
 						displayBox.showPrevEngVieDef();
 					else if (currentDataSetID == 2)
-					displayBox.showPrevVieEngDef();
+						displayBox.showPrevVieEngDef();
 				}
 				else if (dataSetButton.isMouseOver(window))
 				{
@@ -552,7 +549,6 @@ void Application::handleEvent()
 				{
 					favourite->likeOrNot(window);
 				}
-
 			}
 		}
 		else if (currentScreen == ScreenState::EditDefinitionScreen)
@@ -598,7 +594,6 @@ void Application::handleEvent()
 				favourite->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 				favourite->eraseWordList();
-				//delete favourite;
 			}
 		}
 		else
@@ -764,7 +759,7 @@ void Application::searchInEmojiDict(std::string& inputWord)
 		// Console
 		std::cout << wordInfo << std::endl;
 		// UI
-		displayBox.emojiDefinition = true;
+		displayBox.setEmojiMode(true);
 		displayBox.showEmojiDefinition(inputWord, wordInfo);
 	}
 	else

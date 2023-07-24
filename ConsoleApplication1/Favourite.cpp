@@ -35,14 +35,15 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 }
 
 
-Favourite::Favourite(sf::RenderWindow&window,int currentDataSet):
+Favourite::Favourite(sf::RenderWindow&window):
 	addBar(20, sf::Color::Black, sf::Color::Transparent, true),
 	backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	prevButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	nextButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	isEndScreen(false),
-	isExist(false)
+	isExist(false),
+	currentDataSetID(0)
 {
 	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
 	initAddButton(font);
@@ -55,7 +56,7 @@ Favourite::Favourite(sf::RenderWindow&window,int currentDataSet):
 	posY = 320;
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
-	filePath = "favorite_words" + std::to_string(currentDataSet) + ".txt";
+	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 
 void Favourite::initExistedText()
@@ -253,6 +254,7 @@ void Favourite::loadWordsList()
 	{
 		numberPage = (wordItems.size() / 7) + 1;
 	}
+	fi.close();
 	//std::cout << wordItems.size();
 	//std::cout << numberPage;
 }
@@ -438,6 +440,12 @@ void Favourite::render(sf::RenderWindow& window)
 }
 void Favourite::setEndScreen(bool value) {
 	isEndScreen = value;
+}
+
+void Favourite::setCurrentDataSet(int theID)
+{
+	currentDataSetID = theID;
+	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 
 bool Favourite::filterAndCheck(std::string wordCheck)
