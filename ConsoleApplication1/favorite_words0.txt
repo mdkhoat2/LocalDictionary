@@ -5,3 +5,5 @@ application
 favourite
 profile
 project-based
+continue
+kiki

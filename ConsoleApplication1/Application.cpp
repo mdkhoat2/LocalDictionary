@@ -164,7 +164,6 @@ void Application::loadEngVieDict()
                 ++count;
             else
             {   
-				std::cout << word << std::endl;
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 1);
                     

@@ -56,7 +56,7 @@ Favourite::Favourite(sf::RenderWindow&window):
 	posY = 320;
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
-	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	//filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 
 void Favourite::initExistedText()
@@ -274,11 +274,12 @@ void Favourite::resavePositionDeleteButton()
 
 void Favourite::addWord(std::string inputword)
 {
-	if (filterAndCheck(inputword) && inputword != "")
+	if(inputword.empty()==true)return;
+	if (filterAndCheck(inputword))
 	{
 		isExist = true;
 	}
-	if (inputword != "" && !filterAndCheck(inputword))
+	else
 	{
 		if (posY1 == 610)
 		{
@@ -493,9 +494,13 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 	for (int i = 0; i < word.length(); ++i)
 	{
 		if (i == 0)
+		{
 			word[0] = toupper(word[0]);
-		if (word[i - 1] == ' ')
+		}
+		else if (word[i - 1] == ' '&&i>1)
+		{
 			word[i] = toupper(word[i]);
+		}
 	}
 	if (checkStringInFile(filePath, word) == true)
 	{
