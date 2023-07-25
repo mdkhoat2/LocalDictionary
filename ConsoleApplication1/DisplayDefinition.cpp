@@ -732,7 +732,12 @@ void DisplayBox::showEmojiDefinition(std::string& inputWord, std::string& wordIn
     std::string emoji = "0x"+ wordInfor;
     sf::Uint32 emojiUnicode = hexStringToUint32(emoji);
     emojiText.setString(sf::String(emojiUnicode));
-    word.setString(inputWord);
+    std::string word1 = inputWord;
+    for (int i = 0; i < word1.length(); i++)
+    {
+        word1[i] = tolower(word1[i]);
+    }
+    word.setString(word1);
 }
 void DisplayBox::clearEmoji()
 {
