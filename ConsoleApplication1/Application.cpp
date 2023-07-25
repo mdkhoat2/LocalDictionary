@@ -73,6 +73,10 @@ void Application::loadEngEngDict()
             {
                 // insert the previous word with its definition
                 trieInsert(engEngRoot, word, wordInfo, 0);
+				if (count <= 11584)
+					count++;
+				else
+					engEngVector.push_back(word);
                 word = line;
                 wordInfo.clear();
             }
@@ -139,6 +143,7 @@ void Application::loadEngEngDict()
         }
     }
     trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
+	engEngVector.push_back(word);
     fin.close();
     newWord->loadAddedWord(engEngRoot);
 }
