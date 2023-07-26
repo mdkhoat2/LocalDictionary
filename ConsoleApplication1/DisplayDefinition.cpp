@@ -1,4 +1,5 @@
 #include <sstream>
+#include <fstream>
 #include <string>
 #include "DisplayDefinition.h"
 
@@ -24,7 +25,8 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite(),
     EEData(nullptr),
     EEDefID(0),
-    EEDefNum(0)
+    EEDefNum(0),
+    currentDataSetID(0)
 {
     theBox.setPosition(pos);
     float xText = pos.x + 30.f;
@@ -300,88 +302,41 @@ void DisplayBox::adjustTextPosition()
     wordExample.setPosition(wordExample.getPosition().x, wordDefBounds.top + wordDefBounds.height + 20.f);
 }
 
+void DisplayBox::setCurrentDataSet(int theID)
+{
+    currentDataSetID = theID;
+}
+
 void DisplayBox::initEngEngFirstDef()
 {
     word.setString(EEData->word);
-
     EEDefID = 0;
-    if(!EEData->defList[0].wordType.empty())
-    {
-        wordType.setString(EEData->defList[0].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(EEData->defList[0].defAndExample.first);
-    wrapText(wordDef);
-    if(!EEData->defList[0].defAndExample.second.empty())
-    {
-        wordExample.setString(EEData->defList[0].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngEngUIText();
     // Initialize the buttons
     if(EEDefNum > 1)
         showNextButton = true;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNextEngEngDef()
 {
     ++EEDefID;
-    if(!EEData->defList[EEDefID].wordType.empty())
-    {
-        wordType.setString(EEData->defList[EEDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!EEData->defList[EEDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngEngUIText();
     // Update buttons
     if(EEDefID > 0)
         showPrevButton = true;
     if(EEDefID == EEDefNum-1)
         showNextButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showPrevEngEngDef()
 {
     --EEDefID;
-    if(!EEData->defList[EEDefID].wordType.empty())
-    {
-        wordType.setString(EEData->defList[EEDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!EEData->defList[EEDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngEngUIText();
     // Update buttons
     if(EEDefID < EEDefNum-1)
         showNextButton = true;
     if(EEDefID == 0)
         showPrevButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNoEngEngDefinitions()
@@ -418,88 +373,59 @@ void DisplayBox::clearEngEngData()
     showPrevButton = false;
 }
 
+void DisplayBox::setEngEngUIText()
+{
+    if(!EEData->defList[EEDefID].wordType.empty())
+    {
+        wordType.setString(EEData->defList[EEDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!EEData->defList[EEDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Adjust text position
+    adjustTextPosition();
+}
+
 void DisplayBox::initEngVieFirstDef()
 {
     word.setString(engVieData->word);
 
     engVieDefID = 0;
-    if(!engVieData->defList[0].wordType.empty())
-    {
-        wordType.setString(engVieData->defList[0].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(engVieData->defList[0].defAndExample.first);
-    wrapText(wordDef);
-    if(!engVieData->defList[0].defAndExample.second.empty())
-    {
-        wordExample.setString(engVieData->defList[0].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngVieUIText();
     // Initialize the buttons
     if(engVieDefNum > 1)
         showNextButton = true;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNextEngVieDef()
 {
     ++engVieDefID;
-    if(!engVieData->defList[engVieDefID].wordType.empty())
-    {
-        wordType.setString(engVieData->defList[engVieDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(engVieData->defList[engVieDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngVieUIText();
     // Update buttons
     if(engVieDefID > 0)
         showPrevButton = true;
     if(engVieDefID == engVieDefNum-1)
         showNextButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showPrevEngVieDef()
 {
     --engVieDefID;
-    if(!engVieData->defList[engVieDefID].wordType.empty())
-    {
-        wordType.setString(engVieData->defList[engVieDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(engVieData->defList[engVieDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setEngVieUIText();
     // Update buttons
     if(engVieDefID < engVieDefNum-1)
         showNextButton = true;
     if(engVieDefID == 0)
         showPrevButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNoEngVieDefinitions()
@@ -534,88 +460,59 @@ void DisplayBox::clearEngVieData()
     wordExample.setString("");  
 }
 
+void DisplayBox::setEngVieUIText()
+{
+    if(!engVieData->defList[engVieDefID].wordType.empty())
+    {
+        wordType.setString(engVieData->defList[engVieDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(engVieData->defList[engVieDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Adjust text position
+    adjustTextPosition();
+}
+
 void DisplayBox::initVieEngFirstDef()
 {
     word.setString(vieEngData->word);
 
     vieEngDefID = 0;
-    if(!vieEngData->defList[0].wordType.empty())
-    {
-        wordType.setString(vieEngData->defList[0].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(vieEngData->defList[0].defAndExample.first);
-    wrapText(wordDef);
-    if(!vieEngData->defList[0].defAndExample.second.empty())
-    {
-        wordExample.setString(vieEngData->defList[0].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setVieEngUIText();
     // Initialize the buttons
     if(vieEngDefNum > 1)
         showNextButton = true;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNextVieEngDef()
 {
     ++vieEngDefID;
-    if(!vieEngData->defList[vieEngDefID].wordType.empty())
-    {
-        wordType.setString(vieEngData->defList[vieEngDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(vieEngData->defList[vieEngDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setVieEngUIText();
     // Update buttons
     if(vieEngDefID > 0)
         showPrevButton = true;
     if(vieEngDefID == vieEngDefNum-1)
         showNextButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showPrevVieEngDef()
 {
     --vieEngDefID;
-    if(!vieEngData->defList[vieEngDefID].wordType.empty())
-    {
-        wordType.setString(vieEngData->defList[vieEngDefID].wordType);
-        wrapText(wordType);
-    }
-    else
-        wordType.setString("");
-    wordDef.setString(vieEngData->defList[vieEngDefID].defAndExample.first);
-    wrapText(wordDef);
-    if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
-    {
-        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
-        wrapText(wordExample);
-    }
-    else
-        wordExample.setString("");
+    setVieEngUIText();
     // Update buttons
     if(vieEngDefID < vieEngDefNum-1)
         showNextButton = true;
     if(vieEngDefID == 0)
         showPrevButton = false;
-    // Adjust text position
-    adjustTextPosition();
 }
 
 void DisplayBox::showNoVieEngDefinitions()
@@ -648,6 +545,28 @@ void DisplayBox::clearVieEngData()
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");  
+}
+
+void DisplayBox::setVieEngUIText()
+{
+    if(!vieEngData->defList[vieEngDefID].wordType.empty())
+    {
+        wordType.setString(vieEngData->defList[vieEngDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(vieEngData->defList[vieEngDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Adjust text position
+    adjustTextPosition();
 }
 
 void DisplayBox::showExistedDefinitions() {
@@ -776,4 +695,83 @@ const sf::String &DisplayBox::getWordDef() const
 const sf::String &DisplayBox::getWordExample() const
 {
     return wordExample.getString();
+}
+
+void DisplayBox::receiveEditText(std::string &editWordType, std::string &editWordDef, std::string &editWordExample)
+{
+    // Change current word data and UI text
+    removeEndLineInString(editWordDef);
+    if(currentDataSetID == 0)
+    {
+        EEData->defList[EEDefID].wordType = editWordType;
+        EEData->defList[EEDefID].defAndExample.first = editWordDef;
+        EEData->defList[EEDefID].defAndExample.second = editWordExample;
+        setEngEngUIText();
+        saveEngEngEditToFile();
+    }
+    else if(currentDataSetID == 1)
+    {
+        engVieData->defList[EEDefID].wordType = editWordType;
+        engVieData->defList[EEDefID].defAndExample.first = editWordDef;
+        engVieData->defList[EEDefID].defAndExample.second = editWordExample;
+        setEngVieUIText();
+    }
+    else if(currentDataSetID == 2)
+    {
+        vieEngData->defList[EEDefID].wordType = editWordType;
+        vieEngData->defList[EEDefID].defAndExample.first = editWordDef;
+        vieEngData->defList[EEDefID].defAndExample.second = editWordExample;
+        setVieEngUIText();
+    }
+}
+
+void DisplayBox::saveEngEngEditToFile()
+{
+    // Add the word to the list of words that are edited
+    std::string wordStr = word.getString();
+    std::string filename = "data/edit-words/list-of-words.txt";
+    std::ifstream fin;
+    std::string fileContent, line;
+    fin.open(filename);
+    if(fin.is_open())
+    {
+        while(std::getline(fin, line))
+        {
+            if(fileContent.empty())
+                fileContent = line;
+            else
+                fileContent += "\n" + line;
+        }
+        fin.close();
+    }
+    // Now fileContent contains all the word that has been edited before
+    // We search if the word exist in the list or not
+    if(fileContent.empty())
+        fileContent = wordStr;
+    else
+    {
+        bool found = false;
+        std::stringstream stream(fileContent);
+        while(std::getline(stream, line))
+        {
+            if(wordStr == line)
+            {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            fileContent += "\n" + wordStr;
+    }
+    std::ofstream fout;
+    fout.open(filename);
+    fout << fileContent;
+    fout.close();
+
+    // Create a file to store the edited word info
+    filename = "data/edit-words/" + wordStr + ".txt";
+    std::string wordInfo = recoverEngEngWordInfo(*EEData);
+    fout.open(filename);
+    fout << wordInfo;
+    fout.close();
 }

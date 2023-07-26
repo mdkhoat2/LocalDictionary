@@ -129,6 +129,7 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
         // this is the word type
         if(line[0] == '*')
         {
+            // push the previous definition
             if(!theDef.empty())
             {
                 engEngData.defList.push_back(theDef);
@@ -152,6 +153,7 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
         // this is the definition (assume that has only 1 line or has been modified to have 1 line)
         else if(line[0] == '-')
         {
+            // push the previous definition
             if(!theDef.defAndExample.first.empty())
             {
                 engEngData.defList.push_back(theDef);
@@ -186,10 +188,31 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
         engEngData.defList.push_back(theDef);
 }
 
-std::string recoverEngEngWordInfo(WordData& theWordData)
+std::string recoverEngEngWordInfo(WordDataEngVie& theWordData)
 {
     std::string wordInfo;
-    
+    std::string wordType, wordDef, wordExample;
+    std::string temp, line;
+    int defNum = theWordData.defList.size();
+    for(int i = 0; i < defNum; ++i)
+    {
+        temp = theWordData.defList[i].wordType;
+        wordDef = theWordData.defList[i].defAndExample.first;
+        wordExample = theWordData.defList[i].defAndExample.second;
+        if(wordType != temp)
+        {
+            wordType = temp;
+            if(i == 0)
+                wordInfo = "*" + wordType;
+            else
+                wordInfo += "\n*" + wordType;
+        }
+        wordInfo += "\n" + wordDef;
+        // Note that wordExample can have multiple lines
+        std::stringstream stream(wordExample);
+        while(getline(stream, line))
+            wordInfo += "\n=" + line;
+    }
     return wordInfo;
 }
 

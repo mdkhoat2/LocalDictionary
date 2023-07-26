@@ -437,6 +437,7 @@ void Application::changeDataSet()
 		dataSetButton.setString("      VI - EN");
 	else
 		dataSetButton.setString("      Emoji");
+	displayBox.setCurrentDataSet(currentDataSetID);
 }
 
 void Application::run()
@@ -566,7 +567,7 @@ void Application::handleEvent()
 			if (endScreen)
 			{
 				// Display box receive the edited word type, definition and example
-
+				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}

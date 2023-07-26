@@ -79,7 +79,7 @@ void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::strin
 void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::string& wordInfo);
 
 // Functions to recover the wordInfo from the data structures
-std::string recoverEngEngWordInfo(WordData& theWordData);
+std::string recoverEngEngWordInfo(WordDataEngVie& theWordData);
 
 
 void separateEngEngExample(std::string& wordInfo);
