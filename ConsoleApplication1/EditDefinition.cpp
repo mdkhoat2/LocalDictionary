@@ -113,6 +113,21 @@ void EditDefinitionScreen::initTextToEdit(const sf::String &theWord, const sf::S
     editBox.initTextToEdit(theWord, theWordType, theWordDef, theWordExample);
 }
 
+std::string EditDefinitionScreen::getEditWordType()
+{
+    return editBox.getWordType();
+}
+
+std::string EditDefinitionScreen::getEditWordDef()
+{
+    return editBox.getWordDef();
+}
+
+std::string EditDefinitionScreen::getEditWordExample()
+{
+    return editBox.getWordExample();
+}
+
 void EditDefinitionScreen::initCancelButton(const sf::Font &font)
 {
     // Cancel button
@@ -397,4 +412,19 @@ void EditBox::wordDefAreaTypedOn(sf::Event input)
 void EditBox::wordExampleAreaTypedOn(sf::Event input)
 {
     wordExampleArea.typedOn(input);
+}
+
+std::string EditBox::getWordType()
+{
+    return wordTypeArea.getText();
+}
+
+std::string EditBox::getWordDef()
+{
+    return wordDefArea.getText();
+}
+
+std::string EditBox::getWordExample()
+{
+    return wordExampleArea.getText();
 }

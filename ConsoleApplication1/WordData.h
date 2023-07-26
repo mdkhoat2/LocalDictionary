@@ -37,27 +37,6 @@ public:
     WordDefNode* defListHead[4];
 };
 
-struct EngEngDef
-{
-public:
-    EngEngDef();
-    void clear();
-    bool empty();
-public:
-    std::string wordType;
-    std::pair<std::string, std::string> defAndExample;
-};
-
-struct WordDataEngEng
-{
-public:
-    WordDataEngEng();
-    void consolePrint();
-public:
-    std::string word;
-    std::vector<EngEngDef> defList;
-};
-
 struct EngVieDef
 {
 public:
@@ -94,7 +73,7 @@ void removeEndLineInString(std::string& str);
 
 // Functions to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
-void extractEngEngData(WordDataEngEng& engEngData, std::string& word, std::string& wordInfo);
+void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::string &wordInfo);
 void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::string& wordInfo);
 void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::string& wordInfo);
 
@@ -103,5 +82,6 @@ std::string recoverEngEngWordInfo(WordData& theWordData);
 
 
 void separateEngEngExample(std::string& wordInfo);
+std::string formatEngEngWordInfo(std::string& wordInfo);
 
 #endif

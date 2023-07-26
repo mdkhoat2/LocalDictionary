@@ -53,7 +53,6 @@ public:
 	sf::FloatRect getGlobalBounds() const;
 	sf::FloatRect getBoxGlobalBounds() const;
 
-
 	bool isMouseOver(sf::RenderWindow& window);
 	bool isSelect();
 	void wrapText(sf::Text& theText);

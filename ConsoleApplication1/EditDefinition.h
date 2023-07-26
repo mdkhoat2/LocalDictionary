@@ -39,6 +39,11 @@ public:
     void wordTypeAreaTypedOn(sf::Event input);
     void wordDefAreaTypedOn(sf::Event input);
     void wordExampleAreaTypedOn(sf::Event input);
+
+    // Accessors
+    std::string getWordType();
+    std::string getWordDef();
+    std::string getWordExample();
 private:
     sf::RectangleShape theBox;
     sf::Text word;
@@ -61,6 +66,10 @@ public:
     bool isMouseOverSaveButton(sf::RenderWindow& window);
     void initTextToEdit(const sf::String& theWord, const sf::String& theWordType, 
     const sf::String& theWordDef, const sf::String& theWordExample);
+    // Accessors
+    std::string getEditWordType();
+    std::string getEditWordDef();
+    std::string getEditWordExample();
 private:
     sf::Texture cancelButtonTex;
     sf::Sprite cancelButton;

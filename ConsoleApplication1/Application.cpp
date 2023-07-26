@@ -700,7 +700,8 @@ void Application::searchInEngEngDict(std::string& inputWord)
     {
         // Console
         separateEngEngExample(wordInfo);
-        std::cout << wordInfo << std::endl;
+		std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+        std::cout << newWordInfo << std::endl;
         // UI
         displayBox.getWordDataEngEng(inputWord, wordInfo);
     }

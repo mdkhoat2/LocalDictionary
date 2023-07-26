@@ -85,6 +85,7 @@ private:
     WordData* engEngData; // for Eng-Eng data set only
     int engEngDefNum;
 
+
     WordDataEngVie* engVieData; // for Eng-Vie data set only
     int engVieDefID;
     int engVieDefNum;
