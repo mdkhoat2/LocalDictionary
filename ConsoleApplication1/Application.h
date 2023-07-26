@@ -80,6 +80,9 @@ private:
 
     Favourite *favourite;
     History history;
+    History history1;
+    History history2;
+    History history3;
     DisplayBox displayBox;
 
     EngTrieNode* engEngRoot;
@@ -106,6 +109,8 @@ private:
     void initDisplayBox();
     void initFavouriteButton();
     void changeDataSet();
+    void loadAllHistory();
+    void drawHistory();
 };
 
 
