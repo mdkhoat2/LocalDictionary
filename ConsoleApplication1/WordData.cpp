@@ -136,7 +136,17 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
             }
             if(line.length() >= 2)
             {
-                theDef.wordType = line.substr(1);
+                std::string wordType = line.substr(1);
+                if(wordType == "n")
+                    theDef.wordType = "noun";
+                else if(wordType == "v")
+                    theDef.wordType = "verb";
+                else if(wordType == "adj")
+                    theDef.wordType = "adjective";
+                else if(wordType == "adv")
+                    theDef.wordType = "adverb";
+                else
+                    theDef.wordType = line;
             }
         }
         // this is the definition (assume that has only 1 line or has been modified to have 1 line)
@@ -171,6 +181,9 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
             continue;
         }
     }
+    // Push the last definition
+    if(!theDef.empty())
+        engEngData.defList.push_back(theDef);
 }
 
 std::string recoverEngEngWordInfo(WordData& theWordData)

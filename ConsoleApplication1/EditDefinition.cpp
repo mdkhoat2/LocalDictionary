@@ -16,12 +16,22 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     initEditBox(font2);
 }
 
-void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen)
+void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen, 
+std::string& editWordType, std::string& editWordDef, std::string& editWordExample)
 {
     if(event.type == sf::Event::MouseButtonPressed)
     {
         if(isMouseOverCancelButton(window))
         {
+            endScreen = true;
+            isEndScreen = endScreen;
+        }
+
+        if(isMouseOverSaveButton(window))
+        {
+            editWordType = editBox.getWordType();
+            editWordDef = editBox.getWordDef();
+            editWordExample = editBox.getWordExample();
             endScreen = true;
             isEndScreen = endScreen;
         }
@@ -49,6 +59,8 @@ void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window
         }            
         else
             editBox.setSelectedWordExampleArea(false);
+
+        
     }
     else if(event.type == sf::Event::TextEntered)
     {

@@ -9,11 +9,6 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     wordType(),
     wordDef(),
     wordExample(),
-    engEngTypeID(0),
-    engEngDefID(1),
-    engEngPtr(nullptr),
-    engEngData(nullptr),
-    engEngDefNum(0),
     engVieData(nullptr),
     engVieDefID(0),
     engVieDefNum(0),
@@ -26,7 +21,10 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     nextButtonTex(),
     prevButtonTex(),
     nextButtonSprite(),
-    prevButtonSprite()
+    prevButtonSprite(),
+    EEData(nullptr),
+    EEDefID(0),
+    EEDefNum(0)
 {
     theBox.setPosition(pos);
     float xText = pos.x + 30.f;
@@ -79,7 +77,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
 
 DisplayBox::~DisplayBox()
 {
-    delete engEngData;
+    delete EEData;
     delete engVieData;
     delete vieEngData;
 }
@@ -174,30 +172,30 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
         delete vieEngData;
         vieEngData = nullptr;
     }
-    if(engEngData == nullptr)
+    if(EEData == nullptr)
     {
-        engEngData = new WordData;
-        extractWordData(*engEngData, inputWord, wordInfo);
+        EEData = new WordDataEngVie;
+        extractEngEngData(*EEData, inputWord, wordInfo);
     }
-    else // delete old word data
+    else
     {
-        delete engEngData;
+        delete EEData;
         showNextButton = false;
         showPrevButton = false;
-        engEngData = new WordData;
-        extractWordData(*engEngData, inputWord, wordInfo);
+        EEData = new WordDataEngVie;
+        extractEngEngData(*EEData, inputWord, wordInfo);
     }
-    engEngDefNum = countNumOfDefs(*engEngData);
-    initFirstDef();
+    EEDefNum = EEData->defList.size();
+    initEngEngFirstDef();
 }
 
 void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
 {
     // delete old data of other data sets
-    if(engEngData)
+    if(EEData)
     {
-        delete engEngData;
-        engEngData = nullptr;
+        delete EEData;
+        EEData = nullptr;
     }
     if(vieEngData)
     {
@@ -224,10 +222,10 @@ void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo
 void DisplayBox::getWordDataVieEng(std::string &inputWord, std::string &wordInfo)
 {
     // delete old data of other data sets
-    if(engEngData)
+    if(EEData)
     {
-        delete engEngData;
-        engEngData = nullptr;
+        delete EEData;
+        EEData = nullptr;
     }
     if(engVieData)
     {
@@ -302,140 +300,113 @@ void DisplayBox::adjustTextPosition()
     wordExample.setPosition(wordExample.getPosition().x, wordDefBounds.top + wordDefBounds.height + 20.f);
 }
 
-void DisplayBox::initFirstDef()
+void DisplayBox::initEngEngFirstDef()
 {
-    // initialize the text to display
-    word.setString(engEngData->word);
+    word.setString(EEData->word);
 
-    engEngDefID = 1;
-    for(int i = 0; i < 4; ++i)
+    EEDefID = 0;
+    if(!EEData->defList[0].wordType.empty())
     {
-        if(engEngData->defListHead[i] != nullptr)
-        {
-            engEngTypeID = i;
-            engEngPtr = engEngData->defListHead[i];
-            break;
-        }
+        wordType.setString(EEData->defList[0].wordType);
+        wrapText(wordType);
     }
-    // initialize the buttons
-    if(engEngDefNum > 1)
-    {
-        showNextButton = true;
-    }
-    setUIText();
-}
-
-void DisplayBox::setUIText()
-{
-    // Word type
-    if(engEngTypeID == 0)
-        wordType.setString("noun");
-    else if(engEngTypeID == 1)
-        wordType.setString("verb");
-    else if(engEngTypeID == 2)
-        wordType.setString("adjective");
     else
-        wordType.setString("adverb");
-    // Word definition corresponding to that word type
-    wordDef.setString(engEngPtr->wordDef);
+        wordType.setString("");
+    wordDef.setString(EEData->defList[0].defAndExample.first);
     wrapText(wordDef);
-    if(engEngPtr->wordExample[0] != '[')
-        wordExample.setString("Example:" + engEngPtr->wordExample);
+    if(!EEData->defList[0].defAndExample.second.empty())
+    {
+        wordExample.setString(EEData->defList[0].defAndExample.second);
+        wrapText(wordExample);
+    }
     else
-        wordExample.setString(engEngPtr->wordExample);
-    wrapText(wordExample);
+        wordExample.setString("");
+    // Initialize the buttons
+    if(EEDefNum > 1)
+        showNextButton = true;
     // Adjust text position
     adjustTextPosition();
 }
 
-void DisplayBox::showNextDef()
+void DisplayBox::showNextEngEngDef()
 {
-    ++engEngDefID;
-    // If there are another definitions of the current word type
-    if(engEngPtr->next != nullptr)
+    ++EEDefID;
+    if(!EEData->defList[EEDefID].wordType.empty())
     {
-        engEngPtr = engEngPtr->next;
+        wordType.setString(EEData->defList[EEDefID].wordType);
+        wrapText(wordType);
     }
-    // Need to search for definition of other word types
-    else 
-    {
-        for(int i = engEngTypeID + 1; i < 4; ++i)
-        {
-            if(engEngData->defListHead[i] != nullptr)
-            {
-                engEngTypeID = i;
-                engEngPtr = engEngData->defListHead[engEngTypeID];
-                break;
-            }
-        }
-    }
-    setUIText();
-    if(engEngDefID > 1)
-        showPrevButton = true;
-    if(engEngDefID == engEngDefNum)
-        showNextButton = false;
-}
-
-void DisplayBox::showPrevDef()
-{
-    --engEngDefID;
-    // If it is not the first definition of the current word type
-    if(engEngPtr != engEngData->defListHead[engEngTypeID])
-    {
-        WordDefNode* targetPtr = engEngData->defListHead[engEngTypeID];
-        while(targetPtr->next != engEngPtr)
-            targetPtr = targetPtr->next;
-        engEngPtr = targetPtr;
-    }
-    // Need to search for definitions of previous word types
     else
+        wordType.setString("");
+    wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!EEData->defList[EEDefID].defAndExample.second.empty())
     {
-        for(int i = engEngTypeID - 1; i >= 0; --i)
-        {
-            if(engEngData->defListHead[i] != nullptr)
-            {
-                // Get the last definition in this list
-                engEngTypeID = i;
-                WordDefNode* targetPtr = engEngData->defListHead[engEngTypeID];
-                while(targetPtr->next != nullptr)
-                    targetPtr = targetPtr->next;
-                engEngPtr = targetPtr;
-                break;
-            }
-        }
+        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        wrapText(wordExample);
     }
-    setUIText();
-    // Change status of buttons
-    if(engEngDefID < engEngDefNum)
-        showNextButton = true;
-    if(engEngDefID == 1)
-        showPrevButton = false;
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(EEDefID > 0)
+        showPrevButton = true;
+    if(EEDefID == EEDefNum-1)
+        showNextButton = false;
+    // Adjust text position
+    adjustTextPosition();
 }
 
-void DisplayBox::showNoDefinitions()
+void DisplayBox::showPrevEngEngDef()
 {
-    if(engEngData)
+    --EEDefID;
+    if(!EEData->defList[EEDefID].wordType.empty())
     {
-        delete engEngData;
-        engEngData = nullptr;
-        engEngPtr = nullptr;
+        wordType.setString(EEData->defList[EEDefID].wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
+    wrapText(wordDef);
+    if(!EEData->defList[EEDefID].defAndExample.second.empty())
+    {
+        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        wrapText(wordExample);
+    }
+    else
+        wordExample.setString("");
+    // Update buttons
+    if(EEDefID < EEDefNum-1)
+        showNextButton = true;
+    if(EEDefID == 0)
+        showPrevButton = false;
+    // Adjust text position
+    adjustTextPosition();
+}
+
+void DisplayBox::showNoEngEngDefinitions()
+{
+    if(EEData)
+    {
+        delete EEData;
+        EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
-
-    word.setString("No Definitions Found!");
+    word.setString("No Definition Found!");
     wordType.setString("");
     wordDef.setString("");
-    wordExample.setString("");
+    wordExample.setString("");  
 }
 
 void DisplayBox::clearEngEngData()
 {
-    if(engEngData)
+    if(EEData)
     {
-        delete engEngData;
-        engEngData = nullptr;
-        engEngPtr = nullptr;
+        delete EEData;
+        EEData = nullptr;
+        EEDefID = 0;
     }
 
     word.setString("");
@@ -680,10 +651,10 @@ void DisplayBox::clearVieEngData()
 }
 
 void DisplayBox::showExistedDefinitions() {
-    if (engEngData)
+    if (EEData)
     {
-        delete engEngData;
-        engEngData = nullptr;
+        delete EEData;
+        EEData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -694,10 +665,10 @@ void DisplayBox::showExistedDefinitions() {
 }
 
 void DisplayBox::showNewDefinitions() {
-    if (engEngData)
+    if (EEData)
     {
-        delete engEngData;
-        engEngData = nullptr;
+        delete EEData;
+        EEData = nullptr;
     }
     showNextButton = false;
     showPrevButton = false;

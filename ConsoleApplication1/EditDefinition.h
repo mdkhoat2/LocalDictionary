@@ -56,7 +56,8 @@ class EditDefinitionScreen
 {
 public:
     EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::Sprite& background);
-    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen);
+    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, std::string& editWordType, 
+    std::string& editWordDef, std::string& editWordExample);
     void update(sf::RenderWindow& window);
     void render(sf::RenderWindow& window, sf::Sprite& background);
 public:

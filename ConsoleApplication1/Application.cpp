@@ -530,7 +530,7 @@ void Application::handleEvent()
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
 					if (currentDataSetID == 0)
-						displayBox.showNextDef();
+						displayBox.showNextEngEngDef();
 					else if (currentDataSetID == 1)
 						displayBox.showNextEngVieDef();
 					else if (currentDataSetID == 2)
@@ -539,7 +539,7 @@ void Application::handleEvent()
 				else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
 				{
 					if (currentDataSetID == 0)
-						displayBox.showPrevDef();
+						displayBox.showPrevEngEngDef();
 					else if (currentDataSetID == 1)
 						displayBox.showPrevEngVieDef();
 					else if (currentDataSetID == 2)
@@ -559,9 +559,14 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			editDefScreen->setEndScreen(endScreen);
-			editDefScreen->handleEvent(event, window, endScreen);
+			std::string editWordType = displayBox.getWordType();
+			std::string editWordDef = displayBox.getWordDef();
+			std::string editWordExample = displayBox.getWordExample();
+			editDefScreen->handleEvent(event, window, endScreen, editWordType, editWordDef, editWordExample);
 			if (endScreen)
 			{
+				// Display box receive the edited word type, definition and example
+
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}
@@ -708,12 +713,12 @@ void Application::searchInEngEngDict(std::string& inputWord)
 		std::string newWordInfo = formatEngEngWordInfo(wordInfo);
         std::cout << newWordInfo << std::endl;
         // UI
-        displayBox.getWordDataEngEng(inputWord, wordInfo);
+        displayBox.getWordDataEngEng(inputWord, newWordInfo);
     }
     else
     {
         std::cout << "Cannot find the word" << "\n";
-        displayBox.showNoDefinitions();
+        displayBox.showNoEngEngDefinitions();
     }
 }
 

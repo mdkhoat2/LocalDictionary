@@ -25,17 +25,19 @@ public:
     void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
     void getWordDataVieEng(std::string& inputWord, std::string& wordInfo);
 
-    // For Eng-Eng
-    void initFirstDef();
-    void setUIText();
-    void showNextDef();
-    void showPrevDef();
-    void showNoDefinitions();
-    void showExistedDefinitions();
-    void showNewDefinitions();
-    void clearEngEngData();
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
+
+    // For Eng-Eng
+    void showExistedDefinitions();
+    void showNewDefinitions();
+    
+    // For Eng-Eng (updated)
+    void initEngEngFirstDef();
+    void showNextEngEngDef();
+    void showPrevEngEngDef();
+    void showNoEngEngDefinitions();
+    void clearEngEngData();
 
     // For Eng-Vie
     void initEngVieFirstDef();
@@ -71,6 +73,9 @@ public:
     const sf::String& getWordDef() const;
     const sf::String& getWordExample() const;
 
+    // Receive change from edit definition screen
+    void receiveEdit(std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
+    
 private:
     sf::RectangleShape theBox;
 
@@ -79,12 +84,10 @@ private:
     sf::Text wordDef;
     sf::Text wordExample;
     sf::Text emojiText;
-    int engEngTypeID;
-    int engEngDefID;
-    WordDefNode* engEngPtr;
-    WordData* engEngData; // for Eng-Eng data set only
-    int engEngDefNum;
 
+    WordDataEngVie* EEData;
+    int EEDefID;
+    int EEDefNum;
 
     WordDataEngVie* engVieData; // for Eng-Vie data set only
     int engVieDefID;
