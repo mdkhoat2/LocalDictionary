@@ -15,6 +15,7 @@ struct WordDefNode
 // This word data is built to read from EE.txt
 // However, it it not suitable for edit definition and add new word
 // because word type doesn't limit to only 4 types
+// Use WordDataEngVie instead
 struct WordData
 {
 public:
