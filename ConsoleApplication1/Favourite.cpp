@@ -446,6 +446,7 @@ void Favourite::setEndScreen(bool value) {
 void Favourite::setCurrentDataSet(int theID)
 {
 	currentDataSetID = theID;
+	posY1 = 260;
 	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 

@@ -73,7 +73,7 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonSprite.setPosition(100, 800);
     prevButtonSprite.setScale(0.5f, 0.5f);
     showPrevButton = false;
-    Font.loadFromFile("font/emoji.woff");
+    Font.loadFromFile("font/seguiemj.ttf"); //this font is Windows 10 default font for emoji
     setEmoji();
 }
 
@@ -735,7 +735,12 @@ void DisplayBox::showEmojiDefinition(std::string& inputWord, std::string& wordIn
     std::string emoji = "0x"+ wordInfor;
     sf::Uint32 emojiUnicode = hexStringToUint32(emoji);
     emojiText.setString(sf::String(emojiUnicode));
-    word.setString(inputWord);
+    std::string word1 = inputWord;
+    for (int i = 0; i < word1.length(); i++)
+    {
+        word1[i] = tolower(word1[i]);
+    }
+    word.setString(word1);
 }
 void DisplayBox::clearEmoji()
 {
