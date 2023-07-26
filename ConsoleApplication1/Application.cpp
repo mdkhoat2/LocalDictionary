@@ -37,6 +37,7 @@ Application::Application() :
 	initEditDefButton();
 	initDisplayBox();
 	initFavouriteButton();
+	loadAllHistory();
 }
 
 Application::~Application()
@@ -385,6 +386,14 @@ void Application::initDeleteButton()
 	deleteButton.setOutlineThickness(2);
 }
 
+void Application::loadAllHistory()
+{
+	history.loadHistory("data/historyEE.txt");
+	history1.loadHistory("data/historyEV.txt");
+	history2.loadHistory("data/historyVE.txt");
+	history3.loadHistory("data/historyEmoji.txt");
+}
+
 void Application::initEditDefButton()
 {
 	editDefButton.setFont(font);
@@ -655,6 +664,17 @@ void Application::update()
 	}
 }
 
+void Application::drawHistory() {
+	if (currentDataSetID == 0)
+		history.drawTo(window);
+	else if (currentDataSetID == 1)
+		history1.drawTo(window);
+	else if (currentDataSetID == 2)
+		history2.drawTo(window);
+	else
+		history3.drawTo(window);
+}
+
 void Application::render()
 {
     if (currentScreen == ScreenState::MainScreen) {
@@ -664,7 +684,7 @@ void Application::render()
         searchButton.drawTo(window);
         dataSetButton.drawTo(window);
 
-        history.drawTo(window);
+		drawHistory();
         //favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
@@ -705,7 +725,7 @@ void Application::render()
 void Application::searchInEngEngDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyEE.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
     if(!wordInfo.empty())
     {
@@ -726,7 +746,7 @@ void Application::searchInEngEngDict(std::string& inputWord)
 void Application::searchInEngVieDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyEV.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
     if(!wordInfo.empty())
     {
@@ -745,7 +765,7 @@ void Application::searchInEngVieDict(std::string& inputWord)
 void Application::searchInVieEngDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyVE.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
     if(!wordInfo.empty())
     {
@@ -763,7 +783,7 @@ void Application::searchInVieEngDict(std::string& inputWord)
 void Application::searchInEmojiDict(std::string& inputWord)
 {
 	if (inputWord != "")
-		history.add(inputWord);
+		history.add(inputWord, "data/historyEmoji.txt");
 	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 3);
 	if (!wordInfo.empty())
 	{

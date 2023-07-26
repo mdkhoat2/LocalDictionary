@@ -2,6 +2,9 @@
 #define HISTORY_H
 
 #include <queue>
+#include <stack>
+#include <vector>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 
 class History
@@ -9,12 +12,12 @@ class History
 public:
 	History();
 
-	void add(std::string word);
+	void add(std::string word, std::string filename);
 	void drawTo(sf::RenderWindow& window);
+	void loadHistory(std::string filename);
 
 private:
-	//create a queue of 20 strings
-	std::queue<std::string> history;
+	std::vector<std::string> history;
 	int size = 0;
 	sf::Font font;
 };
