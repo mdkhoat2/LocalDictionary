@@ -12,6 +12,10 @@ struct WordDefNode
     WordDefNode* next = nullptr;
 };
 
+// This word data is built to read from EE.txt
+// However, it it not suitable for edit definition and add new word
+// because word type doesn't limit to only 4 types
+// Use WordDataEngVie instead
 struct WordData
 {
 public:
@@ -66,12 +70,19 @@ bool isValidWordType(std::string wordType);
 bool isNumber(std::string numStr);
 void convertToNormalChar(wchar_t &ch);
 void convertToNormalLine(std::wstring &line);
+void removeEndLineInString(std::string& str);
 
-// Function to extract different components of a word form "wordInfo" variable
+// Functions to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
+void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::string &wordInfo);
 void extractEngVieData(WordDataEngVie& engVieData, std::string& word, std::string& wordInfo);
 void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::string& wordInfo);
 
+// Functions to recover the wordInfo from the data structures
+std::string recoverEngEngWordInfo(WordData& theWordData);
+
+
 void separateEngEngExample(std::string& wordInfo);
+std::string formatEngEngWordInfo(std::string& wordInfo);
 
 #endif

@@ -79,7 +79,7 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
             {
                 // examples exist
                 if(line[0] == ';' && line.length() >= 2)
-                    example = "Example:" + line.substr(1);
+                    example = line.substr(1);
                 else
                     example = line;
             }
@@ -114,6 +114,83 @@ void extractWordData(WordData &theWordData, std::string word, std::string wordIn
         definition = line;
         example.clear();
     }   
+}
+
+void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::string &wordInfo)
+{
+    // Make sure that the edit definition file or the new word file has the valid format
+    // so that it can extract the word data
+    engEngData.word = word;
+    std::stringstream stream(wordInfo);
+    std::string line;
+    EngVieDef theDef;
+    while(std::getline(stream, line, '\n'))
+    {
+        // this is the word type
+        if(line[0] == '*')
+        {
+            if(!theDef.empty())
+            {
+                engEngData.defList.push_back(theDef);
+                theDef.clear();
+            }
+            if(line.length() >= 2)
+            {
+                std::string wordType = line.substr(1);
+                if(wordType == "n")
+                    theDef.wordType = "noun";
+                else if(wordType == "v")
+                    theDef.wordType = "verb";
+                else if(wordType == "adj")
+                    theDef.wordType = "adjective";
+                else if(wordType == "adv")
+                    theDef.wordType = "adverb";
+                else
+                    theDef.wordType = line;
+            }
+        }
+        // this is the definition (assume that has only 1 line or has been modified to have 1 line)
+        else if(line[0] == '-')
+        {
+            if(!theDef.defAndExample.first.empty())
+            {
+                engEngData.defList.push_back(theDef);
+                theDef.defAndExample.first.clear();
+                theDef.defAndExample.second.clear();
+            }
+            theDef.defAndExample.first = line;
+        }
+        // this is the example (careful: example can have multiple lines)
+        // so we add the sign "=" before each line of the example in file
+        else if(line[0] == '=')
+        {
+            if(theDef.defAndExample.second.empty())
+            {
+                if(line.length() >= 2)
+                    theDef.defAndExample.second = line.substr(1);
+            }
+            else
+            {
+                if(line.length() >= 2)
+                    theDef.defAndExample.second += "\n" + line.substr(1);
+            }
+        }
+        else
+        {
+            std::cout << "What is this line?" << line << std::endl;
+            continue;
+        }
+    }
+    // Push the last definition
+    if(!theDef.empty())
+        engEngData.defList.push_back(theDef);
+}
+
+std::string recoverEngEngWordInfo(WordData& theWordData)
+{
+    std::string wordInfo;
+    
+    return wordInfo;
 }
 
 void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::string &wordInfo)
@@ -311,6 +388,7 @@ void separateEngEngExample(std::string &wordInfo)
                 newWordInfo += "\n";
             int i = 0;
             bool flag = false;
+            // we don't separate each example
             while(i < line.length())
             {
                 if(line[i] == ';' && flag == false)
@@ -333,6 +411,41 @@ void separateEngEngExample(std::string &wordInfo)
         }
     }
     wordInfo = newWordInfo;
+}
+
+std::string formatEngEngWordInfo(std::string &wordInfo)
+{
+    std::string newWordInfo;
+    std::stringstream stream(wordInfo);
+    std::string line, definition, example;
+    while(std::getline(stream, line, '\n'))
+    {
+        // the line contains word type
+        if(isValidWordType(line))
+        {
+            if(newWordInfo.empty())
+                newWordInfo = "*" + line;
+            else
+                newWordInfo += "\n*" + line; 
+        }
+        // the line contains example
+        else if(line[0] == ';')
+        {
+            if(line.length() >= 2)
+                newWordInfo += "\n=" + line.substr(1);
+        }
+        // the line contains synonyms or antonyms
+        else if(line[0] == '[')
+        {
+            newWordInfo += "\n=" + line;
+        }
+        // the line that contains the definition
+        else
+        {
+            newWordInfo += "\n-" + line;
+        }
+    }
+    return newWordInfo;
 }
 
 void insertAtEnd(WordDefNode *&head, std::string wordDef)
@@ -487,6 +600,19 @@ void convertToNormalLine(std::wstring &line)
     {
         convertToNormalChar(line[i]);
     }
+}
+
+void removeEndLineInString(std::string &str)
+{
+    std::string ans;
+    for(int i = 0; i < str.length(); ++i)
+    {
+        if(str[i] == '\n')
+            continue;
+        else
+            ans += str[i];
+    }
+    str = ans;
 }
 
 WordDataEngVie::WordDataEngVie() : word(), defList()

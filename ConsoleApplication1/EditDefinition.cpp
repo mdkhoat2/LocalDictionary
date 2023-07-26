@@ -16,12 +16,22 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     initEditBox(font2);
 }
 
-void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen)
+void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen, 
+std::string& editWordType, std::string& editWordDef, std::string& editWordExample)
 {
     if(event.type == sf::Event::MouseButtonPressed)
     {
         if(isMouseOverCancelButton(window))
         {
+            endScreen = true;
+            isEndScreen = endScreen;
+        }
+
+        if(isMouseOverSaveButton(window))
+        {
+            editWordType = editBox.getWordType();
+            editWordDef = editBox.getWordDef();
+            editWordExample = editBox.getWordExample();
             endScreen = true;
             isEndScreen = endScreen;
         }
@@ -49,6 +59,8 @@ void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window
         }            
         else
             editBox.setSelectedWordExampleArea(false);
+
+        
     }
     else if(event.type == sf::Event::TextEntered)
     {
@@ -113,6 +125,21 @@ void EditDefinitionScreen::initTextToEdit(const sf::String &theWord, const sf::S
     editBox.initTextToEdit(theWord, theWordType, theWordDef, theWordExample);
 }
 
+std::string EditDefinitionScreen::getEditWordType()
+{
+    return editBox.getWordType();
+}
+
+std::string EditDefinitionScreen::getEditWordDef()
+{
+    return editBox.getWordDef();
+}
+
+std::string EditDefinitionScreen::getEditWordExample()
+{
+    return editBox.getWordExample();
+}
+
 void EditDefinitionScreen::initCancelButton(const sf::Font &font)
 {
     // Cancel button
@@ -120,8 +147,9 @@ void EditDefinitionScreen::initCancelButton(const sf::Font &font)
         std::cout << "Cannot load cancel button texture\n";
     cancelButtonTex.setSmooth(true);
     cancelButton.setTexture(cancelButtonTex);
+    cancelButton.setTextureRect(sf::IntRect(270, 340, 400, 120));
     cancelButton.setScale(0.4f, 0.4f);
-    cancelButton.setPosition(450, 650);
+    cancelButton.setPosition(500, 780);
 }
 
 void EditDefinitionScreen::initSaveButton(const sf::Font &font)
@@ -199,12 +227,16 @@ void EditBox::update(sf::RenderWindow &window)
 void EditBox::drawTo(sf::RenderWindow &window)
 {
     window.draw(theBox);
-    window.draw(word);
-    adjustTextPosition();
-    adjustSurroundingTextbox();
-    wordTypeArea.drawTo(window);
-    wordDefArea.drawTo(window);
-    wordExampleArea.drawTo(window);
+    std::string wordStr = word.getString();
+    if(!wordStr.empty())
+    {
+        window.draw(word);
+        adjustTextPosition();
+        adjustSurroundingTextbox();
+        wordTypeArea.drawTo(window);
+        wordDefArea.drawTo(window);
+        wordExampleArea.drawTo(window);
+    }
 }
 
 void EditBox::setFont(const sf::Font &font)
@@ -392,4 +424,19 @@ void EditBox::wordDefAreaTypedOn(sf::Event input)
 void EditBox::wordExampleAreaTypedOn(sf::Event input)
 {
     wordExampleArea.typedOn(input);
+}
+
+std::string EditBox::getWordType()
+{
+    return wordTypeArea.getText();
+}
+
+std::string EditBox::getWordDef()
+{
+    return wordDefArea.getText();
+}
+
+std::string EditBox::getWordExample()
+{
+    return wordExampleArea.getText();
 }
