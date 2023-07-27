@@ -268,15 +268,22 @@ void extractEngEngEditFile(WordDataEngVie &engEngData)
             if(theDef.defAndExample.second.empty())
                 theDef.defAndExample.second = line.substr(1);
             else
-                theDef.defAndExample.second = "\n" + line.substr(1);
+                theDef.defAndExample.second += "\n" + line.substr(1);
+        }
+        else
+        {
+            std::cout << "What is this line?" << line << std::endl;
         }
     }
     if(!theDef.empty())
     {
-        engEngData.defList[index].wordType = theDef.wordType;
-        engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
-        engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
-        engEngData.defList[index].isEdited = true;
+        if(index >= 0)
+        {
+            engEngData.defList[index].wordType = theDef.wordType;
+            engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
+            engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
+            engEngData.defList[index].isEdited = true;
+        }   
     }
     fin.close();
 }

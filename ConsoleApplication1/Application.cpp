@@ -572,11 +572,11 @@ void Application::handleEvent()
 			std::string editWordType = displayBox.getWordType();
 			std::string editWordDef = displayBox.getWordDef();
 			std::string editWordExample = displayBox.getWordExample();
-			editDefScreen->handleEvent(event, window, endScreen, editWordType, editWordDef, editWordExample);
+			bool isSaved = false;
+			editDefScreen->handleEvent(event, window, endScreen);
 			if (endScreen)
 			{
 				// Display box receive the edited word type, definition and example
-				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}
@@ -646,7 +646,19 @@ void Application::update()
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
 	{
-		editDefScreen->update(window);
+		bool endScreen = false;
+		bool isSaved = false;
+		std::string editWordType;
+		std::string editWordDef;
+		std::string editWordExample;
+		editDefScreen->update(window, endScreen, isSaved, editWordType, editWordDef, editWordExample);
+		if(endScreen)
+		{
+			if(isSaved)
+				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
+			editDefScreen->setEndScreen(endScreen);
+			currentScreen = ScreenState::OptionsScreen;
+		}
 	}
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->update(window);

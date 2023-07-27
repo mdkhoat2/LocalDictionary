@@ -21,6 +21,8 @@ public:
 
 	void setOutlineThickness(float thickness);
 
+	void setOutlineColor(const sf::Color& color);
+
 	void setTexture(const sf::Texture *texture);
 
 	const sf::Vector2f& getSize();

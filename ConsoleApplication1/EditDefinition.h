@@ -44,6 +44,9 @@ public:
     std::string getWordType();
     std::string getWordDef();
     std::string getWordExample();
+
+    const sf::Vector2f& getPosition() const;
+    const sf::Vector2f& getSize() const;
 private:
     sf::RectangleShape theBox;
     sf::Text word;
@@ -56,9 +59,9 @@ class EditDefinitionScreen
 {
 public:
     EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::Sprite& background);
-    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, std::string& editWordType, 
-    std::string& editWordDef, std::string& editWordExample);
-    void update(sf::RenderWindow& window);
+    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen);
+    void update(sf::RenderWindow& window, bool& endScreen, bool& isSaved, 
+    std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
     void render(sf::RenderWindow& window, sf::Sprite& background);
 public:
     void setEndScreen(bool value);
@@ -78,7 +81,15 @@ private:
     sf::Sprite saveButton;
     sf::Font font;
 
+    sf::Texture saveSucceededTex;
+    sf::Sprite saveSucceeded;
+    bool showSucceeded;
+    sf::Clock clock;
+    sf::Time succeededTimeMax;
+
     Button dataSetButton;
+    Button cancelButtonHover;
+    Button saveButtonHover;
 
     bool isEndScreen;
     int currentDataSetID;
@@ -90,6 +101,7 @@ private:
     void initSaveButton(const sf::Font& font);
     void initDataSetButton(const sf::Font& font);
     void initEditBox(const sf::Font& font);
+    void initSaveSucceeded(const sf::Font& font);
 };
 
 
