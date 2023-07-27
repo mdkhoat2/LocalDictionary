@@ -7,6 +7,8 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     currentEditAreaID(0),
     cancelButtonTex(),
     cancelButton(),
+    saveButtonTex(),
+    saveButton(),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     editBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black)
 {
@@ -147,9 +149,8 @@ void EditDefinitionScreen::initCancelButton(const sf::Font &font)
         std::cout << "Cannot load cancel button texture\n";
     cancelButtonTex.setSmooth(true);
     cancelButton.setTexture(cancelButtonTex);
-    cancelButton.setTextureRect(sf::IntRect(270, 340, 400, 120));
-    cancelButton.setScale(0.4f, 0.4f);
-    cancelButton.setPosition(500, 780);
+    cancelButton.setScale(0.3f, 0.3f);
+    cancelButton.setPosition(530, 760);
 }
 
 void EditDefinitionScreen::initSaveButton(const sf::Font &font)
@@ -159,8 +160,8 @@ void EditDefinitionScreen::initSaveButton(const sf::Font &font)
         std::cout << "Cannot load save button texture\n";
     saveButtonTex.setSmooth(true);
     saveButton.setTexture(saveButtonTex);
-    saveButton.setScale(0.4f, 0.4f);
-    saveButton.setPosition(200, 650);
+    saveButton.setScale(0.3f, 0.3f);
+    saveButton.setPosition(280, 760);
 }
 
 void EditDefinitionScreen::initDataSetButton(const sf::Font &font)

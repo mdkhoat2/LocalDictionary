@@ -187,6 +187,8 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
         EEData = new WordDataEngVie;
         extractEngEngData(*EEData, inputWord, wordInfo);
     }
+    // Check if the word has any edited definition(s)
+    loadEngEngEditFromFile();
     EEDefNum = EEData->defList.size();
     initEngEngFirstDef();
 }
@@ -700,27 +702,31 @@ const sf::String &DisplayBox::getWordExample() const
 void DisplayBox::receiveEditText(std::string &editWordType, std::string &editWordDef, std::string &editWordExample)
 {
     // Change current word data and UI text
+    // Remove '\n' characters due to word-wrapping
     removeEndLineInString(editWordDef);
     if(currentDataSetID == 0)
     {
         EEData->defList[EEDefID].wordType = editWordType;
         EEData->defList[EEDefID].defAndExample.first = editWordDef;
         EEData->defList[EEDefID].defAndExample.second = editWordExample;
+        EEData->defList[EEDefID].isEdited = true;
         setEngEngUIText();
         saveEngEngEditToFile();
     }
     else if(currentDataSetID == 1)
     {
-        engVieData->defList[EEDefID].wordType = editWordType;
-        engVieData->defList[EEDefID].defAndExample.first = editWordDef;
-        engVieData->defList[EEDefID].defAndExample.second = editWordExample;
+        engVieData->defList[engVieDefID].wordType = editWordType;
+        engVieData->defList[engVieDefID].defAndExample.first = editWordDef;
+        engVieData->defList[engVieDefID].defAndExample.second = editWordExample;
+        engVieData->defList[engVieDefID].isEdited = true;
         setEngVieUIText();
     }
     else if(currentDataSetID == 2)
     {
-        vieEngData->defList[EEDefID].wordType = editWordType;
-        vieEngData->defList[EEDefID].defAndExample.first = editWordDef;
-        vieEngData->defList[EEDefID].defAndExample.second = editWordExample;
+        vieEngData->defList[vieEngDefID].wordType = editWordType;
+        vieEngData->defList[vieEngDefID].defAndExample.first = editWordDef;
+        vieEngData->defList[vieEngDefID].defAndExample.second = editWordExample;
+        vieEngData->defList[vieEngDefID].isEdited = true;
         setVieEngUIText();
     }
 }
@@ -729,7 +735,7 @@ void DisplayBox::saveEngEngEditToFile()
 {
     // Add the word to the list of words that are edited
     std::string wordStr = word.getString();
-    std::string filename = "data/edit-words/list-of-words.txt";
+    std::string filename = "data/edit-words/eng-eng/list-of-words.txt";
     std::ifstream fin;
     std::string fileContent, line;
     fin.open(filename);
@@ -769,9 +775,57 @@ void DisplayBox::saveEngEngEditToFile()
     fout.close();
 
     // Create a file to store the edited word info
-    filename = "data/edit-words/" + wordStr + ".txt";
-    std::string wordInfo = recoverEngEngWordInfo(*EEData);
+    filename = "data/edit-words/eng-eng/" + wordStr + ".txt";
+    std::string savedContent;
+    int defNum = EEData->defList.size();
+    for(int i = 0; i < defNum; ++i)
+    {
+        if(EEData->defList[i].isEdited)
+        {
+            if(savedContent.empty())
+            {
+                savedContent = "@" + std::to_string(i); 
+            }
+            else
+            {
+                savedContent += "\n@" + std::to_string(i);
+            }
+            savedContent += "\n*" + EEData->defList[i].wordType;
+            savedContent += "\n" + EEData->defList[i].defAndExample.first;
+            std::stringstream stream(EEData->defList[i].defAndExample.second);
+            while(std::getline(stream, line))
+                savedContent += "\n=" + line;
+        }
+    }
     fout.open(filename);
-    fout << wordInfo;
+    fout << savedContent;
     fout.close();
+}
+
+void DisplayBox::loadEngEngEditFromFile()
+{
+    std::string filename = "data/edit-words/eng-eng/list-of-words.txt";
+    std::ifstream fin;
+    fin.open(filename);
+    if(!fin.is_open())
+    {
+        fin.close();
+        return;
+    }
+    std::string line;
+    std::string wordStr = EEData->word;
+    bool found = false;
+    while(std::getline(fin, line))
+    {
+        if(wordStr == line)
+        {
+            found = true;
+            break;
+        }
+    }
+    fin.close();
+    if(!found)
+        return;
+    // If the word is edited
+    extractEngEngEditFile(*EEData);
 }

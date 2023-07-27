@@ -80,6 +80,7 @@ public:
     // Receive change from edit definition screen
     void receiveEditText(std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
     void saveEngEngEditToFile();
+    void loadEngEngEditFromFile();
     
 private:
     sf::RectangleShape theBox;

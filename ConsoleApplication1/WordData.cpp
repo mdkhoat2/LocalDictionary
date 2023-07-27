@@ -216,6 +216,71 @@ std::string recoverEngEngWordInfo(WordDataEngVie& theWordData)
     return wordInfo;
 }
 
+void extractEngEngEditFile(WordDataEngVie &engEngData)
+{
+    std::string wordStr = engEngData.word;
+    std::string filename = "data/edit-words/eng-eng/" + wordStr + ".txt";
+    std::ifstream fin;
+    fin.open(filename);
+    if(!fin.is_open())
+    {
+        std::cout << "Cannot open edit of this word!" << std::endl;
+        return;
+    }
+    std::string line;
+    int index = -1;
+    EngVieDef theDef;
+    while(std::getline(fin, line))
+    {
+        // this line contains the index of the edited definition in defList of EEData
+        if(line.length() >= 2 && line[0] == '@')
+        {
+            // add the previous definition to word data
+            if(!theDef.empty())
+            {  
+                if(index >= 0)
+                {
+                    engEngData.defList[index].wordType = theDef.wordType;
+                    engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
+                    engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
+                    engEngData.defList[index].isEdited = true;
+                    theDef.clear();
+                }
+            }
+            if(isNumber(line.substr(1)))
+            {
+                index = std::stoi(line.substr(1));
+            }
+        }
+        // this line contains the word type
+        else if(line.length() >= 2 && line[0] == '*')
+        {
+            theDef.wordType = line.substr(1);
+        }
+        // this line contains the definition
+        else if(line.length() >= 2 && line[0] == '-')
+        {
+            theDef.defAndExample.first = line;
+        }
+        // this line contains the example
+        else if(line.length() >= 2 && line[0] == '=')
+        {
+            if(theDef.defAndExample.second.empty())
+                theDef.defAndExample.second = line.substr(1);
+            else
+                theDef.defAndExample.second = "\n" + line.substr(1);
+        }
+    }
+    if(!theDef.empty())
+    {
+        engEngData.defList[index].wordType = theDef.wordType;
+        engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
+        engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
+        engEngData.defList[index].isEdited = true;
+    }
+    fin.close();
+}
+
 void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::string &wordInfo)
 {
     engVieData.word = word;
@@ -631,7 +696,7 @@ void removeEndLineInString(std::string &str)
     for(int i = 0; i < str.length(); ++i)
     {
         if(str[i] == '\n')
-            continue;
+            ans += " ";
         else
             ans += str[i];
     }
@@ -659,7 +724,7 @@ void WordDataEngVie::consolePrint()
     }
 }
 
-EngVieDef::EngVieDef() : wordType(), defAndExample()
+EngVieDef::EngVieDef() : wordType(), defAndExample(), isEdited(false)
 {
 }
 

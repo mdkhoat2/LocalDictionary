@@ -47,6 +47,7 @@ public:
 public:
     std::string wordType;
     std::pair<std::string, std::string> defAndExample;
+    bool isEdited;
 };
 
 struct WordDataEngVie
@@ -80,6 +81,9 @@ void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::strin
 
 // Functions to recover the wordInfo from the data structures
 std::string recoverEngEngWordInfo(WordDataEngVie& theWordData);
+
+// Functions to read edit from file
+void extractEngEngEditFile(WordDataEngVie& engEngData);
 
 
 void separateEngEngExample(std::string& wordInfo);
