@@ -216,10 +216,137 @@ std::string recoverEngEngWordInfo(WordDataEngVie& theWordData)
     return wordInfo;
 }
 
-void extractEngEngEditFile(WordDataEngVie &engEngData)
+void saveEditToFile(WordDataEngVie &theData, int currentDataSetID)
 {
-    std::string wordStr = engEngData.word;
-    std::string filename = "data/edit-words/eng-eng/" + wordStr + ".txt";
+    // Add the word to the list of words that are edited
+    std::string wordStr = theData.word;
+    std::string filename = "data/edit-words/";
+    if(currentDataSetID == 0)
+        filename += "eng-eng/";
+    else if(currentDataSetID == 1)
+        filename += "eng-vie/";
+    else if(currentDataSetID == 2)
+        filename += "vie-eng/";
+    filename += "list-of-words.txt";
+    std::ifstream fin;
+    std::string fileContent, line;
+    fin.open(filename);
+    if(fin.is_open())
+    {
+        while(std::getline(fin, line))
+        {
+            if(fileContent.empty())
+                fileContent = line;
+            else
+                fileContent += "\n" + line;
+        }
+        fin.close();
+    }
+    // Now fileContent contains all the word that has been edited before
+    // We search if the word exist in the list or not
+    if(fileContent.empty())
+        fileContent = wordStr;
+    else
+    {
+        bool found = false;
+        std::stringstream stream(fileContent);
+        while(std::getline(stream, line))
+        {
+            if(wordStr == line)
+            {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            fileContent += "\n" + wordStr;
+    }
+    std::ofstream fout;
+    fout.open(filename);
+    fout << fileContent;
+    fout.close();
+
+    // Create a file to store the edited word info
+    filename = "data/edit-words/";
+    if(currentDataSetID == 0)
+        filename += "eng-eng/";
+    else if(currentDataSetID == 1)
+        filename += "eng-vie/";
+    else if(currentDataSetID == 2)
+        filename += "vie-eng/";
+    filename += wordStr + ".txt";
+    std::string savedContent;
+    int defNum = theData.defList.size();
+    for(int i = 0; i < defNum; ++i)
+    {
+        if(theData.defList[i].isEdited)
+        {
+            if(savedContent.empty())
+            {
+                savedContent = "@" + std::to_string(i); 
+            }
+            else
+            {
+                savedContent += "\n@" + std::to_string(i);
+            }
+            savedContent += "\n*" + theData.defList[i].wordType;
+            savedContent += "\n" + theData.defList[i].defAndExample.first;
+            std::stringstream stream(theData.defList[i].defAndExample.second);
+            while(std::getline(stream, line))
+                savedContent += "\n=" + line;
+        }
+    }
+    fout.open(filename);
+    fout << savedContent;
+    fout.close();
+}
+
+void loadEditFromFile(WordDataEngVie &theData, int currentDataSetID)
+{
+    std::string filename = "data/edit-words/";
+    if(currentDataSetID == 0)
+        filename += "eng-eng/";
+    else if(currentDataSetID == 1)
+        filename += "eng-vie/";
+    else if(currentDataSetID == 2)
+        filename += "vie-eng/";
+    filename += "list-of-words.txt";
+    std::ifstream fin;
+    fin.open(filename);
+    if(!fin.is_open())
+    {
+        fin.close();
+        return;
+    }
+    std::string line;
+    std::string wordStr = theData.word;
+    bool found = false;
+    while(std::getline(fin, line))
+    {
+        if(wordStr == line)
+        {
+            found = true;
+            break;
+        }
+    }
+    fin.close();
+    if(!found)
+        return;
+    // If the word is edited
+    extractEditFile(theData, currentDataSetID);
+}
+
+void extractEditFile(WordDataEngVie &theData, int currentDataSetID)
+{
+    std::string wordStr = theData.word;
+    std::string filename = "data/edit-words/";
+    if(currentDataSetID == 0)
+        filename += "eng-eng/";
+    else if(currentDataSetID == 1)
+        filename += "eng-vie/";
+    else if(currentDataSetID == 2)
+        filename += "vie-eng/";
+    filename += wordStr + ".txt";
     std::ifstream fin;
     fin.open(filename);
     if(!fin.is_open())
@@ -240,10 +367,10 @@ void extractEngEngEditFile(WordDataEngVie &engEngData)
             {  
                 if(index >= 0)
                 {
-                    engEngData.defList[index].wordType = theDef.wordType;
-                    engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
-                    engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
-                    engEngData.defList[index].isEdited = true;
+                    theData.defList[index].wordType = theDef.wordType;
+                    theData.defList[index].defAndExample.first = theDef.defAndExample.first;
+                    theData.defList[index].defAndExample.second = theDef.defAndExample.second;
+                    theData.defList[index].isEdited = true;
                     theDef.clear();
                 }
             }
@@ -279,10 +406,10 @@ void extractEngEngEditFile(WordDataEngVie &engEngData)
     {
         if(index >= 0)
         {
-            engEngData.defList[index].wordType = theDef.wordType;
-            engEngData.defList[index].defAndExample.first = theDef.defAndExample.first;
-            engEngData.defList[index].defAndExample.second = theDef.defAndExample.second;
-            engEngData.defList[index].isEdited = true;
+            theData.defList[index].wordType = theDef.wordType;
+            theData.defList[index].defAndExample.first = theDef.defAndExample.first;
+            theData.defList[index].defAndExample.second = theDef.defAndExample.second;
+            theData.defList[index].isEdited = true;
         }   
     }
     fin.close();
