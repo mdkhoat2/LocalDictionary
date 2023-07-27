@@ -242,12 +242,10 @@ void Textbox::inputLogic(int charTyped) {
     }
     // Set the textbox text:
     textbox.setString(text.str() + "_");
-    if (textbox.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
-        wrapText(textbox);
-        std::string currentText = textbox.getString();
-        if(currentText[currentText.length()-1] == '_')
-            currentText.pop_back();
-        text.str("");
-        text << currentText;
-    }
+    wrapText(textbox);
+    std::string currentText = textbox.getString();
+    if(currentText[currentText.length()-1] == '_')
+        currentText.pop_back();
+    text.str("");
+    text << currentText;
 }

@@ -37,6 +37,7 @@ Application::Application() :
 	initEditDefButton();
 	initDisplayBox();
 	initFavouriteButton();
+	loadAllHistory();
 }
 
 Application::~Application()
@@ -385,6 +386,14 @@ void Application::initDeleteButton()
 	deleteButton.setOutlineThickness(2);
 }
 
+void Application::loadAllHistory()
+{
+	history.loadHistory("data/historyEE.txt");
+	history1.loadHistory("data/historyEV.txt");
+	history2.loadHistory("data/historyVE.txt");
+	history3.loadHistory("data/historyEmoji.txt");
+}
+
 void Application::initEditDefButton()
 {
 	editDefButton.setFont(font);
@@ -437,6 +446,7 @@ void Application::changeDataSet()
 		dataSetButton.setString("      VI - EN");
 	else
 		dataSetButton.setString("      Emoji");
+	displayBox.setCurrentDataSet(currentDataSetID);
 }
 
 void Application::run()
@@ -530,7 +540,7 @@ void Application::handleEvent()
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
 					if (currentDataSetID == 0)
-						displayBox.showNextDef();
+						displayBox.showNextEngEngDef();
 					else if (currentDataSetID == 1)
 						displayBox.showNextEngVieDef();
 					else if (currentDataSetID == 2)
@@ -539,7 +549,7 @@ void Application::handleEvent()
 				else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
 				{
 					if (currentDataSetID == 0)
-						displayBox.showPrevDef();
+						displayBox.showPrevEngEngDef();
 					else if (currentDataSetID == 1)
 						displayBox.showPrevEngVieDef();
 					else if (currentDataSetID == 2)
@@ -559,9 +569,14 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			editDefScreen->setEndScreen(endScreen);
+			std::string editWordType = displayBox.getWordType();
+			std::string editWordDef = displayBox.getWordDef();
+			std::string editWordExample = displayBox.getWordExample();
+			bool isSaved = false;
 			editDefScreen->handleEvent(event, window, endScreen);
 			if (endScreen)
 			{
+				// Display box receive the edited word type, definition and example
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}
@@ -631,7 +646,19 @@ void Application::update()
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
 	{
-		editDefScreen->update(window);
+		bool endScreen = false;
+		bool isSaved = false;
+		std::string editWordType;
+		std::string editWordDef;
+		std::string editWordExample;
+		editDefScreen->update(window, endScreen, isSaved, editWordType, editWordDef, editWordExample);
+		if(endScreen)
+		{
+			if(isSaved)
+				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
+			editDefScreen->setEndScreen(endScreen);
+			currentScreen = ScreenState::OptionsScreen;
+		}
 	}
 	else if (currentScreen == ScreenState::AddScreen) {
 		newWord->update(window);
@@ -649,6 +676,17 @@ void Application::update()
 	}
 }
 
+void Application::drawHistory() {
+	if (currentDataSetID == 0)
+		history.drawTo(window);
+	else if (currentDataSetID == 1)
+		history1.drawTo(window);
+	else if (currentDataSetID == 2)
+		history2.drawTo(window);
+	else
+		history3.drawTo(window);
+}
+
 void Application::render()
 {
     if (currentScreen == ScreenState::MainScreen) {
@@ -658,7 +696,7 @@ void Application::render()
         searchButton.drawTo(window);
         dataSetButton.drawTo(window);
 
-        history.drawTo(window);
+		drawHistory();
         //favouriteMain.drawTo(window);
         menuButton.drawTo(window);
         displayBox.drawTo(window);
@@ -699,27 +737,28 @@ void Application::render()
 void Application::searchInEngEngDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyEE.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
     if(!wordInfo.empty())
     {
         // Console
         separateEngEngExample(wordInfo);
-        std::cout << wordInfo << std::endl;
+		std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+        std::cout << newWordInfo << std::endl;
         // UI
-        displayBox.getWordDataEngEng(inputWord, wordInfo);
+        displayBox.getWordDataEngEng(inputWord, newWordInfo);
     }
     else
     {
         std::cout << "Cannot find the word" << "\n";
-        displayBox.showNoDefinitions();
+        displayBox.showNoEngEngDefinitions();
     }
 }
 
 void Application::searchInEngVieDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyEV.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
     if(!wordInfo.empty())
     {
@@ -738,7 +777,7 @@ void Application::searchInEngVieDict(std::string& inputWord)
 void Application::searchInVieEngDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord);
+        history.add(inputWord, "data/historyVE.txt");
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
     if(!wordInfo.empty())
     {
@@ -756,7 +795,7 @@ void Application::searchInVieEngDict(std::string& inputWord)
 void Application::searchInEmojiDict(std::string& inputWord)
 {
 	if (inputWord != "")
-		history.add(inputWord);
+		history.add(inputWord, "data/historyEmoji.txt");
 	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 3);
 	if (!wordInfo.empty())
 	{

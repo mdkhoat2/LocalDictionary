@@ -362,7 +362,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
         {
             if (currentDataSetID == 0)
-                displayBox.showNextDef();
+                displayBox.showNextEngEngDef();
             else if (currentDataSetID == 1)
                 displayBox.showNextEngVieDef();
             else if (currentDataSetID == 2)
@@ -371,7 +371,7 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
         {
             if (currentDataSetID == 0)
-                displayBox.showPrevDef();
+                displayBox.showPrevEngEngDef();
             else if (currentDataSetID == 1)
                 displayBox.showPrevEngVieDef();
             else if (currentDataSetID == 2)

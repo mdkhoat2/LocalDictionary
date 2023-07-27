@@ -25,17 +25,21 @@ public:
     void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
     void getWordDataVieEng(std::string& inputWord, std::string& wordInfo);
 
-    // For Eng-Eng
-    void initFirstDef();
-    void setUIText();
-    void showNextDef();
-    void showPrevDef();
-    void showNoDefinitions();
-    void showExistedDefinitions();
-    void showNewDefinitions();
-    void clearEngEngData();
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
+    void setCurrentDataSet(int theID);
+
+    // For Add words
+    void showExistedDefinitions();
+    void showNewDefinitions();
+    
+    // For Eng-Eng (updated)
+    void initEngEngFirstDef();
+    void showNextEngEngDef();
+    void showPrevEngEngDef();
+    void showNoEngEngDefinitions();
+    void clearEngEngData();
+    void setEngEngUIText();
 
     // For Eng-Vie
     void initEngVieFirstDef();
@@ -43,6 +47,7 @@ public:
     void showPrevEngVieDef();
     void showNoEngVieDefinitions();
     void clearEngVieData();
+    void setEngVieUIText();
 
     // For Vie-Eng
     void initVieEngFirstDef();
@@ -50,6 +55,7 @@ public:
     void showPrevVieEngDef();
     void showNoVieEngDefinitions();
     void clearVieEngData();
+    void setVieEngUIText();
 
     //For Emoji
     void showEmojiDefinition(std::string& inputWord, std::string& wordInfor);
@@ -70,6 +76,11 @@ public:
     const sf::String& getWordDef() const;
     const sf::String& getWordExample() const;
 
+    // Receive change from edit definition screen
+    void receiveEditText(std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
+    void saveEngEngEditToFile();
+    void loadEngEngEditFromFile();
+    
 private:
     sf::RectangleShape theBox;
 
@@ -77,11 +88,11 @@ private:
     sf::Text wordType;
     sf::Text wordDef;
     sf::Text wordExample;
-    int engEngTypeID;
-    int engEngDefID;
-    WordDefNode* engEngPtr;
-    WordData* engEngData; // for Eng-Eng data set only
-    int engEngDefNum;
+    //sf::Text emojiText;
+
+    WordDataEngVie* EEData;
+    int EEDefID;
+    int EEDefNum;
 
     WordDataEngVie* engVieData; // for Eng-Vie data set only
     int engVieDefID;
@@ -100,6 +111,7 @@ private:
     sf::Sprite prevButtonSprite;
     //sf::Font Font;
     bool emojiDefinition;
+    int currentDataSetID;
 };
 
 
