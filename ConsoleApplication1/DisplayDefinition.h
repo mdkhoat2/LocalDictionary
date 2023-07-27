@@ -27,8 +27,9 @@ public:
 
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
+    void setCurrentDataSet(int theID);
 
-    // For Eng-Eng
+    // For Add words
     void showExistedDefinitions();
     void showNewDefinitions();
     
@@ -38,6 +39,7 @@ public:
     void showPrevEngEngDef();
     void showNoEngEngDefinitions();
     void clearEngEngData();
+    void setEngEngUIText();
 
     // For Eng-Vie
     void initEngVieFirstDef();
@@ -45,6 +47,7 @@ public:
     void showPrevEngVieDef();
     void showNoEngVieDefinitions();
     void clearEngVieData();
+    void setEngVieUIText();
 
     // For Vie-Eng
     void initVieEngFirstDef();
@@ -52,6 +55,7 @@ public:
     void showPrevVieEngDef();
     void showNoVieEngDefinitions();
     void clearVieEngData();
+    void setVieEngUIText();
 
     //For Emoji
     void showEmojiDefinition(std::string& inputWord, std::string& wordInfor);
@@ -74,7 +78,9 @@ public:
     const sf::String& getWordExample() const;
 
     // Receive change from edit definition screen
-    void receiveEdit(std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
+    void receiveEditText(std::string& editWordType, std::string& editWordDef, std::string& editWordExample);
+    void saveEngEngEditToFile();
+    void loadEngEngEditFromFile();
     
 private:
     sf::RectangleShape theBox;
@@ -105,6 +111,7 @@ private:
     sf::Sprite prevButtonSprite;
     sf::Font Font;
     bool emojiDefinition;
+    int currentDataSetID;
 };
 
 sf::Uint32 hexStringToUint32(const std::string& hexString);

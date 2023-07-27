@@ -7,17 +7,27 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     currentEditAreaID(0),
     cancelButtonTex(),
     cancelButton(),
+    saveButtonTex(),
+    saveButton(),
+    saveSucceededTex(),
+    saveSucceeded(),
+    showSucceeded(false),
+    clock(),
+    succeededTimeMax(),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
-    editBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black)
+    editBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
+    cancelButtonHover("", {170.1f, 47.1f}, 20, sf::Color::Transparent, sf::Color::Transparent),
+    saveButtonHover("", {170.1f, 47.1f}, 20, sf::Color::Transparent, sf::Color::Transparent)
 {
     initCancelButton(font);
     initDataSetButton(font);
     initSaveButton(font);
     initEditBox(font2);
+    initSaveSucceeded(font);
+    succeededTimeMax = sf::seconds(2.0f);
 }
 
-void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen, 
-std::string& editWordType, std::string& editWordDef, std::string& editWordExample)
+void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen)
 {
     if(event.type == sf::Event::MouseButtonPressed)
     {
@@ -29,11 +39,8 @@ std::string& editWordType, std::string& editWordDef, std::string& editWordExampl
 
         if(isMouseOverSaveButton(window))
         {
-            editWordType = editBox.getWordType();
-            editWordDef = editBox.getWordDef();
-            editWordExample = editBox.getWordExample();
-            endScreen = true;
-            isEndScreen = endScreen;
+            showSucceeded = true;
+            clock.restart();
         }
 
         if(editBox.isMouseOverWordTypeArea(window))
@@ -79,23 +86,61 @@ std::string& editWordType, std::string& editWordDef, std::string& editWordExampl
     }
 }
 
-void EditDefinitionScreen::update(sf::RenderWindow& window)
+void EditDefinitionScreen::update(sf::RenderWindow& window, bool& endScreen, bool& isSaved
+, std::string& editWordType, std::string& editWordDef, std::string& editWordExample)
 {
     dataSetButton.update(window);
+    sf::Color grey(0, 0, 0, 120);
+    if(isMouseOverCancelButton(window))
+        cancelButtonHover.setOutlineColor(grey);
+
+    else
+        cancelButtonHover.setOutlineColor(sf::Color::Transparent);
+    if(isMouseOverSaveButton(window))
+        saveButtonHover.setOutlineColor(grey);
+    else
+        saveButtonHover.setOutlineColor(sf::Color::Transparent);
+
+    if(showSucceeded)
+    {
+        if(clock.getElapsedTime() >= succeededTimeMax)
+        {
+            showSucceeded = false;
+            editWordType = editBox.getWordType();
+            editWordDef = editBox.getWordDef();
+            editWordExample = editBox.getWordExample();
+            endScreen = true;
+            isSaved = true;
+            isEndScreen = endScreen;
+        }
+     
+    }
 }
 
 void EditDefinitionScreen::render(sf::RenderWindow &window, sf::Sprite& background)
 {
-    if(!isEndScreen)
+    if(!isEndScreen && !showSucceeded)
     {
         window.clear(sf::Color::White);
         window.draw(background);
         window.draw(cancelButton);
         window.draw(saveButton);
+        cancelButtonHover.drawTo(window);
+        saveButtonHover.drawTo(window);
         dataSetButton.drawTo(window);
         editBox.drawTo(window);
     }
-        
+    if(showSucceeded)
+    {
+        window.clear(sf::Color::White);
+        window.draw(background);
+        window.draw(cancelButton);
+        window.draw(saveButton);
+        cancelButtonHover.drawTo(window);
+        saveButtonHover.drawTo(window);
+        dataSetButton.drawTo(window);
+        window.draw(saveSucceeded);
+    }
 }
 
 void EditDefinitionScreen::setEndScreen(bool value)
@@ -147,9 +192,11 @@ void EditDefinitionScreen::initCancelButton(const sf::Font &font)
         std::cout << "Cannot load cancel button texture\n";
     cancelButtonTex.setSmooth(true);
     cancelButton.setTexture(cancelButtonTex);
-    cancelButton.setTextureRect(sf::IntRect(270, 340, 400, 120));
-    cancelButton.setScale(0.4f, 0.4f);
-    cancelButton.setPosition(500, 780);
+    cancelButton.setScale(0.3f, 0.3f);
+    cancelButton.setPosition(530, 760);
+    // Cancel button hover
+    cancelButtonHover.setPosition(cancelButton.getPosition().x + 16.8f, cancelButton.getPosition().y + 16.8f);
+    cancelButtonHover.setOutlineThickness(2);
 }
 
 void EditDefinitionScreen::initSaveButton(const sf::Font &font)
@@ -159,8 +206,11 @@ void EditDefinitionScreen::initSaveButton(const sf::Font &font)
         std::cout << "Cannot load save button texture\n";
     saveButtonTex.setSmooth(true);
     saveButton.setTexture(saveButtonTex);
-    saveButton.setScale(0.4f, 0.4f);
-    saveButton.setPosition(200, 650);
+    saveButton.setScale(0.3f, 0.3f);
+    saveButton.setPosition(280, 760);
+    // Save button hover
+    saveButtonHover.setPosition(saveButton.getPosition().x + 16.8f, saveButton.getPosition().y + 16.8f);
+    saveButtonHover.setOutlineThickness(2);
 }
 
 void EditDefinitionScreen::initDataSetButton(const sf::Font &font)
@@ -186,6 +236,15 @@ void EditDefinitionScreen::initEditBox(const sf::Font &font)
     editBox.setCharacterSize(25);
 }
 
+void EditDefinitionScreen::initSaveSucceeded(const sf::Font &font)
+{
+    if(!saveSucceededTex.loadFromFile("background/succeeded.png"))
+        std::cout << "Cannot load texture succeeded from file" << std::endl;
+    saveSucceededTex.setSmooth(true);
+    saveSucceeded.setTexture(saveSucceededTex);
+    saveSucceeded.setScale(0.3f, 0.3f);
+    saveSucceeded.setPosition(290, 450);
+}
 
 /*------------------------EDIT BOX-------------------------*/
 EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size, 
@@ -439,4 +498,14 @@ std::string EditBox::getWordDef()
 std::string EditBox::getWordExample()
 {
     return wordExampleArea.getText();
+}
+
+const sf::Vector2f &EditBox::getPosition() const
+{
+    return theBox.getPosition();
+}
+
+const sf::Vector2f &EditBox::getSize() const
+{
+    return theBox.getSize();
 }

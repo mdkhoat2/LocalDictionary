@@ -48,6 +48,11 @@ void Button::setOutlineThickness(float thickness)
     button.setOutlineThickness(thickness);
 }
 
+void Button::setOutlineColor(const sf::Color &color)
+{
+    button.setOutlineColor(color);
+}
+
 void Button::setTexture(const sf::Texture *texture)
 {
     button.setTexture(texture);
