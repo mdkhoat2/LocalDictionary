@@ -405,6 +405,7 @@ void Application::initDisplayBox()
 {
 	displayBox.setFont(font2);
 	displayBox.setCharacterSize(25);
+	displayBox.setCurrentDataSet(currentDataSetID);
 }
 
 void Application::initFavouriteButton()

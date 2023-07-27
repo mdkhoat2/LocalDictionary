@@ -82,9 +82,10 @@ void extractVieEngData(WordDataEngVie& vieEngData, std::string& word, std::strin
 // Functions to recover the wordInfo from the data structures
 std::string recoverEngEngWordInfo(WordDataEngVie& theWordData);
 
-// Functions to read edit from file
-void extractEngEngEditFile(WordDataEngVie& engEngData);
-
+// Functions to read and write edit from file
+void saveEditToFile(WordDataEngVie& theData, int currentDataSetID);
+void loadEditFromFile(WordDataEngVie& theData, int currentDataSetID);
+void extractEditFile(WordDataEngVie& engEngData, int currentDataSetID);
 
 void separateEngEngExample(std::string& wordInfo);
 std::string formatEngEngWordInfo(std::string& wordInfo);
