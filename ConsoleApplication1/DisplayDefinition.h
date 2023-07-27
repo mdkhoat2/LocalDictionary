@@ -59,7 +59,6 @@ public:
 
     //For Emoji
     void showEmojiDefinition(std::string& inputWord, std::string& wordInfor);
-    void setEmoji();
     void showNoEmojiDefinition();
     void clearEmoji();
     void setEmojiMode(bool value);
@@ -89,7 +88,7 @@ private:
     sf::Text wordType;
     sf::Text wordDef;
     sf::Text wordExample;
-    sf::Text emojiText;
+    //sf::Text emojiText;
 
     WordDataEngVie* EEData;
     int EEDefID;
@@ -102,19 +101,19 @@ private:
     WordDataEngVie* vieEngData; // for Vie-Eng data set only
     int vieEngDefID;
     int vieEngDefNum;
-
+    sf::Texture emojiTexture;
+    sf::Sprite emojiImage;
     bool showNextButton;
     bool showPrevButton;
     sf::Texture nextButtonTex;
     sf::Texture prevButtonTex;
     sf::Sprite nextButtonSprite;
     sf::Sprite prevButtonSprite;
-    sf::Font Font;
+    //sf::Font Font;
     bool emojiDefinition;
     int currentDataSetID;
 };
 
-sf::Uint32 hexStringToUint32(const std::string& hexString);
 
 
 
