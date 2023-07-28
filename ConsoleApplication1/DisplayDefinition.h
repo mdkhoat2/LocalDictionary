@@ -69,6 +69,13 @@ public:
     bool isMouseOverPrevButton(sf::RenderWindow& window);
     bool nextButtonDrawn();
     bool prevButtonDrawn();
+    void setNextButtonPos(float xIn, float yIn);
+    void setPrevButtonPos(float xIn, float yIn);
+    sf::Vector2u getNextButtonTexSize() const;
+    sf::Vector2u getPrevButtonTexSize() const;
+    const sf::Vector2f& getNextButtonScale() const;
+    const sf::Vector2f& getPrevButtonScale() const;
+    
 
     // Accessors
     const sf::String& getWord() const;
