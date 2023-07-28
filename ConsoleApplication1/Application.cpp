@@ -453,8 +453,8 @@ void Application::changeDataSet()
 void Application::run()
 {
 	// Load dictionaries
-	newWord = new NewWord(font, window);
-	removeWord = new RemoveWord(font, window);
+	newWord = new NewWord(font, font2, window);
+	removeWord = new RemoveWord(font2, window);
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	loadEngEngDict();

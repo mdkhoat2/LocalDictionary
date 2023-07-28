@@ -13,11 +13,11 @@
 class NewWord {
 public:
 	void addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
-	void addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
+	bool addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
 	void saveAddedWord();
 	void loadAddedWord(EngTrieNode*& root);
 public:
-	NewWord(sf::Font& font, sf::RenderWindow& window);
+	NewWord(sf::Font& font,sf::Font& font2 , sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
@@ -27,7 +27,8 @@ public:
 	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 private:
-	std::queue<WordData> addedWord;
+	//std::queue<WordDataEngVie*> addedWord;
+	std::queue<std::pair<std::string, std::string>> addedWord;
 
 	sf::Texture addScreenTex, dataSetTex;
 	sf::Sprite addScreen, dataSet;
