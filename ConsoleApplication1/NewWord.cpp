@@ -1,20 +1,23 @@
 #include "NewWord.h"
 
 void NewWord::addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
+    std::cout << wordInfo << std::endl;
 	trieInsert(root, word, wordInfo, 0);
-	WordData tmp;
-	extractWordData(tmp, word, wordInfo);
-	addedWord.push(tmp);
+    separateEngEngExample(wordInfo);
+    std::cout << wordInfo << std::endl;
+    std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+    //WordDataEngVie* tmp = new WordDataEngVie();
+	//extractEngEngData(*tmp, word, newWordInfo);
+    addedWord.push({word, newWordInfo});
 }
 
-void NewWord::addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
+bool NewWord::addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
     std::ifstream fin("data/" + inputWord + ".txt");
     if (!fin.is_open()) {
         fin.close();
-        return;
+        return false;
     }
     std::string line, word;
-    bool moreThan1Def = false;
     int count = 0;
 
     while (std::getline(fin, line)) {
@@ -24,7 +27,8 @@ void NewWord::addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::s
                 word = line;
             }
         }
-        else {
+        else // this is the definition area
+        {
             // Count leading spaces
             int i = 0;
             while (line[i] == ' ')
@@ -86,6 +90,7 @@ void NewWord::addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::s
     }
     addNewWord(root, word, wordInfo);
     fin.close();
+    return true;
 }
 
 void NewWord::saveAddedWord() {
@@ -96,42 +101,15 @@ void NewWord::saveAddedWord() {
 		fout.close();
 		return;
 	}
-
-	while (!addedWord.empty()) {
-		WordData tmp = addedWord.front();
-		fout << tmp.word << std::endl;
-		for (int i = 0; i < 4; ++i) {
-			if (tmp.defListHead[i]) {
-				fout << "     ";
-				switch (i) {
-				case 0:
-					fout << "n ";
-					break;
-				case 1:
-					fout << "v ";
-					break;
-				case 2:
-					fout << "adj ";
-					break;
-				case 3:
-					fout << "adv ";
-					break;
-				}
-				if (tmp.defListHead[i]->next) {
-					WordDefNode* cur = tmp.defListHead[i];
-					int count = 1;
-					while (cur) {
-						fout << count << ": " << cur->wordDef << std::endl; 
-						++count;
-						cur = cur->next;
-					}
-				}
-				else fout << " : " << tmp.defListHead[i]->wordDef << std::endl;
-			}
-		}
-		addedWord.pop();
-	}
-
+    while (!addedWord.empty()) {
+        std::string tmp = addedWord.front().first;
+        if (tmp != "") {
+            fout << tmp << std::endl;
+            std::string newWordInfo = addedWord.front().second;
+            fout << newWordInfo << std::endl;
+        }
+        addedWord.pop();
+    }
 	fout.close();
 }
 
@@ -139,13 +117,20 @@ void NewWord::loadAddedWord(EngTrieNode*& root) {
     std::ifstream fin("data/Added Words.txt");
     
     std::string line, word, wordInfo;
-    bool moreThan1Def = false;
     int count = 0;
-
     while (std::getline(fin, line))
     {
-        if (line[0] != ' ') // this is a word
-        {
+        if (line[0] == '*') { // this is a word type
+            if (!wordInfo.empty()) wordInfo += '\n';
+            wordInfo += line.substr(1); 
+        }
+        else if (line[0] == '-') { // this is a word definition
+            wordInfo += '\n' + line.substr(1) + ';';
+        }
+        else if (line[0] == '=') { // this is a word example
+            wordInfo += line.substr(1);
+        }
+        else { // this is a word 
             if (count == 0) // Read first word
             {
                 ++count;
@@ -157,67 +142,17 @@ void NewWord::loadAddedWord(EngTrieNode*& root) {
                 addNewWord(root, word, wordInfo);
                 word = line;
                 wordInfo.clear();
-                moreThan1Def = false;
-            }
-        }
-        else
-        {
-            // Skip leading spaces
-            int i = 0;
-            while (line[i] == ' ')
-                ++i;
-            // Read the word's information
-            // The first line will definitely contain the word type
-            if (wordInfo.empty())
-            {
-                std::string wordType;
-                while (line[i] != ' ')
-                    wordType += line[i++];
-                if (isdigit(line[i + 1]))
-                    moreThan1Def = true;
-                wordInfo += wordType + "\n" + line.substr(i + 1);
-            }
-            else
-            {
-                // Check for "X:" which indicates another meaning of the same word type
-                int j = i;
-                std::string numStr;
-                while (line[j] != ':' && j < line.length())
-                    numStr += line[j++];
-                if (isNumber(numStr) && moreThan1Def)
-                    wordInfo += "\n" + line.substr(i);
-                else
-                {
-                    // Check for any other word type
-                    std::string wordType;
-                    while (line[i] != ' ' && i < line.length())
-                        wordType += line[i++];
-                    // If the word has another word type
-                    if (isValidWordType(wordType))
-                    {
-                        wordInfo += "\n" + wordType + "\n" + line.substr(i + 1);
-                    }
-                    // If it is a normal line
-                    else if (line[i] == ' ')
-                    {
-                        wordInfo += " " + wordType + line.substr(i);
-                    }
-                    // If the line contains only 1 word that is not a word type
-                    else
-                    {
-                        wordInfo += " " + wordType;
-                    }
-                }
             }
         }
     }
-    addNewWord(root, word, wordInfo);
+    addNewWord(root, word, wordInfo); // insert last word
+    std::cout << wordInfo << std::endl;
     fin.close();
 }
 
 // UI
 
-NewWord::NewWord(sf::Font& font, sf::RenderWindow& window) :
+NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     wordBar(20, sf::Color::Black, sf::Color::Transparent, true),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
@@ -232,8 +167,8 @@ NewWord::NewWord(sf::Font& font, sf::RenderWindow& window) :
     initAddButton(font);
     initDataSetButton(font);
     initWordBar(font);
-    initDisplayBox(font);
-    initNoteBox(font);
+    initDisplayBox(font2);
+    initNoteBox(font2);
     initDataSetText(font);
 }
 
@@ -302,12 +237,12 @@ void NewWord::initDataSetButton(sf::Font& font) {
 
 void NewWord::initDisplayBox(sf::Font& font) {
     displayBox.setFont(font);
-    displayBox.setCharacterSize(30);
+    displayBox.setCharacterSize(25);
 }
 
 void NewWord::initNoteBox(sf::Font& font) {
     noteBox.setFont(font);
-    noteBox.setCharacterSize(30);
+    noteBox.setCharacterSize(25);
 }
 
 void NewWord::changeDataSet()
@@ -416,19 +351,28 @@ void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) 
         // Console
         std::cout << "The word has already existed" << "\n";
         separateEngEngExample(wordInfo);
-        std::cout << wordInfo << std::endl;
+        std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+        std::cout << newWordInfo << std::endl;
         // UI
         noteBox.showExistedDefinitions();
-        displayBox.getWordDataEngEng(inputWord, wordInfo);
+        displayBox.getWordDataEngEng(inputWord, newWordInfo);
     }
     else {
-    addFromTextFile(engEngRoot, inputWord, wordInfo);
-    // Console
-    std::cout << "The word has been imported" << "\n";
-    std::cout << wordInfo << std::endl;
-    // UI
-    noteBox.showNewDefinitions();
-    displayBox.getWordDataEngEng(inputWord, wordInfo);
+        if (addFromTextFile(engEngRoot, inputWord, wordInfo)) {
+            // Console
+            std::cout << "The word has been imported" << "\n";
+            //separateEngEngExample(wordInfo);
+            std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+            std::cout << newWordInfo << std::endl;
+            // UI
+            noteBox.showNewDefinitions();
+            displayBox.getWordDataEngEng(inputWord, newWordInfo);
+        }
+        else {
+            std::cout << "Cannot find the word" << "\n";
+            noteBox.showNoEngEngDefinitions();
+            displayBox.clearEngEngData();
+        }
     }
 }
 
@@ -436,20 +380,24 @@ void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) 
     std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
     if (!wordInfo.empty()) {
         // Console
-        std::cout << "The word has already existed" << "\n";
         std::cout << wordInfo << std::endl;
         // UI
-        noteBox.showExistedDefinitions();
+        displayBox.showExistedDefinitions();
         displayBox.getWordDataEngVie(inputWord, wordInfo);
     }
     else {
-    addFromTextFile(engEngRoot, inputWord, wordInfo);
-    // Console
-    std::cout << "The word has been imported" << "\n";
-    std::cout << wordInfo << std::endl;
-    // UI
-    noteBox.showNewDefinitions();
-    displayBox.getWordDataEngVie(inputWord, wordInfo);
+        if (addFromTextFile(engEngRoot, inputWord, wordInfo)) {
+            // Console
+            std::cout << "The word has been imported" << "\n";
+            std::cout << wordInfo << std::endl;
+            // UI
+            noteBox.showNewDefinitions();
+            displayBox.getWordDataEngVie(inputWord, wordInfo);
+        }
+        else {
+            std::cout << "Cannot find the word" << "\n";
+            noteBox.showNoEngVieDefinitions();
+        }
     }
 }
 

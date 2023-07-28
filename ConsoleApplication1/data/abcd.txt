@@ -1,2 +1,4 @@
 abcd
-     n : random testing word
+     n 1: testing word; "the tesing word is abcd" [syn: {abccd}, {abbcd}]
+     2: hoping for no bugs
+     v : hello abcd; "abcd is great" [syn: {abcd}, {abab}]
