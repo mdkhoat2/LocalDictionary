@@ -100,7 +100,7 @@ private:
     void initCancelButton(const sf::Font& font);
     void initSaveButton(const sf::Font& font);
     void initDataSetButton(const sf::Font& font);
-    void initEditBox(const sf::Font& font);
+    void initEditBox(const sf::Font& font, sf::Sprite& background);
     void initSaveSucceeded(const sf::Font& font);
 };
 

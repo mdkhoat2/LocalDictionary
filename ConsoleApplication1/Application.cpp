@@ -334,9 +334,11 @@ void Application::initFont()
 
 void Application::initSearchBar()
 {
+	float scaleX = mainScreen.getScale().x;
+	float scaleY = mainScreen.getScale().y;
 	searchBar.setPosition({ 125, 180 });
-	searchBar.setBoxPosition({ 74, 158 });
-	searchBar.setBoxSize({ 800, 68 });
+	searchBar.setBoxPosition(sf::Vector2f(247 * scaleX, 536 * scaleY));
+	searchBar.setBoxSize(sf::Vector2f(2608 * scaleX, 213 * scaleY));
 	searchBar.setLimit(true, 65); //set limit to 65 characters
 	searchBar.setFont(font);
 
@@ -403,6 +405,10 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
+	float scaleX = mainScreen.getScale().x;
+	float scaleY = mainScreen.getScale().y;
+	displayBox.setPosition(247 * scaleX, 842 * scaleY);
+	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
 	displayBox.setFont(font2);
 	displayBox.setCharacterSize(25);
 	displayBox.setCurrentDataSet(currentDataSetID);

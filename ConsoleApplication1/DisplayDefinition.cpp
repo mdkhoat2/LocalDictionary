@@ -58,20 +58,19 @@ DisplayBox::DisplayBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     prevButtonTex.setSmooth(true);
 
     nextButtonSprite.setTexture(nextButtonTex);
-    nextButtonSprite.setTextureRect(sf::IntRect(63, 45, 110, 110));
+    nextButtonSprite.setTextureRect(sf::IntRect(65, 46, 86, 85));
+    nextButtonSprite.setScale(0.5f, 0.5f);
 
     prevButtonSprite.setTexture(prevButtonTex);
-    prevButtonSprite.setTextureRect(sf::IntRect(65, 45, 110, 110));
-    
-    // std::cout << nextButtonTex->getSize().x << " " << nextButtonTex->getSize().y << std::endl;
-    // std::cout << prevButtonTex->getSize().x << " " << prevButtonTex->getSize().y << std::endl;
+    prevButtonSprite.setTextureRect(sf::IntRect(65, 46, 86, 85));
+    prevButtonSprite.setScale(0.5f, 0.5f);
 
     nextButtonSprite.setPosition(870, 800);
-    nextButtonSprite.setScale(0.5f, 0.5f);
+    
     showNextButton = false;
 
     prevButtonSprite.setPosition(100, 800);
-    prevButtonSprite.setScale(0.5f, 0.5f);
+    
     showPrevButton = false;
     //Font.loadFromFile("font/seguiemj.ttf"); //this font is Windows 10 default font for emoji
     //setEmoji();
@@ -621,6 +620,36 @@ bool DisplayBox::nextButtonDrawn()
 bool DisplayBox::prevButtonDrawn()
 {
     return showPrevButton;
+}
+
+void DisplayBox::setNextButtonPos(float xIn, float yIn)
+{
+    nextButtonSprite.setPosition(xIn, yIn);
+}
+
+void DisplayBox::setPrevButtonPos(float xIn, float yIn)
+{
+    prevButtonSprite.setPosition(xIn, yIn);
+}
+
+sf::Vector2u DisplayBox::getNextButtonTexSize() const
+{
+    return nextButtonTex.getSize();
+}
+
+sf::Vector2u DisplayBox::getPrevButtonTexSize() const
+{
+    return prevButtonTex.getSize();
+}
+
+const sf::Vector2f &DisplayBox::getNextButtonScale() const
+{
+    return nextButtonSprite.getScale();
+}
+
+const sf::Vector2f &DisplayBox::getPrevButtonScale() const
+{
+    return prevButtonSprite.getScale();
 }
 
 void DisplayBox::showEmojiDefinition(std::string& inputWord, std::string& wordInfor)

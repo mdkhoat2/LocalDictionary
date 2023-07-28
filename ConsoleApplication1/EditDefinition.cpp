@@ -22,7 +22,7 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     initCancelButton(font);
     initDataSetButton(font);
     initSaveButton(font);
-    initEditBox(font2);
+    initEditBox(font2, background);
     initSaveSucceeded(font);
     succeededTimeMax = sf::seconds(2.0f);
 }
@@ -230,8 +230,12 @@ void EditDefinitionScreen::initDataSetButton(const sf::Font &font)
 		dataSetButton.setString("      Emoji");
 }
 
-void EditDefinitionScreen::initEditBox(const sf::Font &font)
+void EditDefinitionScreen::initEditBox(const sf::Font &font, sf::Sprite& background)
 {
+    float scaleX = background.getScale().x;
+    float scaleY = background.getScale().y;
+    editBox.setPosition(247 * scaleX, 842 * scaleY);
+    editBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
     editBox.setFont(font);
     editBox.setCharacterSize(25);
 }
@@ -404,19 +408,23 @@ void EditBox::adjustSurroundingTextbox()
 {
     // Word type
     sf::FloatRect wordTypeBounds = word.getGlobalBounds();
-    wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordTypeBounds.height + 10));
+    wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordTypeBounds.height + 10));
     wordTypeArea.setOutlineColor(sf::Color::Black);
     wordTypeArea.setOutlineThickness(2.0f);
     wordTypeArea.setBoxPosition(wordTypeArea.getTextPosition().x - 5, wordTypeArea.getTextPosition().y - 5);
     // Word definition
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
-    wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordDefBounds.height + 10));
+    wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordDefBounds.height + 10));
     wordDefArea.setOutlineColor(sf::Color::Black);
     wordDefArea.setOutlineThickness(2.0f);
     wordDefArea.setBoxPosition(wordDefArea.getTextPosition().x - 5, wordDefArea.getTextPosition().y - 5);
     // Word example
     sf::FloatRect wordExampleBounds = wordExampleArea.getGlobalBounds();
-    wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 10, wordExampleBounds.height + 10));
+    std::string exampleText = wordExampleArea.getText();
+    if(!exampleText.empty())
+        wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordExampleBounds.height + 10));
+    else
+        wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordExampleArea.setOutlineColor(sf::Color::Black);
     wordExampleArea.setOutlineThickness(2.0f);
     wordExampleArea.setBoxPosition(wordExampleArea.getTextPosition().x - 5, wordExampleArea.getTextPosition().y - 5);
