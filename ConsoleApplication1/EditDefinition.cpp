@@ -258,6 +258,8 @@ void EditDefinitionScreen::initSaveSucceeded(const sf::Font &font)
     saveSucceeded.setPosition(290, 450);
 }
 
+
+
 /*------------------------EDIT BOX-------------------------*/
 EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size, 
     const sf::Color& backColor, const sf::Color& textColor) :
@@ -265,7 +267,13 @@ EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     word(),
     wordTypeArea(25, sf::Color::Black, sf::Color::Transparent, false),
     wordDefArea(25, sf::Color::Black, sf::Color::Transparent, false),
-    wordExampleArea(25, sf::Color::Black, sf::Color::Transparent, false)
+    wordExampleArea(25, sf::Color::Black, sf::Color::Transparent, false),
+    wordTypePlaceholder(),
+    wordDefPlaceholder(),
+    wordExamplePlaceholder(),
+    showTypePlaceholder(true),
+    showDefPlaceholder(true),
+    showExamplePlaceholder(true)
 {
     theBox.setPosition(pos);
     float xText = pos.x + 30.f;
@@ -288,6 +296,17 @@ EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     wordDefArea.setStyle(sf::Text::Regular);
     wordExampleArea.setStyle(sf::Text::Regular);
 
+    wordTypePlaceholder.setFillColor(sf::Color(128, 128, 128));
+    wordTypePlaceholder.setString("Enter word type...");
+    wordTypePlaceholder.setCharacterSize(25);
+
+    wordDefPlaceholder.setFillColor(sf::Color(128, 128, 128));
+    wordDefPlaceholder.setString("Enter definition...");
+    wordDefPlaceholder.setCharacterSize(25);
+
+    wordExamplePlaceholder.setFillColor(sf::Color(128, 128, 128));
+    wordExamplePlaceholder.setString("Enter example...");
+    wordExamplePlaceholder.setCharacterSize(25);
 }
 
 void EditBox::update(sf::RenderWindow &window)
@@ -307,6 +326,13 @@ void EditBox::drawTo(sf::RenderWindow &window)
         wordTypeArea.drawTo(window);
         wordDefArea.drawTo(window);
         wordExampleArea.drawTo(window);
+
+        if(wordTypeArea.getText().empty())
+            window.draw(wordTypePlaceholder);
+        if(wordDefArea.getText().empty())
+            window.draw(wordDefPlaceholder);
+        if(wordExampleArea.getText().empty())
+            window.draw(wordExamplePlaceholder);
     }
 }
 
@@ -316,6 +342,10 @@ void EditBox::setFont(const sf::Font &font)
     wordTypeArea.setFont(font);
     wordDefArea.setFont(font);
     wordExampleArea.setFont(font);
+
+    wordTypePlaceholder.setFont(font);
+    wordDefPlaceholder.setFont(font);
+    wordExamplePlaceholder.setFont(font);
 }
 
 void EditBox::setPosition(float xIn, float yIn)
@@ -398,10 +428,13 @@ void EditBox::adjustTextPosition()
 {
     sf::FloatRect wordBounds = word.getGlobalBounds();
     wordTypeArea.setPosition(wordTypeArea.getTextPosition().x, wordBounds.top + wordBounds.height + 20.f);
+    wordTypePlaceholder.setPosition(wordTypeArea.getTextPosition().x + 5.f, wordBounds.top + wordBounds.height + 20.f);
     sf::FloatRect wordTypeBounds = wordTypeArea.getGlobalBounds();
-    wordDefArea.setPosition(wordDefArea.getTextPosition().x, wordTypeBounds.top + wordTypeBounds.height + 20.f);
+    wordDefArea.setPosition(wordDefArea.getTextPosition().x, wordTypeBounds.top + wordTypeBounds.height + 40.f);
+    wordDefPlaceholder.setPosition(wordDefArea.getTextPosition().x + 5.f, wordTypeBounds.top + wordTypeBounds.height + 40.f);
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
-    wordExampleArea.setPosition(wordExampleArea.getTextPosition().x, wordDefBounds.top + wordDefBounds.height + 20.f);
+    wordExampleArea.setPosition(wordExampleArea.getTextPosition().x, wordDefBounds.top + wordDefBounds.height + 40.f);
+    wordExamplePlaceholder.setPosition(wordExampleArea.getTextPosition().x + 5.f, wordDefBounds.top + wordDefBounds.height + 40.f);
 }
 
 void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWordType, const sf::String &theWordDef, const sf::String &theWordExample)
@@ -415,14 +448,22 @@ void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWor
 void EditBox::adjustSurroundingTextbox()
 {
     // Word type
-    sf::FloatRect wordTypeBounds = word.getGlobalBounds();
-    wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordTypeBounds.height + 10));
+    sf::FloatRect wordBounds = word.getGlobalBounds();
+    std::string typeText = wordTypeArea.getText();
+    if(!typeText.empty())
+        wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordBounds.height + 10));
+    else
+        wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordTypeArea.setOutlineColor(sf::Color::Black);
     wordTypeArea.setOutlineThickness(2.0f);
     wordTypeArea.setBoxPosition(wordTypeArea.getTextPosition().x - 5, wordTypeArea.getTextPosition().y - 5);
     // Word definition
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
-    wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordDefBounds.height + 10));
+    std::string defText = wordDefArea.getText();
+    if(!defText.empty())
+        wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordDefBounds.height + 10));
+    else
+        wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordDefArea.setOutlineColor(sf::Color::Black);
     wordDefArea.setOutlineThickness(2.0f);
     wordDefArea.setBoxPosition(wordDefArea.getTextPosition().x - 5, wordDefArea.getTextPosition().y - 5);
