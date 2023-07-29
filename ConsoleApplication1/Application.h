@@ -12,6 +12,7 @@
 #include "DisplayDefinition.h"
 #include "Favourite.h"
 #include "SwitchDataSet.h"
+#include "SearchDefinition.h"
 
 class Application
 {
@@ -23,7 +24,8 @@ public:
         AddScreen,
         RemoveScreen,
         EditDefinitionScreen,
-        FavouriteScreen
+        FavouriteScreen,
+        SearchDefinitionScreen
     };
 public:
     Application();
@@ -77,6 +79,7 @@ private:
     Button deleteButton;
     Button editDefButton;
     Button favouritebutton;
+    Button searchDefButton;
 
     Favourite *favourite;
     History history;
@@ -94,6 +97,7 @@ private:
     EditDefinitionScreen* editDefScreen;
     NewWord* newWord;
     RemoveWord* removeWord;
+    SearchDefinitionScreen* searchDefScreen;
 private:
     void initWindow();
     void initBackground();
@@ -108,6 +112,7 @@ private:
     void initEditDefButton();
     void initDisplayBox();
     void initFavouriteButton();
+    void initSearchDefButton();
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();

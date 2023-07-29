@@ -151,6 +151,14 @@ void EditDefinitionScreen::setEndScreen(bool value)
 void EditDefinitionScreen::setCurrentDataSetID(int theID)
 {
     currentDataSetID = theID;
+    if (currentDataSetID == 0)
+		dataSetButton.setString("      EN - EN");
+	else if (currentDataSetID == 1)
+		dataSetButton.setString("      EN - VI");
+	else if (currentDataSetID == 2)
+		dataSetButton.setString("      VI - EN");
+	else
+		dataSetButton.setString("      Emoji");
 }
 
 bool EditDefinitionScreen::isMouseOverCancelButton(sf::RenderWindow& window)

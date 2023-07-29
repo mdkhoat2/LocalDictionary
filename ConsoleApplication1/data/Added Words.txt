@@ -3,7 +3,7 @@ abcd
 -testing word
 = "the tesing word is abcd" 
 =[syn: {abccd}, {abbcd}]
--hoping for no bugs;;;;;;;;;;;;;;;;;;;;;;
+-hoping for no bugs;;;;;;;;;;;;;;;;;;;;;;;;;;;
 *v
 -hello abcd
 = "abcd is great" 
