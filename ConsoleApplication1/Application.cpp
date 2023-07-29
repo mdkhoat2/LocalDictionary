@@ -146,7 +146,7 @@ void Application::loadEngEngDict()
     trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
 	engEngVector.push_back(word);
     fin.close();
-    newWord->loadAddedWord(engEngRoot);
+    newWord->loadAddedEEWord(engEngRoot);
 }
 
 void Application::loadEngVieDict()
@@ -460,7 +460,7 @@ void Application::run()
 {
 	// Load dictionaries
 	newWord = new NewWord(font, font2, window);
-	removeWord = new RemoveWord(font2, window);
+	removeWord = new RemoveWord(font, font2, window);
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	loadEngEngDict();
@@ -487,7 +487,7 @@ void Application::handleEvent()
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			newWord->saveAddedWord();
+			newWord->saveAddedEEWord();
 			window.close();
 		}	
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)

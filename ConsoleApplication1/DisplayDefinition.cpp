@@ -600,6 +600,34 @@ void DisplayBox::showNewDefinitions() {
     wordDef.setString("");
 }
 
+void DisplayBox::showDeletionReConfirmation() {
+    if (EEData)
+    {
+        delete EEData;
+        EEData = nullptr;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Are you sure to delete this word?");
+    wordType.setString("");
+    wordDef.setString("");
+}
+
+void DisplayBox::showDeleteSuccessfully() {
+    if (EEData)
+    {
+        delete EEData;
+        EEData = nullptr;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Delete Successfully!");
+    wordType.setString("");
+    wordDef.setString("");
+}
+
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);

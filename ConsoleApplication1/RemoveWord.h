@@ -12,24 +12,26 @@
 
 class RemoveWord {
 public:
-	void removeWord(EngTrieNode*& root, std::string word);
-	void saveRemovedWord();
-	void loadRemovedWord(EngTrieNode*& root);
+	void removeEEWord(EngTrieNode*& root, std::string word, std::string& wordInfo);
+	void saveRemovedEEWord();
+	void loadRemovedEEWord(EngTrieNode*& root);
 public:
-	RemoveWord(sf::Font& font, sf::RenderWindow& window);
+	RemoveWord(sf::Font& font1, sf::Font font2, sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
 public:
-	void removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
+	bool removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 	void removeInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 	void removeInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 private:
-	std::queue<std::string> removedWord;
+	std::string wordTmp, wordInfoTmp;
+	
+	std::queue<std::pair<std::string, std::string>> removedEEWord;
 
-	sf::Texture removeScreenTex, dataSetTex;
-	sf::Sprite removeScreen, dataSet;
+	sf::Texture removeScreenTex, dataSetTex, cancelTex, confirmTex;
+	sf::Sprite removeScreen, dataSet, cancel, confirm;
 
 	Textbox wordBar;
 
@@ -41,6 +43,8 @@ private:
 	Button backButton;
 	Button removeButton;
 	Button dataSetButton;
+	Button cancelButton;
+	Button confirmButton;
 
 	int currentDataSetID;
 	/*
@@ -49,12 +53,14 @@ private:
 		2: VieEng
 		3: Emoji
 	*/
-
+	bool isDeleting;
 	bool isEndScreen;
 private:
 	void initBackground(sf::RenderWindow& window);
 	void initWordBar(sf::Font& font);
 	void initBackButton(sf::Font& font);
+	void initCancelButton(sf::Font& font);
+	void initConfirmButton(sf::Font& font);
 	void initRemoveButton(sf::Font& font);
 	void initDataSetText(sf::Font& font);
 	void initDataSetButton(sf::Font& font);
