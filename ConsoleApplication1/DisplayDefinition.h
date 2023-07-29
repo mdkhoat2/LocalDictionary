@@ -32,6 +32,10 @@ public:
     // For Add words
     void showExistedDefinitions();
     void showNewDefinitions();
+
+    // For Remove words
+    void showDeletionReConfirmation();
+    void showDeleteSuccessfully();
     
     // For Eng-Eng (updated)
     void initEngEngFirstDef();

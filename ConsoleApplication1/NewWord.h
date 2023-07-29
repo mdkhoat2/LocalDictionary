@@ -12,10 +12,11 @@
 
 class NewWord {
 public:
-	void addNewWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
-	bool addFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
-	void saveAddedWord();
-	void loadAddedWord(EngTrieNode*& root);
+	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
+	void addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
+	void saveAddedEEWord();
+	void loadAddedEEWord(EngTrieNode*& root);
+
 public:
 	NewWord(sf::Font& font,sf::Font& font2 , sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
