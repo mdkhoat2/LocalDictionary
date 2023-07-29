@@ -154,6 +154,11 @@ sf::FloatRect Textbox::getBoxGlobalBounds() const
     return theBox.getGlobalBounds();
 }
 
+const sf::Vector2f &Textbox::getBoxSize() const
+{
+    return theBox.getSize();
+}
+
 bool Textbox::isMouseOver(sf::RenderWindow &window)
 {
     int mouseX = sf::Mouse::getPosition(window).x;

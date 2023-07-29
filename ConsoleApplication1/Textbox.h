@@ -51,7 +51,9 @@ public:
 
 	const sf::Vector2f& getTextPosition() const;
 	sf::FloatRect getGlobalBounds() const;
+
 	sf::FloatRect getBoxGlobalBounds() const;
+	const sf::Vector2f& getBoxSize() const;
 
 	bool isMouseOver(sf::RenderWindow& window);
 	bool isSelect();

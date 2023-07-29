@@ -14,6 +14,7 @@ Application::Application() :
 	deleteButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	searchDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
 	history(),
 	favourite(nullptr),
@@ -21,6 +22,7 @@ Application::Application() :
 	editDefScreen(nullptr),
 	newWord(nullptr),
 	removeWord(nullptr),
+	searchDefScreen(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	currentDataSetID(0)
@@ -37,6 +39,7 @@ Application::Application() :
 	initEditDefButton();
 	initDisplayBox();
 	initFavouriteButton();
+	initSearchDefButton();
 	loadAllHistory();
 }
 
@@ -47,6 +50,7 @@ Application::~Application()
 	delete newWord;
 	delete favourite;
 	delete removeWord;
+	delete searchDefScreen;
 }
 
 void Application::loadEngEngDict()
@@ -421,6 +425,13 @@ void Application::initFavouriteButton()
 	favouritebutton.setOutlineThickness(2);
 }
 
+void Application::initSearchDefButton()
+{
+	searchDefButton.setFont(font);
+	searchDefButton.setPosition({ 972, 475 });
+	searchDefButton.setOutlineThickness(2);
+}
+
 void Application::changeDataSet()
 {
 	// Clear word data before change data set
@@ -463,6 +474,7 @@ void Application::run()
 	removeWord = new RemoveWord(font, font2, window);
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
+	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -544,6 +556,11 @@ void Application::handleEvent()
 					favourite->loadWordsList();
 					currentScreen = ScreenState::FavouriteScreen;
 				}
+				else if(searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
+				{
+					searchDefScreen->setCurrentDataSetID(currentDataSetID);
+					currentScreen = ScreenState::SearchDefinitionScreen;
+				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
 					if (currentDataSetID == 0)
@@ -622,6 +639,17 @@ void Application::handleEvent()
 				favourite->eraseWordList();
 			}
 		}
+		else if(currentScreen == ScreenState::SearchDefinitionScreen)
+		{
+			bool endScreen = false;
+			searchDefScreen->setEndScreen(endScreen);
+			searchDefScreen->handleEvent(event, window, endScreen);
+			if(endScreen)
+			{
+				searchDefScreen->setEndScreen(endScreen);
+				currentScreen = ScreenState::OptionsScreen;
+			}
+		}
 		else
 		{
 
@@ -649,6 +677,7 @@ void Application::update()
 		deleteButton.update(window);
 		editDefButton.update(window);
 		favouritebutton.update(window);
+		searchDefButton.update(window);
 		displayBox.update(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
@@ -676,6 +705,10 @@ void Application::update()
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
 		favourite->update(window);
+	}
+	else if(currentScreen == ScreenState::SearchDefinitionScreen)
+	{
+		searchDefScreen->update(window);
 	}
 	else
 	{
@@ -721,6 +754,7 @@ void Application::render()
 		deleteButton.drawTo(window);
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
+		searchDefButton.drawTo(window);
 		displayBox.drawTo(window);
 		//dataSetBar.drawTo(window);
 	}
@@ -736,6 +770,10 @@ void Application::render()
 	else if (currentScreen == ScreenState::FavouriteScreen)
 	{
 		favourite->render(window);
+	}
+	else if(currentScreen == ScreenState::SearchDefinitionScreen)
+	{
+		searchDefScreen->render(window);
 	}
 
 	window.display();
