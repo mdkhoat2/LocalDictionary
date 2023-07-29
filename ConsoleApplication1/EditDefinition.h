@@ -57,10 +57,6 @@ private:
     sf::Text wordTypePlaceholder;
     sf::Text wordDefPlaceholder;
     sf::Text wordExamplePlaceholder;
-
-    bool showTypePlaceholder;
-    bool showDefPlaceholder;
-    bool showExamplePlaceholder;
 };
 
 class EditDefinitionScreen

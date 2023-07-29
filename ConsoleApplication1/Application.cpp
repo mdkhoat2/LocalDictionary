@@ -78,6 +78,9 @@ void Application::loadEngEngDict()
             {
                 // insert the previous word with its definition
                 trieInsert(engEngRoot, word, wordInfo, 0);
+				separateEngEngExample(wordInfo);
+				std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+				searchDefScreen->insertEngEngItem(word, newWordInfo);
 				if (count <= 11584)
 					count++;
 				else
@@ -176,7 +179,7 @@ void Application::loadEngVieDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 1);
-                    
+                searchDefScreen->insertEngVieItem(word, wordInfo);
                 word.clear();
                 wordInfo.clear();
             }
@@ -233,6 +236,7 @@ void Application::loadVieEngDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 2);
+				searchDefScreen->insertVieEngItem(word, wordInfo);
                 word.clear();
                 wordInfo.clear();
             }
