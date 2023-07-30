@@ -222,6 +222,12 @@ void Textbox::wrapText(sf::Text &theText)
     theText.setString(wrappedStr);
 }
 
+void Textbox::clear()
+{
+    text.str("");
+    textbox.setString("");
+}
+
 void Textbox::deleteLastChar() {
     std::string t = text.str();
     std::string newT = "";

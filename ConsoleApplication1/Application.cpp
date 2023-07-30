@@ -555,6 +555,13 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					if(currentDataSetID == 0)
+						displayBox.clearEngEngData();
+					else if(currentDataSetID == 1)
+						displayBox.clearEngVieData();
+					else if(currentDataSetID == 2)
+						displayBox.clearVieEngData();
+					searchBar.clear();
 					favourite->setCurrentDataSet(currentDataSetID);
 					favourite->addtoFile();
 					favourite->loadWordsList();
@@ -562,6 +569,13 @@ void Application::handleEvent()
 				}
 				else if(searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					if(currentDataSetID == 0)
+						displayBox.clearEngEngData();
+					else if(currentDataSetID == 1)
+						displayBox.clearEngVieData();
+					else if(currentDataSetID == 2)
+						displayBox.clearVieEngData();
+					searchBar.clear();
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}

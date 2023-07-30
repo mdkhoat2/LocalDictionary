@@ -352,7 +352,7 @@ void DisplayBox::showNoEngEngDefinitions()
     }
     showNextButton = false;
     showPrevButton = false;
-    word.setString("No Definition Found!");
+    word.setString("No Definitions Found!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");  

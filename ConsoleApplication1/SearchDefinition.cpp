@@ -24,11 +24,11 @@ SearchDefinitionScreen::SearchDefinitionScreen(sf::Font &font1, sf::Font &font2,
 
 void SearchDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool &endScreen)
 {
-    if (event.type == sf::Event::TextEntered) {
+    if(event.type == sf::Event::TextEntered) {
         searchBar.typedOn(event);
     }
     if (event.type == sf::Event::MouseButtonPressed) {
-        if (searchBar.isMouseOver(window))
+        if(searchBar.isMouseOver(window))
             searchBar.setSelected(true);
         else
             searchBar.setSelected(false);
@@ -44,12 +44,23 @@ void SearchDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &wind
                 searchInVieEngItems(inputDef);
         }
 
-        if (backButton.isMouseOver(window)) {
+        else if(backButton.isMouseOver(window)) {
             endScreen = true;
             isEndScreen = endScreen;
+            displayBox.clearData();
+            displayBox.clearUIText();
+            searchBar.clear();
         }
-        else if (dataSetButton.isMouseOver(window))
+        else if(dataSetButton.isMouseOver(window))
             changeDataSet();
+        else if(displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
+        {
+            displayBox.showNextWord();
+        }
+        else if(displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
+        {
+            displayBox.showPrevWord();
+        }
     }
 }
 
@@ -72,6 +83,7 @@ void SearchDefinitionScreen::render(sf::RenderWindow &window)
         backButton.drawTo(window);
         searchButton.drawTo(window);
         dataSetButton.drawTo(window);
+        displayBox.drawTo(window);
     }
 }
 
@@ -86,6 +98,7 @@ void SearchDefinitionScreen::setCurrentDataSetID(int theID)
 		dataSetButton.setString("      VI - EN");
 	else
 		dataSetButton.setString("      Emoji");
+    displayBox.setCurrentDataSet(theID);
 }
 
 void SearchDefinitionScreen::setEndScreen(bool val)
@@ -97,6 +110,7 @@ void SearchDefinitionScreen::insertEngEngItem(std::string &word, std::string &wo
 {
     WordDataEngVie theItem;
     extractEngEngData(theItem, word, wordInfo);
+    loadEditFromFile(theItem, 0);
     EEItems.push_back(theItem);
 }
 
@@ -104,6 +118,7 @@ void SearchDefinitionScreen::insertEngVieItem(std::string &word, std::string &wo
 {
     WordDataEngVie theItem;
     extractEngVieData(theItem, word, wordInfo);
+    loadEditFromFile(theItem, 1);
     EVItems.push_back(theItem);
 }
 
@@ -111,6 +126,7 @@ void SearchDefinitionScreen::insertVieEngItem(std::string &word, std::string &wo
 {
     WordDataEngVie theItem;
     extractVieEngData(theItem, word, wordInfo);
+    loadEditFromFile(theItem, 2);
     VEItems.push_back(theItem);
 }
 
@@ -119,6 +135,7 @@ void SearchDefinitionScreen::searchInEngEngItems(std::string &inputDef)
     if(!displayBox.isDataEmpty())
         displayBox.clearData();
     std::pair<std::string, EngVieDef> thePair;
+    int count = 0;
     for(int i = 0; i < EEItems.size(); ++i)
     {
         for(int j = 0; j < EEItems[i].defList.size(); ++j)
@@ -132,10 +149,15 @@ void SearchDefinitionScreen::searchInEngEngItems(std::string &inputDef)
                 thePair.second.defAndExample.first = EEItems[i].defList[j].defAndExample.first;
                 thePair.second.defAndExample.second = EEItems[i].defList[j].defAndExample.second;
                 displayBox.insertDataPair(thePair);
+                ++count;
                 break;
             }
         }
     }
+    if(count == 0)
+        displayBox.showNoWord();
+    else
+        displayBox.initFirstWord();
 }
 
 void SearchDefinitionScreen::searchInEngVieItems(std::string &inputDef)
@@ -160,6 +182,7 @@ void SearchDefinitionScreen::searchInEngVieItems(std::string &inputDef)
             }
         }
     }
+    displayBox.initFirstWord();
 }
 
 void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef)
@@ -184,6 +207,7 @@ void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef)
             }
         }
     }
+    displayBox.initFirstWord();
 }
 
 void SearchDefinitionScreen::initBackground(sf::RenderWindow &window)
@@ -271,6 +295,9 @@ void SearchDefinitionScreen::changeDataSet()
         dataSetButton.setString("      EN - VI");
     else if (currentDataSetID == 2)
         dataSetButton.setString("      VI - EN");
+    displayBox.clearData();
+    displayBox.clearUIText();
+    displayBox.setCurrentDataSet(currentDataSetID);
 }
 
 /*----------------------------WORD DISPLAY BOX--------------------------------------*/
@@ -280,7 +307,10 @@ const sf::Color &backColor, const sf::Color &textColor) :
     theBox(),
     word(),
     wordType(),
-    wordExample(),
+    wordDef(),
+    word2(),
+    wordType2(),
+    wordDef2(),
     showNextButton(false),
     showPrevButton(false),
     nextButtonTex(),
@@ -288,8 +318,8 @@ const sf::Color &backColor, const sf::Color &textColor) :
     prevButtonTex(),
     prevButtonSprite(),
     currentDataSetID(0),
-    buttonMaxNum(5),
-    isButtonClicked(false)
+    firstWordID(0),
+    wordNum(0) 
 {
     theBox.setPosition(pos);
     float xText = pos.x + 30.f;
@@ -297,7 +327,10 @@ const sf::Color &backColor, const sf::Color &textColor) :
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 40.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 250.f);
+
+    word2.setPosition(xText, yText + 110.f);
+    wordType2.setPosition(xText, yText + 160.f);
+    wordDef2.setPosition(xText, yText + 200.f);
 
     theBox.setSize(size);
 
@@ -305,12 +338,18 @@ const sf::Color &backColor, const sf::Color &textColor) :
     word.setFillColor(textColor);
     wordType.setFillColor(textColor);
     wordDef.setFillColor(textColor);
-    wordExample.setFillColor(sf::Color(128, 128, 128));
+
+    word2.setFillColor(textColor);
+    wordType2.setFillColor(textColor);
+    wordDef2.setFillColor(textColor);
 
     word.setStyle(sf::Text::Bold);
     wordType.setStyle(sf::Text::Regular);
     wordDef.setStyle(sf::Text::Regular);
-    wordExample.setStyle(sf::Text::Regular);
+
+    word2.setStyle(sf::Text::Bold);
+    wordType2.setStyle(sf::Text::Regular);
+    wordDef2.setStyle(sf::Text::Regular);
 
     if(!nextButtonTex.loadFromFile("background/next-button.png"))
         std::cout << "Cannot load next button texture" << std::endl;
@@ -350,17 +389,16 @@ void WordDisplayBox::update(sf::RenderWindow &window)
 void WordDisplayBox::drawTo(sf::RenderWindow &window)
 {
     window.draw(theBox);
-    if(isButtonClicked)
-    {
-        window.draw(word);
-        window.draw(wordType);
-        window.draw(wordExample);
-    }
-    else
-    {
-        for(int i = 0; i < wordButtons.size(); ++i)
-            wordButtons[i].drawTo(window);
-    }
+    window.draw(word);
+    window.draw(wordType);
+    window.draw(wordDef);
+    window.draw(word2);
+    window.draw(wordType2);
+    window.draw(wordDef2);
+    if(showNextButton)
+        window.draw(nextButtonSprite);
+    if(showPrevButton)
+        window.draw(prevButtonSprite);
 }
 
 void WordDisplayBox::setPosition(const sf::Vector2f &pos)
@@ -371,7 +409,10 @@ void WordDisplayBox::setPosition(const sf::Vector2f &pos)
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 130.f);
+
+    word2.setPosition(xText, yText + 110.f);
+    wordType2.setPosition(xText, yText + 160.f);
+    wordDef2.setPosition(xText, yText + 200.f);
 }
 
 void WordDisplayBox::setPosition(float xIn, float yIn)
@@ -382,7 +423,10 @@ void WordDisplayBox::setPosition(float xIn, float yIn)
     word.setPosition(xText, yText);
     wordType.setPosition(xText, yText + 50.f);
     wordDef.setPosition(xText, yText + 90.f);
-    wordExample.setPosition(xText, yText + 130.f);
+
+    word2.setPosition(xText, yText + 110.f);
+    wordType2.setPosition(xText, yText + 160.f);
+    wordDef2.setPosition(xText, yText + 200.f);
 }
 
 void WordDisplayBox::setBackColor(const sf::Color &color)
@@ -400,9 +444,10 @@ void WordDisplayBox::setFont(const sf::Font &font)
     word.setFont(font);
     wordType.setFont(font);
     wordDef.setFont(font);
-    wordExample.setFont(font);
-    for(int i = 0; i < wordButtons.size(); ++i)
-        wordButtons[i].setFont(font);
+
+    word2.setFont(font);
+    wordType2.setFont(font);
+    wordDef2.setFont(font);
 }
 
 void WordDisplayBox::setCharacterSize(unsigned int size)
@@ -410,7 +455,10 @@ void WordDisplayBox::setCharacterSize(unsigned int size)
     word.setCharacterSize(size + 10);
     wordType.setCharacterSize(size);
     wordDef.setCharacterSize(size);
-    wordExample.setCharacterSize(size);
+
+    word2.setCharacterSize(size + 10);
+    wordType2.setCharacterSize(size);
+    wordDef2.setCharacterSize(size);
 }
 
 void WordDisplayBox::setCurrentDataSet(int theID)
@@ -420,7 +468,11 @@ void WordDisplayBox::setCurrentDataSet(int theID)
 
 void WordDisplayBox::clearData()
 {
-    wordButtons.clear();
+    for(int i = 0; i < wordArr.size(); ++i)
+    {
+        wordArr[i].first.clear();
+        wordArr[i].second.clear();
+    }
     wordArr.clear();
 }
 
@@ -432,7 +484,208 @@ bool WordDisplayBox::isDataEmpty()
 void WordDisplayBox::insertDataPair(std::pair<std::string, EngVieDef> &thePair)
 {
     wordArr.push_back(thePair);
-    // Create button corresponding to that data pair
-    Button theButton(thePair.first, sf::Vector2f(60, 120), 20, sf::Color(128, 128, 128), sf::Color::Black);
-    wordButtons.push_back(theButton);
+}
+
+void WordDisplayBox::wrapText(sf::Text &theText)
+{
+    std::string str = theText.getString();
+    std::string wrappedStr;
+
+    std::istringstream iss(str);
+    std::string word;
+    std::string line;
+
+    // Clear theText before wrapping
+    theText.setString("");
+
+    while (std::getline(iss, word, '\n')) {
+        // Process each line separately
+        if (!line.empty()) {
+            // Add the previous line to the wrapped text and start a new line
+            wrappedStr += line + '\n';
+            line.clear();
+        }
+        std::istringstream lineIss(word);
+        while (lineIss >> word) {
+            // Set theText with the current line + the next word
+            theText.setString(line + (line.empty() ? "" : " ") + word);
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+                // Add the current line to the wrapped text and start a new line
+                wrappedStr += line + '\n';
+                line = word;
+            } else {
+                // Continue adding words to the current line
+                line += (line.empty() ? "" : " ") + word;
+            }
+        }
+    }
+
+    // Add the last line to the wrapped text
+    wrappedStr += line;
+
+    // Set theText with the wrapped text
+    theText.setString(wrappedStr);
+}
+
+void WordDisplayBox::adjustTextPosition()
+{
+    sf::FloatRect wordBounds1 = word.getGlobalBounds();
+    wordType.setPosition(wordType.getPosition().x, wordBounds1.top + wordBounds1.height + 20.f);
+    sf::FloatRect wordTypeBounds1 = wordType.getGlobalBounds();
+    wordDef.setPosition(wordDef.getPosition().x, wordTypeBounds1.top + wordTypeBounds1.height + 20.f);
+
+    sf::FloatRect wordDefBounds1 = wordDef.getGlobalBounds();
+    word2.setPosition(word2.getPosition().x, wordDefBounds1.top + wordDefBounds1.height + 40.f);
+    sf::FloatRect wordBounds2 = word2.getGlobalBounds();
+    wordType2.setPosition(wordType2.getPosition().x, wordBounds2.top + wordBounds2.height + 20.f);
+    sf::FloatRect wordTypeBounds2 = wordType2.getGlobalBounds();
+    wordDef2.setPosition(wordDef2.getPosition().x, wordTypeBounds2.top + wordTypeBounds2.height + 20.f);
+}
+
+void WordDisplayBox::setUIText()
+{
+    // Word 1
+    if(!wordArr[firstWordID].first.empty())
+    {
+        word.setString(wordArr[firstWordID].first);
+        wrapText(word);
+    }
+    else
+        word.setString("");
+    // Word type 1
+    if(!wordArr[firstWordID].second.wordType.empty())
+    {
+        wordType.setString(wordArr[firstWordID].second.wordType);
+        wrapText(wordType);
+    }
+    else
+        wordType.setString("");
+    // Word definition 1
+    if(!wordArr[firstWordID].second.defAndExample.first.empty())
+    {
+        wordDef.setString(wordArr[firstWordID].second.defAndExample.first);
+        wrapText(wordDef);
+    }
+    else
+        wordDef.setString("");
+    
+    if(firstWordID < wordNum - 1)
+    {
+        // Word 2
+        if(!wordArr[firstWordID+1].first.empty())
+        {
+            word2.setString(wordArr[firstWordID+1].first);
+            wrapText(word2);
+        }
+        else
+            word2.setString("");
+        // Word type 2
+        if(!wordArr[firstWordID+1].second.wordType.empty())
+        {
+            wordType2.setString(wordArr[firstWordID+1].second.wordType);
+            wrapText(wordType2);
+        }
+        else
+            wordType2.setString("");
+        // Word definition 2
+        if(!wordArr[firstWordID+1].second.defAndExample.first.empty())
+        {
+            wordDef2.setString(wordArr[firstWordID+1].second.defAndExample.first);
+            wrapText(wordDef2);
+        }
+        else
+            wordDef2.setString("");
+    }
+    // There are odd number of words
+    else
+    {
+        word2.setString("");
+        wordType2.setString("");
+        wordDef2.setString("");
+    }
+
+    // Adjust text position
+    adjustTextPosition();
+}
+
+void WordDisplayBox::initFirstWord()
+{
+    wordNum = wordArr.size();
+    firstWordID = 0;
+    setUIText();
+    if(wordNum > 2)
+        showNextButton = true;
+
+}
+
+void WordDisplayBox::showNextWord()
+{
+    firstWordID += 2;
+    setUIText();
+    // Update buttons
+    if(firstWordID >= 2)
+        showPrevButton = true;
+    if(firstWordID == wordNum-2 || firstWordID == wordNum-1)
+        showNextButton = false;
+}
+
+void WordDisplayBox::showPrevWord()
+{
+    firstWordID -= 2;
+    setUIText();
+    // Update buttons
+    if(firstWordID < wordNum-2)
+        showNextButton = true;
+    if(firstWordID == 0)
+        showPrevButton = false;
+}
+
+void WordDisplayBox::showNoWord()
+{
+    clearData();
+    firstWordID = 0;
+    wordNum = 0;
+
+    if(currentDataSetID == 0 || currentDataSetID == 2)
+        word.setString("No words found!");
+    else if(currentDataSetID == 1)
+        word.setString("Khong tim thay tu phu hop!");
+    wordType.setString("");
+    wordDef.setString("");
+    word2.setString("");
+    wordType2.setString("");
+    wordDef2.setString("");
+}
+
+void WordDisplayBox::clearUIText()
+{
+    word.setString("");
+    wordType.setString("");
+    wordDef.setString("");
+
+    word2.setString("");
+    wordType2.setString("");
+    wordDef2.setString("");
+}
+
+bool WordDisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
+{
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    return nextButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
+}
+
+bool WordDisplayBox::isMouseOverPrevButton(sf::RenderWindow &window)
+{
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    return prevButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
+}
+
+bool WordDisplayBox::nextButtonDrawn()
+{
+    return showNextButton;
+}
+
+bool WordDisplayBox::prevButtonDrawn()
+{
+    return showPrevButton;
 }

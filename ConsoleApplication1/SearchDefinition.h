@@ -24,20 +24,35 @@ public:
     void clearData();
     bool isDataEmpty();
     void insertDataPair(std::pair<std::string, EngVieDef>& thePair);
-    void adjustButtonsPosition();
-    void setUI(sf::Font& font);
+
+    void wrapText(sf::Text& theText);
+    void adjustTextPosition();
+    void setUIText();
+    void initFirstWord();
+    void showNextWord();
+    void showPrevWord();
+    void showNoWord();
+    void clearUIText();
+
+    // For next and prev buttons
+    bool isMouseOverNextButton(sf::RenderWindow& window);
+    bool isMouseOverPrevButton(sf::RenderWindow& window);
+    bool nextButtonDrawn();
+    bool prevButtonDrawn();
 private:
     sf::RectangleShape theBox;
 
     sf::Text word;
     sf::Text wordType;
     sf::Text wordDef;
-    sf::Text wordExample;
 
-    std::vector<Button> wordButtons;
+    sf::Text word2;
+    sf::Text wordType2;
+    sf::Text wordDef2;
+
     std::vector<std::pair<std::string, EngVieDef>> wordArr;
-
-    int buttonMaxNum;
+    int firstWordID;
+    int wordNum;
 
     bool showNextButton;
     bool showPrevButton;
@@ -47,7 +62,6 @@ private:
     sf::Sprite prevButtonSprite;
 
     int currentDataSetID;
-    bool isButtonClicked;
 };
 
 class SearchDefinitionScreen
