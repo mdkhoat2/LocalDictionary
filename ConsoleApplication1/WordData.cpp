@@ -179,7 +179,6 @@ void extractEngEngData(WordDataEngVie &engEngData, std::string &word, std::strin
         }
         else
         {
-            std::cout << "What is this line?" << line << std::endl;
             continue;
         }
     }
@@ -399,7 +398,7 @@ void extractEditFile(WordDataEngVie &theData, int currentDataSetID)
         }
         else
         {
-            std::cout << "What is this line?" << line << std::endl;
+            continue;
         }
     }
     if(!theDef.empty())
@@ -505,7 +504,6 @@ void extractEngVieData(WordDataEngVie &engVieData, std::string &word, std::strin
         }
         else
         {
-            std::cout << "What is this line?" << line << std::endl;
             continue;
         }   
     }
@@ -581,7 +579,6 @@ void extractVieEngData(WordDataEngVie &vieEngData, std::string &word, std::strin
         }
         else
         {
-            std::cout << "What is this line?" << line << std::endl;
             continue;
         }   
     }

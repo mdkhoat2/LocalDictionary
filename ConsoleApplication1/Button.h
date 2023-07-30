@@ -36,7 +36,9 @@ public:
 
 	void setString(std::string text);
 
-	void setStyle(sf::Text::Style style);
+	void setStyle(sf::Uint32 style);
+
+	void adjustSizeToContainText();
 private:
 	sf::Text text;
 	sf::RectangleShape button;

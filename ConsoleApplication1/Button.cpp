@@ -101,7 +101,15 @@ void Button::setString(std::string text)
     this->text.setString(text);
 }
 
-void Button::setStyle(sf::Text::Style style)
+void Button::setStyle(sf::Uint32 style)
 {
     text.setStyle(style);
+}
+
+void Button::adjustSizeToContainText()
+{
+    button.setSize(sf::Vector2f(text.getGlobalBounds().width + 30, text.getGlobalBounds().height + 10));
+    btnWidth = button.getSize().x;
+    btnHeight = button.getSize().y;
+    
 }

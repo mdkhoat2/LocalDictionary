@@ -270,10 +270,7 @@ EditBox::EditBox(const sf::Vector2f& pos, const sf::Vector2f& size,
     wordExampleArea(25, sf::Color::Black, sf::Color::Transparent, false),
     wordTypePlaceholder(),
     wordDefPlaceholder(),
-    wordExamplePlaceholder(),
-    showTypePlaceholder(true),
-    showDefPlaceholder(true),
-    showExamplePlaceholder(true)
+    wordExamplePlaceholder()
 {
     theBox.setPosition(pos);
     float xText = pos.x + 30.f;

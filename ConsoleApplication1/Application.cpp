@@ -78,6 +78,9 @@ void Application::loadEngEngDict()
             {
                 // insert the previous word with its definition
                 trieInsert(engEngRoot, word, wordInfo, 0);
+				separateEngEngExample(wordInfo);
+				std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+				searchDefScreen->insertEngEngItem(word, newWordInfo);
 				if (count <= 11584)
 					count++;
 				else
@@ -176,7 +179,7 @@ void Application::loadEngVieDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 1);
-                    
+                searchDefScreen->insertEngVieItem(word, wordInfo);
                 word.clear();
                 wordInfo.clear();
             }
@@ -233,6 +236,7 @@ void Application::loadVieEngDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 2);
+				searchDefScreen->insertVieEngItem(word, wordInfo);
                 word.clear();
                 wordInfo.clear();
             }
@@ -551,6 +555,13 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					if(currentDataSetID == 0)
+						displayBox.clearEngEngData();
+					else if(currentDataSetID == 1)
+						displayBox.clearEngVieData();
+					else if(currentDataSetID == 2)
+						displayBox.clearVieEngData();
+					searchBar.clear();
 					favourite->setCurrentDataSet(currentDataSetID);
 					favourite->addtoFile();
 					favourite->loadWordsList();
@@ -558,6 +569,13 @@ void Application::handleEvent()
 				}
 				else if(searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					if(currentDataSetID == 0)
+						displayBox.clearEngEngData();
+					else if(currentDataSetID == 1)
+						displayBox.clearEngVieData();
+					else if(currentDataSetID == 2)
+						displayBox.clearVieEngData();
+					searchBar.clear();
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}
