@@ -75,14 +75,14 @@ void RemoveWord::loadRemovedEEWord(EngTrieNode*& root) {
 
 // UI
 
-RemoveWord::RemoveWord(sf::Font& font, sf::Font font2, sf::RenderWindow& window) :
+RemoveWord::RemoveWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     wordBar(20, sf::Color::Black, sf::Color::Transparent, true),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     cancelButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     removeButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     confirmButton("", { 40, 40 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
-    noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
+    noteBox({ 72, 240 }, { 100, 510 }, sf::Color::Transparent, sf::Color::Black),
     displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     isDeleting(false),
     isEndScreen(false),
@@ -95,8 +95,8 @@ RemoveWord::RemoveWord(sf::Font& font, sf::Font font2, sf::RenderWindow& window)
     initCancelButton(font);
     initDataSetButton(font);
     initWordBar(font);
-    initDisplayBox(font2);
     initNoteBox(font2);
+    initDisplayBox(font2);
     initDataSetText(font);
 }
 
@@ -256,7 +256,7 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
                 std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
                 if (!wordInfo.empty()) {
                     // Console
-                    std::cout << "The word has already existed" << "\n";
+                    std::cout << "The word  is found!" << "\n";
                     separateEngEngExample(wordInfo);
                     std::string newWordInfo = formatEngEngWordInfo(wordInfo);
                     std::cout << newWordInfo << std::endl;
@@ -297,10 +297,11 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
             else if (currentDataSetID == 2)
                 displayBox.showPrevVieEngDef();
         }
-        else if (!isDeleting && dataSetButton.isMouseOver(window))
-            changeDataSet();
         else if (isDeleting && cancelButton.isMouseOver(window)) {
             isDeleting = false;
+            noteBox.showCancelSuccessfully();
+            wordTmp.clear();
+            wordInfoTmp.clear();
         }
         else if (isDeleting && confirmButton.isMouseOver(window)) {
             isDeleting = false;
@@ -316,6 +317,8 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
             wordTmp.clear();
             wordInfoTmp.clear();
         }
+        else if (!isDeleting && dataSetButton.isMouseOver(window))
+            changeDataSet();
     }
 }
 
@@ -324,12 +327,12 @@ void RemoveWord::update(sf::RenderWindow& window) {
         backButton.update(window);
         removeButton.update(window);
         dataSetButton.update(window);
-        //noteBox.update(window);
-        //displayBox.update(window);
         if (isDeleting) {
             cancelButton.update(window);
             confirmButton.update(window);
         }
+        noteBox.update(window);
+        displayBox.update(window);
     }
 }
 
@@ -342,14 +345,14 @@ void RemoveWord::render(sf::RenderWindow& window) {
         backButton.drawTo(window);
         removeButton.drawTo(window);
         dataSetButton.drawTo(window);
-        //noteBox.drawTo(window);
-        //displayBox.drawTo(window);
         if (isDeleting) {
             window.draw(cancel);
             window.draw(confirm);
             cancelButton.drawTo(window);
             confirmButton.drawTo(window);
         }
+        noteBox.drawTo(window);
+        displayBox.drawTo(window);
     }
 }
 
