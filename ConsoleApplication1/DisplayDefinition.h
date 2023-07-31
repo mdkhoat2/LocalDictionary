@@ -36,6 +36,7 @@ public:
     // For Remove words
     void showDeletionReConfirmation();
     void showDeleteSuccessfully();
+    void showCancelSuccessfully();
     
     // For Eng-Eng (updated)
     void initEngEngFirstDef();
