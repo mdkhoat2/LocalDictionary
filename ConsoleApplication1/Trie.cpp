@@ -1,7 +1,7 @@
 #include <sstream>
 #include "Trie.h"
 
-EngTrieNode::EngTrieNode() : flag(false) 
+EngTrieNode::EngTrieNode() : flag(false), isDeleted(false)
 {
     for(int i = 0; i < 72; ++i) 
       links[i] = nullptr;
@@ -191,7 +191,7 @@ std::string trieSearch(EngTrieNode* root, std::string word, int curDataSetID)
     }
     if(curDataSetID == 0)
     {
-        if(node->flag && !node->engEngWordInfo.empty())
+        if(node->flag && !node->engEngWordInfo.empty() && !node->isDeleted)
             return node->engEngWordInfo;
     }
     else if(curDataSetID == 1)
@@ -225,6 +225,39 @@ std::string trieSearch(VieTrieNode *root, std::wstring word)
         return node->wordInfo;
     else
         return std::string();
+}
+
+void trieHide(EngTrieNode* root, std::string word, int curDataSetID)
+{
+    if (word.empty())
+        return;
+    EngTrieNode* node = root;
+    for (int i = 0; i < word.length(); ++i)
+    {
+        if (!node->containsKey(word[i]))
+            return;
+        node = node->get(word[i]);
+    }
+    if (curDataSetID == 0)
+    {
+        if (node->flag && !node->engEngWordInfo.empty() && !node->isDeleted)
+            node->isDeleted = true;
+    }
+    else if (curDataSetID == 1)
+    {
+        if (node->flag && !node->engVieWordInfo.empty())
+            node->isDeleted = true;
+    }
+    else if (curDataSetID == 2)
+    {
+        if (node->flag && !node->vieEngWordInfo.empty())
+            node->isDeleted = true;
+    }
+    else
+    {
+        if (node->flag && !node->emojiInfo.empty())
+            node->isDeleted = true;
+    }
 }
 
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
