@@ -14,6 +14,7 @@
     <ClCompile Include="WordData.cpp" />
     <ClCompile Include="SwitchDataSet.cpp" />
     <ClCompile Include="RemoveWord.cpp" />
+    <ClCompile Include="SearchDefinition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="WordData.h" />
     <ClInclude Include="SwitchDataSet.h" />
     <ClInclude Include="RemoveWord.h" />
+    <ClInclude Include="SearchDefinition.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="favorite_words0.txt" />

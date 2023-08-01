@@ -628,6 +628,20 @@ void DisplayBox::showDeleteSuccessfully() {
     wordDef.setString("");
 }
 
+void DisplayBox::showCancelSuccessfully() {
+    if (EEData)
+    {
+        delete EEData;
+        EEData = nullptr;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Action Cancelled");
+    wordType.setString("");
+    wordDef.setString("");
+}
+
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);

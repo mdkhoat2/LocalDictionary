@@ -16,7 +16,7 @@ public:
 	void saveRemovedEEWord();
 	void loadRemovedEEWord(EngTrieNode*& root);
 public:
-	RemoveWord(sf::Font& font1, sf::Font font2, sf::RenderWindow& window);
+	RemoveWord(sf::Font& font1, sf::Font& font2, sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
