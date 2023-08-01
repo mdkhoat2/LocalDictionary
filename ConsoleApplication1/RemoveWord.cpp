@@ -1,9 +1,10 @@
 #include "RemoveWord.h"
 
-void RemoveWord::removeEEWord(EngTrieNode*& root, std::string word, std::string& wordInfo) {
-    trieRemove(root, word, 0);
-    std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-    removedEEWord.push({ word, newWordInfo });
+void RemoveWord::removeEEWord(EngTrieNode*& root, std::string word/*, std::string& wordInfo*/) {
+    trieHide(root, word, 0);
+    //std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+    //removedEEWord.push({ word, newWordInfo });
+    removedEEWord.push(word);
 }
 
 void RemoveWord::saveRemovedEEWord() {
@@ -17,11 +18,12 @@ void RemoveWord::saveRemovedEEWord() {
     }
 
     while (!removedEEWord.empty()) {
-        std::string tmp = removedEEWord.front().first;
+        //std::string tmp = removedEEWord.front().first;
+        std::string tmp = removedEEWord.front();
         if (tmp != "") {
             fout << tmp << std::endl;
-            std::string newWordInfo = removedEEWord.front().second;
-            fout << newWordInfo << std::endl;
+            //std::string newWordInfo = removedEEWord.front().second;
+            //fout << newWordInfo << std::endl;
         }
         removedEEWord.pop();
     }
@@ -35,41 +37,51 @@ void RemoveWord::loadRemovedEEWord(EngTrieNode*& root) {
         fin.close();
         return;
     }
-    std::string line, word, wordInfo;
-    int count = 0;
-    while (std::getline(fin, line))
-    {
-        if (line[0] == '*') { // this is a word type
-            if (!wordInfo.empty()) wordInfo += '\n';
-            wordInfo += line.substr(1);
-        }
-        else if (line[0] == '-') { // this is a word definition
-            wordInfo += '\n' + line.substr(1);
-        }
-        else if (line[0] == '=') { // this is a word example
-            if (line[1] == ' ') wordInfo += ';' + line.substr(1);
-            else wordInfo += line.substr(1);
-        }
-        else { // this is a word 
-            if (count == 0) // Read first word
-            {
-                ++count;
-                word = line;
-            }
-            else
-            {
-                // remove the previous word with its definition
-                removeEEWord(root, word, wordInfo);
-                word = line;
-                wordInfo.clear();
-            }
+    std::string line, word;
+    while (std::getline(fin, line)) {
+        if (line[0] == ' ') // this is an empty space
+            continue;
+        else {
+            word = line;
+            removeEEWord(root, word);
         }
     }
-    if (word.empty()) {
-        fin.close();
-        return;
-    }
-    removeEEWord(root, word, wordInfo); // remove last word
+
+    //std::string line, word, wordInfo;
+    //int count = 0;
+    //while (std::getline(fin, line))
+    //{
+    //    if (line[0] == '*') { // this is a word type
+    //        if (!wordInfo.empty()) wordInfo += '\n';
+    //        wordInfo += line.substr(1);
+    //    }
+    //    else if (line[0] == '-') { // this is a word definition
+    //        wordInfo += '\n' + line.substr(1);
+    //    }
+    //    else if (line[0] == '=') { // this is a word example
+    //        if (line[1] == ' ') wordInfo += ';' + line.substr(1);
+    //        else wordInfo += line.substr(1);
+    //    }
+    //    else { // this is a word 
+    //        if (count == 0) // Read first word
+    //        {
+    //            ++count;
+    //            word = line;
+    //        }
+    //        else
+    //        {
+    //            // remove the previous word with its definition
+    //            removeEEWord(root, word, wordInfo);
+    //            word = line;
+    //            wordInfo.clear();
+    //        }
+    //    }
+    //}
+    //if (word.empty()) {
+    //    fin.close();
+    //    return;
+    //}
+    //removeEEWord(root, word, wordInfo); // remove last word
     fin.close();
 }
 
@@ -307,7 +319,7 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
             isDeleting = false;
             if (currentDataSetID == 0) {
                 displayBox.clearEngEngData();
-                removeEEWord(engEngRoot, wordTmp, wordInfoTmp);
+                removeEEWord(engEngRoot, wordTmp/*, wordInfoTmp*/);
             }
             /*else if (currentDataSetID == 1)
                 removeInEngVieDict(inputWord, engEngRoot);

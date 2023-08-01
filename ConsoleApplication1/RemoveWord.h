@@ -12,7 +12,7 @@
 
 class RemoveWord {
 public:
-	void removeEEWord(EngTrieNode*& root, std::string word, std::string& wordInfo);
+	void removeEEWord(EngTrieNode*& root, std::string word/*, std::string& wordInfo*/);
 	void saveRemovedEEWord();
 	void loadRemovedEEWord(EngTrieNode*& root);
 public:
@@ -28,7 +28,8 @@ public:
 private:
 	std::string wordTmp, wordInfoTmp;
 	
-	std::queue<std::pair<std::string, std::string>> removedEEWord;
+	//std::queue<std::pair<std::string, std::string>> removedEEWord;
+	std::queue<std::string> removedEEWord;
 
 	sf::Texture removeScreenTex, dataSetTex, cancelTex, confirmTex;
 	sf::Sprite removeScreen, dataSet, cancel, confirm;

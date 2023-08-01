@@ -154,6 +154,7 @@ void Application::loadEngEngDict()
 	engEngVector.push_back(word);
     fin.close();
     newWord->loadAddedEEWord(engEngRoot);
+	removeWord->loadRemovedEEWord(engEngRoot);
 }
 
 void Application::loadEngVieDict()
@@ -504,6 +505,7 @@ void Application::handleEvent()
 		if (event.type == sf::Event::Closed)
 		{
 			newWord->saveAddedEEWord();
+			removeWord->saveRemovedEEWord();
 			window.close();
 		}	
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)

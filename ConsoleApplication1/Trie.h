@@ -27,6 +27,10 @@ struct EngTrieNode
     std::string engVieWordInfo; 
     std::string vieEngWordInfo;
     std::string emojiInfo;
+
+    // Member variable for remove function
+    bool isDeleted;
+
     // Constructor
     EngTrieNode();
 
@@ -63,6 +67,9 @@ std::string trieSearch(VieTrieNode* root, std::wstring word);
 // Don't use this function remove because it can contain bug!
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth = 0);
 VieTrieNode* trieRemove(VieTrieNode*& root, std::wstring word, int depth = 0);
+
+// This function is use for removing words by flagging them with isDelete variable
+void trieHide(EngTrieNode* root, std::string word, int curDataSetID);
 
 void trieDeleteAll(EngTrieNode* &root);
 void trieDeleteAll(VieTrieNode* &root);
