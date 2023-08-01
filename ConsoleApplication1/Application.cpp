@@ -80,11 +80,9 @@ void Application::loadEngEngDict()
                 trieInsert(engEngRoot, word, wordInfo, 0);
 				separateEngEngExample(wordInfo);
 				std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-				searchDefScreen->insertEngEngItem(word, newWordInfo);
-				if (count <= 11584)
-					count++;
-				else
-					engEngVector.push_back(word);
+				WordDataEngVie theItem;
+				extractEngEngData(theItem, word, newWordInfo);
+				engEngVector.push_back(theItem);
                 word = line;
                 wordInfo.clear();
             }
@@ -151,7 +149,6 @@ void Application::loadEngEngDict()
         }
     }
     trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
-	engEngVector.push_back(word);
     fin.close();
     newWord->loadAddedEEWord(engEngRoot);
 }
@@ -179,7 +176,9 @@ void Application::loadEngVieDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 1);
-                searchDefScreen->insertEngVieItem(word, wordInfo);
+                WordDataEngVie theItem;
+				extractEngVieData(theItem, word, wordInfo);
+				engVieVector.push_back(theItem);
                 word.clear();
                 wordInfo.clear();
             }
@@ -236,7 +235,9 @@ void Application::loadVieEngDict()
             {   
                 // insert previous word and its information
                 trieInsert(engEngRoot, word, wordInfo, 2);
-				searchDefScreen->insertVieEngItem(word, wordInfo);
+				WordDataEngVie theItem;
+				extractVieEngData(theItem, word, wordInfo);
+				vieEngVector.push_back(theItem);
                 word.clear();
                 wordInfo.clear();
             }
@@ -661,7 +662,7 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			searchDefScreen->setEndScreen(endScreen);
-			searchDefScreen->handleEvent(event, window, endScreen);
+			searchDefScreen->handleEvent(event, window, endScreen, engEngVector, engVieVector, vieEngVector);
 			if(endScreen)
 			{
 				searchDefScreen->setEndScreen(endScreen);
