@@ -22,7 +22,9 @@ SearchDefinitionScreen::SearchDefinitionScreen(sf::Font &font1, sf::Font &font2,
     initDisplayBox(font2);
 }
 
-void SearchDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool &endScreen)
+void SearchDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool &endScreen,
+std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+std::vector<WordDataEngVie>& vieEngVector)
 {
     if(event.type == sf::Event::TextEntered) {
         searchBar.typedOn(event);
@@ -37,11 +39,11 @@ void SearchDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &wind
         {
             std::string inputDef = searchBar.getText();
             if (currentDataSetID == 0)
-                searchInEngEngItems(inputDef);
+                searchInEngEngItems(inputDef, engEngVector);
             else if (currentDataSetID == 1)
-                searchInEngVieItems(inputDef);
+                searchInEngVieItems(inputDef, engVieVector);
             else if (currentDataSetID == 2)
-                searchInVieEngItems(inputDef);
+                searchInVieEngItems(inputDef, vieEngVector);
         }
 
         else if(backButton.isMouseOver(window)) {
@@ -106,31 +108,7 @@ void SearchDefinitionScreen::setEndScreen(bool val)
     isEndScreen = val;
 }
 
-void SearchDefinitionScreen::insertEngEngItem(std::string &word, std::string &wordInfo)
-{
-    WordDataEngVie theItem;
-    extractEngEngData(theItem, word, wordInfo);
-    loadEditFromFile(theItem, 0);
-    EEItems.push_back(theItem);
-}
-
-void SearchDefinitionScreen::insertEngVieItem(std::string &word, std::string &wordInfo)
-{
-    WordDataEngVie theItem;
-    extractEngVieData(theItem, word, wordInfo);
-    loadEditFromFile(theItem, 1);
-    EVItems.push_back(theItem);
-}
-
-void SearchDefinitionScreen::insertVieEngItem(std::string &word, std::string &wordInfo)
-{
-    WordDataEngVie theItem;
-    extractVieEngData(theItem, word, wordInfo);
-    loadEditFromFile(theItem, 2);
-    VEItems.push_back(theItem);
-}
-
-void SearchDefinitionScreen::searchInEngEngItems(std::string &inputDef)
+void SearchDefinitionScreen::searchInEngEngItems(std::string& inputDef, std::vector<WordDataEngVie>& EEItems)
 {
     if(!displayBox.isDataEmpty())
         displayBox.clearData();
@@ -160,11 +138,12 @@ void SearchDefinitionScreen::searchInEngEngItems(std::string &inputDef)
         displayBox.initFirstWord();
 }
 
-void SearchDefinitionScreen::searchInEngVieItems(std::string &inputDef)
+void SearchDefinitionScreen::searchInEngVieItems(std::string& inputDef, std::vector<WordDataEngVie>& EVItems)
 {
     if(!displayBox.isDataEmpty())
         displayBox.clearData();
     std::pair<std::string, EngVieDef> thePair;
+    int count = 0;
     for(int i = 0; i < EVItems.size(); ++i)
     {
         for(int j = 0; j < EVItems[i].defList.size(); ++j)
@@ -178,18 +157,23 @@ void SearchDefinitionScreen::searchInEngVieItems(std::string &inputDef)
                 thePair.second.defAndExample.first = EVItems[i].defList[j].defAndExample.first;
                 thePair.second.defAndExample.second = EVItems[i].defList[j].defAndExample.second;
                 displayBox.insertDataPair(thePair);
+                ++count;
                 break;
             }
         }
     }
-    displayBox.initFirstWord();
+    if(count == 0)
+        displayBox.showNoWord();
+    else
+        displayBox.initFirstWord();
 }
 
-void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef)
+void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef, std::vector<WordDataEngVie>& VEItems)
 {
     if(!displayBox.isDataEmpty())
         displayBox.clearData();
     std::pair<std::string, EngVieDef> thePair;
+    int count = 0;
     for(int i = 0; i < VEItems.size(); ++i)
     {
         for(int j = 0; j < VEItems[i].defList.size(); ++j)
@@ -203,11 +187,15 @@ void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef)
                 thePair.second.defAndExample.first = VEItems[i].defList[j].defAndExample.first;
                 thePair.second.defAndExample.second = VEItems[i].defList[j].defAndExample.second;
                 displayBox.insertDataPair(thePair);
+                ++count;
                 break;
             }
         }
     }
-    displayBox.initFirstWord();
+    if(count == 0)
+        displayBox.showNoWord();
+    else
+        displayBox.initFirstWord();
 }
 
 void SearchDefinitionScreen::initBackground(sf::RenderWindow &window)

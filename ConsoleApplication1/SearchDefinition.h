@@ -7,25 +7,19 @@ class SearchDefinitionScreen
 {
 public:
     SearchDefinitionScreen(sf::Font& font1, sf::Font& font2, sf::RenderWindow& window);
-    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen);
+    void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, 
+    std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+    std::vector<WordDataEngVie>& vieEngVector);
     void update(sf::RenderWindow& window);
     void render(sf::RenderWindow& window);
 
     void setCurrentDataSetID(int theID);
     void setEndScreen(bool val);
 
-    void insertEngEngItem(std::string& word, std::string& wordInfo);
-    void insertEngVieItem(std::string& word, std::string& wordInfo);
-    void insertVieEngItem(std::string& word, std::string& wordInfo);
-
-    void searchInEngEngItems(std::string& inputDef);
-    void searchInEngVieItems(std::string& inputDef);
-    void searchInVieEngItems(std::string& inputDef);
+    void searchInEngEngItems(std::string& inputDef, std::vector<WordDataEngVie>& EEItems);
+    void searchInEngVieItems(std::string& inputDef, std::vector<WordDataEngVie>& EVItems);
+    void searchInVieEngItems(std::string& inputDef, std::vector<WordDataEngVie>& VEItems);
 private:
-    std::vector<WordDataEngVie> EEItems;
-    std::vector<WordDataEngVie> EVItems;
-    std::vector<WordDataEngVie> VEItems;
-
     sf::Texture searchScreenTex;
     sf::Sprite searchScreen;
     sf::Texture dataSetTex;
