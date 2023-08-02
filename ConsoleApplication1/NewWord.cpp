@@ -1,13 +1,18 @@
 #include "NewWord.h"
 
-void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
-	trieInsert(root, word, wordInfo, 0);
+void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
+    std::vector<WordDataEngVie>& engEngVector) {
     separateEngEngExample(wordInfo);
     std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+    WordDataEngVie theItem;
+    extractEngEngData(theItem, word, wordInfo);
+    engEngVector.push_back(theItem);
+	trieInsert(root, word, engEngVector.size()-1, 0);
     addedWord.push({word, newWordInfo});
 }
 
-bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
+bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
+    std::vector<WordDataEngVie>& engEngVector) {
     std::ifstream fin("data/add_remove/tests/" + inputWord + ".txt");
     if (!fin.is_open()) {
         std::cout << "Could not open " + inputWord + ".txt file!";
@@ -89,7 +94,7 @@ bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std:
         fin.close();
         return false;
     }
-    addNewEEWord(root, word, wordInfo);
+    addNewEEWord(root, word, wordInfo, engEngVector);
     fin.close();
     return true;
 }
@@ -115,7 +120,7 @@ void NewWord::saveAddedEEWord() {
 	fout.close();
 }
 
-void NewWord::loadAddedEEWord(EngTrieNode*& root) {
+void NewWord::loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engEngVector) {
     std::ifstream fin("data/add_remove/Added Words.txt");
     if (!fin.is_open()) {
         std::cout << "Could not open Added Words.txt file!";
@@ -146,7 +151,7 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root) {
             else
             {
                 // insert the previous word with its definition
-                addNewEEWord(root, word, wordInfo);
+                addNewEEWord(root, word, wordInfo, engEngVector);
                 word = line;
                 wordInfo.clear();
             }
@@ -156,7 +161,7 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root) {
         fin.close();
         return;
     }
-    addNewEEWord(root, word, wordInfo); // insert last word
+    addNewEEWord(root, word, wordInfo, engEngVector); // insert last word
     fin.close();
 }
 
@@ -281,7 +286,9 @@ void NewWord::changeDataSet()
         dataSetButton.setString("      Emoji");
 }
 
-void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot) {
+void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
+std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
         //defBar.typedOn(event);
@@ -298,11 +305,11 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         else if (addButton.isMouseOver(window)) {
             std::string inputWord = wordBar.getText();
             if (currentDataSetID == 0)
-                addInEngEngDict(inputWord, engEngRoot);
+                addInEngEngDict(inputWord, engEngRoot, engEngVector);
             else if (currentDataSetID == 1)
-                addInEngVieDict(inputWord, engEngRoot);
+                addInEngVieDict(inputWord, engEngRoot, engVieVector);
             else if (currentDataSetID == 2)
-                addInVieEngDict(inputWord, engEngRoot);
+                addInVieEngDict(inputWord, engEngRoot, vieEngVector);
         }
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
         {
@@ -355,28 +362,25 @@ void NewWord::setEndScreen(bool value) {
     isEndScreen = value;
 }
 
-void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
-    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-    if (!wordInfo.empty()) {
+void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
+std::vector<WordDataEngVie>& engEngVector) {
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
+    if (wordIndex != -1) {
         // Console
         std::cout << "The word has already existed" << "\n";
-        separateEngEngExample(wordInfo);
-        std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-        std::cout << newWordInfo << std::endl;
+        std::cout << wordIndex << std::endl;
         // UI
         noteBox.showExistedDefinitions();
-        displayBox.getWordDataEngEng(inputWord, newWordInfo);
+        displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
     }
     else {
-        if (addEEFromTextFile(engEngRoot, inputWord, wordInfo)) {
+        std::string wordInfo;
+        if (addEEFromTextFile(engEngRoot, inputWord, wordInfo, engEngVector)) {
             // Console
             std::cout << "The word has been imported" << "\n";
-            //separateEngEngExample(wordInfo);
-            std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-            std::cout << newWordInfo << std::endl;
             // UI
             noteBox.showNewDefinitions();
-            displayBox.getWordDataEngEng(inputWord, newWordInfo);
+            displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
         }
         else {
             std::cout << "Cannot find the word" << "\n";
@@ -386,7 +390,8 @@ void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) 
     }
 }
 
-void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
+void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
+std::vector<WordDataEngVie>& engVieVector) {
 //    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
 //    if (!wordInfo.empty()) {
 //        // Console
@@ -411,7 +416,8 @@ void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) 
 //    }
 }
 
-void NewWord::addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
+void NewWord::addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
+std::vector<WordDataEngVie>& vieEngVector) {
 //    std::string wordInfo;
 //    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
 //    if (!wordInfo.empty()) {

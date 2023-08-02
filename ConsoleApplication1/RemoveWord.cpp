@@ -249,7 +249,9 @@ void RemoveWord::changeDataSet()
         dataSetButton.setString("      Emoji");
 }
 
-void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot) {
+void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
+std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
     }
@@ -265,20 +267,18 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
         else if (removeButton.isMouseOver(window)) {
             std::string inputWord = wordBar.getText();
             if (currentDataSetID == 0) {
-                std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-                if (!wordInfo.empty()) {
+                int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
+                if (wordIndex != -1) {
                     // Console
                     std::cout << "The word  is found!" << "\n";
-                    separateEngEngExample(wordInfo);
-                    std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-                    std::cout << newWordInfo << std::endl;
+                    std::cout << wordIndex << std::endl;
 
                     wordTmp = inputWord;
                     isDeleting = true;
-                    wordInfoTmp = wordInfo;
+
                     //UI
                     noteBox.showDeletionReConfirmation();
-                    displayBox.getWordDataEngEng(inputWord, newWordInfo);
+                    displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
                 }
                 else {
                     std::cout << "Cannot find the word" << "\n";
@@ -319,7 +319,7 @@ void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& en
             isDeleting = false;
             if (currentDataSetID == 0) {
                 displayBox.clearEngEngData();
-                removeEEWord(engEngRoot, wordTmp/*, wordInfoTmp*/);
+                removeEEWord(engEngRoot, wordTmp);
             }
             /*else if (currentDataSetID == 1)
                 removeInEngVieDict(inputWord, engEngRoot);

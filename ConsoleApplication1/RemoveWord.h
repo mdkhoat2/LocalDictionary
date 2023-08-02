@@ -17,7 +17,9 @@ public:
 	void loadRemovedEEWord(EngTrieNode*& root);
 public:
 	RemoveWord(sf::Font& font1, sf::Font& font2, sf::RenderWindow& window);
-	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
+	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
+	std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+	std::vector<WordDataEngVie>& vieEngVector);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
