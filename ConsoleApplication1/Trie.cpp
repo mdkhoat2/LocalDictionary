@@ -182,6 +182,21 @@ int trieSearch(EngTrieNode *root, std::string word, int curDataSetID)
         if(node->flag && !node->isDeleted)
             return node->engEngIndex;
     }
+    else if(curDataSetID == 1)
+    {
+        if(node->flag && !node->isDeleted)
+            return node->engVieIndex;
+    }
+    else if(curDataSetID == 2)
+    {
+        if(node->flag && !node->isDeleted)
+            return node->vieEngIndex;
+    }
+    else
+    {
+        if(node->flag && !node->isDeleted)
+            return node->emojiIndex;
+    }
     return -1;
 }
 
