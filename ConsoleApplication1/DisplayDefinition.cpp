@@ -720,9 +720,8 @@ const sf::Vector2f &DisplayBox::getPrevButtonScale() const
 
 void DisplayBox::showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector)
 {
-    std::string wordInfor = emojiVector[emojiIndex];
-    std::string emoji = "0x"+ wordInfor;
-    std::string imagePath = wordInfor;
+    std::string emoji = "0x"+ emojiVector[emojiIndex];
+    std::string imagePath = emojiVector[emojiIndex];
     for (int i = 0; i < imagePath.length(); i++)
     {
         if (imagePath[i] == ' ')imagePath[i] = '-';

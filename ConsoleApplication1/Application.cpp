@@ -894,7 +894,7 @@ void Application::searchInEmojiDict(std::string& inputWord)
 	if (emojiIndex != -1)
 	{
 		// Console
-		std::cout << emojiIndex << std::endl;
+		std::cout << emojiVector[emojiIndex] << std::endl;
 		// UI
 		displayBox.setEmojiMode(true);
 		displayBox.showEmojiDefinition(inputWord, emojiIndex, emojiVector);

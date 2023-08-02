@@ -145,7 +145,8 @@ void trieInsert(EngTrieNode *&root, std::string &word, int wordIndex, int curDat
     }
     else
     {
-        node->emojiIndex = wordIndex;
+        if(node->emojiIndex == -1)
+            node->emojiIndex = wordIndex;
     }
 }
 
