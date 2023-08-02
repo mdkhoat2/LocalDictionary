@@ -160,7 +160,7 @@ void DisplayBox::drawTo(sf::RenderWindow &window)
         
 }
 
-void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo)
+void DisplayBox::getWordDataEngEng(std::string &inputWord, int& wordIndex, std::vector<WordDataEngVie>& engEngVector)
 {
     // delete old data of other data sets
     if(engVieData)
@@ -176,7 +176,11 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
     if(EEData == nullptr)
     {
         EEData = new WordDataEngVie;
-        extractEngEngData(*EEData, inputWord, wordInfo);
+        EEData->word = engEngVector[wordIndex].word;
+        for(int i = 0; i < engEngVector[wordIndex].defList.size(); ++i)
+        {
+            EEData->defList.push_back(engEngVector[wordIndex].defList[i]);
+        }
     }
     else
     {
@@ -184,7 +188,11 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
         showNextButton = false;
         showPrevButton = false;
         EEData = new WordDataEngVie;
-        extractEngEngData(*EEData, inputWord, wordInfo);
+        EEData->word = engEngVector[wordIndex].word;
+        for(int i = 0; i < engEngVector[wordIndex].defList.size(); ++i)
+        {
+            EEData->defList.push_back(engEngVector[wordIndex].defList[i]);
+        }
     }
     // Check if the word has any edited definition(s)
     loadEditFromFile(*EEData, 0);
@@ -192,7 +200,7 @@ void DisplayBox::getWordDataEngEng(std::string &inputWord, std::string &wordInfo
     initEngEngFirstDef();
 }
 
-void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo)
+void DisplayBox::getWordDataEngVie(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& engVieVector)
 {
     // delete old data of other data sets
     if(EEData)
@@ -208,7 +216,11 @@ void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo
     if(engVieData == nullptr)
     {
         engVieData = new WordDataEngVie;
-        extractEngVieData(*engVieData, inputWord, wordInfo);
+        engVieData->word = engVieVector[wordIndex].word;
+        for(int i = 0; i < engVieVector[wordIndex].defList.size(); ++i)
+        {
+            engVieData->defList.push_back(engVieVector[wordIndex].defList[i]);
+        }
     }
     else // delete old word data
     {
@@ -216,14 +228,18 @@ void DisplayBox::getWordDataEngVie(std::string &inputWord, std::string &wordInfo
         showNextButton = false;
         showPrevButton = false;
         engVieData = new WordDataEngVie;
-        extractEngVieData(*engVieData, inputWord, wordInfo);
+        engVieData->word = engVieVector[wordIndex].word;
+        for(int i = 0; i < engVieVector[wordIndex].defList.size(); ++i)
+        {
+            engVieData->defList.push_back(engVieVector[wordIndex].defList[i]);
+        }
     }
     loadEditFromFile(*engVieData, 1);
     engVieDefNum = engVieData->defList.size();
     initEngVieFirstDef();
 }
 
-void DisplayBox::getWordDataVieEng(std::string &inputWord, std::string &wordInfo)
+void DisplayBox::getWordDataVieEng(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& vieEngVector)
 {
     // delete old data of other data sets
     if(EEData)
@@ -239,7 +255,11 @@ void DisplayBox::getWordDataVieEng(std::string &inputWord, std::string &wordInfo
     if(vieEngData == nullptr)
     {
         vieEngData = new WordDataEngVie;
-        extractVieEngData(*vieEngData, inputWord, wordInfo);
+        vieEngData->word = vieEngVector[wordIndex].word;
+        for(int i = 0; i < vieEngVector[wordIndex].defList.size(); ++i)
+        {
+            vieEngData->defList.push_back(vieEngVector[wordIndex].defList[i]);
+        }
     }
     else // delete old word data
     {
@@ -247,7 +267,11 @@ void DisplayBox::getWordDataVieEng(std::string &inputWord, std::string &wordInfo
         showNextButton = false;
         showPrevButton = false;
         vieEngData = new WordDataEngVie;
-        extractVieEngData(*vieEngData, inputWord, wordInfo);
+        vieEngData->word = vieEngVector[wordIndex].word;
+        for(int i = 0; i < vieEngVector[wordIndex].defList.size(); ++i)
+        {
+            vieEngData->defList.push_back(vieEngVector[wordIndex].defList[i]);
+        }
     }
     loadEditFromFile(*vieEngData, 2);
     vieEngDefNum = vieEngData->defList.size();
@@ -694,9 +718,9 @@ const sf::Vector2f &DisplayBox::getPrevButtonScale() const
     return prevButtonSprite.getScale();
 }
 
-void DisplayBox::showEmojiDefinition(std::string& inputWord, std::string& wordInfor)
+void DisplayBox::showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector)
 {
-  
+    std::string wordInfor = emojiVector[emojiIndex];
     std::string emoji = "0x"+ wordInfor;
     std::string imagePath = wordInfor;
     for (int i = 0; i < imagePath.length(); i++)

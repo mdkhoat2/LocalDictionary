@@ -12,21 +12,25 @@
 
 class NewWord {
 public:
-	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
-	void addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
+	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
+	std::vector<WordDataEngVie>& engEngVector);
+	void addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
+    std::vector<WordDataEngVie>& engEngVector);
 	void saveAddedEEWord();
-	void loadAddedEEWord(EngTrieNode*& root);
+	void loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engEngVector);
 
 public:
 	NewWord(sf::Font& font,sf::Font& font2 , sf::RenderWindow& window);
-	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
+	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
+	std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+	std::vector<WordDataEngVie>& vieEngVector);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
 public:
-	void addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
+	void addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engEngVector);
+	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector);
+	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector);
 private:
 	//std::queue<WordDataEngVie*> addedWord;
 	std::queue<std::pair<std::string, std::string>> addedWord;
