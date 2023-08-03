@@ -139,6 +139,11 @@ void Textbox::setText(const sf::String& theText)
     text << textStream;
 }
 
+const sf::Vector2f &Textbox::getBoxPosition() const
+{
+    return theBox.getPosition();
+}
+
 const sf::Vector2f &Textbox::getTextPosition() const
 {
     return textbox.getPosition();
