@@ -256,7 +256,7 @@ void Application::loadVieEngDict()
 				WordDataEngVie theItem;
 				extractVieEngData(theItem, word, wordInfo);
 				vieEngVector.push_back(theItem);
-
+				
 				trieInsert(engEngRoot, word, wordIndex, 2);
 				++wordIndex;
 

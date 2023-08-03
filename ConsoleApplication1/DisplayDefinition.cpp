@@ -260,6 +260,7 @@ void DisplayBox::getWordDataVieEng(std::string& inputWord, int& wordIndex, std::
         {
             vieEngData->defList.push_back(vieEngVector[wordIndex].defList[i]);
         }
+        addMoreVieEngDefs(vieEngVector, wordIndex);
     }
     else // delete old word data
     {
@@ -272,10 +273,32 @@ void DisplayBox::getWordDataVieEng(std::string& inputWord, int& wordIndex, std::
         {
             vieEngData->defList.push_back(vieEngVector[wordIndex].defList[i]);
         }
+        addMoreVieEngDefs(vieEngVector, wordIndex);
     }
     loadEditFromFile(*vieEngData, 2);
     vieEngDefNum = vieEngData->defList.size();
     initVieEngFirstDef();
+}
+
+void DisplayBox::addMoreVieEngDefs(std::vector<WordDataEngVie> &vieEngVector, int &wordIndex)
+{
+    // Assume that vieEngData is non-empty
+    int i = wordIndex + 1;
+    std::string curWord = vieEngVector[wordIndex].word;
+    char curWordFirst = tolower(curWord[0]);
+    while(i < vieEngVector.size())
+    {
+        char wordFirst = tolower(vieEngVector[i].word[0]);
+        // stop if the first character is not the same anymore
+        if(curWordFirst != wordFirst) 
+            break;
+        if(curWord == vieEngVector[i].word)
+        {
+            for(int j = 0; j < vieEngVector[i].defList.size(); ++j)
+                vieEngData->defList.push_back(vieEngVector[i].defList[j]);
+        }
+        ++i;
+    }
 }
 
 void DisplayBox::wrapText(sf::Text& theText)

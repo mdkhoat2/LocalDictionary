@@ -834,6 +834,20 @@ void removeEndLineInString(std::string &str)
     str = ans;
 }
 
+bool isPrefix(std::string &prefix, std::string &word)
+{
+    int n = prefix.size();
+    int m = word.size();
+    if(n > m)
+        return false;
+    for(int i = 0; i < n; ++i)
+    {
+        if(prefix[i] != word[i])
+            return false;
+    }
+    return true;
+}
+
 WordDataEngVie::WordDataEngVie() : word(), defList()
 {
 }
