@@ -24,6 +24,7 @@ public:
     void getWordDataEngEng(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& engEngVector);
     void getWordDataEngVie(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& engVieVector);
     void getWordDataVieEng(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& vieEngVector);
+    void addMoreVieEngDefs(std::vector<WordDataEngVie>& vieEngVector, int& wordIndex);
 
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
