@@ -10,22 +10,22 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
     {
         if (dataSetID == 0)
         {
-            if (!prefixRoot->engEngWordInfo.empty())
+            if (prefixRoot->engEngIndex!=-1)
                 proposeWordList.push_back(prefix);
         }
         else if (dataSetID == 1)
         {
-            if (!prefixRoot->engVieWordInfo.empty())
+            if (prefixRoot->engVieIndex != -1)
                 proposeWordList.push_back(prefix);
         }
         else if (dataSetID == 2)
         {
-            if (!prefixRoot->vieEngWordInfo.empty())
+            if (prefixRoot->vieEngIndex != -1)
                 proposeWordList.push_back(prefix);
         }
         else
         {
-            if (!prefixRoot->emojiInfo.empty())
+            if (prefixRoot->emojiIndex != -1)
                 proposeWordList.push_back(prefix);
         }
     }
