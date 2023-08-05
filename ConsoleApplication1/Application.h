@@ -13,6 +13,7 @@
 #include "Favourite.h"
 #include "SwitchDataSet.h"
 #include "SearchDefinition.h"
+#include "ProposeWord.h"
 
 class Application
 {
@@ -98,6 +99,7 @@ private:
     NewWord* newWord;
     RemoveWord* removeWord;
     SearchDefinitionScreen* searchDefScreen;
+    ProposeWord* proposedWord;
 private:
     void initWindow();
     void initBackground();

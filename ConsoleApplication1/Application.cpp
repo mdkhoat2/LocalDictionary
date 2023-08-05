@@ -25,6 +25,7 @@ Application::Application() :
 	searchDefScreen(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+	proposedWord(nullptr),
 	currentDataSetID(0)
 {
 	initWindow();
@@ -501,6 +502,7 @@ void Application::changeDataSet()
 	else
 		dataSetButton.setString("      Emoji");
 	displayBox.setCurrentDataSet(currentDataSetID);
+	proposedWord->setDataSetID(currentDataSetID);
 }
 
 void Application::run()
@@ -511,6 +513,7 @@ void Application::run()
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
+	proposedWord = new ProposeWord();
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -542,7 +545,12 @@ void Application::handleEvent()
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)
 		{
 			if (event.type == sf::Event::TextEntered)
+			{
 				searchBar.typedOn(event);
+				proposedWord->isTyping = true;
+				std::string word = searchBar.getText();
+				proposedWord->initWordList(word, engEngRoot);
+			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 				if (searchBar.isMouseOver(window))
@@ -553,6 +561,8 @@ void Application::handleEvent()
 				if (searchButton.isMouseOver(window))
 				{
 					std::string inputWord = searchBar.getText();
+					proposedWord->isTyping = false;
+
 					//if (inputWord!="")
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
@@ -638,6 +648,11 @@ void Application::handleEvent()
 				{
 					favourite->likeOrNot(window);
 				}
+				
+			}
+			else if (proposedWord->setIsTyping() && proposedWord->getMousePosition(window))
+			{
+				proposedWord->handleEvent(event, window);
 			}
 		}
 		else if (currentScreen == ScreenState::EditDefinitionScreen)
@@ -790,8 +805,15 @@ void Application::render()
 		drawHistory();
         //favouriteMain.drawTo(window);
         menuButton.drawTo(window);
-        displayBox.drawTo(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.drawTo(window);
+		}
         //dataSetBar.drawTo(window);
+		else 
+		{
+			proposedWord->drawTo(window);
+		}
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
 		window.clear(sf::Color::White);
@@ -806,7 +828,15 @@ void Application::render()
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
 		searchDefButton.drawTo(window);
-		displayBox.drawTo(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.drawTo(window);
+		}
+		//dataSetBar.drawTo(window);
+		else
+		{
+			proposedWord->drawTo(window);
+		}
 		//dataSetBar.drawTo(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen) {
