@@ -1,7 +1,11 @@
+#include <iostream>
+#include <fstream>
 #include <sstream>
+#include <queue>
 #include "Trie.h"
 
-EngTrieNode::EngTrieNode() : flag(false) 
+EngTrieNode::EngTrieNode() : 
+    flag(false), isDeleted(false), engEngIndex(-1), engVieIndex(-1), vieEngIndex(-1), emojiIndex(-1)
 {
     for(int i = 0; i < 72; ++i) 
       links[i] = nullptr;
@@ -107,7 +111,7 @@ bool EngTrieNode::hasNoChildren()
     return true;
 }
 
-void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int curDataSetID)
+void trieInsert(EngTrieNode *&root, std::string &word, int wordIndex, int curDataSetID)
 {
     if(word.empty())
         return;
@@ -123,41 +127,26 @@ void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int 
     node->flag = true;
     if(curDataSetID == 0)
     {
-        node->engEngWordInfo = wordInfo;
+        node->engEngIndex = wordIndex;
     }
     else if(curDataSetID == 1)
     {
-        // In the EV dictionary, a word appears at many places with different meanings, so we need to
-        // check if it is already inserted or not
-        if(node->engVieWordInfo.empty())
-            node->engVieWordInfo = wordInfo;
-        else
-        {
-            // Add the sign "@" to delete old word type
-            node->engVieWordInfo += "\n@\n" + wordInfo;
-        }
-            
+        // If the word has been inserted with different definition before
+        // then don't insert the index because we search for it later
+        if(node->engVieIndex == -1)
+            node->engVieIndex = wordIndex;
     }
-        
     else if(curDataSetID == 2)
     {
-        // Because of non-accent so we need to add more meanings to the word
-        // if it is already inserted but appears again in the dictionary
-        if(node->vieEngWordInfo.empty())
-            node->vieEngWordInfo = wordInfo;
-        else
-        {
-            // Add the sign "@" to delete old word type
-            node->vieEngWordInfo += "\n@\n" + wordInfo;
-        }
-  
+        // If the word has been inserted with different definition before
+        // then don't insert the index because we search for it later
+        if(node->vieEngIndex == -1)
+            node->vieEngIndex = wordIndex;
     }
     else
     {
-        if (node->emojiInfo.empty())
-        {
-            node->emojiInfo= wordInfo;
-        }
+        if(node->emojiIndex == -1)
+            node->emojiIndex = wordIndex;
     }
 }
 
@@ -178,38 +167,38 @@ void trieInsert(VieTrieNode *&root, std::wstring word, std::string wordInfo)
     node->wordInfo = wordInfo;
 }
 
-std::string trieSearch(EngTrieNode* root, std::string word, int curDataSetID)
+int trieSearch(EngTrieNode *root, std::string word, int curDataSetID)
 {
     if(word.empty())
-        return std::string();
+        return -1;
     EngTrieNode* node = root;
     for(int i = 0; i < word.length(); ++i) 
     {
         if(!node->containsKey(word[i]))
-            return std::string();
+            return -1;
         node = node->get(word[i]);
     }
     if(curDataSetID == 0)
     {
-        if(node->flag && !node->engEngWordInfo.empty())
-            return node->engEngWordInfo;
+        if(node->flag && !node->isDeleted)
+            return node->engEngIndex;
     }
     else if(curDataSetID == 1)
     {
-        if(node->flag && !node->engVieWordInfo.empty())
-            return node->engVieWordInfo;
+        if(node->flag && !node->isDeleted)
+            return node->engVieIndex;
     }
     else if(curDataSetID == 2)
     {
-        if(node->flag && !node->vieEngWordInfo.empty())
-            return node->vieEngWordInfo;
+        if(node->flag && !node->isDeleted)
+            return node->vieEngIndex;
     }
     else
     {
-        if (node->flag && !node->emojiInfo.empty())
-            return node->emojiInfo;
+        if(node->flag && !node->isDeleted)
+            return node->emojiIndex;
     }
-    return std::string();
+    return -1;
 }
 
 std::string trieSearch(VieTrieNode *root, std::wstring word)
@@ -225,6 +214,39 @@ std::string trieSearch(VieTrieNode *root, std::wstring word)
         return node->wordInfo;
     else
         return std::string();
+}
+
+void trieHide(EngTrieNode* root, std::string word, int curDataSetID)
+{
+    if (word.empty())
+        return;
+    EngTrieNode* node = root;
+    for (int i = 0; i < word.length(); ++i)
+    {
+        if (!node->containsKey(word[i]))
+            return;
+        node = node->get(word[i]);
+    }
+    if (curDataSetID == 0)
+    {
+        if (node->flag && node->engEngIndex != -1 && !node->isDeleted)
+            node->isDeleted = true;
+    }
+    else if (curDataSetID == 1)
+    {
+        if (node->flag && node->engVieIndex != -1)
+            node->isDeleted = true;
+    }
+    else if (curDataSetID == 2)
+    {
+        if (node->flag && node->vieEngIndex != -1)
+            node->isDeleted = true;
+    }
+    else
+    {
+        if (node->flag && node->emojiIndex != -1)
+            node->isDeleted = true;
+    }
 }
 
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
@@ -513,11 +535,11 @@ void trieDeleteAll(VieTrieNode *&root)
     root = nullptr;
 }
 
-std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSetID)
+int filterAndSearch(EngTrieNode *root, std::string &word, int curDataSetID)
 {
-    std::string result = trieSearch(root, word, curDataSetID);
+    int result = trieSearch(root, word, curDataSetID);
     // If there is a word looks the same as inputWord
-    if(!result.empty())
+    if(result != -1)
         return result;
     // Uppercase all characters
     for(int i = 0; i < word.length(); ++i)
@@ -526,7 +548,7 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSet
             word[i] = toupper(word[i]);
     }
     result = trieSearch(root, word, curDataSetID);
-    if(!result.empty())
+    if(result != -1)
         return result;
     // Lowercase all characters of inputWord
     for(int i = 0; i < word.length(); ++i)
@@ -534,12 +556,12 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSet
         word[i] = tolower(word[i]);
     }
     result = trieSearch(root, word, curDataSetID);
-    if(!result.empty())
+    if(result != -1)
         return result;
     // Lowercase all characters and uppercase first character of first single word
     word[0] = toupper(word[0]);
     result = trieSearch(root, word, curDataSetID);
-    if(!result.empty())
+    if(result != -1)
         return result;
     // Lowercase all characters and uppercase first character of second single word
     word[0] = tolower(word[0]);
@@ -552,7 +574,7 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSet
             word[i+1] = toupper(word[i+1]);
     }
     result = trieSearch(root, word, curDataSetID);
-    if(!result.empty())
+    if(result != -1)
         return result;
     // Lowercase all characters and uppercase all first characters of each single word
     for(int i = 0; i < word.length(); ++i)
@@ -563,9 +585,9 @@ std::string filterAndSearch(EngTrieNode *root, std::string &word, int curDataSet
             word[i] = toupper(word[i]);
     }
     result = trieSearch(root, word, curDataSetID);
-    if(!result.empty())
+    if(result != -1)
         return result;
-    return std::string();
+    return -1;
 }
 
 VieTrieNode::VieTrieNode() : flag(false)
@@ -1141,4 +1163,122 @@ std::string trim(const std::string& str) {
     }
     size_t last = str.find_last_not_of(" \t");
     return str.substr(first, (last - first + 1));
+}
+
+std::string serialize(EngTrieNode *root)
+{
+    if(!root)
+        return "";
+    std::string s = "";
+    std::queue<EngTrieNode*> q;
+    q.push(root);
+    while(!q.empty()) {
+        EngTrieNode* curNode = q.front();
+        q.pop();
+        if(curNode == nullptr) {
+            s += "#,";
+        }
+        else {
+            if(curNode->flag == true)
+                s += "1,";
+            else
+                s += "0,";
+            s += std::to_string(curNode->engEngIndex) + ",";
+            s += std::to_string(curNode->engVieIndex) + ",";
+            s += std::to_string(curNode->vieEngIndex) + ",";
+            s += std::to_string(curNode->emojiIndex) + ",";
+            for(int i = 0; i < 72; ++i)
+                q.push(curNode->links[i]);
+        }
+    }
+    return s;
+}
+
+EngTrieNode *deserialize(std::string data)
+{
+    if(data.empty())
+        return nullptr;
+    std::stringstream s(data);
+    std::string temp1, temp2, temp3, temp4, temp5;
+    std::getline(s, temp1, ','); // get the flag
+    std::getline(s, temp2, ','); // get the engEngIndex
+    std::getline(s, temp3, ','); // get the engVieIndex
+    std::getline(s, temp4, ','); // get the vieEngIndex
+    std::getline(s, temp5, ','); // get the emojiIndex
+    EngTrieNode* root = new EngTrieNode();
+    if(temp1 == "0")
+        root->flag = false;
+    else if(temp1 == "1")
+        root->flag = true;
+    root->engEngIndex = stoi(temp2);
+    root->engVieIndex = stoi(temp3);
+    root->vieEngIndex = stoi(temp4);
+    root->emojiIndex = stoi(temp5);
+    std::queue<EngTrieNode*> q;
+    q.push(root);
+    while(!q.empty()) {
+        EngTrieNode* curNode = q.front();
+        q.pop();
+        for(int i = 0; i < 72; ++i)
+        {
+            std::getline(s, temp1, ',');
+            if(temp1 == "#")
+            {
+                curNode->links[i] = nullptr;
+            }
+            else
+            {
+                EngTrieNode* node = new EngTrieNode();
+                if(temp1 == "0")
+                    node->flag = false;
+                else if(temp1 == "1")
+                    node->flag = true;
+                // get 4 more values
+                std::getline(s, temp2, ',');
+                std::getline(s, temp3, ',');
+                std::getline(s, temp4, ',');
+                std::getline(s, temp5, ',');
+                node->engEngIndex = stoi(temp2);
+                node->engVieIndex = stoi(temp3);
+                node->vieEngIndex = stoi(temp4);
+                node->emojiIndex = stoi(temp5);
+                curNode->links[i] = node;
+                q.push(node);
+            }
+        }
+    }
+    return root;
+}
+
+void saveSerializedTrie(EngTrieNode* root)
+{
+    std::ofstream fout;
+    fout.open("data/serialized-trie.dat", std::ios::binary);
+    if(!fout.is_open())
+        return;
+    std::string data = serialize(root);
+    fout.write(data.c_str(), data.size());
+    fout.close();
+}
+
+bool loadSerializedTrie(EngTrieNode*& root)
+{
+    std::ifstream fin;
+    fin.open("data/serialized-trie.dat", std::ios::binary);
+    if(!fin.is_open())
+    {
+        fin.close();
+        return false;
+    }
+    fin.seekg(0, std::ios::end);
+    std::streampos fileSize = fin.tellg();
+    fin.seekg(0, std::ios::beg);
+
+    std::vector<char> buffer(fileSize);
+    fin.read(buffer.data(), fileSize);
+    fin.close();
+
+    std::string data(buffer.data(), fileSize);
+    root = deserialize(data);
+    return true;
 }

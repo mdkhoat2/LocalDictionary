@@ -16,6 +16,8 @@
     <ClCompile Include="RemoveWord.cpp" />
     <ClCompile Include="SearchDefinition.cpp" />
     <ClCompile Include="ProposeWord.cpp" />
+    <ClCompile Include="EditBox.cpp" />
+    <ClCompile Include="WordDisplayBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -32,6 +34,8 @@
     <ClInclude Include="RemoveWord.h" />
     <ClInclude Include="SearchDefinition.h" />
     <ClInclude Include="ProposeWord.h" />
+    <ClInclude Include="EditBox.h" />
+    <ClInclude Include="WordDisplayBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="favorite_words0.txt" />

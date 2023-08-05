@@ -12,12 +12,14 @@
 
 class RemoveWord {
 public:
-	void removeEEWord(EngTrieNode*& root, std::string word, std::string& wordInfo);
+	void removeEEWord(EngTrieNode*& root, std::string word/*, std::string& wordInfo*/);
 	void saveRemovedEEWord();
 	void loadRemovedEEWord(EngTrieNode*& root);
 public:
-	RemoveWord(sf::Font& font1, sf::Font font2, sf::RenderWindow& window);
-	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot);
+	RemoveWord(sf::Font& font1, sf::Font& font2, sf::RenderWindow& window);
+	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
+	std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+	std::vector<WordDataEngVie>& vieEngVector);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
@@ -28,7 +30,8 @@ public:
 private:
 	std::string wordTmp, wordInfoTmp;
 	
-	std::queue<std::pair<std::string, std::string>> removedEEWord;
+	//std::queue<std::pair<std::string, std::string>> removedEEWord;
+	std::queue<std::string> removedEEWord;
 
 	sf::Texture removeScreenTex, dataSetTex, cancelTex, confirmTex;
 	sf::Sprite removeScreen, dataSet, cancel, confirm;

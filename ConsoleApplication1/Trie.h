@@ -23,10 +23,17 @@ struct EngTrieNode
     // Member variables
     EngTrieNode* links[72];
     bool flag;
-    std::string engEngWordInfo;
-    std::string engVieWordInfo; 
-    std::string vieEngWordInfo;
-    std::string emojiInfo;
+    
+    // These are the indices to the vector of WordEngVieData in class Application
+    // We do this to optimize the space of Trie
+    int engEngIndex;
+    int engVieIndex;
+    int vieEngIndex;
+    int emojiIndex;
+
+    // Member variable for remove function
+    bool isDeleted;
+
     // Constructor
     EngTrieNode();
 
@@ -53,24 +60,32 @@ struct VieTrieNode
     bool hasNoChildren();
 };
 
-// Functions about Trie opearations 
-void trieInsert(EngTrieNode*& root, std::string word, std::string wordInfo, int curDataSetID);
-void trieInsert(VieTrieNode*& root, std::wstring word, std::string wordInfo);
+// Functions about Trie operations 
+void trieInsert(EngTrieNode*& root, std::string& word, int wordIndex, int curDataSetID);
 
-std::string trieSearch(EngTrieNode* root, std::string word, int curDataSetID);
-std::string trieSearch(VieTrieNode* root, std::wstring word);
+int trieSearch(EngTrieNode* root, std::string word, int curDataSetID);
 
 // Don't use this function remove because it can contain bug!
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth = 0);
 VieTrieNode* trieRemove(VieTrieNode*& root, std::wstring word, int depth = 0);
 
+// This function is use for removing words by flagging them with isDelete variable
+void trieHide(EngTrieNode* root, std::string word, int curDataSetID);
+
 void trieDeleteAll(EngTrieNode* &root);
 void trieDeleteAll(VieTrieNode* &root);
 
 // Search functions
-std::string filterAndSearch(EngTrieNode* root, std::string &word, int curDataSetID);
+int filterAndSearch(EngTrieNode* root, std::string &word, int curDataSetID);
+
 //Remove space
 std::string trim(const std::string& str);
-//
+
+// Serialize and Deserialize Trie
+std::string serialize(EngTrieNode* root);
+EngTrieNode* deserialize(std::string data);
+void saveSerializedTrie(EngTrieNode* root);
+bool loadSerializedTrie(EngTrieNode*& root);
+
 
 #endif // TRIE_H

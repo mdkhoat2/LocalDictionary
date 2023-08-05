@@ -90,9 +90,9 @@ private:
     DisplayBox displayBox;
 
     EngTrieNode* engEngRoot;
-    std::vector<std::string> engEngVector;
-    std::vector<std::string> engVieVector;
-    std::vector<std::string> vieEngVector;
+    std::vector<WordDataEngVie> engEngVector;
+    std::vector<WordDataEngVie> engVieVector;
+    std::vector<WordDataEngVie> vieEngVector;
     std::vector<std::string> emojiVector;
 
     EditDefinitionScreen* editDefScreen;

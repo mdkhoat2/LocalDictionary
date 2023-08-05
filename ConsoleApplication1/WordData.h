@@ -72,6 +72,7 @@ bool isNumber(std::string numStr);
 void convertToNormalChar(wchar_t &ch);
 void convertToNormalLine(std::wstring &line);
 void removeEndLineInString(std::string& str);
+bool isPrefix(std::string& prefix, std::string& word);
 
 // Functions to extract different components of a word form "wordInfo" variable
 void extractWordData(WordData &theWordData, std::string word, std::string wordInfo);
