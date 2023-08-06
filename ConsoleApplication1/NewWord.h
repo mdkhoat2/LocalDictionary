@@ -12,13 +12,17 @@
 
 class NewWord {
 public:
-	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
-	std::vector<WordDataEngVie>& engEngVector);
-	void addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
-    std::vector<WordDataEngVie>& engEngVector);
+	void saveAddedWord();
+	// EE
+	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo, std::vector<WordDataEngVie>& engEngVector);
+	void addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo, std::vector<WordDataEngVie>& engEngVector);
 	void saveAddedEEWord();
 	void loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engEngVector);
-
+	// EV
+	bool addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo);
+	void addNewEVWord(EngTrieNode*& root, std::string& word, std::string& wordInfo);
+	void saveAddedEVWord();
+	void loadAddedEVWord(EngTrieNode*& root);
 public:
 	NewWord(sf::Font& font,sf::Font& font2 , sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
@@ -33,7 +37,8 @@ public:
 	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector);
 private:
 	//std::queue<WordDataEngVie*> addedWord;
-	std::queue<std::pair<std::string, std::string>> addedWord;
+	std::queue<std::pair<std::string, std::string>> addedEEWord;
+	std::queue<std::pair<std::string, std::string>> addedEVWord;
 
 	sf::Texture addScreenTex, dataSetTex;
 	sf::Sprite addScreen, dataSet;

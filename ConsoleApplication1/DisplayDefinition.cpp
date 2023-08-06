@@ -624,6 +624,7 @@ void DisplayBox::showExistedDefinitions() {
     {
         delete EEData;
         EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -631,6 +632,39 @@ void DisplayBox::showExistedDefinitions() {
     word.setString("The Word Has Already Existed!");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showExistedEngVieDefinitions() {
+    if (engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Tu vung nay da co trong tu dien!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showNewEngVieDefinitions() {
+    if (engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Tu vung moi da duoc them thanh cong!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
 }
 
 void DisplayBox::showNewDefinitions() {
@@ -638,6 +672,7 @@ void DisplayBox::showNewDefinitions() {
     {
         delete EEData;
         EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -645,6 +680,7 @@ void DisplayBox::showNewDefinitions() {
     word.setString("New Word Imported Successfully!");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 }
 
 void DisplayBox::showDeletionReConfirmation() {
@@ -652,6 +688,7 @@ void DisplayBox::showDeletionReConfirmation() {
     {
         delete EEData;
         EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -659,6 +696,7 @@ void DisplayBox::showDeletionReConfirmation() {
     word.setString("Are you sure to delete this word?");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 }
 
 void DisplayBox::showDeleteSuccessfully() {
@@ -666,6 +704,7 @@ void DisplayBox::showDeleteSuccessfully() {
     {
         delete EEData;
         EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -673,6 +712,7 @@ void DisplayBox::showDeleteSuccessfully() {
     word.setString("Delete Successfully!");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 }
 
 void DisplayBox::showCancelSuccessfully() {
@@ -680,6 +720,7 @@ void DisplayBox::showCancelSuccessfully() {
     {
         delete EEData;
         EEData = nullptr;
+        EEDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -687,6 +728,7 @@ void DisplayBox::showCancelSuccessfully() {
     word.setString("Action Cancelled");
     wordType.setString("");
     wordDef.setString("");
+    wordExample.setString("");
 }
 
 bool DisplayBox::isMouseOverNextButton(sf::RenderWindow &window)

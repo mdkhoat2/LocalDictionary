@@ -19,3 +19,5 @@ aaaa
 = "they aaaa run" 
 =[syn: {aaa}, {aak}]
 -surprisingly
+testingEVadd
+
