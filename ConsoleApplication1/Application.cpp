@@ -211,6 +211,7 @@ void Application::loadEngVieDict()
     // Insert the last word
     trieInsert(engEngRoot, word, wordInfo, 1);
     fin.close();
+	newWord->loadAddedEVWord(engEngRoot);
 }
 
 void Application::loadVieEngDict()
@@ -505,7 +506,7 @@ void Application::handleEvent()
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			newWord->saveAddedEEWord();
+			newWord->saveAddedWord();
 			removeWord->saveRemovedEEWord();
 			window.close();
 		}	

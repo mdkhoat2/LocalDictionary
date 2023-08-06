@@ -1,16 +1,23 @@
 #include "NewWord.h"
 
+void NewWord::saveAddedWord() {
+    saveAddedEEWord();
+    saveAddedEVWord();
+}
+
+// EE
+
 void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
 	trieInsert(root, word, wordInfo, 0);
     separateEngEngExample(wordInfo);
     std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-    addedWord.push({word, newWordInfo});
+    addedEEWord.push({word, newWordInfo});
 }
 
 bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
-    std::ifstream fin("data/add_remove/tests/" + inputWord + ".txt");
+    std::ifstream fin("data/add_remove/tests/EE/" + inputWord + ".txt");
     if (!fin.is_open()) {
-        std::cout << "Could not open " + inputWord + ".txt file!";
+        std::cout << "Could not open " + inputWord + ".txt file!\n";
         fin.close();
         return false;
     }
@@ -95,30 +102,30 @@ bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std:
 }
 
 void NewWord::saveAddedEEWord() {
-	if (addedWord.empty()) return;
+	if (addedEEWord.empty()) return;
 
-	std::ofstream fout("data/add_remove/Added Words.txt");
+	std::ofstream fout("data/add_remove/Added Words/EE.txt");
 	if (!fout.is_open()) {
-        std::cout << "Could not open Added Words.txt file!";
+        std::cout << "Could not open EE.txt file!\n";
 		fout.close();
 		return;
 	}
-    while (!addedWord.empty()) {
-        std::string tmp = addedWord.front().first;
-        if (tmp != "") {
-            fout << tmp << std::endl;
-            std::string newWordInfo = addedWord.front().second;
+    while (!addedEEWord.empty()) {
+        std::string word = addedEEWord.front().first;
+        if (word != "") {
+            fout << word << std::endl;
+            std::string newWordInfo = addedEEWord.front().second;
             fout << newWordInfo << std::endl;
         }
-        addedWord.pop();
+        addedEEWord.pop();
     }
 	fout.close();
 }
 
 void NewWord::loadAddedEEWord(EngTrieNode*& root) {
-    std::ifstream fin("data/add_remove/Added Words.txt");
+    std::ifstream fin("data/add_remove/Added Words/EE.txt");
     if (!fin.is_open()) {
-        std::cout << "Could not open Added Words.txt file!";
+        std::cout << "Could not open EE.txt file!\n";
         fin.close();
         return;
     }
@@ -157,6 +164,130 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root) {
         return;
     }
     addNewEEWord(root, word, wordInfo); // insert last word
+    fin.close();
+}
+
+// EV
+
+void NewWord::addNewEVWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
+    trieInsert(root, word, wordInfo, 1);
+    addedEVWord.push({ word, wordInfo });
+}
+
+bool NewWord::addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
+    std::ifstream fin("data/add_remove/tests/EV/" + inputWord + ".txt");
+    if (!fin.is_open()) {
+        std::cout << "Could not open " + inputWord + ".txt file!\n";
+        fin.close();
+        return false;
+    }
+    std::string line, word;
+    while (std::getline(fin, line))
+    {
+        // this is the line containing the word
+        if (line[0] == '@')
+        {
+            int i = 1;
+            while (i < line.length())
+            {
+                if (line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
+                    || line[i] == '[' || line[i] == ']' || line[i] == '&')
+                    break;
+                else
+                {
+                    word += line[i];
+                    ++i;
+                }
+            }
+            // Pop the space at the end of the current word
+            if (word[word.length() - 1] == ' ')
+                word.pop_back();
+        }
+        // this is the line containing the word type, word definitions, ...
+        else
+        {
+            if (wordInfo.empty())
+                wordInfo = line;
+            else
+                wordInfo += "\n" + line;
+        }
+    }
+    if (wordInfo.empty()) {
+        fin.close();
+        return false;
+    }
+    addNewEVWord(root, word, wordInfo);
+    fin.close();
+    return true;
+}
+
+void NewWord::saveAddedEVWord() {
+    if (addedEVWord.empty()) return;
+
+    std::ofstream fout("data/add_remove/Added Words/EV.txt");
+    if (!fout.is_open()) {
+        std::cout << "Could not open EV.txt file!\n";
+        fout.close();
+        return;
+    }
+    while (!addedEVWord.empty()) {
+        std::string word = addedEVWord.front().first;
+        if (word != "") {
+            fout << word << std::endl;
+            std::string wordInfo = addedEVWord.front().second;
+            fout << wordInfo << std::endl;
+        }
+        addedEVWord.pop();
+    }
+    fout.close();
+}
+
+void NewWord::loadAddedEVWord(EngTrieNode*& root) {
+    std::ifstream fin("data/add_remove/Added Words/EV.txt");
+    if (!fin.is_open()) {
+        std::cout << "Could not open EV.txt file!\n";
+        fin.close();
+        return;
+    }
+    std::string line, word, wordInfo;
+    int count = 0;
+    while (std::getline(fin, line))
+    {
+        if (line[0] == '*')
+            wordInfo += line;
+        else if (line[0] == '-' || line[0] == '=')
+            wordInfo += '\n' + line;
+        //if (line[0] == '*') { // this is a word type
+        //    if (!wordInfo.empty()) wordInfo += '\n';
+        //    wordInfo += line.substr(1);
+        //}
+        //else if (line[0] == '-') { // this is a word definition
+        //    wordInfo += '\n' + line.substr(1);
+        //}
+        //else if (line[0] == '=') { // this is a word example
+        //    if (line[1] == ' ') wordInfo += ';' + line.substr(1);
+        //    else wordInfo += line.substr(1);
+        //}
+        else { // this is a word 
+            if (count == 0) // Read first word
+            {
+                ++count;
+                word = line;
+            }
+            else
+            {
+                // insert the previous word with its definition
+                addNewEVWord(root, word, wordInfo);
+                word = line;
+                wordInfo.clear();
+            }
+        }
+    }
+    if (word.empty()) {
+        fin.close();
+        return;
+    }
+    addNewEVWord(root, word, wordInfo); // insert last word
     fin.close();
 }
 
@@ -257,6 +388,9 @@ void NewWord::initNoteBox(sf::Font& font) {
 
 void NewWord::changeDataSet()
 {
+    // Clear note box
+    noteBox.clearEngEngData();
+
     // Clear word data before change data set
     if (currentDataSetID == 0) 
         displayBox.clearEngEngData();
@@ -292,6 +426,16 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         else
             wordBar.setSelected(false);
         if (backButton.isMouseOver(window)) {
+            // Clear note box
+            noteBox.clearEngEngData();
+
+            // Clear word data before change data set
+            if (currentDataSetID == 0)
+                displayBox.clearEngEngData();
+            else if (currentDataSetID == 1)
+                displayBox.clearEngVieData();
+            //else if (currentDataSetID == 2)
+                //displayBox.clearVieEngData();
             endScreen = true;
             isEndScreen = endScreen;
         }
@@ -387,28 +531,29 @@ void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) 
 }
 
 void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
-//    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-//    if (!wordInfo.empty()) {
-//        // Console
-//        std::cout << wordInfo << std::endl;
-//        // UI
-//        displayBox.showExistedDefinitions();
-//        displayBox.getWordDataEngVie(inputWord, wordInfo);
-//    }
-//    else {
-//        if (addEEFromTextFile(engEngRoot, inputWord, wordInfo)) {
-//            // Console
-//            std::cout << "The word has been imported" << "\n";
-//            std::cout << wordInfo << std::endl;
-//            // UI
-//            noteBox.showNewDefinitions();
-//            displayBox.getWordDataEngVie(inputWord, wordInfo);
-//        }
-//        else {
-//            std::cout << "Cannot find the word" << "\n";
-//            noteBox.showNoEngVieDefinitions();
-//        }
-//    }
+    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
+    if (!wordInfo.empty()) {
+        // Console
+        std::cout << "Tu vung da co trong tu dien" << "\n";
+        std::cout << wordInfo << std::endl;
+        // UI
+        noteBox.showExistedEngVieDefinitions();
+        displayBox.getWordDataEngVie(inputWord, wordInfo);
+    }
+    else {
+        if (addEVFromTextFile(engEngRoot, inputWord, wordInfo)) {
+            // Console
+            std::cout << "Tu vung moi da duoc them" << "\n";
+            std::cout << wordInfo << std::endl;
+            // UI
+            noteBox.showNewEngVieDefinitions();
+            displayBox.getWordDataEngVie(inputWord, wordInfo);
+        }
+        else {
+            std::cout << "Khong the tim thay tu vung" << "\n";
+            noteBox.showNoEngVieDefinitions();
+        }
+    }
 }
 
 void NewWord::addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) {

@@ -33,6 +33,9 @@ public:
     void showExistedDefinitions();
     void showNewDefinitions();
 
+    void showExistedEngVieDefinitions();
+    void showNewEngVieDefinitions();
+
     // For Remove words
     void showDeletionReConfirmation();
     void showDeleteSuccessfully();
