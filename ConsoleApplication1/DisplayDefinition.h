@@ -21,9 +21,10 @@ public:
     void update(sf::RenderWindow& window);
     void drawTo(sf::RenderWindow& window);
 
-    void getWordDataEngEng(std::string& inputWord, std::string& wordInfo);
-    void getWordDataEngVie(std::string& inputWord, std::string& wordInfo);
-    void getWordDataVieEng(std::string& inputWord, std::string& wordInfo);
+    void getWordDataEngEng(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& engEngVector);
+    void getWordDataEngVie(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& engVieVector);
+    void getWordDataVieEng(std::string& inputWord, int& wordIndex, std::vector<WordDataEngVie>& vieEngVector);
+    void addMoreVieEngDefs(std::vector<WordDataEngVie>& vieEngVector, int& wordIndex);
 
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
@@ -66,7 +67,7 @@ public:
     void setVieEngUIText();
 
     //For Emoji
-    void showEmojiDefinition(std::string& inputWord, std::string& wordInfor);
+    void showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector);
     void showNoEmojiDefinition();
     void clearEmoji();
     void setEmojiMode(bool value);

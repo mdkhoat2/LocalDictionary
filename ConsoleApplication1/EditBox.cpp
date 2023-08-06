@@ -163,15 +163,36 @@ void EditBox::wrapText(sf::Text &theText)
 
 void EditBox::adjustTextPosition()
 {
+    // Spacing between word and word type
     sf::FloatRect wordBounds = word.getGlobalBounds();
     wordTypeArea.setPosition(wordTypeArea.getTextPosition().x, wordBounds.top + wordBounds.height + 20.f);
     wordTypePlaceholder.setPosition(wordTypeArea.getTextPosition().x + 5.f, wordBounds.top + wordBounds.height + 20.f);
+
+    // Spacing between word type and word definition
     sf::FloatRect wordTypeBounds = wordTypeArea.getGlobalBounds();
-    wordDefArea.setPosition(wordDefArea.getTextPosition().x, wordTypeBounds.top + wordTypeBounds.height + 40.f);
-    wordDefPlaceholder.setPosition(wordDefArea.getTextPosition().x + 5.f, wordTypeBounds.top + wordTypeBounds.height + 40.f);
+    if(!wordTypeArea.getText().empty())
+    {
+        wordDefArea.setPosition(wordDefArea.getTextPosition().x, wordTypeBounds.top + wordTypeBounds.height + 40.f);
+        wordDefPlaceholder.setPosition(wordDefArea.getTextPosition().x + 5.f, wordTypeBounds.top + wordTypeBounds.height + 40.f);
+    }
+    else
+    {
+        wordDefArea.setPosition(wordDefArea.getTextPosition().x, wordTypeArea.getBoxPosition().y + wordTypeArea.getBoxSize().y + 40.f);
+        wordDefPlaceholder.setPosition(wordDefArea.getTextPosition().x + 5.f, wordTypeArea.getBoxPosition().y + wordTypeArea.getBoxSize().y + 40.f);
+    }
+
+    // Spacing between word definition and word example
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
-    wordExampleArea.setPosition(wordExampleArea.getTextPosition().x, wordDefBounds.top + wordDefBounds.height + 40.f);
-    wordExamplePlaceholder.setPosition(wordExampleArea.getTextPosition().x + 5.f, wordDefBounds.top + wordDefBounds.height + 40.f);
+    if(!wordDefArea.getText().empty())
+    {
+        wordExampleArea.setPosition(wordExampleArea.getTextPosition().x, wordDefBounds.top + wordDefBounds.height + 40.f);
+        wordExamplePlaceholder.setPosition(wordExampleArea.getTextPosition().x + 5.f, wordDefBounds.top + wordDefBounds.height + 40.f);
+    }
+    else
+    {
+        wordExampleArea.setPosition(wordExampleArea.getTextPosition().x, wordDefArea.getBoxPosition().y + wordDefArea.getBoxSize().y + 40.f);
+        wordExamplePlaceholder.setPosition(wordExampleArea.getTextPosition().x + 5.f, wordDefArea.getBoxPosition().y + wordDefArea.getBoxSize().y + 40.f);
+    }
 }
 
 void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWordType, const sf::String &theWordDef, const sf::String &theWordExample)
@@ -188,7 +209,7 @@ void EditBox::adjustSurroundingTextbox()
     sf::FloatRect wordBounds = word.getGlobalBounds();
     std::string typeText = wordTypeArea.getText();
     if(!typeText.empty())
-        wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordBounds.height + 10));
+        wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordBounds.height + 14));
     else
         wordTypeArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordTypeArea.setOutlineColor(sf::Color::Black);
@@ -198,7 +219,7 @@ void EditBox::adjustSurroundingTextbox()
     sf::FloatRect wordDefBounds = wordDefArea.getGlobalBounds();
     std::string defText = wordDefArea.getText();
     if(!defText.empty())
-        wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordDefBounds.height + 10));
+        wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordDefBounds.height + 14));
     else
         wordDefArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordDefArea.setOutlineColor(sf::Color::Black);
@@ -208,7 +229,7 @@ void EditBox::adjustSurroundingTextbox()
     sf::FloatRect wordExampleBounds = wordExampleArea.getGlobalBounds();
     std::string exampleText = wordExampleArea.getText();
     if(!exampleText.empty())
-        wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordExampleBounds.height + 10));
+        wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, wordExampleBounds.height + 14));
     else
         wordExampleArea.setBoxSize(sf::Vector2f(theBox.getSize().x - 25, 40));
     wordExampleArea.setOutlineColor(sf::Color::Black);

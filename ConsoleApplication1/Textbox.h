@@ -49,10 +49,12 @@ public:
 	void setTextColor(const sf::Color& color);
 	void setText(const sf::String& theText);
 
+	const sf::Vector2f& getBoxPosition() const;
 	const sf::Vector2f& getTextPosition() const;
-	sf::FloatRect getGlobalBounds() const;
 
+	sf::FloatRect getGlobalBounds() const;
 	sf::FloatRect getBoxGlobalBounds() const;
+	
 	const sf::Vector2f& getBoxSize() const;
 
 	bool isMouseOver(sf::RenderWindow& window);

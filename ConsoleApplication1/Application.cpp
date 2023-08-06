@@ -25,6 +25,7 @@ Application::Application() :
 	searchDefScreen(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+	proposedWord(nullptr),
 	currentDataSetID(0)
 {
 	initWindow();
@@ -64,7 +65,7 @@ void Application::loadEngEngDict()
 		std::getline(fin, line);
 		++count;
 	}
-
+	int wordIndex = 0;
     while(std::getline(fin, line))
     {
         if(line[0] != ' ') // this is a word
@@ -77,12 +78,14 @@ void Application::loadEngEngDict()
             else
             {
                 // insert the previous word with its definition
-                trieInsert(engEngRoot, word, wordInfo, 0);
 				separateEngEngExample(wordInfo);
 				std::string newWordInfo = formatEngEngWordInfo(wordInfo);
 				WordDataEngVie theItem;
 				extractEngEngData(theItem, word, newWordInfo);
 				engEngVector.push_back(theItem);
+				trieInsert(engEngRoot, word, wordIndex, 0);
+				++wordIndex;
+
                 word = line;
                 wordInfo.clear();
             }
@@ -148,9 +151,16 @@ void Application::loadEngEngDict()
             }
         }
     }
-    trieInsert(engEngRoot, word, wordInfo, 0); // Insert last word
+	separateEngEngExample(wordInfo);
+	std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+	WordDataEngVie theItem;
+	extractEngEngData(theItem, word, newWordInfo);
+	engEngVector.push_back(theItem); // Insert the last word
+	trieInsert(engEngRoot, word, wordIndex, 0);
+	++wordIndex;
+
     fin.close();
-    newWord->loadAddedEEWord(engEngRoot);
+    newWord->loadAddedEEWord(engEngRoot, engEngVector);
 	removeWord->loadRemovedEEWord(engEngRoot);
 }
 
@@ -165,6 +175,7 @@ void Application::loadEngVieDict()
         std::getline(fin, line);
         ++count;
     }
+	int wordIndex = 0;
     while(std::getline(fin, line))
     {
         // this is the line containing the word
@@ -176,10 +187,12 @@ void Application::loadEngVieDict()
             else
             {   
                 // insert previous word and its information
-                trieInsert(engEngRoot, word, wordInfo, 1);
-                WordDataEngVie theItem;
+				WordDataEngVie theItem;
 				extractEngVieData(theItem, word, wordInfo);
 				engVieVector.push_back(theItem);
+				trieInsert(engEngRoot, word, wordIndex, 1);
+				++wordIndex;
+
                 word.clear();
                 wordInfo.clear();
             }
@@ -209,7 +222,12 @@ void Application::loadEngVieDict()
         }
     }
     // Insert the last word
-    trieInsert(engEngRoot, word, wordInfo, 1);
+	WordDataEngVie theItem;
+	extractEngVieData(theItem, word, wordInfo);
+	engVieVector.push_back(theItem);
+	trieInsert(engEngRoot, word, wordIndex, 1);
+	++wordIndex;
+
     fin.close();
 	newWord->loadAddedEVWord(engEngRoot);
 }
@@ -225,6 +243,7 @@ void Application::loadVieEngDict()
         std::getline(fin, line);
         ++count;
     }
+	int wordIndex = 0;
     while(std::getline(fin, line))
     {
         // this is the line containing the word
@@ -236,10 +255,13 @@ void Application::loadVieEngDict()
             else
             {   
                 // insert previous word and its information
-                trieInsert(engEngRoot, word, wordInfo, 2);
 				WordDataEngVie theItem;
 				extractVieEngData(theItem, word, wordInfo);
 				vieEngVector.push_back(theItem);
+				
+				trieInsert(engEngRoot, word, wordIndex, 2);
+				++wordIndex;
+
                 word.clear();
                 wordInfo.clear();
             }
@@ -256,7 +278,12 @@ void Application::loadVieEngDict()
         }
     }
     // Insert the last word
-    trieInsert(engEngRoot, word, wordInfo, 2);
+	WordDataEngVie theItem;
+	extractVieEngData(theItem, word, wordInfo);
+	vieEngVector.push_back(theItem);
+	trieInsert(engEngRoot, word, wordIndex, 2);
+	++wordIndex;
+
     fin.close();
 }
 
@@ -268,6 +295,7 @@ void Application::loadEmojiDict()
 		return;
 	}
 	std::string line;
+	int emojiIndex = 0;
 	while (std::getline(inputFile, line)) 
 	{
 		if (line.empty() || line[0] == '#')
@@ -294,7 +322,10 @@ void Application::loadEmojiDict()
 		status = trim(status);
 		word = trim(word);
 		emojis = hexCode;
-		trieInsert(engEngRoot, word, emojis, 3);
+		emojiVector.push_back(emojis);
+		trieInsert(engEngRoot, word, emojiIndex, 3);
+		++emojiIndex;
+
 	}
 
 	inputFile.close();
@@ -472,6 +503,7 @@ void Application::changeDataSet()
 	else
 		dataSetButton.setString("      Emoji");
 	displayBox.setCurrentDataSet(currentDataSetID);
+	proposedWord->setDataSetID(currentDataSetID);
 }
 
 void Application::run()
@@ -482,6 +514,7 @@ void Application::run()
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
+	proposedWord = new ProposeWord();
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -513,7 +546,12 @@ void Application::handleEvent()
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)
 		{
 			if (event.type == sf::Event::TextEntered)
+			{
 				searchBar.typedOn(event);
+				proposedWord->isTyping = true;
+				std::string word = searchBar.getText();
+				proposedWord->initWordList(word, engEngRoot);
+			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 				if (searchBar.isMouseOver(window))
@@ -524,6 +562,8 @@ void Application::handleEvent()
 				if (searchButton.isMouseOver(window))
 				{
 					std::string inputWord = searchBar.getText();
+					proposedWord->isTyping = false;
+
 					//if (inputWord!="")
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
@@ -609,6 +649,11 @@ void Application::handleEvent()
 				{
 					favourite->likeOrNot(window);
 				}
+				
+			}
+			else if (proposedWord->setIsTyping() && proposedWord->getMousePosition(window))
+			{
+				proposedWord->handleEvent(event, window);
 			}
 		}
 		else if (currentScreen == ScreenState::EditDefinitionScreen)
@@ -631,7 +676,7 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			newWord->setEndScreen(endScreen);
-			newWord->handleEvent(event, window, endScreen, engEngRoot);
+			newWord->handleEvent(event, window, endScreen, engEngRoot, engEngVector, engVieVector, vieEngVector);
 			if (endScreen)
 			{
 				newWord->setEndScreen(endScreen);
@@ -642,7 +687,7 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			removeWord->setEndScreen(endScreen);
-			removeWord->handleEvent(event, window, endScreen, engEngRoot);
+			removeWord->handleEvent(event, window, endScreen, engEngRoot, engEngVector, engVieVector, vieEngVector);
 			if (endScreen)
 			{
 				removeWord->setEndScreen(endScreen);
@@ -761,8 +806,15 @@ void Application::render()
 		drawHistory();
         //favouriteMain.drawTo(window);
         menuButton.drawTo(window);
-        displayBox.drawTo(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.drawTo(window);
+		}
         //dataSetBar.drawTo(window);
+		else 
+		{
+			proposedWord->drawTo(window);
+		}
     }
     else if(currentScreen == ScreenState::OptionsScreen) {
 		window.clear(sf::Color::White);
@@ -777,7 +829,15 @@ void Application::render()
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
 		searchDefButton.drawTo(window);
-		displayBox.drawTo(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.drawTo(window);
+		}
+		//dataSetBar.drawTo(window);
+		else
+		{
+			proposedWord->drawTo(window);
+		}
 		//dataSetBar.drawTo(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen) {
@@ -801,19 +861,17 @@ void Application::render()
 	window.display();
 }
 
-void Application::searchInEngEngDict(std::string& inputWord)
+void Application::searchInEngEngDict(std::string &inputWord)
 {
-    if (inputWord!="")
+	if (inputWord!="")
         history.add(inputWord, "data/historyEE.txt");
-    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-    if(!wordInfo.empty())
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
+    if(wordIndex != -1)
     {
         // Console
-        separateEngEngExample(wordInfo);
-		std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-        std::cout << newWordInfo << std::endl;
+        std::cout << wordIndex << std::endl;
         // UI
-        displayBox.getWordDataEngEng(inputWord, newWordInfo);
+        displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
     }
     else
     {
@@ -826,13 +884,13 @@ void Application::searchInEngVieDict(std::string& inputWord)
 {
     if (inputWord!="")
         history.add(inputWord, "data/historyEV.txt");
-    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
-    if(!wordInfo.empty())
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+    if(wordIndex != -1)
     {
         // Console
-        std::cout << wordInfo << std::endl;
+        std::cout << wordIndex << std::endl;
         // UI
-        displayBox.getWordDataEngVie(inputWord, wordInfo);
+        displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
     }
     else
     {
@@ -845,13 +903,13 @@ void Application::searchInVieEngDict(std::string& inputWord)
 {
     if (inputWord!="")
         history.add(inputWord, "data/historyVE.txt");
-    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 2);
-    if(!wordInfo.empty())
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
+    if(wordIndex != -1)
     {
         // Console
-        std::cout << wordInfo << std::endl;
+        std::cout << wordIndex << std::endl;
         // UI
-        displayBox.getWordDataVieEng(inputWord, wordInfo);
+        displayBox.getWordDataVieEng(inputWord, wordIndex, vieEngVector);
     }
     else
     {
@@ -863,14 +921,14 @@ void Application::searchInEmojiDict(std::string& inputWord)
 {
 	if (inputWord != "")
 		history.add(inputWord, "data/historyEmoji.txt");
-	std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 3);
-	if (!wordInfo.empty())
+	int emojiIndex = filterAndSearch(engEngRoot, inputWord, 3);
+	if (emojiIndex != -1)
 	{
 		// Console
-		std::cout << wordInfo << std::endl;
+		std::cout << emojiVector[emojiIndex] << std::endl;
 		// UI
 		displayBox.setEmojiMode(true);
-		displayBox.showEmojiDefinition(inputWord, wordInfo);
+		displayBox.showEmojiDefinition(inputWord, emojiIndex, emojiVector);
 	}
 	else
 	{
