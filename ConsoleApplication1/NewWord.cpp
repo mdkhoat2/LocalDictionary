@@ -11,10 +11,10 @@ void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& w
     std::vector<WordDataEngVie>& engEngVector) {
     separateEngEngExample(wordInfo);
     std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-    WordDataEngEng theItem;
+    WordDataEngVie theItem;
     extractEngEngData(theItem, word, wordInfo);
     engEngVector.push_back(theItem);
-	  trieInsert(root, word, engEngVector.size()-1, 0);
+	trieInsert(root, word, engEngVector.size() - 1, 0);
     addedEEWord.push({word, newWordInfo});
 }
 
@@ -174,12 +174,17 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& e
 
 // EV
 
-void NewWord::addNewEVWord(EngTrieNode*& root, std::string& word, std::string& wordInfo) {
-    trieInsert(root, word, wordInfo, 1);
+void NewWord::addNewEVWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
+    std::vector<WordDataEngVie>& engVieVector) {
+    WordDataEngVie theItem;
+    extractEngVieData(theItem, word, wordInfo);
+    engVieVector.push_back(theItem);
+    trieInsert(root, word, engVieVector.size() - 1, 1);
     addedEVWord.push({ word, wordInfo });
 }
 
-bool NewWord::addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo) {
+bool NewWord::addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
+    std::vector<WordDataEngVie>& engVieVector) {
     std::ifstream fin("data/add_remove/tests/EV/" + inputWord + ".txt");
     if (!fin.is_open()) {
         std::cout << "Could not open " + inputWord + ".txt file!\n";
@@ -221,7 +226,7 @@ bool NewWord::addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std:
         fin.close();
         return false;
     }
-    addNewEVWord(root, word, wordInfo);
+    addNewEVWord(root, word, wordInfo, engVieVector);
     fin.close();
     return true;
 }
@@ -247,7 +252,7 @@ void NewWord::saveAddedEVWord() {
     fout.close();
 }
 
-void NewWord::loadAddedEVWord(EngTrieNode*& root) {
+void NewWord::loadAddedEVWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engVieVector) {
     std::ifstream fin("data/add_remove/Added Words/EV.txt");
     if (!fin.is_open()) {
         std::cout << "Could not open EV.txt file!\n";
@@ -262,17 +267,6 @@ void NewWord::loadAddedEVWord(EngTrieNode*& root) {
             wordInfo += line;
         else if (line[0] == '-' || line[0] == '=')
             wordInfo += '\n' + line;
-        //if (line[0] == '*') { // this is a word type
-        //    if (!wordInfo.empty()) wordInfo += '\n';
-        //    wordInfo += line.substr(1);
-        //}
-        //else if (line[0] == '-') { // this is a word definition
-        //    wordInfo += '\n' + line.substr(1);
-        //}
-        //else if (line[0] == '=') { // this is a word example
-        //    if (line[1] == ' ') wordInfo += ';' + line.substr(1);
-        //    else wordInfo += line.substr(1);
-        //}
         else { // this is a word 
             if (count == 0) // Read first word
             {
@@ -282,7 +276,7 @@ void NewWord::loadAddedEVWord(EngTrieNode*& root) {
             else
             {
                 // insert the previous word with its definition
-                addNewEVWord(root, word, wordInfo);
+                addNewEVWord(root, word, wordInfo, engVieVector);
                 word = line;
                 wordInfo.clear();
             }
@@ -292,7 +286,7 @@ void NewWord::loadAddedEVWord(EngTrieNode*& root) {
         fin.close();
         return;
     }
-    addNewEVWord(root, word, wordInfo); // insert last word
+    addNewEVWord(root, word, wordInfo, engVieVector); // insert last word
     fin.close();
 }
 
@@ -421,8 +415,8 @@ void NewWord::changeDataSet()
 }
 
 void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
-std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
-std::vector<WordDataEngVie>& vieEngVector) {
+    std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+    std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
         //defBar.typedOn(event);
@@ -506,8 +500,8 @@ void NewWord::setEndScreen(bool value) {
     isEndScreen = value;
 }
 
-void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
-std::vector<WordDataEngVie>& engEngVector) {
+void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot,
+    std::vector<WordDataEngVie>& engEngVector) {
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
     if (wordIndex != -1) {
         // Console
@@ -524,6 +518,7 @@ std::vector<WordDataEngVie>& engEngVector) {
             std::cout << "The word has been imported" << "\n";
             // UI
             noteBox.showNewDefinitions();
+            wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
             displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
         }
         else {
@@ -534,24 +529,27 @@ std::vector<WordDataEngVie>& engEngVector) {
     }
 }
 
-void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector) {
-    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 1);
-    if (!wordInfo.empty()) {
+void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot,
+    std::vector<WordDataEngVie>& engVieVector) {
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+    if (wordIndex != -1) {
         // Console
         std::cout << "Tu vung da co trong tu dien" << "\n";
-        std::cout << wordInfo << std::endl;
+        std::cout << wordIndex << std::endl;
         // UI
         noteBox.showExistedEngVieDefinitions();
-        displayBox.getWordDataEngVie(inputWord, wordInfo);
+        displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
     }
     else {
-        if (addEVFromTextFile(engEngRoot, inputWord, wordInfo)) {
+        std::string wordInfo;
+        if (addEVFromTextFile(engEngRoot, inputWord, wordInfo, engVieVector)) {
             // Console
             std::cout << "Tu vung moi da duoc them" << "\n";
             std::cout << wordInfo << std::endl;
             // UI
             noteBox.showNewEngVieDefinitions();
-            displayBox.getWordDataEngVie(inputWord, wordInfo);
+            wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+            displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
         }
         else {
             std::cout << "Khong the tim thay tu vung" << "\n";
@@ -561,7 +559,7 @@ void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
 }
 
 void NewWord::addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, 
-std::vector<WordDataEngVie>& vieEngVector) {
+    std::vector<WordDataEngVie>& vieEngVector) {
 //    std::string wordInfo;
 //    std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
 //    if (!wordInfo.empty()) {

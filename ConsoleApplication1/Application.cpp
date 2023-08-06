@@ -229,7 +229,7 @@ void Application::loadEngVieDict()
 	++wordIndex;
 
     fin.close();
-	newWord->loadAddedEVWord(engEngRoot);
+	newWord->loadAddedEVWord(engEngRoot, engVieVector);
 }
 
 void Application::loadVieEngDict()
