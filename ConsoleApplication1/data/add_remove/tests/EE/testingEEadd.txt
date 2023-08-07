@@ -1,0 +1,5 @@
+testingEEadd
+     adj 1: testing; "the bugs are quite testing" [syn: {testin}, {testing}]
+     2: draining
+     adv 1: testingly; "the test is testingly hard" [syn: {testinly}, {testingly}]
+     2: suffocatingly
