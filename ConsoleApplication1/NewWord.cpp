@@ -9,10 +9,11 @@ void NewWord::saveAddedWord() {
 
 void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
     std::vector<WordDataEngVie>& engEngVector) {
-    separateEngEngExample(wordInfo);
     std::string newWordInfo = formatEngEngWordInfo(wordInfo);
+    std::cout << word << std::endl;
+    std::cout << newWordInfo << std::endl;
     WordDataEngVie theItem;
-    extractEngEngData(theItem, word, wordInfo);
+    extractEngEngData(theItem, word, newWordInfo);
     engEngVector.push_back(theItem);
 	trieInsert(root, word, engEngVector.size() - 1, 0);
     addedEEWord.push({word, newWordInfo});
@@ -20,22 +21,18 @@ void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& w
 
 bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
     std::vector<WordDataEngVie>& engEngVector) {
-    std::ifstream fin("data/add_remove/tests/" + inputWord + ".txt");
+    std::ifstream fin("data/add_remove/tests/EE/" + inputWord + ".txt");
     if (!fin.is_open()) {
         std::cout << "Could not open " + inputWord + ".txt file!\n";
         fin.close();
         return false;
     }
     std::string line, word;
-    int count = 0;
 
     while (std::getline(fin, line)) {
-        if (line[0] != ' ') { // this is a word
-            if (count == 0) { // Read the word
-                ++count;
-                word = line;
-            }
-        }
+        if (line[0] != ' ')  // this is a word
+            word = line; // Read the word
+        
         else // this is the definition area
         {
             // Count leading spaces
@@ -101,6 +98,7 @@ bool NewWord::addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std:
         fin.close();
         return false;
     }
+    separateEngEngExample(wordInfo);
     addNewEEWord(root, word, wordInfo, engEngVector);
     fin.close();
     return true;
@@ -128,7 +126,7 @@ void NewWord::saveAddedEEWord() {
 }
 
 void NewWord::loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engEngVector) {
-    std::ifstream fin("data/add_remove/Added Words.txt");
+    std::ifstream fin("data/add_remove/Added Words/EE.txt");
     if (!fin.is_open()) {
         std::cout << "Could not open EE.txt file!\n";
         fin.close();
@@ -518,8 +516,6 @@ void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot,
             std::cout << "The word has been imported" << "\n";
             // UI
             noteBox.showNewDefinitions();
-            wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
-            displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
         }
         else {
             std::cout << "Cannot find the word" << "\n";
@@ -548,8 +544,6 @@ void NewWord::addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot,
             std::cout << wordInfo << std::endl;
             // UI
             noteBox.showNewEngVieDefinitions();
-            wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
-            displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
         }
         else {
             std::cout << "Khong the tim thay tu vung" << "\n";
