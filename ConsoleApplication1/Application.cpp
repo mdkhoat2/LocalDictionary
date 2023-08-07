@@ -634,6 +634,7 @@ void Application::handleEvent()
 				}
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					//reset function
+					resetEverything();
 				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
@@ -959,8 +960,22 @@ void Application::resetEverything()
 
 void Application::resetHistoryAll() {
 	history.resetHistory();
+	clearFile("data/historyEE.txt");
 	history1.resetHistory();
+	clearFile("data/historyEV.txt");
 	history2.resetHistory();
+	clearFile("data/historyVE.txt");
 	history3.resetHistory();
+	clearFile("data/historyEmoji.txt");
+}
+
+void Application::clearFile(std::string filename)
+{
+	std::ofstream fout(filename);
+	if (!fout) {
+		std::cout << "cannot find file with name " << filename << std::endl;
+	}
+	fout << "";
+	fout.close();
 }
 

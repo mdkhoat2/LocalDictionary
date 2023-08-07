@@ -48,6 +48,7 @@ public:
 public:
     void resetEverything();
     void resetHistoryAll();
+    void clearFile(std::string filename);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
