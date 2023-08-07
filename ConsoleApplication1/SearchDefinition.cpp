@@ -201,7 +201,7 @@ void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef, std::vec
 void SearchDefinitionScreen::initBackground(sf::RenderWindow &window)
 {
     // Load background from file
-    if (!searchScreenTex.loadFromFile("background/add.jpg"))
+    if (!searchScreenTex.loadFromFile("background/searchDef.jpg"))
         std::cout << "add not found!\n";
     searchScreenTex.setSmooth(true);
     searchScreen.setTexture(searchScreenTex);

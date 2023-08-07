@@ -45,6 +45,9 @@ public:
     void searchInEngVieDict(std::string& inputWord);
     void searchInVieEngDict(std::string& inputWord);
     void searchInEmojiDict(std::string& inputWord);
+public:
+    void resetEverything();
+    void resetHistoryAll();
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
@@ -81,6 +84,7 @@ private:
     Button editDefButton;
     Button favouritebutton;
     Button searchDefButton;
+    Button resetButton;
 
     Favourite *favourite;
     History history;
@@ -115,6 +119,7 @@ private:
     void initDisplayBox();
     void initFavouriteButton();
     void initSearchDefButton();
+    void initResetButton();
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();

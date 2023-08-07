@@ -15,7 +15,7 @@ public:
 	void add(std::string word, std::string filename);
 	void drawTo(sf::RenderWindow& window);
 	void loadHistory(std::string filename);
-
+	void resetHistory();
 private:
 	std::vector<std::string> history;
 	int size = 0;

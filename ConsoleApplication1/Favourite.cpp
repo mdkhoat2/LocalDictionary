@@ -123,7 +123,7 @@ void Favourite::initBackground(sf::RenderWindow&window)
 	favouriteImage2.setTexture(favouriteTexture2);
 	favouriteImage2.setScale(sf::Vector2f(30.f / favouriteTexture2.getSize().x, 30.f / favouriteTexture2.getSize().y));
 
-	if (!deleteButtonTexture.loadFromFile("background/buttondelete.jpg"))
+	if (!deleteButtonTexture.loadFromFile("background/removeButton.png"))
 	{
 		std::cout << "Falied to load image";
 		return;

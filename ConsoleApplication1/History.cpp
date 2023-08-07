@@ -58,3 +58,8 @@ void History::loadHistory(std::string filename)
 	}
 	fin.close();
 }
+
+void History::resetHistory()
+{
+	history.clear();
+}

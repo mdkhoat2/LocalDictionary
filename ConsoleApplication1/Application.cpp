@@ -15,6 +15,7 @@ Application::Application() :
 	editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	searchDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	resetButton("", {153,42}, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
 	history(),
 	favourite(nullptr),
@@ -40,6 +41,7 @@ Application::Application() :
 	initEditDefButton();
 	initDisplayBox();
 	initFavouriteButton();
+	initResetButton();
 	initSearchDefButton();
 	loadAllHistory();
 }
@@ -470,6 +472,13 @@ void Application::initSearchDefButton()
 	searchDefButton.setOutlineThickness(2);
 }
 
+void Application::initResetButton()
+{
+	resetButton.setFont(font);
+	resetButton.setPosition({ 972, 815 });
+	resetButton.setOutlineThickness(2);
+}
+
 void Application::changeDataSet()
 {
 	// Clear word data before change data set
@@ -623,6 +632,9 @@ void Application::handleEvent()
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}
+				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					//reset function
+				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
 					if (currentDataSetID == 0)
@@ -745,6 +757,7 @@ void Application::update()
 		editDefButton.update(window);
 		favouritebutton.update(window);
 		searchDefButton.update(window);
+		resetButton.update(window);
 		displayBox.update(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
@@ -829,6 +842,7 @@ void Application::render()
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
 		searchDefButton.drawTo(window);
+		resetButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
 			displayBox.drawTo(window);
@@ -917,6 +931,7 @@ void Application::searchInVieEngDict(std::string& inputWord)
         displayBox.showNoVieEngDefinitions();
     }
 }
+
 void Application::searchInEmojiDict(std::string& inputWord)
 {
 	if (inputWord != "")
@@ -935,5 +950,17 @@ void Application::searchInEmojiDict(std::string& inputWord)
 		displayBox.showNoEmojiDefinition();
 		std::cout << "Cannot find the word " << "\n";
 	}
+}
+
+void Application::resetEverything()
+{
+	resetHistoryAll();
+}
+
+void Application::resetHistoryAll() {
+	history.resetHistory();
+	history1.resetHistory();
+	history2.resetHistory();
+	history3.resetHistory();
 }
 
