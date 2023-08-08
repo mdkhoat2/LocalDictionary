@@ -59,6 +59,9 @@ private:
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
 
+    sf::Texture loadingScreenTexture;
+    sf::Sprite loadingScreen;
+
     ScreenState currentScreen;
 
     int currentDataSetID;

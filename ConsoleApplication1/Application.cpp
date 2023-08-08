@@ -356,6 +356,11 @@ void Application::initBackground()
 	screenWithOptionsTex.setSmooth(true);
 	screenWithOptions.setTexture(screenWithOptionsTex);
 
+	if (!loadingScreenTexture.loadFromFile("background/loading1.jpg"))
+		std::cout << "Loading screen not found!\n";
+	loadingScreenTexture.setSmooth(true);
+	loadingScreen.setTexture(loadingScreenTexture);
+
 	// Scale the background to fit window
 	float scaleX = static_cast<float>(window.getSize().x) / mainScreenTex.getSize().x;
 	float scaleY = static_cast<float>(window.getSize().y) / mainScreenTex.getSize().y;
@@ -365,6 +370,8 @@ void Application::initBackground()
 	scaleX = static_cast<float>(window.getSize().x) / screenWithOptionsTex.getSize().x;
 	scaleY = static_cast<float>(window.getSize().y) / screenWithOptionsTex.getSize().y;
 	screenWithOptions.setScale(scaleX, scaleY);
+
+	loadingScreen.setScale(scaleX, scaleY);
 }
 
 void Application::initFont()
@@ -518,6 +525,8 @@ void Application::changeDataSet()
 void Application::run()
 {
 	// Load dictionaries
+	window.draw(loadingScreen);
+	window.display();
 	newWord = new NewWord(font, font2, window);
 	removeWord = new RemoveWord(font, font2, window);
 	favourite = new Favourite(window);
