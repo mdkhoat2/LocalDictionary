@@ -380,7 +380,9 @@ void Application::initFont()
 	if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
 		std::cout << "Font not found!\n";
 	if (!font2.loadFromFile("font/Merriweather-Regular.ttf"))
-		std::cout << "Font not found!\n";
+		std::cout << "Font2 not found!\n";
+	if (!font3.loadFromFile("font/SF-Pro-Display-Regular.otf"))
+		std::cout << "Font3 not found!\n";
 }
 
 void Application::initSearchBar()
@@ -460,7 +462,7 @@ void Application::initDisplayBox()
 	float scaleY = mainScreen.getScale().y;
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
-	displayBox.setFont(font2);
+	displayBox.setFont(font3);
 	displayBox.setCharacterSize(25);
 	displayBox.setCurrentDataSet(currentDataSetID);
 }
