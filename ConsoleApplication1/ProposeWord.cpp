@@ -188,7 +188,7 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 		{
 			sf::Text wordText(word, font, 20);
 			wordText.setFillColor(sf::Color::Black);
-			wordText.setPosition(140, y);
+			wordText.setPosition(125, y);
 			window.draw(wordText);
 			y += 50;
 		}

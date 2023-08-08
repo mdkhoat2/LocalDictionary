@@ -147,6 +147,7 @@
     <ClCompile Include="DisplayDefinition.cpp" />
     <ClCompile Include="EditBox.cpp" />
     <ClCompile Include="EditDefinition.cpp" />
+    <ClCompile Include="Explore.cpp" />
     <ClCompile Include="Favourite.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="NewWord.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="DisplayDefinition.h" />
     <ClInclude Include="EditBox.h" />
     <ClInclude Include="EditDefinition.h" />
+    <ClInclude Include="Explore.h" />
     <ClInclude Include="Favourite.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="NewWord.h" />

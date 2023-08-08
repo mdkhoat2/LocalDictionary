@@ -74,6 +74,7 @@ private:
 
     sf::Font font;
     sf::Font font2;
+    sf::Font font3;
 
     sf::Event event;
     

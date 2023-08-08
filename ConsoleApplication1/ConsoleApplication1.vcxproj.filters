@@ -18,6 +18,7 @@
     <ClCompile Include="ProposeWord.cpp" />
     <ClCompile Include="EditBox.cpp" />
     <ClCompile Include="WordDisplayBox.cpp" />
+    <ClCompile Include="Explore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="ProposeWord.h" />
     <ClInclude Include="EditBox.h" />
     <ClInclude Include="WordDisplayBox.h" />
+    <ClInclude Include="Explore.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="favorite_words0.txt" />
