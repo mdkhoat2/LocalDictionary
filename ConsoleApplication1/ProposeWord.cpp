@@ -131,7 +131,7 @@ void ProposeWord::initScrollBar()
 	scrollbar1Image.setTexture(scrollbar1Texture);
 	scrollbar1Image.setScale(sf::Vector2f(15.f / scrollbar1Texture.getSize().x, 607.f / scrollbar1Texture.getSize().y));
 	scrollbar1Image.setPosition(926, 253);
-	if (!scrollbar2Texture.loadFromFile("background/scroll-bar2.png"))
+	if (!scrollbar2Texture.loadFromFile("background/scroll-bar4.png"))
 	{
 		std::cout << "Falied to load image ";
 	}
@@ -197,7 +197,7 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 	if (proposeWordList.size() > 7)
 	{
 		float posY = 300 + firstVisibleIndex * (520 / (proposeWordList.size() - 7));
-		scrollbar2Image.setPosition(900, posY);
+		scrollbar2Image.setPosition(895, posY);
 		window.draw(scrollbar2Image);
 	}
 }
