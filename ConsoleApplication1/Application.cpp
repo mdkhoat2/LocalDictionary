@@ -912,7 +912,7 @@ void Application::searchInEngEngDict(std::string &inputWord)
 void Application::searchInEngVieDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord, "data/historyEV.txt");
+        history1.add(inputWord, "data/historyEV.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
     if(wordIndex != -1)
     {
@@ -931,7 +931,7 @@ void Application::searchInEngVieDict(std::string& inputWord)
 void Application::searchInVieEngDict(std::string& inputWord)
 {
     if (inputWord!="")
-        history.add(inputWord, "data/historyVE.txt");
+        history2.add(inputWord, "data/historyVE.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
     if(wordIndex != -1)
     {
@@ -950,7 +950,7 @@ void Application::searchInVieEngDict(std::string& inputWord)
 void Application::searchInEmojiDict(std::string& inputWord)
 {
 	if (inputWord != "")
-		history.add(inputWord, "data/historyEmoji.txt");
+		history3.add(inputWord, "data/historyEmoji.txt");
 	int emojiIndex = filterAndSearch(engEngRoot, inputWord, 3);
 	if (emojiIndex != -1)
 	{
