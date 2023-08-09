@@ -14,6 +14,7 @@
 #include "SwitchDataSet.h"
 #include "SearchDefinition.h"
 #include "ProposeWord.h"
+#include "Explore.h"
 
 class Application
 {
@@ -26,7 +27,8 @@ public:
         RemoveScreen,
         EditDefinitionScreen,
         FavouriteScreen,
-        SearchDefinitionScreen
+        SearchDefinitionScreen,
+        ExploreScreen
     };
 public:
     Application();
@@ -90,6 +92,9 @@ private:
     Button editDefButton;
     Button favouritebutton;
     Button searchDefButton;
+    Button exploreButton;
+    Button randomWordButton;
+    Button randomDefButton;
     Button resetButton;
 
     Favourite *favourite;
@@ -110,6 +115,7 @@ private:
     RemoveWord* removeWord;
     SearchDefinitionScreen* searchDefScreen;
     ProposeWord* proposedWord;
+    Explore* explore;
 private:
     void initWindow();
     void initBackground();
@@ -125,6 +131,9 @@ private:
     void initDisplayBox();
     void initFavouriteButton();
     void initSearchDefButton();
+    void initExploreButton();
+    void initRandomWordButton();
+	void initRandomDefButton();
     void initResetButton();
     void changeDataSet();
     void loadAllHistory();
