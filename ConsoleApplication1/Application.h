@@ -43,10 +43,10 @@ public:
     void update();
     void render();
 public:
-    void searchInEngEngDict(std::string& inputWord);
-    void searchInEngVieDict(std::string& inputWord);
-    void searchInVieEngDict(std::string& inputWord);
-    void searchInEmojiDict(std::string& inputWord);
+    void searchInEngEngDict(std::string& inputWord, bool isForRandom);
+    void searchInEngVieDict(std::string& inputWord, bool isForRandom);
+    void searchInVieEngDict(std::string& inputWord, bool isForRandom);
+    void searchInEmojiDict(std::string& inputWord, bool isForRandom);
 public:
     void resetEverything();
     void resetHistoryAll();
@@ -115,7 +115,7 @@ private:
     RemoveWord* removeWord;
     SearchDefinitionScreen* searchDefScreen;
     ProposeWord* proposedWord;
-    Explore* explore;
+    
 private:
     void initWindow();
     void initBackground();
@@ -138,6 +138,7 @@ private:
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();
+    void explore();
 };
 
 
