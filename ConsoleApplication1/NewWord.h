@@ -9,6 +9,7 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "DisplayDefinition.h"
+#include "EditBox.h"
 
 class NewWord {
 public:
@@ -45,7 +46,18 @@ public:
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
+
+	// Accessors
+	std::string getEditWordType();
+	std::string getEditWordDef();
+	std::string getEditWordExample();
 public:
+	// From keyboard
+	void addInEngEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engEngVector);
+	void addInEngVieDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector);
+	void addInVieEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector);
+
+	// From text file
 	void addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engEngVector);
 	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector);
 	void addInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector);
@@ -55,8 +67,8 @@ private:
 	std::queue<std::pair<std::string, std::string>> addedEVWord;
 	std::queue<std::pair<std::string, std::string>> addedVEWord;
 
-	sf::Texture addScreenTex, dataSetTex;
-	sf::Sprite addScreen, dataSet;
+	sf::Texture addScreenTex, dataSetTex, addOptTex, cancelTex;
+	sf::Sprite addScreen, dataSet, addOpt, cancel;
 
 	Textbox wordBar;
 
@@ -64,10 +76,13 @@ private:
 	DisplayBox displayBox;
 
 	sf::Text dataSetText;
+	sf::Text addOptText;
 
 	Button backButton;
 	Button addButton;
 	Button dataSetButton;
+	Button addOptButton;
+	Button cancelButton;
 
 	int currentDataSetID;
 	/*
@@ -77,17 +92,32 @@ private:
 		3: Emoji
 	*/
 
+	int currentAddOptID;
+	/*
+		0: From keyboard
+		1: From text file
+	*/
+
+	EditBox editBox;
+	int currentEditAreaID;
+	bool isAdding;
+
 	bool isEndScreen;
 private:
 	void initBackground(sf::RenderWindow& window);
 	void initWordBar(sf::Font& font);
+	void initEditBox(const sf::Font& font, sf::Sprite& background);
 	void initBackButton(sf::Font& font);
+	void initCancelButton(sf::Font& font);
 	void initAddButton(sf::Font& font);
 	void initDataSetText(sf::Font& font);
 	void initDataSetButton(sf::Font& font);
+	void initAddOptText(sf::Font& font);
+	void initAddOptButton(sf::Font& font);
 	void initDisplayBox(sf::Font& font);
 	void initNoteBox(sf::Font& font);
 	void changeDataSet();
+	void changeAddOpt();
 };
 
 #endif

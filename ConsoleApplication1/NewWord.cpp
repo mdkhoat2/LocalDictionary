@@ -399,22 +399,32 @@ void NewWord::loadAddedVEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& v
 
 NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     wordBar(20, sf::Color::Black, sf::Color::Transparent, true),
+    editBox({ 72, 350 }, { 780, 600 }, sf::Color::Transparent, sf::Color::Black),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    cancelButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+    addOptButton("      Keyboard", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
     displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     isEndScreen(false),
-    currentDataSetID(0)
+    currentDataSetID(0),
+    currentAddOptID(0),
+    currentEditAreaID(0),
+    isAdding(false)
 {
     initBackground(window);
     initBackButton(font);
+    initCancelButton(font);
     initAddButton(font);
-    initDataSetButton(font);
     initWordBar(font);
+    initEditBox(font2, addScreen);
     initDisplayBox(font2);
     initNoteBox(font2);
     initDataSetText(font);
+    initDataSetButton(font);
+	initAddOptText(font);
+	initAddOptButton(font);
 }
 
 void NewWord::initBackground(sf::RenderWindow& window)
@@ -430,6 +440,7 @@ void NewWord::initBackground(sf::RenderWindow& window)
     float scaleY = static_cast<float>(window.getSize().y) / addScreenTex.getSize().y;
     addScreen.setScale(scaleX, scaleY);
 
+    // dataSet
     // Load image from file
     if (!dataSetTex.loadFromFile("background/data-set.png"))
         std::cout << "data-set not found!\n";
@@ -442,6 +453,34 @@ void NewWord::initBackground(sf::RenderWindow& window)
     dataSet.setScale(scaleX, scaleY);
     // Set the image's position
     dataSet.setPosition({ 956, 56 });
+
+    // addOpt
+    // Load image from file
+    if (!addOptTex.loadFromFile("background/data-set.png"))
+        std::cout << "data-set not found!\n";
+    addOptTex.setSmooth(true);
+    addOpt.setTexture(addOptTex);
+
+    // Scale the image
+    scaleX = static_cast<float>(185.f) / addOptTex.getSize().x;
+    scaleY = static_cast<float>(92.f) / addOptTex.getSize().y;
+    addOpt.setScale(scaleX, scaleY);
+    // Set the image's position
+    addOpt.setPosition({ 956, 237 });
+
+    // cancel
+    // Load image from file
+    if (!cancelTex.loadFromFile("background/cancel-button.png"))
+        std::cout << "cancel-button not found!\n";
+    cancelTex.setSmooth(true);
+    cancel.setTexture(cancelTex);
+
+    // Scale the image
+    scaleX = static_cast<float>(185.f) / cancelTex.getSize().x;
+    scaleY = static_cast<float>(77.f) / cancelTex.getSize().y;
+    cancel.setScale(scaleX, scaleY);
+    // Set the image's position
+    cancel.setPosition({ 956, 336 });
 
 }
 
@@ -457,6 +496,13 @@ void NewWord::initBackButton(sf::Font& font) {
     backButton.setFont(font);
     backButton.setPosition({ 972, 163 });
     backButton.setOutlineThickness(2);
+}
+
+
+void NewWord::initCancelButton(sf::Font& font) {
+    cancelButton.setFont(font);
+    cancelButton.setPosition({ 972, 353 });
+    cancelButton.setOutlineThickness(2);
 }
 
 void NewWord::initAddButton(sf::Font& font) {
@@ -480,9 +526,34 @@ void NewWord::initDataSetButton(sf::Font& font) {
     dataSetButton.setStyle(sf::Text::Style::Bold);
 }
 
+void NewWord::initAddOptText(sf::Font& font)
+{
+    addOptText.setFont(font);
+    addOptText.setPosition({ 972, 241 });
+    addOptText.setCharacterSize(20);
+    addOptText.setFillColor(sf::Color::Black);
+}
+
+void NewWord::initAddOptButton(sf::Font& font) {
+    addOptButton.setFont(font);
+    addOptButton.setPosition({ 972, 253 });
+    addOptButton.setOutlineThickness(2);
+    addOptButton.setStyle(sf::Text::Style::Bold);
+}
+
 void NewWord::initDisplayBox(sf::Font& font) {
     displayBox.setFont(font);
     displayBox.setCharacterSize(25);
+}
+
+void NewWord::initEditBox(const sf::Font& font, sf::Sprite& background)
+{
+    //float scaleX = background.getScale().x;
+    //float scaleY = background.getScale().y;
+    //editBox.setPosition(247 * scaleX, 842 * scaleY);
+    //editBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
+    editBox.setFont(font);
+    editBox.setCharacterSize(25);
 }
 
 void NewWord::initNoteBox(sf::Font& font) {
@@ -519,12 +590,63 @@ void NewWord::changeDataSet()
         dataSetButton.setString("      Emoji");
 }
 
+void NewWord::changeAddOpt()
+{
+    // Clear note box
+    //noteBox.clearEngEngData();
+
+    // Clear word data before change data set
+    /*if (currentAddOptID == 0)
+        displayBox.clearEngEngData();
+    else if (currentAddOptID == 1)
+        displayBox.clearEngVieData();*/
+
+    // Start changing data set
+    if (currentAddOptID == 1)
+        currentAddOptID = 0;
+    else
+        currentAddOptID = 1;
+
+    if (currentAddOptID == 0)
+        addOptButton.setString("      Keyboard");
+    else if (currentAddOptID == 1)
+        addOptButton.setString("      Text file");
+}
+
+std::string NewWord::getEditWordType()
+{
+    return editBox.getWordType();
+}
+
+std::string NewWord::getEditWordDef()
+{
+    return editBox.getWordDef();
+}
+
+std::string NewWord::getEditWordExample()
+{
+    return editBox.getWordExample();
+}
+
 void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
     std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
     std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
-        //defBar.typedOn(event);
+        if (isAdding) {
+            if (currentEditAreaID == 0 && editBox.isWordTypeAreaSelected())
+            {
+                editBox.wordTypeAreaTypedOn(event);
+            }
+            else if (currentEditAreaID == 1 && editBox.isWordDefAreaSelected())
+            {
+                editBox.wordDefAreaTypedOn(event);
+            }
+            else if (currentEditAreaID == 2 && editBox.isWordExampleAreaSelected())
+            {
+                editBox.wordExampleAreaTypedOn(event);
+            }
+        }
     }
     if (event.type == sf::Event::MouseButtonPressed) {
         if (wordBar.isMouseOver(window))
@@ -547,12 +669,27 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
         }
         else if (addButton.isMouseOver(window)) {
             std::string inputWord = wordBar.getText();
-            if (currentDataSetID == 0)
-                addInEngEngDict(inputWord, engEngRoot, engEngVector);
-            else if (currentDataSetID == 1)
-                addInEngVieDict(inputWord, engEngRoot, engVieVector);
-            else if (currentDataSetID == 2)
-                addInVieEngDict(inputWord, engEngRoot, vieEngVector);
+            if (!isAdding) {
+                if (currentAddOptID) {
+                    if (currentDataSetID == 0)
+                        addInEngEngDict(inputWord, engEngRoot, engEngVector);
+                    else if (currentDataSetID == 1)
+                        addInEngVieDict(inputWord, engEngRoot, engVieVector);
+                    else if (currentDataSetID == 2)
+                        addInVieEngDict(inputWord, engEngRoot, vieEngVector);
+                }
+                else {
+                    if (currentDataSetID == 0)
+                        addInEngEngDictKB(inputWord, engEngRoot, engEngVector);
+                    else if (currentDataSetID == 1)
+                        addInEngVieDictKB(inputWord, engEngRoot, engVieVector);
+                    else if (currentDataSetID == 2)
+                        addInVieEngDictKB(inputWord, engEngRoot, vieEngVector);
+                }
+            }
+            else {
+
+            }
         }
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
         {
@@ -572,8 +709,12 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
             else if (currentDataSetID == 2)
                 displayBox.showPrevVieEngDef();
         }
-        else if (dataSetButton.isMouseOver(window))
+        else if (isAdding && cancelButton.isMouseOver(window))
+            isAdding = false;
+        else if (!isAdding && dataSetButton.isMouseOver(window))
             changeDataSet();
+        else if (!isAdding && addOptButton.isMouseOver(window))
+            changeAddOpt();
     }
 }
 
@@ -582,8 +723,13 @@ void NewWord::update(sf::RenderWindow& window) {
         backButton.update(window);
         addButton.update(window);
         dataSetButton.update(window);
+        addOptButton.update(window);
         noteBox.update(window);
         displayBox.update(window);
+        if (isAdding) {
+            editBox.update(window);
+            cancelButton.update(window);
+        }
     }
 }
 
@@ -592,12 +738,19 @@ void NewWord::render(sf::RenderWindow& window) {
         window.clear(sf::Color::White);
         window.draw(addScreen);
         window.draw(dataSet);
+        window.draw(addOpt);
         wordBar.drawTo(window);
         backButton.drawTo(window);
         addButton.drawTo(window);
         dataSetButton.drawTo(window);
+        addOptButton.drawTo(window);
         noteBox.drawTo(window);
         displayBox.drawTo(window);
+        if (isAdding) {
+            window.draw(cancel);
+            cancelButton.drawTo(window);
+            editBox.drawTo(window);
+        }
     }
 }
 
@@ -605,6 +758,34 @@ void NewWord::setEndScreen(bool value) {
     isEndScreen = value;
 }
 
+// Add from keyboard
+void NewWord::addInEngEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engEngVector) {
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
+    if (wordIndex != -1) {
+        // Console
+        std::cout << "The word has already existed" << "\n";
+        std::cout << wordIndex << std::endl;
+        // UI
+        noteBox.showExistedDefinitions();
+        displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
+    }
+    else {
+        std::cout << "Cannot find the word" << "\n";
+        noteBox.showNoEngEngDefinitions();
+        displayBox.clearEngEngData();
+        isAdding = true;
+    }
+}
+
+void NewWord::addInEngVieDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector) {
+
+}
+
+void NewWord::addInVieEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector) {
+
+}
+
+// Add from text file
 void NewWord::addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot,
     std::vector<WordDataEngVie>& engEngVector) {
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
