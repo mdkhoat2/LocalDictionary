@@ -635,6 +635,22 @@ void DisplayBox::showExistedDefinitions() {
     wordExample.setString("");
 }
 
+void DisplayBox::showExistedVieEngDefinitions() {
+    if (vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("The Word Has Already Existed!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
 void DisplayBox::showExistedEngVieDefinitions() {
     if (engVieData)
     {
@@ -673,6 +689,22 @@ void DisplayBox::showNewDefinitions() {
         delete EEData;
         EEData = nullptr;
         EEDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("New Word Imported Successfully!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showNewVieEngDefinitions() {
+    if (vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
     }
     showNextButton = false;
     showPrevButton = false;
@@ -725,7 +757,103 @@ void DisplayBox::showCancelSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Action Cancelled");
+    word.setString("Action Cancelled!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showEVDeletionReConfirmation() {
+    if (engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Ban co chac chan muon xoa tu vung nay?");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showEVDeleteSuccessfully() {
+    if (engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Da xoa tu vung thanh cong!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showEVCancelSuccessfully() {
+    if (engVieData)
+    {
+        delete engVieData;
+        engVieData = nullptr;
+        engVieDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Hanh dong da duoc huy thanh cong!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showVEDeletionReConfirmation() {
+    if (vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Are you sure to delete this word?");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showVEDeleteSuccessfully() {
+    if (vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Delete Successfully!");
+    wordType.setString("");
+    wordDef.setString("");
+    wordExample.setString("");
+}
+
+void DisplayBox::showVECancelSuccessfully() {
+    if (vieEngData)
+    {
+        delete vieEngData;
+        vieEngData = nullptr;
+        vieEngDefID = 0;
+    }
+    showNextButton = false;
+    showPrevButton = false;
+
+    word.setString("Action cancelled!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");

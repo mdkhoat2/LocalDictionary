@@ -20,6 +20,7 @@ public:
 		std::vector<WordDataEngVie>& engEngVector);
 	void saveAddedEEWord();
 	void loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engEngVector);
+
 	// EV
 	bool addEVFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
 		std::vector<WordDataEngVie>& engVieVector);
@@ -27,6 +28,15 @@ public:
 		std::vector<WordDataEngVie>& engVieVector);
 	void saveAddedEVWord();
 	void loadAddedEVWord(EngTrieNode*& root, std::vector<WordDataEngVie>& engVieVector);
+
+
+	// VE
+	bool addVEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
+		std::vector<WordDataEngVie>& vieEngVector);
+	void addNewVEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
+		std::vector<WordDataEngVie>& vieEngVector);
+	void saveAddedVEWord();
+	void loadAddedVEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& vieEngVector);
 public:
 	NewWord(sf::Font& font,sf::Font& font2 , sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
@@ -43,6 +53,7 @@ private:
 	//std::queue<WordDataEngVie*> addedWord;
 	std::queue<std::pair<std::string, std::string>> addedEEWord;
 	std::queue<std::pair<std::string, std::string>> addedEVWord;
+	std::queue<std::pair<std::string, std::string>> addedVEWord;
 
 	sf::Texture addScreenTex, dataSetTex;
 	sf::Sprite addScreen, dataSet;

@@ -12,26 +12,36 @@
 
 class RemoveWord {
 public:
-	void removeEEWord(EngTrieNode*& root, std::string word/*, std::string& wordInfo*/);
+	void saveRemovedWord();
+
+	// EE 
+	void removeEEWord(EngTrieNode*& root, std::string word);
 	void saveRemovedEEWord();
 	void loadRemovedEEWord(EngTrieNode*& root);
+
+	// EV
+	void removeEVWord(EngTrieNode*& root, std::string word);
+	void saveRemovedEVWord();
+	void loadRemovedEVWord(EngTrieNode*& root);
+
+	// VE
+	void removeVEWord(EngTrieNode*& root, std::string word);
+	void saveRemovedVEWord();
+	void loadRemovedVEWord(EngTrieNode*& root);
 public:
 	RemoveWord(sf::Font& font1, sf::Font& font2, sf::RenderWindow& window);
 	void handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
-	std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
-	std::vector<WordDataEngVie>& vieEngVector);
+		std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+		std::vector<WordDataEngVie>& vieEngVector);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
 	void setEndScreen(bool value);
-public:
-	bool removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void removeInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot);
-	void removeInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot);
 private:
-	std::string wordTmp, wordInfoTmp;
+	std::string wordTmp;
 	
-	//std::queue<std::pair<std::string, std::string>> removedEEWord;
 	std::queue<std::string> removedEEWord;
+	std::queue<std::string> removedEVWord;
+	std::queue<std::string> removedVEWord;
 
 	sf::Texture removeScreenTex, dataSetTex, cancelTex, confirmTex;
 	sf::Sprite removeScreen, dataSet, cancel, confirm;
