@@ -209,7 +209,7 @@ void Textbox::wrapText(sf::Text &theText)
         while (lineIss >> word) {
             // Set theText with the current line + the next word
             theText.setString(line + (line.empty() ? "" : " ") + word);
-            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width) {
                 // Add the current line to the wrapped text and start a new line
                 wrappedStr += line + '\n';
                 line = word;

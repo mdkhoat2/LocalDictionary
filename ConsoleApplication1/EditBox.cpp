@@ -143,7 +143,7 @@ void EditBox::wrapText(sf::Text &theText)
         while (lineIss >> word) {
             // Set theText with the current line + the next word
             theText.setString(line + (line.empty() ? "" : " ") + word);
-            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 40.f) {
+            if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
                 // Add the current line to the wrapped text and start a new line
                 wrappedStr += line + '\n';
                 line = word;
@@ -199,7 +199,11 @@ void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWor
 {
     word.setString(theWord);
     wordTypeArea.setText(theWordType);
-    wordDefArea.setText(theWordDef);
+    if(theWordDef != "(Choose 'edit definition' to add a new definition!)"
+    && theWordDef != "- (This definition has been deleted!)")
+        wordDefArea.setText(theWordDef);
+    else
+        wordDefArea.setText("");
     wordExampleArea.setText(theWordExample);
 }
 

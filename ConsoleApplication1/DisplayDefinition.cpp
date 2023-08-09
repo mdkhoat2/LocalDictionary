@@ -363,18 +363,26 @@ void DisplayBox::initEngEngFirstDef()
     EEDefID = 0;
     setEngEngUIText();
     // Initialize the buttons
-    if(EEDefNum > 1)
+    if(EEDefNum > 0)
         showNextButton = true;
 }
 
 void DisplayBox::showNextEngEngDef()
 {
     ++EEDefID;
-    setEngEngUIText();
+    if(EEDefID < EEDefNum)
+        setEngEngUIText();
+    else
+    {
+        wordType.setString("");
+        wordDef.setString("      (Choose 'edit definition' to add a new definition!)");
+        wrapText(wordDef);   
+        wordExample.setString("");
+    }
     // Update buttons
     if(EEDefID > 0)
         showPrevButton = true;
-    if(EEDefID == EEDefNum-1)
+    if(EEDefID == EEDefNum)
         showNextButton = false;
 }
 
@@ -383,7 +391,7 @@ void DisplayBox::showPrevEngEngDef()
     --EEDefID;
     setEngEngUIText();
     // Update buttons
-    if(EEDefID < EEDefNum-1)
+    if(EEDefID < EEDefNum)
         showNextButton = true;
     if(EEDefID == 0)
         showPrevButton = false;
@@ -452,18 +460,26 @@ void DisplayBox::initEngVieFirstDef()
     engVieDefID = 0;
     setEngVieUIText();
     // Initialize the buttons
-    if(engVieDefNum > 1)
+    if(engVieDefNum > 0)
         showNextButton = true;
 }
 
 void DisplayBox::showNextEngVieDef()
 {
     ++engVieDefID;
-    setEngVieUIText();
+    if(engVieDefID < engVieDefNum)
+        setEngVieUIText();
+    else
+    {
+        wordType.setString("");
+        wordDef.setString("      (Choose 'edit definition' to add a new definition!)");
+        wrapText(wordDef);   
+        wordExample.setString("");
+    }
     // Update buttons
     if(engVieDefID > 0)
         showPrevButton = true;
-    if(engVieDefID == engVieDefNum-1)
+    if(engVieDefID == engVieDefNum)
         showNextButton = false;
 }
 
@@ -472,7 +488,7 @@ void DisplayBox::showPrevEngVieDef()
     --engVieDefID;
     setEngVieUIText();
     // Update buttons
-    if(engVieDefID < engVieDefNum-1)
+    if(engVieDefID < engVieDefNum)
         showNextButton = true;
     if(engVieDefID == 0)
         showPrevButton = false;
@@ -539,18 +555,26 @@ void DisplayBox::initVieEngFirstDef()
     vieEngDefID = 0;
     setVieEngUIText();
     // Initialize the buttons
-    if(vieEngDefNum > 1)
+    if(vieEngDefNum > 0)
         showNextButton = true;
 }
 
 void DisplayBox::showNextVieEngDef()
 {
     ++vieEngDefID;
-    setVieEngUIText();
+    if(vieEngDefID < vieEngDefNum)
+        setVieEngUIText();
+    else
+    {
+        wordType.setString("");
+        wordDef.setString("(Choose 'edit definition' to add a new definition!)");
+        wrapText(wordDef);   
+        wordExample.setString("");
+    }
     // Update buttons
     if(vieEngDefID > 0)
         showPrevButton = true;
-    if(vieEngDefID == vieEngDefNum-1)
+    if(vieEngDefID == vieEngDefNum)
         showNextButton = false;
 }
 
@@ -559,7 +583,7 @@ void DisplayBox::showPrevVieEngDef()
     --vieEngDefID;
     setVieEngUIText();
     // Update buttons
-    if(vieEngDefID < vieEngDefNum-1)
+    if(vieEngDefID < vieEngDefNum)
         showNextButton = true;
     if(vieEngDefID == 0)
         showPrevButton = false;
@@ -983,29 +1007,109 @@ void DisplayBox::receiveEditText(std::string &editWordType, std::string &editWor
     removeEndLineInString(editWordDef);
     if(currentDataSetID == 0)
     {
-        EEData->defList[EEDefID].wordType = editWordType;
-        EEData->defList[EEDefID].defAndExample.first = editWordDef;
-        EEData->defList[EEDefID].defAndExample.second = editWordExample;
-        EEData->defList[EEDefID].isEdited = true;
-        setEngEngUIText();
-        saveEditToFile(*EEData, currentDataSetID);
+        if(EEDefID < EEDefNum)
+        {
+            if(editWordType.empty() && editWordDef.empty() && editWordExample.empty())
+            {
+                EEData->defList[EEDefID].wordType = "";
+                EEData->defList[EEDefID].defAndExample.first = "- (This definition has been deleted!)";
+                EEData->defList[EEDefID].defAndExample.second = "";
+            }
+            else
+            {
+                EEData->defList[EEDefID].wordType = editWordType;
+                EEData->defList[EEDefID].defAndExample.first = editWordDef;
+                EEData->defList[EEDefID].defAndExample.second = editWordExample;
+            } 
+            EEData->defList[EEDefID].isEdited = true;
+            setEngEngUIText();
+            saveEditToFile(*EEData, currentDataSetID);
+        }
+        // If this is a new definition
+        else
+        {
+            ++EEDefNum;
+            EngVieDef newDef;
+            newDef.wordType = editWordType;
+            newDef.defAndExample.first = editWordDef;
+            newDef.defAndExample.second = editWordExample;
+            EEData->defList.push_back(newDef);
+            EEData->defList[EEDefID].isEdited = true;
+            setEngEngUIText();
+            saveEditToFile(*EEData, currentDataSetID);
+            showNextButton = true;
+        }
     }
     else if(currentDataSetID == 1)
     {
-        engVieData->defList[engVieDefID].wordType = editWordType;
-        engVieData->defList[engVieDefID].defAndExample.first = editWordDef;
-        engVieData->defList[engVieDefID].defAndExample.second = editWordExample;
-        engVieData->defList[engVieDefID].isEdited = true;
-        saveEditToFile(*engVieData, currentDataSetID);
-        setEngVieUIText();
+        if(engVieDefID < engVieDefNum)
+        {
+            if(editWordType.empty() && editWordDef.empty() && editWordExample.empty())
+            {
+                engVieData->defList[engVieDefID].wordType = "";
+                engVieData->defList[engVieDefID].defAndExample.first = "- (This definition has been deleted!)";
+                engVieData->defList[engVieDefID].defAndExample.second = "";
+            }
+            else
+            {
+                engVieData->defList[engVieDefID].wordType = editWordType;
+                engVieData->defList[engVieDefID].defAndExample.first = editWordDef;
+                engVieData->defList[engVieDefID].defAndExample.second = editWordExample;
+            }
+            
+            engVieData->defList[engVieDefID].isEdited = true;
+            saveEditToFile(*engVieData, currentDataSetID);
+            setEngVieUIText();
+        }
+        // If this is a new definition
+        else
+        {
+            ++engVieDefNum;
+            EngVieDef newDef;
+            newDef.wordType = editWordType;
+            newDef.defAndExample.first = editWordDef;
+            newDef.defAndExample.second = editWordExample;
+            engVieData->defList.push_back(newDef);
+            engVieData->defList[engVieDefID].isEdited = true;
+            setEngVieUIText();
+            saveEditToFile(*engVieData, currentDataSetID);
+            showNextButton = true;
+        }
     }
     else if(currentDataSetID == 2)
     {
-        vieEngData->defList[vieEngDefID].wordType = editWordType;
-        vieEngData->defList[vieEngDefID].defAndExample.first = editWordDef;
-        vieEngData->defList[vieEngDefID].defAndExample.second = editWordExample;
-        vieEngData->defList[vieEngDefID].isEdited = true;
-        saveEditToFile(*vieEngData, currentDataSetID);
-        setVieEngUIText();
+        if(vieEngDefID < vieEngDefNum)
+        {
+            if(editWordType.empty() && editWordDef.empty() && editWordExample.empty())
+            {
+                vieEngData->defList[vieEngDefID].wordType = "";
+                vieEngData->defList[vieEngDefID].defAndExample.first = "- (This definition has been deleted!)";
+                vieEngData->defList[vieEngDefID].defAndExample.second = "";
+            }
+            else
+            {
+                vieEngData->defList[vieEngDefID].wordType = editWordType;
+                vieEngData->defList[vieEngDefID].defAndExample.first = editWordDef;
+                vieEngData->defList[vieEngDefID].defAndExample.second = editWordExample;
+            }
+            
+            vieEngData->defList[vieEngDefID].isEdited = true;
+            saveEditToFile(*vieEngData, currentDataSetID);
+            setVieEngUIText();
+        }
+        // If this is a new definition
+        else
+        {
+            ++vieEngDefNum;
+            EngVieDef newDef;
+            newDef.wordType = editWordType;
+            newDef.defAndExample.first = editWordDef;
+            newDef.defAndExample.second = editWordExample;
+            vieEngData->defList.push_back(newDef);
+            vieEngData->defList[vieEngDefID].isEdited = true;
+            setEngVieUIText();
+            saveEditToFile(*vieEngData, currentDataSetID);
+            showNextButton = true;
+        }
     }
 }

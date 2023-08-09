@@ -461,8 +461,8 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
-	float scaleX = mainScreen.getScale().x;
-	float scaleY = mainScreen.getScale().y;
+	float scaleX = screenWithOptions.getScale().x;
+	float scaleY = screenWithOptions.getScale().y;
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
 	displayBox.setFont(font3);
@@ -535,8 +535,8 @@ void Application::run()
 	newWord = new NewWord(font, font2, window);
 	removeWord = new RemoveWord(font, font2, window);
 	favourite = new Favourite(window);
-	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
-	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
+	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
+	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	proposedWord = new ProposeWord();
 	loadEngEngDict();
 	loadEngVieDict();
@@ -687,14 +687,10 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			editDefScreen->setEndScreen(endScreen);
-			std::string editWordType = displayBox.getWordType();
-			std::string editWordDef = displayBox.getWordDef();
-			std::string editWordExample = displayBox.getWordExample();
-			bool isSaved = false;
 			editDefScreen->handleEvent(event, window, endScreen);
 			if (endScreen)
 			{
-				// Display box receive the edited word type, definition and example
+				// this will be executed when user press "cancel" button
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}
@@ -785,6 +781,7 @@ void Application::update()
 		editDefScreen->update(window, endScreen, isSaved, editWordType, editWordDef, editWordExample);
 		if(endScreen)
 		{
+			// this will be executed when user press "save" button
 			if(isSaved)
 				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
 			editDefScreen->setEndScreen(endScreen);
@@ -969,7 +966,21 @@ void Application::searchInEmojiDict(std::string& inputWord)
 
 void Application::resetEverything()
 {
+	// Clear display box
+	if(currentDataSetID == 0)
+		displayBox.clearEngEngData();
+	else if(currentDataSetID == 1)
+		displayBox.clearEngVieData();
+	else if(currentDataSetID == 2)
+		displayBox.clearVieEngData();
+	else
+		displayBox.clearEmoji();
+	// Clear search bar
+	searchBar.clear();
+	// Reset history
 	resetHistoryAll();
+	// Reset edit definition
+	resetEditDef();
 }
 
 void Application::resetHistoryAll() {
@@ -981,6 +992,97 @@ void Application::resetHistoryAll() {
 	clearFile("data/historyVE.txt");
 	history3.resetHistory();
 	clearFile("data/historyEmoji.txt");
+}
+
+void Application::resetEditDef()
+{
+	// Delete all eng-eng edited words
+	std::string filename = "data/edit-words/eng-eng/list-of-words.txt";
+	std::ifstream fin;
+	std::vector<std::string> words;
+	std::string line;
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	std::ofstream fout;
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/eng-eng/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
+	// Delete all eng-vie edited words 
+	words.clear();
+	filename = "data/edit-words/eng-vie/list-of-words.txt";
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/eng-vie/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
+	// Delete all vie-eng edited words 
+	words.clear();
+	filename = "data/edit-words/vie-eng/list-of-words.txt";
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/vie-eng/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
 }
 
 void Application::clearFile(std::string filename)
