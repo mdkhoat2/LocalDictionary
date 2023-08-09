@@ -1,0 +1,8 @@
+thunghiemthemVE
+* noun
+- test
+=thu nghiem de tim loi+A test to find bug
+=loi nhieu toi noi thu nghiem mai van con loi+There are so many bugs to an extent that there are still bugs no matter how many tests
+=thu nghiem hoan tat+test is complete
+* verb
+- to test

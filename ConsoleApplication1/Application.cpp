@@ -232,6 +232,7 @@ void Application::loadEngVieDict()
 
     fin.close();
 	newWord->loadAddedEVWord(engEngRoot, engVieVector);
+	removeWord->loadRemovedEVWord(engEngRoot);
 }
 
 void Application::loadVieEngDict()
@@ -287,6 +288,8 @@ void Application::loadVieEngDict()
 	++wordIndex;
 
     fin.close();
+	newWord->loadAddedVEWord(engEngRoot, vieEngVector);
+	removeWord->loadRemovedVEWord(engEngRoot);
 }
 
 void Application::loadEmojiDict()
@@ -560,7 +563,7 @@ void Application::handleEvent()
 		if (event.type == sf::Event::Closed)
 		{
 			newWord->saveAddedWord();
-			removeWord->saveRemovedEEWord();
+			removeWord->saveRemovedWord();
 			window.close();
 		}	
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)

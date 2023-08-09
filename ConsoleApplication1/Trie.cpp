@@ -5,7 +5,7 @@
 #include "Trie.h"
 
 EngTrieNode::EngTrieNode() : 
-    flag(false), isDeleted(false), engEngIndex(-1), engVieIndex(-1), vieEngIndex(-1), emojiIndex(-1)
+    flag(false), isEEDeleted(false), isEVDeleted(false), isVEDeleted(false), isEmojiDeleted(false), engEngIndex(-1), engVieIndex(-1), vieEngIndex(-1), emojiIndex(-1)
 {
     for(int i = 0; i < 72; ++i) 
       links[i] = nullptr;
@@ -180,22 +180,22 @@ int trieSearch(EngTrieNode *root, std::string word, int curDataSetID)
     }
     if(curDataSetID == 0)
     {
-        if(node->flag && !node->isDeleted)
+        if(node->flag && !node->isEEDeleted)
             return node->engEngIndex;
     }
     else if(curDataSetID == 1)
     {
-        if(node->flag && !node->isDeleted)
+        if(node->flag && !node->isEVDeleted)
             return node->engVieIndex;
     }
     else if(curDataSetID == 2)
     {
-        if(node->flag && !node->isDeleted)
+        if(node->flag && !node->isVEDeleted)
             return node->vieEngIndex;
     }
     else
     {
-        if(node->flag && !node->isDeleted)
+        if(node->flag && !node->isEmojiDeleted)
             return node->emojiIndex;
     }
     return -1;
@@ -229,23 +229,23 @@ void trieHide(EngTrieNode* root, std::string word, int curDataSetID)
     }
     if (curDataSetID == 0)
     {
-        if (node->flag && node->engEngIndex != -1 && !node->isDeleted)
-            node->isDeleted = true;
+        if (node->flag && node->engEngIndex != -1 && !node->isEEDeleted)
+            node->isEEDeleted = true;
     }
     else if (curDataSetID == 1)
     {
-        if (node->flag && node->engVieIndex != -1)
-            node->isDeleted = true;
+        if (node->flag && node->engVieIndex != -1 && !node->isEVDeleted)
+            node->isEVDeleted = true;
     }
     else if (curDataSetID == 2)
     {
-        if (node->flag && node->vieEngIndex != -1)
-            node->isDeleted = true;
+        if (node->flag && node->vieEngIndex != -1 && !node->isVEDeleted)
+            node->isVEDeleted = true;
     }
     else
     {
-        if (node->flag && node->emojiIndex != -1)
-            node->isDeleted = true;
+        if (node->flag && node->emojiIndex != -1 && !node->isEmojiDeleted)
+            node->isEmojiDeleted = true;
     }
 }
 
