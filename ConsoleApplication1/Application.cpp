@@ -567,6 +567,7 @@ void Application::run()
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	proposedWord = new ProposeWord();
+	explore = new Explore(font, font3, window);
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();

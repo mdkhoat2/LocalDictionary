@@ -6,7 +6,6 @@ Explore::Explore(sf::Font& font, sf::Font& font2, sf::Window& window) :
 {
 	initBackground(window);
 	initFont();
-	initSearchBar();
 	initDisplayBox();
 }
 
@@ -21,6 +20,16 @@ void Explore::initBackground(sf::Window& window)
 	float scaleX = static_cast<float>(window.getSize().x) / backgroundTex.getSize().x;
 	float scaleY = static_cast<float>(window.getSize().y) / backgroundTex.getSize().y;
 	background.setScale(scaleX, scaleY);
+}
+
+void Explore::initFont()
+{
+	font = font;
+	font2 = font2;
+}
+
+void Explore::initDisplayBox() {
+	
 }
 
 
