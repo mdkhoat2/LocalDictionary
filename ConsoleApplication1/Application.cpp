@@ -27,7 +27,6 @@ Application::Application() :
 	newWord(nullptr),
 	removeWord(nullptr),
 	searchDefScreen(nullptr),
-	explore(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	proposedWord(nullptr),
@@ -61,7 +60,6 @@ Application::~Application()
 	delete favourite;
 	delete removeWord;
 	delete searchDefScreen;
-	delete explore;
 }
 
 void Application::loadEngEngDict()
@@ -513,6 +511,36 @@ void Application::initRandomDefButton()
 	randomDefButton.setOutlineThickness(2);
 }
 
+void Application::explore()
+{
+	// Clear word data before explore
+	if (currentDataSetID == 0)
+	{
+		displayBox.clearEngEngData();
+	}
+	else if (currentDataSetID == 1)
+	{
+		displayBox.clearEngVieData();
+	}
+	else if (currentDataSetID == 2)
+	{
+		displayBox.clearVieEngData();
+	}
+	else if (currentDataSetID == 3)
+	{
+		displayBox.clearEmoji();
+	}
+	// Start exploring
+	if (currentDataSetID == 0)
+		searchInEngEngDict(engEngVector[ranNum(engEngVector.size())].word,true);
+	else if (currentDataSetID == 1)
+		searchInEngVieDict(engVieVector[ranNum(engVieVector.size())].word, true);
+	else if (currentDataSetID == 2)
+		searchInVieEngDict(vieEngVector[ranNum(vieEngVector.size())].word, true);
+	else
+		searchInEmojiDict(emojiVector[ranNum(engEngVector.size())], true);
+}
+
 void Application::initResetButton()
 {
 	resetButton.setFont(font);
@@ -567,7 +595,6 @@ void Application::run()
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	proposedWord = new ProposeWord();
-	explore = new Explore(font, font3, window);
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -621,13 +648,13 @@ void Application::handleEvent()
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
 					if (currentDataSetID == 0)
-						searchInEngEngDict(inputWord);
+						searchInEngEngDict(inputWord, false);
 					else if (currentDataSetID == 1)
-						searchInEngVieDict(inputWord);
+						searchInEngVieDict(inputWord, false);
 					else if (currentDataSetID == 2)
-						searchInVieEngDict(inputWord);
+						searchInVieEngDict(inputWord, false);
 					else 
-						searchInEmojiDict(inputWord);
+						searchInEmojiDict(inputWord, false);
 				}
 				else if (menuButton.isMouseOver(window)) {
 					if (currentScreen == ScreenState::MainScreen)
@@ -675,6 +702,9 @@ void Application::handleEvent()
 					searchBar.clear();
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
 					currentScreen = ScreenState::SearchDefinitionScreen;
+				}
+				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					explore();
 				}
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					//reset function
@@ -923,9 +953,9 @@ void Application::render()
 	window.display();
 }
 
-void Application::searchInEngEngDict(std::string &inputWord)
+void Application::searchInEngEngDict(std::string &inputWord, bool isForRandom)
 {
-	if (inputWord!="")
+	if (inputWord!="" && isForRandom == false)
         history.add(inputWord, "data/historyEE.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
     if(wordIndex != -1)
@@ -942,9 +972,9 @@ void Application::searchInEngEngDict(std::string &inputWord)
     }
 }
 
-void Application::searchInEngVieDict(std::string& inputWord)
+void Application::searchInEngVieDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="")
+    if (inputWord!="" && isForRandom == false)
         history1.add(inputWord, "data/historyEV.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
     if(wordIndex != -1)
@@ -961,9 +991,9 @@ void Application::searchInEngVieDict(std::string& inputWord)
     }
 }
 
-void Application::searchInVieEngDict(std::string& inputWord)
+void Application::searchInVieEngDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="")
+    if (inputWord!="" && isForRandom == false)
         history2.add(inputWord, "data/historyVE.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
     if(wordIndex != -1)
@@ -980,9 +1010,9 @@ void Application::searchInVieEngDict(std::string& inputWord)
     }
 }
 
-void Application::searchInEmojiDict(std::string& inputWord)
+void Application::searchInEmojiDict(std::string& inputWord, bool isForRandom)
 {
-	if (inputWord != "")
+	if (inputWord != "" && isForRandom == false)
 		history3.add(inputWord, "data/historyEmoji.txt");
 	int emojiIndex = filterAndSearch(engEngRoot, inputWord, 3);
 	if (emojiIndex != -1)
