@@ -15,6 +15,9 @@ Application::Application() :
 	editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	searchDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	exploreButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	randomWordButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	randomDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	resetButton("", {153,42}, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
 	history(),
@@ -24,6 +27,7 @@ Application::Application() :
 	newWord(nullptr),
 	removeWord(nullptr),
 	searchDefScreen(nullptr),
+	explore(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	proposedWord(nullptr),
@@ -43,6 +47,9 @@ Application::Application() :
 	initFavouriteButton();
 	initResetButton();
 	initSearchDefButton();
+	initExploreButton();
+	initRandomWordButton();
+	initRandomDefButton();
 	loadAllHistory();
 }
 
@@ -54,6 +61,7 @@ Application::~Application()
 	delete favourite;
 	delete removeWord;
 	delete searchDefScreen;
+	delete explore;
 }
 
 void Application::loadEngEngDict()
@@ -484,6 +492,27 @@ void Application::initSearchDefButton()
 	searchDefButton.setOutlineThickness(2);
 }
 
+void Application::initExploreButton()
+{
+	exploreButton.setFont(font);
+	exploreButton.setPosition({ 972, 531 });
+	exploreButton.setOutlineThickness(2);
+}
+
+void Application::initRandomWordButton() 
+{
+	randomWordButton.setFont(font);
+	randomWordButton.setPosition({ 972, 587 });
+	randomWordButton.setOutlineThickness(2);
+}
+
+void Application::initRandomDefButton()
+{
+	randomDefButton.setFont(font);
+	randomDefButton.setPosition({ 972, 643 });
+	randomDefButton.setOutlineThickness(2);
+}
+
 void Application::initResetButton()
 {
 	resetButton.setFont(font);
@@ -772,6 +801,9 @@ void Application::update()
 		editDefButton.update(window);
 		favouritebutton.update(window);
 		searchDefButton.update(window);
+		exploreButton.update(window);
+		randomWordButton.update(window);
+		randomDefButton.update(window);
 		resetButton.update(window);
 		displayBox.update(window);
 	}
@@ -857,6 +889,9 @@ void Application::render()
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
 		searchDefButton.drawTo(window);
+		exploreButton.drawTo(window);
+		randomWordButton.drawTo(window);
+		randomDefButton.drawTo(window);
 		resetButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
