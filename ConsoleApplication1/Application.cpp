@@ -461,8 +461,8 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
-	float scaleX = mainScreen.getScale().x;
-	float scaleY = mainScreen.getScale().y;
+	float scaleX = screenWithOptions.getScale().x;
+	float scaleY = screenWithOptions.getScale().y;
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
 	displayBox.setFont(font3);
