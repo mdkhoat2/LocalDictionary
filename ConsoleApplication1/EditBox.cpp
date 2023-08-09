@@ -199,7 +199,11 @@ void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWor
 {
     word.setString(theWord);
     wordTypeArea.setText(theWordType);
-    wordDefArea.setText(theWordDef);
+    if(theWordDef != "(Choose 'edit definition' to add a new definition!)"
+    && theWordDef != "- (This definition has been deleted!)")
+        wordDefArea.setText(theWordDef);
+    else
+        wordDefArea.setText("");
     wordExampleArea.setText(theWordExample);
 }
 
