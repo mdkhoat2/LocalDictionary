@@ -50,6 +50,7 @@ public:
 public:
     void resetEverything();
     void resetHistoryAll();
+    void resetEditDef();
     void clearFile(std::string filename);
 private:
     sf::VideoMode videoMode;

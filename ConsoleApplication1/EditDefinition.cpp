@@ -24,7 +24,7 @@ EditDefinitionScreen::EditDefinitionScreen(sf::Font& font, sf::Font& font2, sf::
     initSaveButton(font);
     initEditBox(font2, background);
     initSaveSucceeded(font);
-    succeededTimeMax = sf::seconds(2.0f);
+    succeededTimeMax = sf::seconds(1.5f);
 }
 
 void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window, bool& endScreen)
