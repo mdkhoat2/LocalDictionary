@@ -11,7 +11,6 @@ class Explore
 {
 public:
 	Explore(sf::Font& font, sf::Font& font2, sf::Window& window);
-	~Explore();
 public:
 	void render(sf::Window& window);
 	void changeCurrentDataSet(int _number);
@@ -27,16 +26,13 @@ private:
 	sf::Font font2; //regular
 
 	int currentDataSet;
-	sf::Text word;
 	DisplayBox displayBox;
 
 	std::string currentWord;
-	std::string currentDefinition;
 private:
 	void initCurrentDataSet();
 	void initBackground(sf::Window& window);
 	void initFont();
-	void initSearchBar();
 	void initDisplayBox();
 };
 
