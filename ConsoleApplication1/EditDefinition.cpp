@@ -67,7 +67,6 @@ void EditDefinitionScreen::handleEvent(sf::Event event, sf::RenderWindow &window
         else
             editBox.setSelectedWordExampleArea(false);
 
-        
     }
     else if(event.type == sf::Event::TextEntered)
     {
