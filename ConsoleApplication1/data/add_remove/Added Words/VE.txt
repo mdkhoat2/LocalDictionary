@@ -6,3 +6,7 @@ thunghiemthemVE
 =thu nghiem hoan tat+test is complete
 * verb
 - to test
+tim kiem loi
+* verb
+-to find bugs
+=Chung ta can tim kiem loi+We need to find bugs

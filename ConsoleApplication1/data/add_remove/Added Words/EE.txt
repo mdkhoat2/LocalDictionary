@@ -1,13 +1,25 @@
 abcd
 *n
--testing word; "the tesing word is abcd" [syn: {abccd}, {abbcd}]
+-testing word
+= "the tesing word is abcd" 
+=[syn: {abccd}, {abbcd}]
 -hoping for no bugs
 *v
--hello abcd; "abcd is great" [syn: {abcd}, {abab}]
+-hello abcd
+= "abcd is great" 
+=[syn: {abcd}, {abab}]
 aaaa
 *adj
--screaming; "they scream aaaa" [syn: {aaaaa}, {aaaaaa}]
+-screaming
+= "they scream aaaa" 
+=[syn: {aaaaa}, {aaaaaa}]
 -battery
 *adv
--shockingly; "they aaaa run" [syn: {aaa}, {aak}]
+-shockingly
+= "they aaaa run" 
+=[syn: {aaa}, {aak}]
 -surprisingly
+testingkbadd
+*v
+-to test for bugs
+= "We are testing for bugs"

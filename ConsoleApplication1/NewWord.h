@@ -57,6 +57,10 @@ public:
 	void addInEngVieDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector);
 	void addInVieEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector);
 
+	void pushEEWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample);
+	void pushEVWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample);
+	void pushVEWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample);
+
 	// From text file
 	void addInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engEngVector);
 	void addInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector);
@@ -98,7 +102,7 @@ private:
 		1: From text file
 	*/
 
-	EditBox editBox;
+	EditBox addBox;
 	int currentEditAreaID;
 	bool isAdding;
 
@@ -106,7 +110,9 @@ private:
 private:
 	void initBackground(sf::RenderWindow& window);
 	void initWordBar(sf::Font& font);
-	void initEditBox(const sf::Font& font, sf::Sprite& background);
+	void initAddBox(const sf::Font& font, sf::Sprite& background);
+	void initTextToEdit(const sf::String& theWord, const sf::String& theWordType,
+		const sf::String& theWordDef, const sf::String& theWordExample);
 	void initBackButton(sf::Font& font);
 	void initCancelButton(sf::Font& font);
 	void initAddButton(sf::Font& font);

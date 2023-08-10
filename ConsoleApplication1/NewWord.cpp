@@ -155,6 +155,7 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& e
             else
             {
                 // insert the previous word with its definition
+                separateEngEngExample(wordInfo);
                 addNewEEWord(root, word, wordInfo, engEngVector);
                 word = line;
                 wordInfo.clear();
@@ -165,6 +166,7 @@ void NewWord::loadAddedEEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& e
         fin.close();
         return;
     }
+    separateEngEngExample(wordInfo);
     addNewEEWord(root, word, wordInfo, engEngVector); // insert last word
     fin.close();
 }
@@ -399,7 +401,7 @@ void NewWord::loadAddedVEWord(EngTrieNode*& root, std::vector<WordDataEngVie>& v
 
 NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     wordBar(20, sf::Color::Black, sf::Color::Transparent, true),
-    editBox({ 72, 350 }, { 780, 600 }, sf::Color::Transparent, sf::Color::Black),
+    addBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     cancelButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     addOptButton("      Keyboard", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
@@ -418,7 +420,7 @@ NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     initCancelButton(font);
     initAddButton(font);
     initWordBar(font);
-    initEditBox(font2, addScreen);
+    initAddBox(font2, addScreen);
     initDisplayBox(font2);
     initNoteBox(font2);
     initDataSetText(font);
@@ -546,14 +548,19 @@ void NewWord::initDisplayBox(sf::Font& font) {
     displayBox.setCharacterSize(25);
 }
 
-void NewWord::initEditBox(const sf::Font& font, sf::Sprite& background)
+void NewWord::initAddBox(const sf::Font& font, sf::Sprite& background)
 {
-    //float scaleX = background.getScale().x;
-    //float scaleY = background.getScale().y;
-    //editBox.setPosition(247 * scaleX, 842 * scaleY);
-    //editBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
-    editBox.setFont(font);
-    editBox.setCharacterSize(25);
+    float scaleX = background.getScale().x;
+    float scaleY = background.getScale().y;
+    addBox.setPosition(247 * scaleX, 1292 * scaleY);
+    addBox.setSize(sf::Vector2f(2887 * scaleX, 1569 * scaleY));
+    addBox.setFont(font);
+    addBox.setCharacterSize(25);
+}
+
+void NewWord::initTextToEdit(const sf::String& theWord, const sf::String& theWordType,
+    const sf::String& theWordDef, const sf::String& theWordExample) {
+    addBox.initTextToEdit(theWord, theWordType, theWordDef, theWordExample);
 }
 
 void NewWord::initNoteBox(sf::Font& font) {
@@ -615,36 +622,37 @@ void NewWord::changeAddOpt()
 
 std::string NewWord::getEditWordType()
 {
-    return editBox.getWordType();
+    return addBox.getWordType();
 }
 
 std::string NewWord::getEditWordDef()
 {
-    return editBox.getWordDef();
+    return addBox.getWordDef();
 }
 
 std::string NewWord::getEditWordExample()
 {
-    return editBox.getWordExample();
+    return addBox.getWordExample();
 }
 
 void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
     std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
     std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
-        wordBar.typedOn(event);
-        if (isAdding) {
-            if (currentEditAreaID == 0 && editBox.isWordTypeAreaSelected())
+        if (!isAdding && wordBar.isSelect())
+            wordBar.typedOn(event);
+        else if (isAdding) {
+            if (currentEditAreaID == 0 && addBox.isWordTypeAreaSelected())
             {
-                editBox.wordTypeAreaTypedOn(event);
+                addBox.wordTypeAreaTypedOn(event);
             }
-            else if (currentEditAreaID == 1 && editBox.isWordDefAreaSelected())
+            else if (currentEditAreaID == 1 && addBox.isWordDefAreaSelected())
             {
-                editBox.wordDefAreaTypedOn(event);
+                addBox.wordDefAreaTypedOn(event);
             }
-            else if (currentEditAreaID == 2 && editBox.isWordExampleAreaSelected())
+            else if (currentEditAreaID == 2 && addBox.isWordExampleAreaSelected())
             {
-                editBox.wordExampleAreaTypedOn(event);
+                addBox.wordExampleAreaTypedOn(event);
             }
         }
     }
@@ -653,6 +661,29 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
             wordBar.setSelected(true);
         else
             wordBar.setSelected(false);
+        if (addBox.isMouseOverWordTypeArea(window))
+        {
+            currentEditAreaID = 0;
+            addBox.setSelectedWordTypeArea(true);
+        }
+        else
+            addBox.setSelectedWordTypeArea(false);
+
+        if (addBox.isMouseOverWordDefArea(window))
+        {
+            currentEditAreaID = 1;
+            addBox.setSelectedWordDefArea(true);
+        }
+        else
+            addBox.setSelectedWordDefArea(false);
+
+        if (addBox.isMouseOverWordExampleArea(window))
+        {
+            currentEditAreaID = 2;
+            addBox.setSelectedWordExampleArea(true);
+        }
+        else
+            addBox.setSelectedWordExampleArea(false);
         if (backButton.isMouseOver(window)) {
             // Clear note box
             noteBox.clearEngEngData();
@@ -688,7 +719,37 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 }
             }
             else {
-
+                std::string addWordType = addBox.getWordType();
+                std::string addWordDef = addBox.getWordDef();
+                std::string addWordExample = addBox.getWordExample();
+                if (!addWordType.empty() && !addWordDef.empty()) {
+                    WordDataEngVie theItem;
+                    theItem.word = inputWord;
+                    EngVieDef theDef;
+                    theDef.wordType = addWordType;
+                    theDef.defAndExample.first = addWordDef;
+                    theDef.defAndExample.second = addWordExample;
+                    theItem.defList.push_back(theDef);
+                    if (currentDataSetID == 0) {
+                        engEngVector.push_back(theItem);
+                        trieInsert(engEngRoot, inputWord, engEngVector.size() - 1, 0);
+                        pushEEWordToQueue(inputWord, addWordType, addWordDef, addWordExample);
+                        noteBox.showNewDefinitions();
+                    }
+                    else if (currentDataSetID == 1) {
+                        engVieVector.push_back(theItem);
+                        trieInsert(engEngRoot, inputWord, engVieVector.size() - 1, 1);
+                        pushEVWordToQueue(inputWord, addWordType, addWordDef, addWordExample);
+                        noteBox.showNewEngVieDefinitions();
+                    }
+                    else if (currentDataSetID == 2) {
+                        vieEngVector.push_back(theItem);
+                        trieInsert(engEngRoot, inputWord, vieEngVector.size() - 1, 2);
+                        pushVEWordToQueue(inputWord, addWordType, addWordDef, addWordExample);
+                        noteBox.showNewVieEngDefinitions();
+                    }
+                }
+                isAdding = false;
             }
         }
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
@@ -727,7 +788,7 @@ void NewWord::update(sf::RenderWindow& window) {
         noteBox.update(window);
         displayBox.update(window);
         if (isAdding) {
-            editBox.update(window);
+            addBox.update(window);
             cancelButton.update(window);
         }
     }
@@ -747,9 +808,9 @@ void NewWord::render(sf::RenderWindow& window) {
         noteBox.drawTo(window);
         displayBox.drawTo(window);
         if (isAdding) {
+            addBox.drawTo(window);
             window.draw(cancel);
             cancelButton.drawTo(window);
-            editBox.drawTo(window);
         }
     }
 }
@@ -774,15 +835,111 @@ void NewWord::addInEngEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot
         noteBox.showNoEngEngDefinitions();
         displayBox.clearEngEngData();
         isAdding = true;
+        initTextToEdit(inputWord, "", "", "");
     }
 }
 
 void NewWord::addInEngVieDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& engVieVector) {
-
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+    if (wordIndex != -1) {
+        // Console
+        std::cout << "Tu vung da co trong tu dien" << "\n";
+        // UI
+        noteBox.showExistedEngVieDefinitions();
+        displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
+    }
+    else {
+        std::cout << "Khong the tim thay tu vung" << "\n";
+        noteBox.showNoEngVieDefinitions();
+        displayBox.clearEngVieData();
+        isAdding = true;
+        initTextToEdit(inputWord, "", "", "");
+    }
 }
 
 void NewWord::addInVieEngDictKB(std::string& inputWord, EngTrieNode*& engEngRoot, std::vector<WordDataEngVie>& vieEngVector) {
+    int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
+    if (wordIndex != -1) {
+        // Console
+        std::cout << "The word has already existed" << "\n";
+        // UI
+        noteBox.showExistedVieEngDefinitions();
+        displayBox.getWordDataVieEng(inputWord, wordIndex, vieEngVector);
+    }
+    else {
+        std::cout << "Cannot find the word" << "\n";
+        noteBox.showNoVieEngDefinitions();
+        displayBox.clearVieEngData();
+        isAdding = true;
+        initTextToEdit(inputWord, "", "", "");
+    }
+}
 
+void NewWord::pushEEWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample) {
+    std::string newWordType;
+    if (wordType == "noun")
+        newWordType = "n";
+    else if (wordType == "verb")
+        newWordType = "v";
+    else if (wordType == "adjective")
+        newWordType = "adj";
+    else if (wordType == "adverb")
+        newWordType = "adv";
+    else
+        newWordType = wordType;
+    std::string newWordInfo = "*" + newWordType + '\n' + wordDef;
+    if (!wordExample.empty())
+        newWordInfo += "; " + wordExample;
+    addedEEWord.push({ inputWord, newWordInfo });
+}
+
+void NewWord::pushEVWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample) {
+    std::string newWordInfo = "*  " + wordType + '\n' + wordDef;
+    if (!wordExample.empty()) {
+        std::string newWordEx = "=";
+        int i = 0;
+        while (i < wordExample.length()) {
+            if (wordExample[i] == '=') { // Change ' = ' to '+'
+                newWordEx.pop_back();
+                newWordEx += "+";
+                i += 2;
+            }
+            else {
+                newWordEx += wordExample[i];
+                ++i;
+            }
+        }
+        // Pop the space at the end of the current word
+        if (newWordEx[newWordEx.length() - 1] == ' ')
+            newWordEx.pop_back();
+        newWordInfo += "\n" + newWordEx;
+    }
+    addedEVWord.push({ inputWord, newWordInfo });
+
+}
+
+void NewWord::pushVEWordToQueue(std::string& inputWord, std::string& wordType, std::string& wordDef, std::string& wordExample) {
+    std::string newWordInfo = "* " + wordType + '\n' + wordDef;
+    if (!wordExample.empty()) {
+        std::string newWordEx = "=";
+        int i = 0;
+        while (i < wordExample.length()) {
+            if (wordExample[i] == '=') { // Change ' = ' to '+'
+                newWordEx.pop_back();
+                newWordEx += "+";
+                i += 2;
+            }
+            else {
+                newWordEx += wordExample[i];
+                ++i;
+            }
+        }
+        // Pop the space at the end of the current word
+        if (newWordEx[newWordEx.length() - 1] == ' ')
+            newWordEx.pop_back();
+        newWordInfo += "\n" + newWordEx;
+    }
+    addedVEWord.push({ inputWord, newWordInfo });
 }
 
 // Add from text file
