@@ -391,6 +391,7 @@ bool RemoveWord::removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEng
     //    displayBox.clearEngEngData();
     //    return false;
     //}
+    return 1;
 }
 
 void RemoveWord::removeInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) {

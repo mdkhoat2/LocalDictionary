@@ -15,6 +15,7 @@ Application::Application() :
 	editDefButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	searchDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	favouriteFlag("", { 60,60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
 	history(),
 	favourite(nullptr),
@@ -42,6 +43,7 @@ Application::Application() :
 	initFavouriteButton();
 	initSearchDefButton();
 	loadAllHistory();
+	initfavouriteFlag();
 }
 
 Application::~Application()
@@ -468,6 +470,11 @@ void Application::initSearchDefButton()
 	searchDefButton.setPosition({ 972, 475 });
 	searchDefButton.setOutlineThickness(2);
 }
+void Application::initfavouriteFlag()
+{
+	favouriteFlag.setFont(font);
+	favouriteFlag.setPosition(9, 162);
+}
 
 void Application::changeDataSet()
 {
@@ -514,6 +521,7 @@ void Application::run()
 	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
 	proposedWord = new ProposeWord();
+	favouriteMain = new FavouriteOnMainAndOptionScreen();
 	loadEngEngDict();
 	loadEngVieDict();
 	loadVieEngDict();
@@ -562,7 +570,7 @@ void Application::handleEvent()
 				{
 					std::string inputWord = searchBar.getText();
 					proposedWord->isTyping = false;
-
+					favouriteMain->checkWordAddedOrNot(inputWord, currentDataSetID);
 					//if (inputWord!="")
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
@@ -605,8 +613,7 @@ void Application::handleEvent()
 					else if(currentDataSetID == 2)
 						displayBox.clearVieEngData();
 					searchBar.clear();
-					favourite->setCurrentDataSet(currentDataSetID);
-					favourite->addtoFile();
+					favourite->setDataSet(currentDataSetID);
 					favourite->loadWordsList();
 					currentScreen = ScreenState::FavouriteScreen;
 				}
@@ -644,9 +651,13 @@ void Application::handleEvent()
 				{
 					changeDataSet();
 				}
-				else if (currentScreen == ScreenState::MainScreen)
+				else if (favouriteFlag.isMouseOver(window)&&!proposedWord->setIsTyping())
 				{
-					favourite->likeOrNot(window);
+					favouriteMain->eraseOrAdd(searchBar, currentDataSetID);
+				}
+				else 
+				{
+					proposedWord->handleEvent2(event, window, searchBar);
 				}
 				
 			}
@@ -732,7 +743,14 @@ void Application::update()
 		searchButton.update(window);
 		dataSetButton.update(window);
 		menuButton.update(window);
-		displayBox.update(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.update(window);
+		}
+		else
+		{
+			proposedWord->update(window);
+		}
 	}
 	else if (currentScreen == ScreenState::OptionsScreen)
 	{
@@ -744,7 +762,14 @@ void Application::update()
 		editDefButton.update(window);
 		favouritebutton.update(window);
 		searchDefButton.update(window);
-		displayBox.update(window);
+		if (!proposedWord->setIsTyping())
+		{
+			displayBox.update(window);
+		}
+		else
+		{
+			proposedWord->update(window);
+		}
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
 	{
@@ -807,6 +832,8 @@ void Application::render()
         menuButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
+			favouriteFlag.drawTo(window);
+			favouriteMain->drawTo(window,searchBar);
 			displayBox.drawTo(window);
 		}
         //dataSetBar.drawTo(window);
@@ -830,6 +857,8 @@ void Application::render()
 		searchDefButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
+			favouriteFlag.drawTo(window);
+			favouriteMain->drawTo(window,searchBar);
 			displayBox.drawTo(window);
 		}
 		//dataSetBar.drawTo(window);

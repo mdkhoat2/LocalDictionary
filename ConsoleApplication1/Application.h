@@ -81,6 +81,7 @@ private:
     Button editDefButton;
     Button favouritebutton;
     Button searchDefButton;
+    Button favouriteFlag;
 
     Favourite *favourite;
     History history;
@@ -100,6 +101,7 @@ private:
     RemoveWord* removeWord;
     SearchDefinitionScreen* searchDefScreen;
     ProposeWord* proposedWord;
+    FavouriteOnMainAndOptionScreen* favouriteMain;
 private:
     void initWindow();
     void initBackground();
@@ -118,6 +120,7 @@ private:
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();
+    void initfavouriteFlag();
 };
 
 
