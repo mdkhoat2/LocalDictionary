@@ -32,7 +32,10 @@ struct EngTrieNode
     int emojiIndex;
 
     // Member variable for remove function
-    bool isDeleted;
+    bool isEEDeleted;
+    bool isEVDeleted;
+    bool isVEDeleted;
+    bool isEmojiDeleted;
 
     // Constructor
     EngTrieNode();

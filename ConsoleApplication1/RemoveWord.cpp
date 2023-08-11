@@ -1,39 +1,41 @@
 #include "RemoveWord.h"
 
-void RemoveWord::removeEEWord(EngTrieNode*& root, std::string word/*, std::string& wordInfo*/) {
+void RemoveWord::saveRemovedWord() {
+    saveRemovedEEWord();
+    saveRemovedEVWord();
+    saveRemovedVEWord();
+}
+
+// EE
+
+void RemoveWord::removeEEWord(EngTrieNode*& root, std::string word) {
     trieHide(root, word, 0);
-    //std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-    //removedEEWord.push({ word, newWordInfo });
     removedEEWord.push(word);
 }
 
 void RemoveWord::saveRemovedEEWord() {
     if (removedEEWord.empty()) return;
 
-    std::ofstream fout("data/add_remove/Removed Words.txt");
+    std::ofstream fout("data/add_remove/Removed Words/EE.txt");
     if (!fout.is_open()) {
-        std::cout << "Could not open Removed Words.txt file!";
+        std::cout << "Could not open EE.txt file!";
         fout.close();
         return;
     }
 
     while (!removedEEWord.empty()) {
-        //std::string tmp = removedEEWord.front().first;
         std::string tmp = removedEEWord.front();
-        if (tmp != "") {
+        if (tmp != "") 
             fout << tmp << std::endl;
-            //std::string newWordInfo = removedEEWord.front().second;
-            //fout << newWordInfo << std::endl;
-        }
         removedEEWord.pop();
     }
     fout.close();
 }
 
 void RemoveWord::loadRemovedEEWord(EngTrieNode*& root) {
-    std::ifstream fin("data/add_remove/Removed Words.txt");
+    std::ifstream fin("data/add_remove/Removed Words/EE.txt");
     if (!fin.is_open()) {
-        std::cout << "Could not open Removed Words.txt file!";
+        std::cout << "Could not open EE.txt file!";
         fin.close();
         return;
     }
@@ -46,42 +48,96 @@ void RemoveWord::loadRemovedEEWord(EngTrieNode*& root) {
             removeEEWord(root, word);
         }
     }
+    fin.close();
+}
 
-    //std::string line, word, wordInfo;
-    //int count = 0;
-    //while (std::getline(fin, line))
-    //{
-    //    if (line[0] == '*') { // this is a word type
-    //        if (!wordInfo.empty()) wordInfo += '\n';
-    //        wordInfo += line.substr(1);
-    //    }
-    //    else if (line[0] == '-') { // this is a word definition
-    //        wordInfo += '\n' + line.substr(1);
-    //    }
-    //    else if (line[0] == '=') { // this is a word example
-    //        if (line[1] == ' ') wordInfo += ';' + line.substr(1);
-    //        else wordInfo += line.substr(1);
-    //    }
-    //    else { // this is a word 
-    //        if (count == 0) // Read first word
-    //        {
-    //            ++count;
-    //            word = line;
-    //        }
-    //        else
-    //        {
-    //            // remove the previous word with its definition
-    //            removeEEWord(root, word, wordInfo);
-    //            word = line;
-    //            wordInfo.clear();
-    //        }
-    //    }
-    //}
-    //if (word.empty()) {
-    //    fin.close();
-    //    return;
-    //}
-    //removeEEWord(root, word, wordInfo); // remove last word
+// EV
+
+void RemoveWord::removeEVWord(EngTrieNode*& root, std::string word) {
+    trieHide(root, word, 1);
+    removedEVWord.push(word);
+}
+
+void RemoveWord::saveRemovedEVWord() {
+    if (removedEVWord.empty()) return;
+
+    std::ofstream fout("data/add_remove/Removed Words/EV.txt");
+    if (!fout.is_open()) {
+        std::cout << "Could not open EV.txt file!";
+        fout.close();
+        return;
+    }
+
+    while (!removedEVWord.empty()) {
+        std::string tmp = removedEVWord.front();
+        if (tmp != "")
+            fout << tmp << std::endl;
+        removedEVWord.pop();
+    }
+    fout.close();
+}
+
+void RemoveWord::loadRemovedEVWord(EngTrieNode*& root) {
+    std::ifstream fin("data/add_remove/Removed Words/EV.txt");
+    if (!fin.is_open()) {
+        std::cout << "Could not open EV.txt file!";
+        fin.close();
+        return;
+    }
+    std::string line, word;
+    while (std::getline(fin, line)) {
+        if (line[0] == ' ') // this is an empty space
+            continue;
+        else {
+            word = line;
+            removeEVWord(root, word);
+        }
+    }
+    fin.close();
+}
+
+// VE
+
+void RemoveWord::removeVEWord(EngTrieNode*& root, std::string word) {
+    trieHide(root, word, 2);
+    removedVEWord.push(word);
+}
+
+void RemoveWord::saveRemovedVEWord() {
+    if (removedVEWord.empty()) return;
+
+    std::ofstream fout("data/add_remove/Removed Words/VE.txt");
+    if (!fout.is_open()) {
+        std::cout << "Could not open VE.txt file!";
+        fout.close();
+        return;
+    }
+
+    while (!removedVEWord.empty()) {
+        std::string tmp = removedVEWord.front();
+        if (tmp != "")
+            fout << tmp << std::endl;
+        removedVEWord.pop();
+    }
+    fout.close();
+}
+
+void RemoveWord::loadRemovedVEWord(EngTrieNode*& root) {
+    std::ifstream fin("data/add_remove/Removed Words/VE.txt");
+    if (!fin.is_open()) {
+        std::cout << "Could not open VE.txt file!";
+        fin.close();
+        return;
+    }
+    std::string line, word;
+    while (std::getline(fin, line)) {
+        if (line[0] == ' ') // this is an empty space
+            continue;
+        else {
+            word = line;
+            removeVEWord(root, word);
+        }
+    }
     fin.close();
 }
 
@@ -230,8 +286,8 @@ void RemoveWord::changeDataSet()
         displayBox.clearEngEngData();
     else if (currentDataSetID == 1)
         displayBox.clearEngVieData();
-    //else if (currentDataSetID == 2)
-        //displayBox.clearVieEngData();
+    else if (currentDataSetID == 2)
+        displayBox.clearVieEngData();
 
     // Start changing data set
     if (currentDataSetID == 3)
@@ -250,8 +306,8 @@ void RemoveWord::changeDataSet()
 }
 
 void RemoveWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endScreen, EngTrieNode*& engEngRoot,
-std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
-std::vector<WordDataEngVie>& vieEngVector) {
+    std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector,
+    std::vector<WordDataEngVie>& vieEngVector) {
     if (event.type == sf::Event::TextEntered) {
         wordBar.typedOn(event);
     }
@@ -286,10 +342,46 @@ std::vector<WordDataEngVie>& vieEngVector) {
                     displayBox.clearEngEngData();
                 }
             }
-            /*else if (currentDataSetID == 1)
-                removeInEngVieDict(inputWord, engEngRoot);
-            else if (currentDataSetID == 2)
-                removeInVieEngDict(inputWord, engEngRoot);*/
+            else if (currentDataSetID == 1) {
+                int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+                if (wordIndex != -1) {
+                    // Console
+                    std::cout << "Da tim thay tim vung!" << "\n";
+                    std::cout << wordIndex << std::endl;
+
+                    wordTmp = inputWord;
+                    isDeleting = true;
+
+                    //UI
+                    noteBox.showEVDeletionReConfirmation();
+                    displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
+                }
+                else {
+                    std::cout << "Khong the tim thay tim vung" << "\n";
+                    noteBox.showNoEngVieDefinitions();
+                    displayBox.clearEngVieData();
+                }
+            }
+            else if (currentDataSetID == 2) {
+                int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
+                if (wordIndex != -1) {
+                    // Console
+                    std::cout << "The word  is found!" << "\n";
+                    std::cout << wordIndex << std::endl;
+
+                    wordTmp = inputWord;
+                    isDeleting = true;
+
+                    //UI
+                    noteBox.showVEDeletionReConfirmation();
+                    displayBox.getWordDataVieEng(inputWord, wordIndex, vieEngVector);
+                }
+                else {
+                    std::cout << "Cannot find the word" << "\n";
+                    noteBox.showNoVieEngDefinitions();
+                    displayBox.clearVieEngData();
+                }
+            }
         }
         else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
         {
@@ -311,23 +403,32 @@ std::vector<WordDataEngVie>& vieEngVector) {
         }
         else if (isDeleting && cancelButton.isMouseOver(window)) {
             isDeleting = false;
-            noteBox.showCancelSuccessfully();
             wordTmp.clear();
-            wordInfoTmp.clear();
+            if (currentDataSetID == 0)
+                noteBox.showCancelSuccessfully();
+            else if (currentDataSetID == 1)
+                noteBox.showEVCancelSuccessfully();
+            else if (currentDataSetID == 2)
+                noteBox.showVECancelSuccessfully();
         }
         else if (isDeleting && confirmButton.isMouseOver(window)) {
             isDeleting = false;
             if (currentDataSetID == 0) {
                 displayBox.clearEngEngData();
                 removeEEWord(engEngRoot, wordTmp);
+                noteBox.showDeleteSuccessfully();
             }
-            /*else if (currentDataSetID == 1)
-                removeInEngVieDict(inputWord, engEngRoot);
-            else if (currentDataSetID == 2)
-                removeInVieEngDict(inputWord, engEngRoot);*/
-            noteBox.showDeleteSuccessfully();
+            else if (currentDataSetID == 1) {
+                displayBox.clearEngVieData();
+                removeEVWord(engEngRoot, wordTmp);
+                noteBox.showEVDeleteSuccessfully();
+            }
+            else if (currentDataSetID == 2) {
+                displayBox.clearVieEngData();
+                removeVEWord(engEngRoot, wordTmp);
+                noteBox.showVEDeleteSuccessfully();
+            }
             wordTmp.clear();
-            wordInfoTmp.clear();
         }
         else if (!isDeleting && dataSetButton.isMouseOver(window))
             changeDataSet();
@@ -370,33 +471,4 @@ void RemoveWord::render(sf::RenderWindow& window) {
 
 void RemoveWord::setEndScreen(bool value) {
     isEndScreen = value;
-}
-
-bool RemoveWord::removeInEngEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
-    //std::string wordInfo = filterAndSearch(engEngRoot, inputWord, 0);
-    //if (!wordInfo.empty()) {
-    //    isDeleting = true;
-    //    // Console
-    //    std::cout << "The word has already existed" << "\n";
-    //    separateEngEngExample(wordInfo);
-    //    std::string newWordInfo = formatEngEngWordInfo(wordInfo);
-    //    std::cout << newWordInfo << std::endl;
-    //    // UI
-    //    removeEEWord(engEngRoot, inputWord, wordInfo);
-    //}
-    //else {
-    //    isDeleting = false;
-    //    std::cout << "Cannot find the word" << "\n";
-    //    noteBox.showNoEngEngDefinitions();
-    //    displayBox.clearEngEngData();
-    //    return false;
-    //}
-    return 1;
-}
-
-void RemoveWord::removeInEngVieDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
-}
-
-void RemoveWord::removeInVieEngDict(std::string& inputWord, EngTrieNode*& engEngRoot) {
-
 }

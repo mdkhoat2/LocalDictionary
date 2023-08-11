@@ -29,39 +29,45 @@ public:
     void wrapText(sf::Text& theText);
     void adjustTextPosition();
     void setCurrentDataSet(int theID);
-
-    // For Add words
-    void showExistedDefinitions();
-    void showNewDefinitions();
-
-    // For Remove words
-    void showDeletionReConfirmation();
-    void showDeleteSuccessfully();
-    void showCancelSuccessfully();
     
     // For Eng-Eng (updated)
     void initEngEngFirstDef();
     void showNextEngEngDef();
     void showPrevEngEngDef();
     void showNoEngEngDefinitions();
+    void showExistedDefinitions();
+    void showNewDefinitions();
     void clearEngEngData();
     void setEngEngUIText();
+    void showDeletionReConfirmation();
+    void showDeleteSuccessfully();
+    void showCancelSuccessfully();
 
     // For Eng-Vie
     void initEngVieFirstDef();
     void showNextEngVieDef();
     void showPrevEngVieDef();
     void showNoEngVieDefinitions();
+    void showExistedEngVieDefinitions();
+    void showNewEngVieDefinitions();
     void clearEngVieData();
     void setEngVieUIText();
+    void showEVDeletionReConfirmation();
+    void showEVDeleteSuccessfully();
+    void showEVCancelSuccessfully();
 
     // For Vie-Eng
     void initVieEngFirstDef();
     void showNextVieEngDef();
     void showPrevVieEngDef();
     void showNoVieEngDefinitions();
+    void showExistedVieEngDefinitions();
+    void showNewVieEngDefinitions();
     void clearVieEngData();
     void setVieEngUIText();
+    void showVEDeletionReConfirmation();
+    void showVEDeleteSuccessfully();
+    void showVECancelSuccessfully();
 
     //For Emoji
     void showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector);

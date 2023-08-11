@@ -1,0 +1,12 @@
+testingEVadd
+*  danh tu
+- thu nghiem tinh nang them tu EV
+=to test EV add+ thu them tu EV
+- (nghien cuu) kiem tra do hoan thien (tinh nang)
+=to be fixing bug+ (khoa hoc may tinh) tim loi tinh nang
+- (nghia bong) trom via khong bi loi
+=to be tested by bugs+ loi nhieu qua trom via khong duoc
+testingevkbadd
+*  dong tu
+-thu nghiem, kiem tra
+=to test for bugs+kiem tra loi

@@ -138,7 +138,7 @@ void Favourite::initnextButton(sf::Font& font)
 void Favourite::initBackground(sf::RenderWindow& window)
 {
 
-	if (!deleteButtonTexture.loadFromFile("background/buttondelete.jpg"))
+	if (!deleteButtonTexture.loadFromFile("background/removeButton.png"))
 	{
 		std::cout << "Falied to load image";
 		return;

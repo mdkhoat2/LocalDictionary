@@ -14,6 +14,7 @@
 #include "SwitchDataSet.h"
 #include "SearchDefinition.h"
 #include "ProposeWord.h"
+#include "Explore.h"
 
 class Application
 {
@@ -26,7 +27,8 @@ public:
         RemoveScreen,
         EditDefinitionScreen,
         FavouriteScreen,
-        SearchDefinitionScreen
+        SearchDefinitionScreen,
+        ExploreScreen
     };
 public:
     Application();
@@ -41,10 +43,15 @@ public:
     void update();
     void render();
 public:
-    void searchInEngEngDict(std::string& inputWord);
-    void searchInEngVieDict(std::string& inputWord);
-    void searchInVieEngDict(std::string& inputWord);
-    void searchInEmojiDict(std::string& inputWord);
+    void searchInEngEngDict(std::string& inputWord, bool isForRandom);
+    void searchInEngVieDict(std::string& inputWord, bool isForRandom);
+    void searchInVieEngDict(std::string& inputWord, bool isForRandom);
+    void searchInEmojiDict(std::string& inputWord, bool isForRandom);
+public:
+    void resetEverything();
+    void resetHistoryAll();
+    void resetEditDef();
+    void clearFile(std::string filename);
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow window;
@@ -54,6 +61,9 @@ private:
 
     sf::Texture screenWithOptionsTex;
     sf::Sprite screenWithOptions;
+
+    sf::Texture loadingScreenTexture;
+    sf::Sprite loadingScreen;
 
     ScreenState currentScreen;
 
@@ -67,6 +77,7 @@ private:
 
     sf::Font font;
     sf::Font font2;
+    sf::Font font3;
 
     sf::Event event;
     
@@ -82,6 +93,10 @@ private:
     Button favouritebutton;
     Button searchDefButton;
     Button favouriteFlag;
+    Button exploreButton;
+    Button randomWordButton;
+    Button randomDefButton;
+    Button resetButton;
 
     Favourite *favourite;
     History history;
@@ -102,6 +117,7 @@ private:
     SearchDefinitionScreen* searchDefScreen;
     ProposeWord* proposedWord;
     FavouriteOnMainAndOptionScreen* favouriteMain;
+    
 private:
     void initWindow();
     void initBackground();
@@ -117,10 +133,15 @@ private:
     void initDisplayBox();
     void initFavouriteButton();
     void initSearchDefButton();
+    void initExploreButton();
+    void initRandomWordButton();
+	void initRandomDefButton();
+    void initResetButton();
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();
     void initfavouriteFlag();
+    void explore();
 };
 
 

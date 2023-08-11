@@ -16,6 +16,10 @@ Application::Application() :
 	favouritebutton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	searchDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	favouriteFlag("", { 60,60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	exploreButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	randomWordButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	randomDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	resetButton("", {153,42}, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
 	history(),
 	favourite(nullptr),
@@ -41,7 +45,11 @@ Application::Application() :
 	initEditDefButton();
 	initDisplayBox();
 	initFavouriteButton();
+	initResetButton();
 	initSearchDefButton();
+	initExploreButton();
+	initRandomWordButton();
+	initRandomDefButton();
 	loadAllHistory();
 	initfavouriteFlag();
 }
@@ -231,6 +239,8 @@ void Application::loadEngVieDict()
 	++wordIndex;
 
     fin.close();
+	newWord->loadAddedEVWord(engEngRoot, engVieVector);
+	removeWord->loadRemovedEVWord(engEngRoot);
 }
 
 void Application::loadVieEngDict()
@@ -286,6 +296,8 @@ void Application::loadVieEngDict()
 	++wordIndex;
 
     fin.close();
+	newWord->loadAddedVEWord(engEngRoot, vieEngVector);
+	removeWord->loadRemovedVEWord(engEngRoot);
 }
 
 void Application::loadEmojiDict()
@@ -355,6 +367,11 @@ void Application::initBackground()
 	screenWithOptionsTex.setSmooth(true);
 	screenWithOptions.setTexture(screenWithOptionsTex);
 
+	if (!loadingScreenTexture.loadFromFile("background/loading1.jpg"))
+		std::cout << "Loading screen not found!\n";
+	loadingScreenTexture.setSmooth(true);
+	loadingScreen.setTexture(loadingScreenTexture);
+
 	// Scale the background to fit window
 	float scaleX = static_cast<float>(window.getSize().x) / mainScreenTex.getSize().x;
 	float scaleY = static_cast<float>(window.getSize().y) / mainScreenTex.getSize().y;
@@ -364,6 +381,8 @@ void Application::initBackground()
 	scaleX = static_cast<float>(window.getSize().x) / screenWithOptionsTex.getSize().x;
 	scaleY = static_cast<float>(window.getSize().y) / screenWithOptionsTex.getSize().y;
 	screenWithOptions.setScale(scaleX, scaleY);
+
+	loadingScreen.setScale(scaleX, scaleY);
 }
 
 void Application::initFont()
@@ -372,7 +391,9 @@ void Application::initFont()
 	if (!font.loadFromFile("font/SF-Pro-Rounded-Regular.otf"))
 		std::cout << "Font not found!\n";
 	if (!font2.loadFromFile("font/Merriweather-Regular.ttf"))
-		std::cout << "Font not found!\n";
+		std::cout << "Font2 not found!\n";
+	if (!font3.loadFromFile("font/SF-Pro-Display-Regular.otf"))
+		std::cout << "Font3 not found!\n";
 }
 
 void Application::initSearchBar()
@@ -448,11 +469,11 @@ void Application::initEditDefButton()
 
 void Application::initDisplayBox()
 {
-	float scaleX = mainScreen.getScale().x;
-	float scaleY = mainScreen.getScale().y;
+	float scaleX = screenWithOptions.getScale().x;
+	float scaleY = screenWithOptions.getScale().y;
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
-	displayBox.setFont(font2);
+	displayBox.setFont(font3);
 	displayBox.setCharacterSize(25);
 	displayBox.setCurrentDataSet(currentDataSetID);
 }
@@ -474,6 +495,64 @@ void Application::initfavouriteFlag()
 {
 	favouriteFlag.setFont(font);
 	favouriteFlag.setPosition(9, 162);
+}
+
+void Application::initExploreButton()
+{
+	exploreButton.setFont(font);
+	exploreButton.setPosition({ 972, 531 });
+	exploreButton.setOutlineThickness(2);
+}
+
+void Application::initRandomWordButton() 
+{
+	randomWordButton.setFont(font);
+	randomWordButton.setPosition({ 972, 587 });
+	randomWordButton.setOutlineThickness(2);
+}
+
+void Application::initRandomDefButton()
+{
+	randomDefButton.setFont(font);
+	randomDefButton.setPosition({ 972, 643 });
+	randomDefButton.setOutlineThickness(2);
+}
+
+void Application::explore()
+{
+	// Clear word data before explore
+	if (currentDataSetID == 0)
+	{
+		displayBox.clearEngEngData();
+	}
+	else if (currentDataSetID == 1)
+	{
+		displayBox.clearEngVieData();
+	}
+	else if (currentDataSetID == 2)
+	{
+		displayBox.clearVieEngData();
+	}
+	else if (currentDataSetID == 3)
+	{
+		displayBox.clearEmoji();
+	}
+	// Start exploring
+	if (currentDataSetID == 0)
+		searchInEngEngDict(engEngVector[ranNum(engEngVector.size())].word,true);
+	else if (currentDataSetID == 1)
+		searchInEngVieDict(engVieVector[ranNum(engVieVector.size())].word, true);
+	else if (currentDataSetID == 2)
+		searchInVieEngDict(vieEngVector[ranNum(vieEngVector.size())].word, true);
+	else
+		searchInEmojiDict(emojiVector[ranNum(engEngVector.size())], true);
+}
+
+void Application::initResetButton()
+{
+	resetButton.setFont(font);
+	resetButton.setPosition({ 972, 815 });
+	resetButton.setOutlineThickness(2);
 }
 
 void Application::changeDataSet()
@@ -515,11 +594,13 @@ void Application::changeDataSet()
 void Application::run()
 {
 	// Load dictionaries
+	window.draw(loadingScreen);
+	window.display();
 	newWord = new NewWord(font, font2, window);
 	removeWord = new RemoveWord(font, font2, window);
 	favourite = new Favourite(window);
-	editDefScreen = new EditDefinitionScreen(font, font2, screenWithOptions);
-	searchDefScreen = new SearchDefinitionScreen(font, font2, window);
+	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
+	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	proposedWord = new ProposeWord();
 	favouriteMain = new FavouriteOnMainAndOptionScreen();
 	loadEngEngDict();
@@ -546,8 +627,8 @@ void Application::handleEvent()
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			newWord->saveAddedEEWord();
-			removeWord->saveRemovedEEWord();
+			newWord->saveAddedWord();
+			removeWord->saveRemovedWord();
 			window.close();
 		}	
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)
@@ -575,13 +656,13 @@ void Application::handleEvent()
 					//    history.add(inputWord);
 					//favouriteMain.add(inputWord);
 					if (currentDataSetID == 0)
-						searchInEngEngDict(inputWord);
+						searchInEngEngDict(inputWord, false);
 					else if (currentDataSetID == 1)
-						searchInEngVieDict(inputWord);
+						searchInEngVieDict(inputWord, false);
 					else if (currentDataSetID == 2)
-						searchInVieEngDict(inputWord);
+						searchInVieEngDict(inputWord, false);
 					else 
-						searchInEmojiDict(inputWord);
+						searchInEmojiDict(inputWord, false);
 				}
 				else if (menuButton.isMouseOver(window)) {
 					if (currentScreen == ScreenState::MainScreen)
@@ -629,6 +710,13 @@ void Application::handleEvent()
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}
+				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					explore();
+				}
+				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					//reset function
+					resetEverything();
+				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
 					if (currentDataSetID == 0)
@@ -670,14 +758,10 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			editDefScreen->setEndScreen(endScreen);
-			std::string editWordType = displayBox.getWordType();
-			std::string editWordDef = displayBox.getWordDef();
-			std::string editWordExample = displayBox.getWordExample();
-			bool isSaved = false;
 			editDefScreen->handleEvent(event, window, endScreen);
 			if (endScreen)
 			{
-				// Display box receive the edited word type, definition and example
+				// this will be executed when user press "cancel" button
 				editDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
 			}
@@ -770,6 +854,11 @@ void Application::update()
 		{
 			proposedWord->update(window);
 		}
+		exploreButton.update(window);
+		randomWordButton.update(window);
+		randomDefButton.update(window);
+		resetButton.update(window);
+		displayBox.update(window);
 	}
 	else if (currentScreen == ScreenState::EditDefinitionScreen)
 	{
@@ -781,6 +870,7 @@ void Application::update()
 		editDefScreen->update(window, endScreen, isSaved, editWordType, editWordDef, editWordExample);
 		if(endScreen)
 		{
+			// this will be executed when user press "save" button
 			if(isSaved)
 				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
 			editDefScreen->setEndScreen(endScreen);
@@ -855,6 +945,10 @@ void Application::render()
 		editDefButton.drawTo(window);
 		favouritebutton.drawTo(window);
 		searchDefButton.drawTo(window);
+		exploreButton.drawTo(window);
+		randomWordButton.drawTo(window);
+		randomDefButton.drawTo(window);
+		resetButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
 			favouriteFlag.drawTo(window);
@@ -889,9 +983,9 @@ void Application::render()
 	window.display();
 }
 
-void Application::searchInEngEngDict(std::string &inputWord)
+void Application::searchInEngEngDict(std::string &inputWord, bool isForRandom)
 {
-	if (inputWord!="")
+	if (inputWord!="" && isForRandom == false)
         history.add(inputWord, "data/historyEE.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
     if(wordIndex != -1)
@@ -908,10 +1002,10 @@ void Application::searchInEngEngDict(std::string &inputWord)
     }
 }
 
-void Application::searchInEngVieDict(std::string& inputWord)
+void Application::searchInEngVieDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="")
-        history.add(inputWord, "data/historyEV.txt");
+    if (inputWord!="" && isForRandom == false)
+        history1.add(inputWord, "data/historyEV.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
     if(wordIndex != -1)
     {
@@ -927,10 +1021,10 @@ void Application::searchInEngVieDict(std::string& inputWord)
     }
 }
 
-void Application::searchInVieEngDict(std::string& inputWord)
+void Application::searchInVieEngDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="")
-        history.add(inputWord, "data/historyVE.txt");
+    if (inputWord!="" && isForRandom == false)
+        history2.add(inputWord, "data/historyVE.txt");
     int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
     if(wordIndex != -1)
     {
@@ -945,10 +1039,11 @@ void Application::searchInVieEngDict(std::string& inputWord)
         displayBox.showNoVieEngDefinitions();
     }
 }
-void Application::searchInEmojiDict(std::string& inputWord)
+
+void Application::searchInEmojiDict(std::string& inputWord, bool isForRandom)
 {
-	if (inputWord != "")
-		history.add(inputWord, "data/historyEmoji.txt");
+	if (inputWord != "" && isForRandom == false)
+		history3.add(inputWord, "data/historyEmoji.txt");
 	int emojiIndex = filterAndSearch(engEngRoot, inputWord, 3);
 	if (emojiIndex != -1)
 	{
@@ -963,5 +1058,136 @@ void Application::searchInEmojiDict(std::string& inputWord)
 		displayBox.showNoEmojiDefinition();
 		std::cout << "Cannot find the word " << "\n";
 	}
+}
+
+void Application::resetEverything()
+{
+	// Clear display box
+	if(currentDataSetID == 0)
+		displayBox.clearEngEngData();
+	else if(currentDataSetID == 1)
+		displayBox.clearEngVieData();
+	else if(currentDataSetID == 2)
+		displayBox.clearVieEngData();
+	else
+		displayBox.clearEmoji();
+	// Clear search bar
+	searchBar.clear();
+	// Reset history
+	resetHistoryAll();
+	// Reset edit definition
+	resetEditDef();
+}
+
+void Application::resetHistoryAll() {
+	history.resetHistory();
+	clearFile("data/historyEE.txt");
+	history1.resetHistory();
+	clearFile("data/historyEV.txt");
+	history2.resetHistory();
+	clearFile("data/historyVE.txt");
+	history3.resetHistory();
+	clearFile("data/historyEmoji.txt");
+}
+
+void Application::resetEditDef()
+{
+	// Delete all eng-eng edited words
+	std::string filename = "data/edit-words/eng-eng/list-of-words.txt";
+	std::ifstream fin;
+	std::vector<std::string> words;
+	std::string line;
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	std::ofstream fout;
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/eng-eng/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
+	// Delete all eng-vie edited words 
+	words.clear();
+	filename = "data/edit-words/eng-vie/list-of-words.txt";
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/eng-vie/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
+	// Delete all vie-eng edited words 
+	words.clear();
+	filename = "data/edit-words/vie-eng/list-of-words.txt";
+	fin.open(filename);
+	if(fin.is_open())
+	{
+		while(std::getline(fin, line))
+		{
+			words.push_back(line);
+		}
+		fin.close();
+	}
+	fout.open(filename);
+	if(fout.is_open())
+	{
+		fout << "";
+		fout.close();
+	}
+	for(int i = 0; i < words.size(); ++i)
+	{
+		filename = "data/edit-words/vie-eng/" + words[i] + ".txt";
+		fout.open(filename);
+		if(fout.is_open())
+		{
+			fout << "";
+			fout.close();
+		}
+	}
+}
+
+void Application::clearFile(std::string filename)
+{
+	std::ofstream fout(filename);
+	if (!fout) {
+		std::cout << "cannot find file with name " << filename << std::endl;
+	}
+	fout << "";
+	fout.close();
 }
 

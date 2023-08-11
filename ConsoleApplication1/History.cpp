@@ -2,7 +2,7 @@
 
 History::History()
 {
-	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
+	font.loadFromFile("font/SF-Pro-Display-Medium.otf");
 }
 
 void History::add(std::string word, std::string filename)
@@ -19,19 +19,24 @@ void History::drawTo(sf::RenderWindow& window)
 	text.setFont(font);
 	text.setCharacterSize(20);
 	sf::Color grey(0,0,0,160);
+	sf::Color myBlue(0, 32, 96);
 	text.setFillColor(grey);
-	text.setPosition(980, 320);
+	text.setPosition(985, 280); //972 to 1125 (163 width)
 	int size = history.size();
+	
 
-	for (int i = 0; i < 17; i++) {
+	for (int i = 0; i < 14; i++) {
 		if (size - 1 - i < 0)
 			break;
+		
 		std::string temp = history[size - 1 - i];
-		if (temp.size() >= 15)
-			temp = temp.substr(0, 12) + "...";
+		if (temp.size() >= 14)
+			temp = temp.substr(0, 11) + "...";
 		text.setString(temp);
+		float centerX = (972 + 1125 - text.getLocalBounds().width) / 2;
+		text.setPosition(centerX, text.getPosition().y);
 		window.draw(text);
-		text.move(0, 30);
+		text.move(0, 40);
 	}
 	/*while (!temp.empty())
 	{
@@ -57,4 +62,9 @@ void History::loadHistory(std::string filename)
 		history.push_back(temp);
 	}
 	fin.close();
+}
+
+void History::resetHistory()
+{
+	history.clear();
 }

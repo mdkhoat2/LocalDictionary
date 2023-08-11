@@ -19,3 +19,7 @@ aaaa
 = "they aaaa run" 
 =[syn: {aaa}, {aak}]
 -surprisingly
+testingkbadd
+*v
+-to test for bugs
+= "We are testing for bugs"
