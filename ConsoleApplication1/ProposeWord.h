@@ -12,7 +12,7 @@
 struct ProposeWords
 {
 	std::string word;
-	Button grayButton{ "", {870,50}, 20, sf::Color::Transparent, sf::Color::Transparent };
+	Button grayButton{ "", {866,50}, 20, sf::Color::Transparent, sf::Color::Transparent };
 };
 void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std::vector<ProposeWords>&proposeWordList,int theID);
 
