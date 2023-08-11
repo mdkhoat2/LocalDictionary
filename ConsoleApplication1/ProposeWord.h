@@ -9,7 +9,12 @@
 #include "Trie.h"
 #include "WordData.h"
 #include "DisplayDefinition.h"
-void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std::vector<std::string>&proposeWordList,int theID);
+struct ProposeWords
+{
+	std::string word;
+	Button grayButton{ "", {870,50}, 20, sf::Color::Transparent, sf::Color::Transparent };
+};
+void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std::vector<ProposeWords>&proposeWordList,int theID);
 
 class ProposeWord
 {
@@ -27,11 +32,12 @@ public:
 	bool checkPrefix(std::string word, EngTrieNode* root);
 public:
 	void drawTo(sf::RenderWindow& window);
-
+	void update(sf::RenderWindow& window);
 	void handleEvent(sf::Event& event, sf::RenderWindow& window);
+	void handleEvent2(sf::Event& event, sf::RenderWindow& window, Textbox& searchBar);
 private:
 	EngTrieNode* prefixRoot;
-	std::vector<std::string>proposeWordList;
+	std::vector<ProposeWords>proposeWordList;
 	sf::Font font;
 	sf::Texture scrollbar1Texture, scrollbar2Texture;
 	sf::Sprite scrollbar1Image, scrollbar2Image;

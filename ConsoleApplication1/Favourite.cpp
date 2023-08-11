@@ -1,6 +1,6 @@
-#include"Favourite.h"
+﻿#include"Favourite.h"
 #include<string>
-void saveWords(const std::vector<WordItem>& words,std::string filePath) {
+void saveWords(const std::vector<WordItem>& words, std::string filePath) {
 	std::ofstream file(filePath);
 	if (file.is_open()) {
 		for (const WordItem& word : words) {
@@ -33,14 +33,43 @@ void appendStringToFile(const std::string& file_path, const std::string& target_
 		std::cout << "Unable to open the file." << std::endl;
 	}
 }
+void removeStringFromFile(const std::string& filePath, const std::string& stringToRemove) {
+	std::ifstream inputFile(filePath);
+	if (!inputFile.is_open()) {
+		return;
+	}
 
+	std::vector<std::string> lines;
+	std::string line;
 
-Favourite::Favourite(sf::RenderWindow&window):
+	while (std::getline(inputFile, line)) {
+		if (line.find(stringToRemove) == std::string::npos) {
+			lines.push_back(line);
+		}
+	}
+
+	inputFile.close();
+
+	std::ofstream outputFile(filePath);
+	if (!outputFile.is_open()) {
+		return;
+	}
+
+	for (const auto& line : lines) {
+		outputFile << line << "\n";
+	}
+
+	outputFile.close();
+
+}
+
+Favourite::Favourite(sf::RenderWindow& window) :
 	addBar(20, sf::Color::Black, sf::Color::Transparent, true),
 	backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	prevButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	nextButton("", { 80, 80 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	isEndScreen(false),
 	isExist(false),
 	currentDataSetID(0)
@@ -52,11 +81,11 @@ Favourite::Favourite(sf::RenderWindow&window):
 	initnextButton(font);
 	initprevButton(font);
 	initAddBar(font);
+	initDataSetButton(font);
 	initExistedText();
-	posY = 320;
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
-	//filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 
 void Favourite::initExistedText()
@@ -106,22 +135,8 @@ void Favourite::initnextButton(sf::Font& font)
 	nextButton.setOutlineThickness(2);
 }
 
-void Favourite::initBackground(sf::RenderWindow&window)
+void Favourite::initBackground(sf::RenderWindow& window)
 {
-	if (!favouriteTexture1.loadFromFile("background/favourite2Button.png"))
-	{
-		std::cout << "Falied to load image ";
-	}
-	favouriteTexture1.setSmooth(true);
-	favouriteImage1.setTexture(favouriteTexture1);
-	favouriteImage1.setScale(sf::Vector2f(30.f / favouriteTexture1.getSize().x, 30.f / favouriteTexture1.getSize().y));
-	if (!favouriteTexture2.loadFromFile("background/favouriteButton.png"))
-	{
-		std::cout << "Falied to load image ";
-	}
-	favouriteTexture2.setSmooth(true);
-	favouriteImage2.setTexture(favouriteTexture2);
-	favouriteImage2.setScale(sf::Vector2f(30.f / favouriteTexture2.getSize().x, 30.f / favouriteTexture2.getSize().y));
 
 	if (!deleteButtonTexture.loadFromFile("background/removeButton.png"))
 	{
@@ -158,67 +173,7 @@ void Favourite::initBackground(sf::RenderWindow&window)
 	nextButtonImage.setScale(sf::Vector2f(80.f / nextButtonTexture.getSize().x, 80.f / nextButtonTexture.getSize().y));
 	nextButtonImage.setPosition(800, 700);
 }
-void Favourite::add(std::string word)
-{
-	WordFavouriteButton newWord;
-	newWord.word = word;
-	newWord.favouriteButton.setSize(sf::Vector2f(30, 30));
-	newWord.favouriteButton.setFillColor(sf::Color::Red);
-	newWord.favouriteButton.setPosition(1052, posY);
-	posY += 30;
-	favourite.push_back(newWord);
-}
 
-void Favourite::drawTo(sf::RenderWindow& window)
-{
-	for (const WordFavouriteButton& cur : favourite)
-	{
-		window.draw(cur.favouriteButton);
-		if (cur.liked == true)
-		{
-			favouriteImage2.setPosition(cur.favouriteButton.getPosition().x, cur.favouriteButton.getPosition().y);
-			window.draw(favouriteImage2);
-		}
-		else
-		{
-			favouriteImage1.setPosition(cur.favouriteButton.getPosition().x, cur.favouriteButton.getPosition().y);
-			window.draw(favouriteImage1);
-		}
-	}
-}
-
-void Favourite::addtoFile()
-{
-	std::ofstream fo;
-	std::ifstream fi;
-	for (auto it = favourite.begin(); it != favourite.end(); it++)
-	{
-		if (!filterAndCheck(it->word) && it->liked == true)
-		{
-			appendStringToFile(filePath, it->word);
-		}
-	}
-
-}
-
-void Favourite::likeOrNot(sf::RenderWindow& window)
-{
-	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	for (auto it = favourite.begin(); it != favourite.end(); it++)
-	{
-		if (it->favouriteButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-		{
-			if (it->liked == false)
-			{
-				it->liked = true;
-			}
-			else
-			{
-				it->liked = false;
-			}
-		}
-	}
-}
 
 void Favourite::loadWordsList()
 {
@@ -244,7 +199,8 @@ void Favourite::loadWordsList()
 	}
 	else
 	{
-		std::cout << "Meo";
+		std::cout << "Meo" << std::endl;
+		std::cout << filePath;
 	}
 	if (wordItems.size() % 7 == 0)
 	{
@@ -274,7 +230,7 @@ void Favourite::resavePositionDeleteButton()
 
 void Favourite::addWord(std::string inputword)
 {
-	if(inputword.empty()==true)return;
+	if (inputword.empty() == true)return;
 	if (filterAndCheck(inputword))
 	{
 		isExist = true;
@@ -291,7 +247,7 @@ void Favourite::addWord(std::string inputword)
 		wordItem.deleteButton.setOutlineThickness(2);
 		wordItems.push_back(wordItem);
 		posY1 += 50;
-		saveWords(wordItems,filePath);
+		saveWords(wordItems, filePath);
 		if (wordItems.size() % 7 == 1)
 		{
 			numberPage += 1;
@@ -310,7 +266,7 @@ void Favourite::removeWord(sf::RenderWindow& window)
 		p++;
 		if (it->deleteButton.isMouseOver(window) && first3 < p && p <= last3) {
 			wordItems.erase(it);
-			saveWords(wordItems,filePath);
+			saveWords(wordItems, filePath);
 			resavePositionDeleteButton();
 			if (wordItems.size() != 0)
 			{
@@ -329,7 +285,7 @@ void Favourite::removeWord(sf::RenderWindow& window)
 }
 
 ////////////////////
-void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window,bool &endScreen)
+void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window, bool& endScreen)
 {
 	if (event.type == sf::Event::TextEntered) {
 		addBar.typedOn(event);
@@ -354,13 +310,17 @@ void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window,bool &end
 			endScreen = true;
 			isEndScreen = endScreen;
 		}
-		else if (nextButton.isMouseOver(window)&& currentPage < numberPage)
+		else if (nextButton.isMouseOver(window) && currentPage < numberPage)
 		{
 			currentPage += 1;
 		}
 		else if (prevButton.isMouseOver(window) && currentPage != 1)
 		{
 			currentPage -= 1;
+		}
+		else if (dataSetButton.isMouseOver(window))
+		{
+			changeDataSet();
 		}
 		else
 		{
@@ -374,11 +334,12 @@ void Favourite::update(sf::RenderWindow& window)
 	{
 		addButton.update(window);
 		backButton.update(window);
+		dataSetButton.update(window);
 		int m = 0;
 		for (WordItem& wordItem : wordItems)
 		{
 			m++;
-			if (((currentPage-1)*7) < m && m <= (currentPage*7) && m <= wordItems.size())
+			if (((currentPage - 1) * 7) < m && m <= (currentPage * 7) && m <= wordItems.size())
 			{
 				wordItem.deleteButton.update(window);
 			}
@@ -393,6 +354,7 @@ void Favourite::render(sf::RenderWindow& window)
 		window.clear(sf::Color::White);
 		window.draw(backgroundImage);
 		addButton.drawTo(window);
+		dataSetButton.drawTo(window);
 		backButton.drawTo(window);
 		addBar.drawTo(window);
 		if (currentPage == 1 && numberPage > 1)
@@ -443,13 +405,17 @@ void Favourite::setEndScreen(bool value) {
 	isEndScreen = value;
 }
 
-void Favourite::setCurrentDataSet(int theID)
+void Favourite::setCurrentDataSet()
+{
+	posY1 = 260;
+	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+}
+void Favourite::setDataSet(int theID)
 {
 	currentDataSetID = theID;
 	posY1 = 260;
 	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
-
 bool Favourite::filterAndCheck(std::string wordCheck)
 {
 	std::string word = wordCheck;
@@ -498,7 +464,7 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 		{
 			word[0] = toupper(word[0]);
 		}
-		else if (word[i - 1] == ' '&&i>1)
+		else if (word[i - 1] == ' ' && i > 1)
 		{
 			word[i] = toupper(word[i]);
 		}
@@ -512,8 +478,207 @@ bool Favourite::filterAndCheck(std::string wordCheck)
 
 void Favourite::eraseWordList()
 {
-	while(wordItems.size()!=0)
+	while (wordItems.size() != 0)
 	{
 		wordItems.pop_back();
 	}
+}
+
+void Favourite::initDataSetButton(sf::Font& font)
+{
+	dataSetButton.setFont(font);
+	dataSetButton.setPosition({ 972, 72 });
+	dataSetButton.setOutlineThickness(2);
+	dataSetButton.setStyle(sf::Text::Style::Bold);
+}
+void Favourite::changeDataSet()
+{
+	if (currentDataSetID != 3)
+		currentDataSetID += 1;
+	else
+		currentDataSetID = 0;
+	if (currentDataSetID == 0)
+		dataSetButton.setString("      EN - EN");
+	else if (currentDataSetID == 1)
+		dataSetButton.setString("      EN - VI");
+	else if (currentDataSetID == 2)
+		dataSetButton.setString("      VI - EN");
+	else
+		dataSetButton.setString("      Emoji");
+	eraseWordList();
+	setCurrentDataSet();
+	loadWordsList();
+}
+
+//=======================================================================================
+
+FavouriteOnMainAndOptionScreen::FavouriteOnMainAndOptionScreen()
+{
+	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
+	t1 = sf::seconds(1.5f);
+	initFavouriteFlagImage();
+	initAddedText();
+	initRemovedText();
+	CoutText = false;
+}
+
+
+void FavouriteOnMainAndOptionScreen::initFavouriteFlagImage()
+{
+	if (!favouriteFlag1Texture.loadFromFile("background/flag1.png"))
+	{
+		std::cout << "Falied to load image ";
+	}
+	favouriteFlag1Texture.setSmooth(true);
+	favouriteFlag1Image.setTexture(favouriteFlag1Texture);
+	favouriteFlag1Image.setScale(sf::Vector2f(60.f / favouriteFlag1Texture.getSize().x, 60.f / favouriteFlag1Texture.getSize().y));
+	favouriteFlag1Image.setPosition(9, 162);
+	if (!favouriteFlag2Texture.loadFromFile("background/flag2.png"))
+	{
+		std::cout << "Falied to load image ";
+	}
+	favouriteFlag2Texture.setSmooth(true);
+	favouriteFlag2Image.setTexture(favouriteFlag2Texture);
+	favouriteFlag2Image.setScale(sf::Vector2f(60.f / favouriteFlag2Texture.getSize().x, 60.f / favouriteFlag2Texture.getSize().y));
+	favouriteFlag2Image.setPosition(9, 162);
+}
+
+void FavouriteOnMainAndOptionScreen::initAddedText()
+{
+	Added.setFont(font);
+	Added.setString("You have added this word to favorites");
+	Added.setFillColor(sf::Color::Black);
+	Added.setCharacterSize(33);
+	Added.setPosition(150, 700);
+}
+void FavouriteOnMainAndOptionScreen::initRemovedText()
+{
+	Removed.setFont(font);
+	Removed.setString("You have removed this word from favorites");
+	Removed.setFillColor(sf::Color::Black);
+	Removed.setCharacterSize(33);
+	Removed.setPosition(150, 700);
+}
+void FavouriteOnMainAndOptionScreen::checkWordAddedOrNot(std::string word, int currentDataSetID)
+{
+	std::string filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	if (filterAndCheck(word, filePath))
+	{
+		isAdded = true;
+	}
+	else
+	{
+		isAdded = false;
+	}
+
+}
+void FavouriteOnMainAndOptionScreen::eraseOrAdd(Textbox& searchBar, int currentDataSetID)
+{
+	std::string filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	std::string word = searchBar.getText();
+	CoutText = true;
+	if (isAdded == true)
+	{
+		isAdded = false;
+		filterAndCheck(word, filePath);
+		removeStringFromFile(filePath, word);
+	}
+	else
+	{
+		isAdded = true;
+		appendStringToFile(filePath, word);
+	}
+	clock.restart();
+}
+
+void FavouriteOnMainAndOptionScreen::drawTo(sf::RenderWindow& window, Textbox& searchBar)
+{
+	std::string word = searchBar.getText();
+	if (!word.empty())
+	{
+		if (isAdded == true)
+		{
+			window.draw(favouriteFlag2Image);
+		}
+		else
+		{
+			window.draw(favouriteFlag1Image);
+		}
+		if (CoutText == true)
+		{
+			if (clock.getElapsedTime() >= t1 && CoutText)
+			{
+				CoutText = false;
+			}
+			if (isAdded == true)
+			{
+				window.draw(Added);
+			}
+			else
+			{
+				window.draw(Removed);
+			}
+		}
+	}
+}
+bool FavouriteOnMainAndOptionScreen::filterAndCheck(std::string& word, std::string filePath)
+{
+	std::string wordCheck = word;
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		if (word[i] >= 'a' && word[i] <= 'z')
+			word[i] = toupper(word[i]);
+	}
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		word[i] = tolower(word[i]);
+	}
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	word[0] = toupper(word[0]);
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	word[0] = tolower(word[0]);
+	int i = 0;
+	while (word[i] != ' ' && i < word.length())
+		++i;
+	if (i < word.length() && word[i] == ' ')
+	{
+		if (word[i + 1] >= 'a' && word[i + 1] <= 'z')
+			word[i + 1] = toupper(word[i + 1]);
+	}
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	for (int i = 0; i < word.length(); ++i)
+	{
+		if (i == 0)
+		{
+			word[0] = toupper(word[0]);
+		}
+		else if (word[i - 1] == ' ' && i > 1)
+		{
+			word[i] = toupper(word[i]);
+		}
+	}
+	if (checkStringInFile(filePath, word) == true)
+	{
+		return true;
+	}
+	word = wordCheck;
+	return false;
+
 }
