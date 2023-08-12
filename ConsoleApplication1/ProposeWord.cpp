@@ -1,6 +1,6 @@
 ﻿#include"ProposeWord.h"
 char getCharFromIndex(int index);
-void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std::vector<std::string>& proposeWordList, int dataSetID)
+void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std::vector<ProposeWords>& proposeWordList, int theID)
 {
 	if (!prefixRoot || proposeWordList.size() == 15)
 	{
@@ -8,25 +8,41 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 	}
 	if (prefixRoot->flag)
 	{
-		if (dataSetID == 0)
+		if (theID == 0)
 		{
 			if (prefixRoot->engEngIndex != -1)
-				proposeWordList.push_back(prefix);
+			{
+				ProposeWords meo;
+				meo.word = prefix;
+				proposeWordList.push_back(meo);
+			}
 		}
-		else if (dataSetID == 1)
+		else if (theID == 1)
 		{
 			if (prefixRoot->engVieIndex != -1)
-				proposeWordList.push_back(prefix);
+			{
+				ProposeWords meo;
+				meo.word = prefix;
+				proposeWordList.push_back(meo);
+			}
 		}
-		else if (dataSetID == 2)
+		else if (theID == 2)
 		{
 			if (prefixRoot->vieEngIndex != -1)
-				proposeWordList.push_back(prefix);
+			{
+				ProposeWords meo;
+				meo.word = prefix;
+				proposeWordList.push_back(meo);
+			}
 		}
 		else
 		{
 			if (prefixRoot->emojiIndex != -1)
-				proposeWordList.push_back(prefix);
+			{
+				ProposeWords meo;
+				meo.word = prefix;
+				proposeWordList.push_back(meo);
+			}
 		}
 	}
 
@@ -34,7 +50,7 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 		if (prefixRoot->links[i] != nullptr)
 		{
 			char ch = getCharFromIndex(i);
-			findWordsWithPrefix(prefixRoot->links[i], prefix + ch, proposeWordList, dataSetID);
+			findWordsWithPrefix(prefixRoot->links[i], prefix + ch, proposeWordList, theID);
 		}
 	}
 }
@@ -85,7 +101,7 @@ char getCharFromIndex(int index) {
 ProposeWord::ProposeWord() :
 	datasetID(0),
 	prefixRoot(nullptr),
-	isTyping(false)
+	isTyping(true)
 {
 	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
 	initScrollBar();
@@ -182,13 +198,15 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 {
 	int m = 0;
 	int y = 300;
-	for (std::string& word : proposeWordList)
+	for (ProposeWords& word : proposeWordList)
 	{
 		if (firstVisibleIndex <= m && m <= (firstVisibleIndex + 8))
 		{
-			sf::Text wordText(word, font, 20);
+			sf::Text wordText(word.word, font, 20);
 			wordText.setFillColor(sf::Color::Black);
 			wordText.setPosition(125, y);
+			word.grayButton.drawTo(window);
+			word.grayButton.setPosition(74, y - 15);
 			window.draw(wordText);
 			y += 50;
 		}
@@ -203,9 +221,17 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 }
 void ProposeWord::initWordList(std::string word, EngTrieNode* root)
 {
+	if (word == "")
+	{
+		prevPrefix = "";
+	}
 	if (checkPrefix(word, root))
 	{
 		LoadWordList();
+	}
+	if (prevPrefix.empty())
+	{
+		eraseWordList();
 	}
 }
 bool ProposeWord::checkPrefix(std::string word, EngTrieNode* root)
@@ -296,4 +322,37 @@ bool ProposeWord::checkPrefix(std::string word, EngTrieNode* root)
 		}
 	}
 	return false;
+}
+void ProposeWord::update(sf::RenderWindow& window)
+{
+	int m = 0;
+	for (ProposeWords& word : proposeWordList)
+	{
+		if (firstVisibleIndex <= m && m <= (firstVisibleIndex + 8))
+		{
+			if (word.grayButton.isMouseOver(window))
+			{
+				word.grayButton.setBackColor(sf::Color(241, 237, 255));
+			}
+			else
+			{
+				word.grayButton.setBackColor(sf::Color::Transparent);
+			}
+		}
+		m++;
+	}
+}
+void ProposeWord::handleEvent2(sf::Event& event, sf::RenderWindow& window, Textbox& searchBar)
+{
+
+	int m = 0;
+	for (ProposeWords& word : proposeWordList)
+	{
+		if (firstVisibleIndex <= m && m <= (firstVisibleIndex + 8) && word.grayButton.isMouseOver(window))
+		{
+			searchBar.setText(word.word);
+		}
+		m++;
+	}
+
 }
