@@ -1253,32 +1253,25 @@ EngTrieNode *deserialize(std::string data)
 void saveSerializedTrie(EngTrieNode* root)
 {
     std::ofstream fout;
-    fout.open("data/serialized-trie.dat", std::ios::binary);
+    fout.open("data/serialized-trie.txt");
     if(!fout.is_open())
         return;
     std::string data = serialize(root);
-    fout.write(data.c_str(), data.size());
+    fout << data;
     fout.close();
 }
 
 bool loadSerializedTrie(EngTrieNode*& root)
 {
     std::ifstream fin;
-    fin.open("data/serialized-trie.dat", std::ios::binary);
+    fin.open("data/serialized-trie.txt", std::ios::binary);
     if(!fin.is_open())
     {
         fin.close();
         return false;
     }
-    fin.seekg(0, std::ios::end);
-    std::streampos fileSize = fin.tellg();
-    fin.seekg(0, std::ios::beg);
-
-    std::vector<char> buffer(fileSize);
-    fin.read(buffer.data(), fileSize);
-    fin.close();
-
-    std::string data(buffer.data(), fileSize);
+    std::string data;
+    std::getline(fin, data);
     root = deserialize(data);
     return true;
 }

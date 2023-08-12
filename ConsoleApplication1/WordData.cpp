@@ -834,7 +834,7 @@ void removeEndLineInString(std::string &str)
     str = ans;
 }
 
-bool isPrefix(std::string &prefix, std::string &word)
+bool isPrefix(std::string prefix, std::string word)
 {
     int n = prefix.size();
     int m = word.size();

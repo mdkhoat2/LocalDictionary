@@ -474,7 +474,7 @@ void Application::initDisplayBox()
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
 	displayBox.setFont(font3);
-	displayBox.setCharacterSize(25);
+	displayBox.setCharacterSize(30);
 	displayBox.setCurrentDataSet(currentDataSetID);
 }
 
