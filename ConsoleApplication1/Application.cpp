@@ -741,9 +741,13 @@ void Application::handleEvent()
 				{
 					favouriteMain->eraseOrAdd(searchBar, currentDataSetID);
 				}
-				else 
+				else if(proposedWord->setIsTyping())
 				{
 					proposedWord->handleEvent2(event, window, searchBar);
+				}
+				else
+				{
+
 				}
 				
 			}
