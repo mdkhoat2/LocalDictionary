@@ -544,8 +544,6 @@ void Application::explore()
 		searchInEngVieDict(engVieVector[ranNum(engVieVector.size())].word, true);
 	else if (currentDataSetID == 2)
 		searchInVieEngDict(vieEngVector[ranNum(vieEngVector.size())].word, true);
-	else
-		searchInEmojiDict(emojiVector[ranNum(engEngVector.size())], true);
 }
 
 void Application::initResetButton()

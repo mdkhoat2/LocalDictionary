@@ -147,7 +147,7 @@ void ProposeWord::initScrollBar()
 	scrollbar1Image.setTexture(scrollbar1Texture);
 	scrollbar1Image.setScale(sf::Vector2f(15.f / scrollbar1Texture.getSize().x, 607.f / scrollbar1Texture.getSize().y));
 	scrollbar1Image.setPosition(926, 253);
-	if (!scrollbar2Texture.loadFromFile("background/scroll-bar1.png"))
+	if (!scrollbar2Texture.loadFromFile("background/scroll-bar4.png"))
 	{
 		std::cout << "Falied to load image ";
 	}
@@ -204,9 +204,9 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 		{
 			sf::Text wordText(word.word, font, 20);
 			wordText.setFillColor(sf::Color::Black);
-			wordText.setPosition(140, y);
+			wordText.setPosition(125, y);
 			word.grayButton.drawTo(window);
-			word.grayButton.setPosition(71, y - 15);
+			word.grayButton.setPosition(74, y - 15);
 			window.draw(wordText);
 			y += 50;
 		}
@@ -215,7 +215,7 @@ void ProposeWord::drawTo(sf::RenderWindow& window)
 	if (proposeWordList.size() > 7)
 	{
 		float posY = 300 + firstVisibleIndex * (520 / (proposeWordList.size() - 7));
-		scrollbar2Image.setPosition(926, posY);
+		scrollbar2Image.setPosition(895, posY);
 		window.draw(scrollbar2Image);
 	}
 }
@@ -332,7 +332,7 @@ void ProposeWord::update(sf::RenderWindow& window)
 		{
 			if (word.grayButton.isMouseOver(window))
 			{
-				word.grayButton.setBackColor(sf::Color(201, 209, 202));
+				word.grayButton.setBackColor(sf::Color(241, 237, 255));
 			}
 			else
 			{

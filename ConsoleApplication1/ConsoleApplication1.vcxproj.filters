@@ -19,6 +19,7 @@
     <ClCompile Include="EditBox.cpp" />
     <ClCompile Include="WordDisplayBox.cpp" />
     <ClCompile Include="Explore.cpp" />
+    <ClCompile Include="RandomWord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="EditBox.h" />
     <ClInclude Include="WordDisplayBox.h" />
     <ClInclude Include="Explore.h" />
+    <ClInclude Include="RandomWord.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="favorite_words0.txt" />
