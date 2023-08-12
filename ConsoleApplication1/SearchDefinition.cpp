@@ -98,9 +98,13 @@ void SearchDefinitionScreen::setCurrentDataSetID(int theID)
 		dataSetButton.setString("      EN - VI");
 	else if (currentDataSetID == 2)
 		dataSetButton.setString("      VI - EN");
+    // Not allow to search by definition in Emoji mode
 	else
-		dataSetButton.setString("      Emoji");
-    displayBox.setCurrentDataSet(theID);
+	{
+        currentDataSetID = 0;
+        dataSetButton.setString("      EN - EN");
+    }
+    displayBox.setCurrentDataSet(currentDataSetID);
 }
 
 void SearchDefinitionScreen::setEndScreen(bool val)
@@ -121,7 +125,6 @@ void SearchDefinitionScreen::searchInEngEngItems(std::string& inputDef, std::vec
             size_t found = EEItems[i].defList[j].defAndExample.first.find(inputDef);
             if(found != std::string::npos)
             {
-                std::cout << EEItems[i].word << std::endl; // test
                 thePair.first = EEItems[i].word;
                 thePair.second.wordType = EEItems[i].defList[j].wordType;
                 thePair.second.defAndExample.first = EEItems[i].defList[j].defAndExample.first;
@@ -151,7 +154,6 @@ void SearchDefinitionScreen::searchInEngVieItems(std::string& inputDef, std::vec
             size_t found = EVItems[i].defList[j].defAndExample.first.find(inputDef);
             if(found != std::string::npos)
             {
-                std::cout << EVItems[i].word << std::endl; // test
                 thePair.first = EVItems[i].word;
                 thePair.second.wordType = EVItems[i].defList[j].wordType;
                 thePair.second.defAndExample.first = EVItems[i].defList[j].defAndExample.first;
@@ -181,7 +183,6 @@ void SearchDefinitionScreen::searchInVieEngItems(std::string &inputDef, std::vec
             size_t found = VEItems[i].defList[j].defAndExample.first.find(inputDef);
             if(found != std::string::npos)
             {
-                std::cout << VEItems[i].word << std::endl; // test
                 thePair.first = VEItems[i].word;
                 thePair.second.wordType = VEItems[i].defList[j].wordType;
                 thePair.second.defAndExample.first = VEItems[i].defList[j].defAndExample.first;

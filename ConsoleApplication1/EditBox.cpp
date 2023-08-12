@@ -204,7 +204,9 @@ void EditBox::initTextToEdit(const sf::String &theWord, const sf::String &theWor
         wordDefArea.setText(theWordDef);
     else
         wordDefArea.setText("");
-    wordExampleArea.setText(theWordExample);
+    // Do not get the text "Example:" because it is just for display
+    if(isPrefix("Example:\n", theWordExample))
+        wordExampleArea.setText(theWordExample.substring(9));
 }
 
 void EditBox::adjustSurroundingTextbox()
