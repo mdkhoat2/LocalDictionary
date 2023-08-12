@@ -445,7 +445,11 @@ void DisplayBox::setEngEngUIText()
     wrapText(wordDef);
     if(!EEData->defList[EEDefID].defAndExample.second.empty())
     {
-        wordExample.setString("Example:\n" + EEData->defList[EEDefID].defAndExample.second);
+        // If there are only synonyms/antonyms, do not display the text "Example:"
+        if(EEData->defList[EEDefID].defAndExample.second[0] == '[')
+            wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        else
+            wordExample.setString("Example:\n" + EEData->defList[EEDefID].defAndExample.second);
         wrapText(wordExample);
     }
     else

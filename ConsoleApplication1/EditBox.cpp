@@ -118,6 +118,10 @@ void EditBox::setCharacterSize(unsigned int size)
     wordTypeArea.setCharacterSize(size);
     wordDefArea.setCharacterSize(size);
     wordExampleArea.setCharacterSize(size);
+
+    wordTypePlaceholder.setCharacterSize(size);
+    wordDefPlaceholder.setCharacterSize(size);
+    wordExamplePlaceholder.setCharacterSize(size);
 }
 
 void EditBox::wrapText(sf::Text &theText)
