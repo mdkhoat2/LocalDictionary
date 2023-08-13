@@ -181,12 +181,6 @@
     <ClInclude Include="WordData.h" />
     <ClInclude Include="WordDisplayBox.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="favorite_words0.txt" />
-    <Text Include="favorite_words1.txt" />
-    <Text Include="favorite_words2.txt" />
-    <Text Include="favorite_words3.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
