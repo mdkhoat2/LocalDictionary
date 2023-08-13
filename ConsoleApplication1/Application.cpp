@@ -28,6 +28,7 @@ Application::Application() :
 	newWord(nullptr),
 	removeWord(nullptr),
 	searchDefScreen(nullptr),
+	randomWord(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	proposedWord(nullptr),
@@ -62,6 +63,7 @@ Application::~Application()
 	delete favourite;
 	delete removeWord;
 	delete searchDefScreen;
+	delete randomWord;
 }
 
 void Application::loadEngEngDict()
@@ -474,7 +476,7 @@ void Application::initDisplayBox()
 	displayBox.setPosition(247 * scaleX, 842 * scaleY);
 	displayBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
 	displayBox.setFont(font3);
-	displayBox.setCharacterSize(25);
+	displayBox.setCharacterSize(30);
 	displayBox.setCurrentDataSet(currentDataSetID);
 }
 
@@ -599,6 +601,7 @@ void Application::run()
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
+	randomWord = new RandomWord(font, font3, window);
 	proposedWord = new ProposeWord();
 	favouriteMain = new FavouriteOnMainAndOptionScreen();
 	loadEngEngDict();
@@ -711,6 +714,9 @@ void Application::handleEvent()
 				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					explore();
 				}
+				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					currentScreen = ScreenState::RandomWordScreen;
+				}
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					//reset function
 					resetEverything();
@@ -813,6 +819,15 @@ void Application::handleEvent()
 				currentScreen = ScreenState::OptionsScreen;
 			}
 		}
+		else if (currentScreen == ScreenState::RandomWordScreen) {
+			randomWord->isBackButtonPressed = false;
+			randomWord->handleEvent(event, window, engEngVector, engVieVector, vieEngVector);
+			
+			if (randomWord->isBackButtonPressed) {
+				currentScreen = ScreenState::OptionsScreen;
+			}
+			
+		}
 		else
 		{
 
@@ -870,10 +885,10 @@ void Application::update()
 		std::string editWordDef;
 		std::string editWordExample;
 		editDefScreen->update(window, endScreen, isSaved, editWordType, editWordDef, editWordExample);
-		if(endScreen)
+		if (endScreen)
 		{
 			// this will be executed when user press "save" button
-			if(isSaved)
+			if (isSaved)
 				displayBox.receiveEditText(editWordType, editWordDef, editWordExample);
 			editDefScreen->setEndScreen(endScreen);
 			currentScreen = ScreenState::OptionsScreen;
@@ -889,9 +904,13 @@ void Application::update()
 	{
 		favourite->update(window);
 	}
-	else if(currentScreen == ScreenState::SearchDefinitionScreen)
+	else if (currentScreen == ScreenState::SearchDefinitionScreen)
 	{
 		searchDefScreen->update(window);
+	}
+	else if (currentScreen == ScreenState::RandomWordScreen) {
+		dataSetButton.update(window);
+		randomWord->update(window);
 	}
 	else
 	{
@@ -912,34 +931,34 @@ void Application::drawHistory() {
 
 void Application::render()
 {
-    if (currentScreen == ScreenState::MainScreen) {
+	if (currentScreen == ScreenState::MainScreen) {
 		window.clear(sf::Color::White);
-        window.draw(mainScreen);
-        searchBar.drawTo(window);
-        searchButton.drawTo(window);
-        dataSetButton.drawTo(window);
+		window.draw(mainScreen);
+		searchBar.drawTo(window);
+		searchButton.drawTo(window);
+		dataSetButton.drawTo(window);
 
 		drawHistory();
-        //favouriteMain.drawTo(window);
-        menuButton.drawTo(window);
+		//favouriteMain.drawTo(window);
+		menuButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
 			favouriteFlag.drawTo(window);
-			favouriteMain->drawTo(window,searchBar);
+			favouriteMain->drawTo(window, searchBar);
 			displayBox.drawTo(window);
 		}
-        //dataSetBar.drawTo(window);
-		else 
+		//dataSetBar.drawTo(window);
+		else
 		{
 			proposedWord->drawTo(window);
 		}
-    }
-    else if(currentScreen == ScreenState::OptionsScreen) {
+	}
+	else if (currentScreen == ScreenState::OptionsScreen) {
 		window.clear(sf::Color::White);
-        window.draw(screenWithOptions);
-        searchBar.drawTo(window);
-        searchButton.drawTo(window);
-        dataSetButton.drawTo(window);
+		window.draw(screenWithOptions);
+		searchBar.drawTo(window);
+		searchButton.drawTo(window);
+		dataSetButton.drawTo(window);
 
 		menuButton.drawTo(window);
 		addButton.drawTo(window);
@@ -954,7 +973,7 @@ void Application::render()
 		if (!proposedWord->setIsTyping())
 		{
 			favouriteFlag.drawTo(window);
-			favouriteMain->drawTo(window,searchBar);
+			favouriteMain->drawTo(window, searchBar);
 			displayBox.drawTo(window);
 		}
 		//dataSetBar.drawTo(window);
@@ -977,11 +996,15 @@ void Application::render()
 	{
 		favourite->render(window);
 	}
-	else if(currentScreen == ScreenState::SearchDefinitionScreen)
+	else if (currentScreen == ScreenState::SearchDefinitionScreen)
 	{
 		searchDefScreen->render(window);
 	}
-
+	else if (currentScreen == ScreenState::RandomWordScreen) {
+		randomWord->render(window);
+		dataSetButton.drawTo(window);
+	}
+		
 	window.display();
 }
 
@@ -1079,6 +1102,10 @@ void Application::resetEverything()
 	resetHistoryAll();
 	// Reset edit definition
 	resetEditDef();
+	// Reset add
+	newWord->resetAdd(engEngRoot);
+	// Reset remove
+	removeWord->resetRemove(engEngRoot);
 }
 
 void Application::resetHistoryAll() {

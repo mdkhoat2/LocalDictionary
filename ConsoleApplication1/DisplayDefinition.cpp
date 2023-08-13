@@ -440,11 +440,16 @@ void DisplayBox::setEngEngUIText()
     }
     else
         wordType.setString("");
+
     wordDef.setString(EEData->defList[EEDefID].defAndExample.first);
     wrapText(wordDef);
     if(!EEData->defList[EEDefID].defAndExample.second.empty())
     {
-        wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        // If there are only synonyms/antonyms, do not display the text "Example:"
+        if(EEData->defList[EEDefID].defAndExample.second[0] == '[')
+            wordExample.setString(EEData->defList[EEDefID].defAndExample.second);
+        else
+            wordExample.setString("Example:\n" + EEData->defList[EEDefID].defAndExample.second);
         wrapText(wordExample);
     }
     else
@@ -539,7 +544,7 @@ void DisplayBox::setEngVieUIText()
     wrapText(wordDef);
     if(!engVieData->defList[engVieDefID].defAndExample.second.empty())
     {
-        wordExample.setString(engVieData->defList[engVieDefID].defAndExample.second);
+        wordExample.setString("Example:\n" + engVieData->defList[engVieDefID].defAndExample.second);
         wrapText(wordExample);
     }
     else
@@ -634,7 +639,7 @@ void DisplayBox::setVieEngUIText()
     wrapText(wordDef);
     if(!vieEngData->defList[vieEngDefID].defAndExample.second.empty())
     {
-        wordExample.setString(vieEngData->defList[vieEngDefID].defAndExample.second);
+        wordExample.setString("Example:\n" + vieEngData->defList[vieEngDefID].defAndExample.second);
         wrapText(wordExample);
     }
     else

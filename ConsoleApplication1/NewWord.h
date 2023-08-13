@@ -14,6 +14,7 @@
 class NewWord {
 public:
 	void saveAddedWord();
+	void resetAdd(EngTrieNode* root);
 	// EE
 	bool addEEFromTextFile(EngTrieNode*& root, std::string& inputWord, std::string& wordInfo,
 		std::vector<WordDataEngVie>& engEngVector);
@@ -93,7 +94,6 @@ private:
 		0: EngEng
 		1: EngVie
 		2: VieEng
-		3: Emoji
 	*/
 
 	int currentAddOptID;

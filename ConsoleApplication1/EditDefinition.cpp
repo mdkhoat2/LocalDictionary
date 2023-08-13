@@ -244,7 +244,7 @@ void EditDefinitionScreen::initEditBox(const sf::Font &font, sf::Sprite& backgro
     editBox.setPosition(247 * scaleX, 842 * scaleY);
     editBox.setSize(sf::Vector2f(2887 * scaleX, 2019 * scaleY));
     editBox.setFont(font);
-    editBox.setCharacterSize(25);
+    editBox.setCharacterSize(30);
 }
 
 void EditDefinitionScreen::initSaveSucceeded(const sf::Font &font)

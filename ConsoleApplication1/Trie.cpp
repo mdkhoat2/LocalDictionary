@@ -249,6 +249,39 @@ void trieHide(EngTrieNode* root, std::string word, int curDataSetID)
     }
 }
 
+void trieUnhide(EngTrieNode* root, std::string word, int curDataSetID)
+{
+    if (word.empty())
+        return;
+    EngTrieNode* node = root;
+    for (int i = 0; i < word.length(); ++i)
+    {
+        if (!node->containsKey(word[i]))
+            return;
+        node = node->get(word[i]);
+    }
+    if (curDataSetID == 0)
+    {
+        if (node->flag && node->engEngIndex != -1 && node->isEEDeleted)
+            node->isEEDeleted = false;
+    }
+    else if (curDataSetID == 1)
+    {
+        if (node->flag && node->engVieIndex != -1 && node->isEVDeleted)
+            node->isEVDeleted = false;
+    }
+    else if (curDataSetID == 2)
+    {
+        if (node->flag && node->vieEngIndex != -1 && node->isVEDeleted)
+            node->isVEDeleted = false;
+    }
+    else
+    {
+        if (node->flag && node->emojiIndex != -1 && node->isEmojiDeleted)
+            node->isEmojiDeleted = false;
+    }
+}
+
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
 {
     if (!root)
@@ -1253,32 +1286,25 @@ EngTrieNode *deserialize(std::string data)
 void saveSerializedTrie(EngTrieNode* root)
 {
     std::ofstream fout;
-    fout.open("data/serialized-trie.dat", std::ios::binary);
+    fout.open("data/serialized-trie.txt");
     if(!fout.is_open())
         return;
     std::string data = serialize(root);
-    fout.write(data.c_str(), data.size());
+    fout << data;
     fout.close();
 }
 
 bool loadSerializedTrie(EngTrieNode*& root)
 {
     std::ifstream fin;
-    fin.open("data/serialized-trie.dat", std::ios::binary);
+    fin.open("data/serialized-trie.txt", std::ios::binary);
     if(!fin.is_open())
     {
         fin.close();
         return false;
     }
-    fin.seekg(0, std::ios::end);
-    std::streampos fileSize = fin.tellg();
-    fin.seekg(0, std::ios::beg);
-
-    std::vector<char> buffer(fileSize);
-    fin.read(buffer.data(), fileSize);
-    fin.close();
-
-    std::string data(buffer.data(), fileSize);
+    std::string data;
+    std::getline(fin, data);
     root = deserialize(data);
     return true;
 }
