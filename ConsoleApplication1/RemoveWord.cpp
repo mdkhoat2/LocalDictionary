@@ -6,6 +6,43 @@ void RemoveWord::saveRemovedWord() {
     saveRemovedVEWord();
 }
 
+void RemoveWord::resetRemove(EngTrieNode*& root) {
+    std::string tmp;
+    while (!removedEEWord.empty()) {
+        tmp = removedEEWord.front();
+        if (tmp != "")
+            trieUnhide(root, tmp, 0);
+        removedEEWord.pop();
+    }
+    while (!removedEVWord.empty()) {
+        tmp = removedEVWord.front();
+        if (tmp != "")
+            trieUnhide(root, tmp, 1);
+        removedEVWord.pop();
+    }
+    while (!removedVEWord.empty()) {
+        tmp = removedVEWord.front();
+        if (tmp != "")
+            trieUnhide(root, tmp, 2);
+        removedVEWord.pop();
+    }
+    std::ofstream fout("data/add_remove/Removed Words/EE.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+    fout.open("data/add_remove/Removed Words/EV.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+    fout.open("data/add_remove/Removed Words/VE.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+}
+
 // EE
 
 void RemoveWord::removeEEWord(EngTrieNode*& root, std::string word) {

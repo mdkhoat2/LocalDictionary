@@ -6,6 +6,43 @@ void NewWord::saveAddedWord() {
     saveAddedVEWord();
 }
 
+void NewWord::resetAdd(EngTrieNode* root) {
+    std::string tmp;
+    while (!addedEEWord.empty()) {
+        tmp = addedEEWord.front().first;
+        if (tmp != "")
+            trieHide(root, tmp, 0);
+        addedEEWord.pop();
+    }
+    while (!addedEVWord.empty()) {
+        tmp = addedEVWord.front().first;
+        if (tmp != "")
+            trieHide(root, tmp, 1);
+        addedEVWord.pop();
+    }
+    while (!addedVEWord.empty()) {
+        tmp = addedVEWord.front().first;
+        if (tmp != "")
+            trieHide(root, tmp, 2);
+        addedVEWord.pop();
+    }
+    std::ofstream fout("data/add_remove/Added Words/EE.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+    fout.open("data/add_remove/Added Words/EV.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+    fout.open("data/add_remove/Added Words/VE.txt");
+    if (!fout.is_open())
+        fout.close();
+    fout << "";
+    fout.close();
+}
+
 // EE
 
 void NewWord::addNewEEWord(EngTrieNode*& root, std::string& word, std::string& wordInfo,
@@ -582,7 +619,7 @@ void NewWord::changeDataSet()
         displayBox.clearVieEngData();
 
     // Start changing data set
-    if (currentDataSetID == 3)
+    if (currentDataSetID == 2)
         currentDataSetID = 0;
     else
         ++currentDataSetID;
@@ -591,23 +628,11 @@ void NewWord::changeDataSet()
         dataSetButton.setString("      EN - EN");
     else if (currentDataSetID == 1)
         dataSetButton.setString("      EN - VI");
-    else if (currentDataSetID == 2)
-        dataSetButton.setString("      VI - EN");
     else
-        dataSetButton.setString("      Emoji");
+        dataSetButton.setString("      VI - EN");
 }
 
-void NewWord::changeAddOpt()
-{
-    // Clear note box
-    //noteBox.clearEngEngData();
-
-    // Clear word data before change data set
-    /*if (currentAddOptID == 0)
-        displayBox.clearEngEngData();
-    else if (currentAddOptID == 1)
-        displayBox.clearEngVieData();*/
-
+void NewWord::changeAddOpt() {
     // Start changing data set
     if (currentAddOptID == 1)
         currentAddOptID = 0;

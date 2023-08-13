@@ -18,3 +18,10 @@ mage: dark skin tone
 grinning face
 dagger
 egg
+
+hand
+hair pick
+jar
+hammer
+rock
+rock
