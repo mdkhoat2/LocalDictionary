@@ -85,7 +85,7 @@ Favourite::Favourite(sf::RenderWindow& window) :
 	initExistedText();
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
-	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 
 void Favourite::initExistedText()
@@ -408,13 +408,13 @@ void Favourite::setEndScreen(bool value) {
 void Favourite::setCurrentDataSet()
 {
 	posY1 = 260;
-	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 void Favourite::setDataSet(int theID)
 {
 	currentDataSetID = theID;
 	posY1 = 260;
-	filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
 }
 bool Favourite::filterAndCheck(std::string wordCheck)
 {
@@ -561,7 +561,7 @@ void FavouriteOnMainAndOptionScreen::initRemovedText()
 }
 void FavouriteOnMainAndOptionScreen::checkWordAddedOrNot(std::string word, int currentDataSetID)
 {
-	std::string filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	std::string filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
 	if (filterAndCheck(word, filePath))
 	{
 		isAdded = true;
@@ -574,7 +574,7 @@ void FavouriteOnMainAndOptionScreen::checkWordAddedOrNot(std::string word, int c
 }
 void FavouriteOnMainAndOptionScreen::eraseOrAdd(Textbox& searchBar, int currentDataSetID)
 {
-	std::string filePath = "favorite_words" + std::to_string(currentDataSetID) + ".txt";
+	std::string filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
 	std::string word = searchBar.getText();
 	CoutText = true;
 	if (isAdded == true)
