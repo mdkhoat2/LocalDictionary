@@ -74,6 +74,8 @@ VieTrieNode* trieRemove(VieTrieNode*& root, std::wstring word, int depth = 0);
 
 // This function is use for removing words by flagging them with isDelete variable
 void trieHide(EngTrieNode* root, std::string word, int curDataSetID);
+// This function is use for deflagging isDelete variable
+void trieUnhide(EngTrieNode* root, std::string word, int curDataSetID);
 
 void trieDeleteAll(EngTrieNode* &root);
 void trieDeleteAll(VieTrieNode* &root);

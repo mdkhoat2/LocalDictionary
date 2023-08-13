@@ -249,6 +249,39 @@ void trieHide(EngTrieNode* root, std::string word, int curDataSetID)
     }
 }
 
+void trieUnhide(EngTrieNode* root, std::string word, int curDataSetID)
+{
+    if (word.empty())
+        return;
+    EngTrieNode* node = root;
+    for (int i = 0; i < word.length(); ++i)
+    {
+        if (!node->containsKey(word[i]))
+            return;
+        node = node->get(word[i]);
+    }
+    if (curDataSetID == 0)
+    {
+        if (node->flag && node->engEngIndex != -1 && node->isEEDeleted)
+            node->isEEDeleted = false;
+    }
+    else if (curDataSetID == 1)
+    {
+        if (node->flag && node->engVieIndex != -1 && node->isEVDeleted)
+            node->isEVDeleted = false;
+    }
+    else if (curDataSetID == 2)
+    {
+        if (node->flag && node->vieEngIndex != -1 && node->isVEDeleted)
+            node->isVEDeleted = false;
+    }
+    else
+    {
+        if (node->flag && node->emojiIndex != -1 && node->isEmojiDeleted)
+            node->isEmojiDeleted = false;
+    }
+}
+
 EngTrieNode* trieRemove(EngTrieNode*& root, std::string word, int depth)
 {
     if (!root)
