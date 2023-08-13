@@ -541,11 +541,12 @@ void Application::explore()
 	}
 	// Start exploring
 	if (currentDataSetID == 0)
-		searchInEngEngDict(engEngVector[ranNum(engEngVector.size())].word,true);
+		searchInEngEngDict(engEngVector[ranNum(engEngVector.size())].word, true);
 	else if (currentDataSetID == 1)
 		searchInEngVieDict(engVieVector[ranNum(engVieVector.size())].word, true);
 	else if (currentDataSetID == 2)
 		searchInVieEngDict(vieEngVector[ranNum(vieEngVector.size())].word, true);
+	displayBox.drawTo(window);
 }
 
 void Application::initResetButton()
@@ -821,8 +822,9 @@ void Application::handleEvent()
 		}
 		else if (currentScreen == ScreenState::RandomWordScreen) {
 			randomWord->isBackButtonPressed = false;
-			randomWord->handleEvent(event, window, engEngVector, engVieVector, vieEngVector);
-			
+			randomWord->handleEvent(event, window, currentDataSetID, engEngVector, engVieVector, vieEngVector);
+			if (event.type == sf::Event::MouseButtonPressed && dataSetButton.isMouseOver(window))
+				changeDataSet();
 			if (randomWord->isBackButtonPressed) {
 				currentScreen = ScreenState::OptionsScreen;
 			}
