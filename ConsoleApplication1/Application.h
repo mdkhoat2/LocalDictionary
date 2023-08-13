@@ -15,6 +15,7 @@
 #include "SearchDefinition.h"
 #include "ProposeWord.h"
 #include "Explore.h"
+#include "RandomWord.h"
 
 class Application
 {
@@ -28,7 +29,7 @@ public:
         EditDefinitionScreen,
         FavouriteScreen,
         SearchDefinitionScreen,
-        ExploreScreen
+        RandomWordScreen
     };
 public:
     Application();
@@ -117,7 +118,7 @@ private:
     SearchDefinitionScreen* searchDefScreen;
     ProposeWord* proposedWord;
     FavouriteOnMainAndOptionScreen* favouriteMain;
-    
+    RandomWord* randomWord;
 private:
     void initWindow();
     void initBackground();
