@@ -1104,6 +1104,10 @@ void Application::resetEverything()
 	resetHistoryAll();
 	// Reset edit definition
 	resetEditDef();
+	// Reset add
+	newWord->resetAdd(engEngRoot);
+	// Reset remove
+	removeWord->resetRemove(engEngRoot);
 }
 
 void Application::resetHistoryAll() {

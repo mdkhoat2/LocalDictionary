@@ -13,7 +13,7 @@
 class RemoveWord {
 public:
 	void saveRemovedWord();
-
+	void resetRemove(EngTrieNode*& root);
 	// EE 
 	void removeEEWord(EngTrieNode*& root, std::string word);
 	void saveRemovedEEWord();
