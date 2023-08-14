@@ -713,6 +713,7 @@ void Application::handleEvent()
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}
 				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					proposedWord->isTyping = false;
 					explore();
 				}
 				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
