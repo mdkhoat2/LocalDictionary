@@ -21,12 +21,14 @@ public:
 	void handleEvent(sf::Event& event, sf::RenderWindow& window, int& id, std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector, std::vector<WordDataEngVie>& vieEngVector);
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window);
+	bool isBackButtonPressed;
+private:
 	void displayDefinition(sf::RenderWindow& window, word toDraw);
 	void displayKeyword(sf::RenderWindow& window);
-public:
-	bool isBackButtonPressed;
 	void getRandom(std::vector<WordDataEngVie>& root);
+	void wrapText(sf::Text& theText);
 private:
+	sf::RectangleShape theBox;
 	sf::Texture backgroundTexture;
 	sf::Sprite background;
 
