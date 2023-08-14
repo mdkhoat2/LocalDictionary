@@ -15,7 +15,10 @@ RandomWord::RandomWord(sf::Font& first, sf::Font& second, sf::RenderWindow& wind
 {
 	font = first;
 	font2 = second;
+	theBox.setPosition(72, 250);
+	theBox.setSize({ 850, 600 });
 	initBackground(window);
+	initSprite();
 	initBackButton();
 	initRandomButton();
 	initButton1();
@@ -29,6 +32,8 @@ RandomWord::RandomWord(sf::Font& first, sf::Font& second, sf::RenderWindow& wind
 void RandomWord::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id, std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector, std::vector<WordDataEngVie>& vieEngVector)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		isSubmitted = false;
 		if (backButton.isMouseOver(window))
 			isBackButtonPressed = true;
 		else if (randomButton.isMouseOver(window)) {
@@ -72,6 +77,7 @@ void RandomWord::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id
 				std::cout << "Incorrect\n";
 			}
 		}
+	}
 }
 
 void RandomWord::update(sf::RenderWindow& window)
@@ -108,6 +114,19 @@ void RandomWord::render(sf::RenderWindow& window)
 		//std::cout << "1 " << keyword << std::endl << word1.def << std::endl << word2.def << std::endl;
 	}
 	displayKeyword(window);
+	//window.draw(right);
+	//window.draw(wrong);
+	if (isSubmitted)
+		if (isCorrect) {
+			//for (int i = 0; i < 5000; i++)
+				window.draw(right);
+			//isSubmitted = false;
+		}
+		else {
+			//for (int i = 0; i < 5000; i++)
+				window.draw(wrong);
+			//isSubmitted = false;
+		}
 }
 
 void RandomWord::displayDefinition(sf::RenderWindow& window, word toDraw)
@@ -119,21 +138,29 @@ void RandomWord::displayDefinition(sf::RenderWindow& window, word toDraw)
 	text.setFillColor(sf::Color::Black);
 	text.setPosition(100, 270);
 	window.draw(text);
-	std::vector<std::string> line;
-	while (toDraw.def.size() > 0) {
-		std::string temp = toDraw.def.substr(0, 63);
-		toDraw.def.erase(0, 63);
-		line.push_back(temp);
-	}
-	for (int i = 0; i < line.size(); i++) {
-		sf::Text text;
-		text.setFont(font);
-		text.setString(line[i]);
-		text.setCharacterSize(30);
-		text.setFillColor(sf::Color::Black);
-		text.setPosition(100, 320 + i * 40);
-		window.draw(text);
-	}
+	//std::vector<std::string> line;
+	//while (toDraw.def.size() > 0) {
+	//	std::string temp = toDraw.def.substr(0, 63);
+	//	toDraw.def.erase(0, 63);
+	//	line.push_back(temp);
+	//}
+	//for (int i = 0; i < line.size(); i++) {
+	//	sf::Text text;
+	//	text.setFont(font);
+	//	text.setString(line[i]);
+	//	text.setCharacterSize(30);
+	//	text.setFillColor(sf::Color::Black);
+	//	text.setPosition(100, 320 + i * 40);
+	//	window.draw(text);
+	//}
+	sf::Text text2;
+	text2.setFont(font);
+	text2.setString(toDraw.def);
+	text2.setCharacterSize(30);
+	text2.setFillColor(sf::Color::Black);
+	text2.setPosition(100, 320);
+	wrapText(text2);
+	window.draw(text2);
 }
 
 void RandomWord::displayKeyword(sf::RenderWindow& window)
@@ -177,6 +204,48 @@ void RandomWord::getRandom(std::vector<WordDataEngVie>& root)
 		keyword = root[n4].word;
 }
 
+void RandomWord::wrapText(sf::Text& theText)
+{
+	std::string str = theText.getString();
+	std::string wrappedStr;
+
+	std::istringstream iss(str);
+	std::string word;
+	std::string line;
+
+	// Clear theText before wrapping
+	theText.setString("");
+
+	while (std::getline(iss, word, '\n')) {
+		// Process each line separately
+		if (!line.empty()) {
+			// Add the previous line to the wrapped text and start a new line
+			wrappedStr += line + '\n';
+			line.clear();
+		}
+		std::istringstream lineIss(word);
+		while (lineIss >> word) {
+			// Set theText with the current line + the next word
+			theText.setString(line + (line.empty() ? "" : " ") + word);
+			if (theText.getLocalBounds().width > theBox.getLocalBounds().width - 30.f) {
+				// Add the current line to the wrapped text and start a new line
+				wrappedStr += line + '\n';
+				line = word;
+			}
+			else {
+				// Continue adding words to the current line
+				line += (line.empty() ? "" : " ") + word;
+			}
+		}
+	}
+
+	// Add the last line to the wrapped text
+	wrappedStr += line;
+
+	// Set theText with the wrapped text
+	theText.setString(wrappedStr);
+}
+
 void RandomWord::initBackground(sf::RenderWindow& window)
 {
 	if (!backgroundTexture.loadFromFile("background/randomWord.jpg"))
@@ -194,15 +263,15 @@ void RandomWord::initSprite()
 		std::cout << "randomWord not found!\n";
 	rightTexture.setSmooth(true);
 	right.setTexture(rightTexture);
-	right.setScale(0.5, 0.5);
-	right.setPosition(500, 500);
+	right.setScale(0.3, 0.3);
+	right.setPosition(300, 300);
 
 	if (!wrongTexture.loadFromFile("background/oops.png"))
 		std::cout << "randomWord not found!\n";
 	wrongTexture.setSmooth(true);
 	wrong.setTexture(wrongTexture);
-	wrong.setScale(0.5, 0.5);
-	wrong.setPosition(500, 500);
+	wrong.setScale(0.3, 0.3);
+	wrong.setPosition(300, 300);
 }
 
 void RandomWord::initBackButton()
