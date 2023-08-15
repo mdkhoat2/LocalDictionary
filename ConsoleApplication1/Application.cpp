@@ -19,9 +19,10 @@ Application::Application() :
 	exploreButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	randomWordButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	randomDefButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-	resetButton("", {153,42}, 20, sf::Color::Transparent, sf::Color::Transparent),
+	resetButton("", { 153,42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
+	fullHistoryButton("", { 36,36 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	engEngRoot(nullptr),
-	history(),
+	historyScreen(nullptr),
 	favourite(nullptr),
 	currentScreen(ScreenState::MainScreen),
 	editDefScreen(nullptr),
@@ -47,6 +48,7 @@ Application::Application() :
 	initDisplayBox();
 	initFavouriteButton();
 	initResetButton();
+	initFullHistoryButton();
 	initSearchDefButton();
 	initExploreButton();
 	initRandomWordButton();
@@ -78,18 +80,18 @@ void Application::loadEngEngDict()
 		++count;
 	}
 	int wordIndex = 0;
-    while(std::getline(fin, line))
-    {
-        if(line[0] != ' ') // this is a word
-        {
-            if(count == 59) // Read first word
-            {   
-                ++count;
-                word = line;
-            }
-            else
-            {
-                // insert the previous word with its definition
+	while (std::getline(fin, line))
+	{
+		if (line[0] != ' ') // this is a word
+		{
+			if (count == 59) // Read first word
+			{
+				++count;
+				word = line;
+			}
+			else
+			{
+				// insert the previous word with its definition
 				separateEngEngExample(wordInfo);
 				std::string newWordInfo = formatEngEngWordInfo(wordInfo);
 				WordDataEngVie theItem;
@@ -98,71 +100,71 @@ void Application::loadEngEngDict()
 				trieInsert(engEngRoot, word, wordIndex, 0);
 				++wordIndex;
 
-                word = line;
-                wordInfo.clear();
-            }
-        }
-        else // this is the definition area
-        {
-            // Count leading spaces
-            int i = 0;
-            while(line[i] == ' ')
-                ++i;
-            // Read the word's information
-            // If there are 5 blanks then this line is the start of a new definition
-            if(i == 5)
-            {
-                // Check if there is any word type
-                int j = i;
-                std::string wordType;
-                while(line[j] != ' ' && j < line.length())
-                {
-                    wordType += line[j];
-                    ++j;
-                }
-                // If it is a word type
-                if(isValidWordType(wordType))
-                {
-                    // If it is the first word type
-                    if(wordInfo.empty())
-                        wordInfo += wordType + "\n";
-                    // If it is not the first word type
-                    else
-                        wordInfo += "\n" + wordType + "\n";
-                    
-                    if(j+3 < line.length())
-                    {
-                        // If that word type has more than 1 definition
-                        if(line[j+1] == '1' && j+4 < line.length())
-                            wordInfo += line.substr(j+4);
-                        // If that word type has only 1 definition
-                        else
-                            wordInfo += line.substr(j+3);
-                    }
+				word = line;
+				wordInfo.clear();
+			}
+		}
+		else // this is the definition area
+		{
+			// Count leading spaces
+			int i = 0;
+			while (line[i] == ' ')
+				++i;
+			// Read the word's information
+			// If there are 5 blanks then this line is the start of a new definition
+			if (i == 5)
+			{
+				// Check if there is any word type
+				int j = i;
+				std::string wordType;
+				while (line[j] != ' ' && j < line.length())
+				{
+					wordType += line[j];
+					++j;
+				}
+				// If it is a word type
+				if (isValidWordType(wordType))
+				{
+					// If it is the first word type
+					if (wordInfo.empty())
+						wordInfo += wordType + "\n";
+					// If it is not the first word type
+					else
+						wordInfo += "\n" + wordType + "\n";
 
-                }
-                    
-                // If it is the word "See"
-                else if(wordType == "See" && i < line.length())
-                    wordInfo += line.substr(i);
-                // If it is a number (which means that the word has more than 1 definition for a word type)
-                else if(isdigit(line[i]) && i+3 < line.length())
-                {
-                    wordInfo += "\n" + line.substr(i+3);
-                }
-                
-            }
-            // If there are more than 5 blanks then it is just a normal line of a definition
-            else if(i > 5 && i < line.length())
-            {
-                wordInfo += " " + line.substr(i);
-            }
-            else
-            {
-                std::cout << "Something goes wrong!" << std::endl;
-            }
-        }
-    }
+					if (j + 3 < line.length())
+					{
+						// If that word type has more than 1 definition
+						if (line[j + 1] == '1' && j + 4 < line.length())
+							wordInfo += line.substr(j + 4);
+						// If that word type has only 1 definition
+						else
+							wordInfo += line.substr(j + 3);
+					}
+
+				}
+
+				// If it is the word "See"
+				else if (wordType == "See" && i < line.length())
+					wordInfo += line.substr(i);
+				// If it is a number (which means that the word has more than 1 definition for a word type)
+				else if (isdigit(line[i]) && i + 3 < line.length())
+				{
+					wordInfo += "\n" + line.substr(i + 3);
+				}
+
+			}
+			// If there are more than 5 blanks then it is just a normal line of a definition
+			else if (i > 5 && i < line.length())
+			{
+				wordInfo += " " + line.substr(i);
+			}
+			else
+			{
+				std::cout << "Something goes wrong!" << std::endl;
+			}
+		}
+	}
 	separateEngEngExample(wordInfo);
 	std::string newWordInfo = formatEngEngWordInfo(wordInfo);
 	WordDataEngVie theItem;
@@ -171,151 +173,151 @@ void Application::loadEngEngDict()
 	trieInsert(engEngRoot, word, wordIndex, 0);
 	++wordIndex;
 
-    fin.close();
-    newWord->loadAddedEEWord(engEngRoot, engEngVector);
+	fin.close();
+	newWord->loadAddedEEWord(engEngRoot, engEngVector);
 	removeWord->loadRemovedEEWord(engEngRoot);
 }
 
 void Application::loadEngVieDict()
 {
-    std::ifstream fin("data/EV_nonaccent.txt");
-    int count = 0;
-    std::string line, word, wordInfo;
-    // Skip the first unnecessary 15 lines
-    while(count < 15)
-    {
-        std::getline(fin, line);
-        ++count;
-    }
+	std::ifstream fin("data/EV_nonaccent.txt");
+	int count = 0;
+	std::string line, word, wordInfo;
+	// Skip the first unnecessary 15 lines
+	while (count < 15)
+	{
+		std::getline(fin, line);
+		++count;
+	}
 	int wordIndex = 0;
-    while(std::getline(fin, line))
-    {
-        // this is the line containing the word
-        if(line[0] == '@')
-        {   
-            // If it is the first word
-            if(count == 15)
-                ++count;
-            else
-            {   
-                // insert previous word and its information
+	while (std::getline(fin, line))
+	{
+		// this is the line containing the word
+		if (line[0] == '@')
+		{
+			// If it is the first word
+			if (count == 15)
+				++count;
+			else
+			{
+				// insert previous word and its information
 				WordDataEngVie theItem;
 				extractEngVieData(theItem, word, wordInfo);
 				engVieVector.push_back(theItem);
 				trieInsert(engEngRoot, word, wordIndex, 1);
 				++wordIndex;
 
-                word.clear();
-                wordInfo.clear();
-            }
-            int i = 1;
-            while(i < line.length())
-            {
-                if(line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
-                || line[i] == '[' || line[i] == ']' || line[i] == '&')
-                    break;
-                else
-                {
-                    word += line[i];
-                    ++i;
-                }
-            }
-            // Pop the space at the end of the current word
-            if(word[word.length()-1] == ' ')
-                word.pop_back();
-        }
-        // this is the line containing the word type, word definitions, ...
-        else
-        {
-            if(wordInfo.empty())
-                wordInfo = line;
-            else
-                wordInfo += "\n" + line;
-        }
-    }
-    // Insert the last word
+				word.clear();
+				wordInfo.clear();
+			}
+			int i = 1;
+			while (i < line.length())
+			{
+				if (line[i] == '/' || line[i] == '=' || line[i] == '(' || line[i] == ')'
+					|| line[i] == '[' || line[i] == ']' || line[i] == '&')
+					break;
+				else
+				{
+					word += line[i];
+					++i;
+				}
+			}
+			// Pop the space at the end of the current word
+			if (word[word.length() - 1] == ' ')
+				word.pop_back();
+		}
+		// this is the line containing the word type, word definitions, ...
+		else
+		{
+			if (wordInfo.empty())
+				wordInfo = line;
+			else
+				wordInfo += "\n" + line;
+		}
+	}
+	// Insert the last word
 	WordDataEngVie theItem;
 	extractEngVieData(theItem, word, wordInfo);
 	engVieVector.push_back(theItem);
 	trieInsert(engEngRoot, word, wordIndex, 1);
 	++wordIndex;
 
-    fin.close();
+	fin.close();
 	newWord->loadAddedEVWord(engEngRoot, engVieVector);
 	removeWord->loadRemovedEVWord(engEngRoot);
 }
 
 void Application::loadVieEngDict()
 {
-    std::ifstream fin("data/VE_nonaccent.txt");
-    int count = 0;
-    std::string line, word, wordInfo;
-    // Skip the first unnecessary 12 lines
-    while(count < 12)
-    {
-        std::getline(fin, line);
-        ++count;
-    }
+	std::ifstream fin("data/VE_nonaccent.txt");
+	int count = 0;
+	std::string line, word, wordInfo;
+	// Skip the first unnecessary 12 lines
+	while (count < 12)
+	{
+		std::getline(fin, line);
+		++count;
+	}
 	int wordIndex = 0;
-    while(std::getline(fin, line))
-    {
-        // this is the line containing the word
-        if(line[0] == '@')
-        {   
-            // If it is the first word
-            if(count == 12)
-                ++count;
-            else
-            {   
-                // insert previous word and its information
+	while (std::getline(fin, line))
+	{
+		// this is the line containing the word
+		if (line[0] == '@')
+		{
+			// If it is the first word
+			if (count == 12)
+				++count;
+			else
+			{
+				// insert previous word and its information
 				WordDataEngVie theItem;
 				extractVieEngData(theItem, word, wordInfo);
 				vieEngVector.push_back(theItem);
-				
+
 				trieInsert(engEngRoot, word, wordIndex, 2);
 				++wordIndex;
 
-                word.clear();
-                wordInfo.clear();
-            }
-            if(line.length() >= 2)
-                word = line.substr(1);
-        }
-        // this is the line containing the word type, word definitions, ...
-        else
-        {
-            if(wordInfo.empty())
-                wordInfo = line;
-            else
-                wordInfo += "\n" + line;
-        }
-    }
-    // Insert the last word
+				word.clear();
+				wordInfo.clear();
+			}
+			if (line.length() >= 2)
+				word = line.substr(1);
+		}
+		// this is the line containing the word type, word definitions, ...
+		else
+		{
+			if (wordInfo.empty())
+				wordInfo = line;
+			else
+				wordInfo += "\n" + line;
+		}
+	}
+	// Insert the last word
 	WordDataEngVie theItem;
 	extractVieEngData(theItem, word, wordInfo);
 	vieEngVector.push_back(theItem);
 	trieInsert(engEngRoot, word, wordIndex, 2);
 	++wordIndex;
 
-    fin.close();
+	fin.close();
 	newWord->loadAddedVEWord(engEngRoot, vieEngVector);
 	removeWord->loadRemovedVEWord(engEngRoot);
 }
 
 void Application::loadEmojiDict()
 {
-	std::ifstream inputFile("data/emoji.txt"); 
+	std::ifstream inputFile("data/emoji.txt");
 	if (!inputFile) {
 		std::cout << "Falied to open file " << std::endl;
 		return;
 	}
 	std::string line;
 	int emojiIndex = 0;
-	while (std::getline(inputFile, line)) 
+	while (std::getline(inputFile, line))
 	{
 		if (line.empty() || line[0] == '#')
 			continue;
-		std::string emojis; 
+		std::string emojis;
 		// Find the position of ';' 
 		std::size_t separatorPos = line.find_first_of(';');
 
@@ -499,6 +501,12 @@ void Application::initfavouriteFlag()
 	favouriteFlag.setPosition(9, 162);
 }
 
+void Application::initFullHistoryButton()
+{
+	fullHistoryButton.setPosition(1108, 834);
+	fullHistoryButton.setOutlineThickness(2);
+}
+
 void Application::initExploreButton()
 {
 	exploreButton.setFont(font);
@@ -506,7 +514,7 @@ void Application::initExploreButton()
 	exploreButton.setOutlineThickness(2);
 }
 
-void Application::initRandomWordButton() 
+void Application::initRandomWordButton()
 {
 	randomWordButton.setFont(font);
 	randomWordButton.setPosition({ 972, 587 });
@@ -571,7 +579,7 @@ void Application::changeDataSet()
 	{
 		displayBox.clearVieEngData();
 	}
-	else if(currentDataSetID == 3)
+	else if (currentDataSetID == 3)
 	{
 		displayBox.clearEmoji();
 	}
@@ -603,6 +611,7 @@ void Application::run()
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	randomWord = new RandomWord(font, font3, window);
+	historyScreen = new HistoryScreen(font3, window, history, history1, history2, history3);
 	proposedWord = new ProposeWord();
 	favouriteMain = new FavouriteOnMainAndOptionScreen();
 	loadEngEngDict();
@@ -632,7 +641,7 @@ void Application::handleEvent()
 			newWord->saveAddedWord();
 			removeWord->saveRemovedWord();
 			window.close();
-		}	
+		}
 		if (currentScreen == ScreenState::MainScreen || currentScreen == ScreenState::OptionsScreen)
 		{
 			if (event.type == sf::Event::TextEntered)
@@ -663,7 +672,7 @@ void Application::handleEvent()
 						searchInEngVieDict(inputWord, false);
 					else if (currentDataSetID == 2)
 						searchInVieEngDict(inputWord, false);
-					else 
+					else
 						searchInEmojiDict(inputWord, false);
 				}
 				else if (menuButton.isMouseOver(window)) {
@@ -684,29 +693,29 @@ void Application::handleEvent()
 				{
 					editDefScreen->setCurrentDataSetID(currentDataSetID);
 					editDefScreen->initTextToEdit(displayBox.getWord(), displayBox.getWordType()
-					, displayBox.getWordDef(), displayBox.getWordExample());
+						, displayBox.getWordDef(), displayBox.getWordExample());
 					currentScreen = ScreenState::EditDefinitionScreen;
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-					if(currentDataSetID == 0)
+					if (currentDataSetID == 0)
 						displayBox.clearEngEngData();
-					else if(currentDataSetID == 1)
+					else if (currentDataSetID == 1)
 						displayBox.clearEngVieData();
-					else if(currentDataSetID == 2)
+					else if (currentDataSetID == 2)
 						displayBox.clearVieEngData();
 					searchBar.clear();
 					favourite->setDataSet(currentDataSetID);
 					favourite->loadWordsList();
 					currentScreen = ScreenState::FavouriteScreen;
 				}
-				else if(searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
+				else if (searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
-					if(currentDataSetID == 0)
+					if (currentDataSetID == 0)
 						displayBox.clearEngEngData();
-					else if(currentDataSetID == 1)
+					else if (currentDataSetID == 1)
 						displayBox.clearEngVieData();
-					else if(currentDataSetID == 2)
+					else if (currentDataSetID == 2)
 						displayBox.clearVieEngData();
 					searchBar.clear();
 					searchDefScreen->setCurrentDataSetID(currentDataSetID);
@@ -719,6 +728,8 @@ void Application::handleEvent()
 				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					currentScreen = ScreenState::RandomWordScreen;
 				}
+				else if (fullHistoryButton.isMouseOver(window) && currentScreen == ScreenState::MainScreen)
+					currentScreen = ScreenState::HistoryScreen;
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					//reset function
 					resetEverything();
@@ -745,11 +756,11 @@ void Application::handleEvent()
 				{
 					changeDataSet();
 				}
-				else if (favouriteFlag.isMouseOver(window)&&!proposedWord->setIsTyping())
+				else if (favouriteFlag.isMouseOver(window) && !proposedWord->setIsTyping())
 				{
 					favouriteMain->eraseOrAdd(searchBar, currentDataSetID);
 				}
-				else if(proposedWord->setIsTyping())
+				else if (proposedWord->setIsTyping())
 				{
 					proposedWord->handleEvent2(event, window, searchBar);
 				}
@@ -757,7 +768,7 @@ void Application::handleEvent()
 				{
 
 				}
-				
+
 			}
 			else if (proposedWord->setIsTyping() && proposedWord->getMousePosition(window))
 			{
@@ -810,12 +821,12 @@ void Application::handleEvent()
 				favourite->eraseWordList();
 			}
 		}
-		else if(currentScreen == ScreenState::SearchDefinitionScreen)
+		else if (currentScreen == ScreenState::SearchDefinitionScreen)
 		{
 			bool endScreen = false;
 			searchDefScreen->setEndScreen(endScreen);
 			searchDefScreen->handleEvent(event, window, endScreen, engEngVector, engVieVector, vieEngVector);
-			if(endScreen)
+			if (endScreen)
 			{
 				searchDefScreen->setEndScreen(endScreen);
 				currentScreen = ScreenState::OptionsScreen;
@@ -829,7 +840,17 @@ void Application::handleEvent()
 			if (randomWord->isBackButtonPressed) {
 				currentScreen = ScreenState::OptionsScreen;
 			}
-			
+
+		}
+		else if (currentScreen == ScreenState::HistoryScreen) {
+			historyScreen->isBackButtonPressed = false;
+			historyScreen->updatePage(history, history1, history2, history3);
+			historyScreen->handleEvent(event, window, currentDataSetID, history, history1, history2, history3);
+			if (event.type == sf::Event::MouseButtonPressed && dataSetButton.isMouseOver(window))
+				changeDataSet();
+			if (historyScreen->isBackButtonPressed) {
+				currentScreen = ScreenState::MainScreen;
+			}
 		}
 		else
 		{
@@ -847,6 +868,7 @@ void Application::update()
 		searchButton.update(window);
 		dataSetButton.update(window);
 		menuButton.update(window);
+		fullHistoryButton.update(window);
 		if (!proposedWord->setIsTyping())
 		{
 			displayBox.update(window);
@@ -915,6 +937,11 @@ void Application::update()
 		dataSetButton.update(window);
 		randomWord->update(window);
 	}
+	else if (currentScreen == ScreenState::HistoryScreen)
+	{
+		dataSetButton.update(window);
+		historyScreen->update(window);
+	}
 	else
 	{
 
@@ -942,6 +969,7 @@ void Application::render()
 		dataSetButton.drawTo(window);
 
 		drawHistory();
+		fullHistoryButton.drawTo(window);
 		//favouriteMain.drawTo(window);
 		menuButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
@@ -1007,65 +1035,69 @@ void Application::render()
 		randomWord->render(window);
 		dataSetButton.drawTo(window);
 	}
-		
+	else if (currentScreen == ScreenState::HistoryScreen) {
+		historyScreen->render(window, currentDataSetID, history, history1, history2, history3);
+		dataSetButton.drawTo(window);
+	}
+
 	window.display();
 }
 
-void Application::searchInEngEngDict(std::string &inputWord, bool isForRandom)
+void Application::searchInEngEngDict(std::string& inputWord, bool isForRandom)
 {
-	if (inputWord!="" && isForRandom == false)
-        history.add(inputWord, "data/historyEE.txt");
-    int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
-    if(wordIndex != -1)
-    {
-        // Console
-        std::cout << wordIndex << std::endl;
-        // UI
-        displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
-    }
-    else
-    {
-        std::cout << "Cannot find the word" << "\n";
-        displayBox.showNoEngEngDefinitions();
-    }
+	if (inputWord != "" && isForRandom == false)
+		history.add(inputWord, "data/historyEE.txt");
+	int wordIndex = filterAndSearch(engEngRoot, inputWord, 0);
+	if (wordIndex != -1)
+	{
+		// Console
+		std::cout << wordIndex << std::endl;
+		// UI
+		displayBox.getWordDataEngEng(inputWord, wordIndex, engEngVector);
+	}
+	else
+	{
+		std::cout << "Cannot find the word" << "\n";
+		displayBox.showNoEngEngDefinitions();
+	}
 }
 
 void Application::searchInEngVieDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="" && isForRandom == false)
-        history1.add(inputWord, "data/historyEV.txt");
-    int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
-    if(wordIndex != -1)
-    {
-        // Console
-        std::cout << wordIndex << std::endl;
-        // UI
-        displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
-    }
-    else
-    {
-        std::cout << "Cannot find the word" << "\n";
-        displayBox.showNoEngVieDefinitions();
-    }
+	if (inputWord != "" && isForRandom == false)
+		history1.add(inputWord, "data/historyEV.txt");
+	int wordIndex = filterAndSearch(engEngRoot, inputWord, 1);
+	if (wordIndex != -1)
+	{
+		// Console
+		std::cout << wordIndex << std::endl;
+		// UI
+		displayBox.getWordDataEngVie(inputWord, wordIndex, engVieVector);
+	}
+	else
+	{
+		std::cout << "Cannot find the word" << "\n";
+		displayBox.showNoEngVieDefinitions();
+	}
 }
 
 void Application::searchInVieEngDict(std::string& inputWord, bool isForRandom)
 {
-    if (inputWord!="" && isForRandom == false)
-        history2.add(inputWord, "data/historyVE.txt");
-    int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
-    if(wordIndex != -1)
-    {
-        // Console
-        std::cout << wordIndex << std::endl;
-        // UI
-        displayBox.getWordDataVieEng(inputWord, wordIndex, vieEngVector);
-    }
-    else
-    {
-        std::cout << "Cannot find the word" << "\n";
-        displayBox.showNoVieEngDefinitions();
-    }
+	if (inputWord != "" && isForRandom == false)
+		history2.add(inputWord, "data/historyVE.txt");
+	int wordIndex = filterAndSearch(engEngRoot, inputWord, 2);
+	if (wordIndex != -1)
+	{
+		// Console
+		std::cout << wordIndex << std::endl;
+		// UI
+		displayBox.getWordDataVieEng(inputWord, wordIndex, vieEngVector);
+	}
+	else
+	{
+		std::cout << "Cannot find the word" << "\n";
+		displayBox.showNoVieEngDefinitions();
+	}
 }
 
 void Application::searchInEmojiDict(std::string& inputWord, bool isForRandom)
@@ -1091,11 +1123,11 @@ void Application::searchInEmojiDict(std::string& inputWord, bool isForRandom)
 void Application::resetEverything()
 {
 	// Clear display box
-	if(currentDataSetID == 0)
+	if (currentDataSetID == 0)
 		displayBox.clearEngEngData();
-	else if(currentDataSetID == 1)
+	else if (currentDataSetID == 1)
 		displayBox.clearEngVieData();
-	else if(currentDataSetID == 2)
+	else if (currentDataSetID == 2)
 		displayBox.clearVieEngData();
 	else
 		displayBox.clearEmoji();
@@ -1130,9 +1162,9 @@ void Application::resetEditDef()
 	std::vector<std::string> words;
 	std::string line;
 	fin.open(filename);
-	if(fin.is_open())
+	if (fin.is_open())
 	{
-		while(std::getline(fin, line))
+		while (std::getline(fin, line))
 		{
 			words.push_back(line);
 		}
@@ -1140,16 +1172,16 @@ void Application::resetEditDef()
 	}
 	std::ofstream fout;
 	fout.open(filename);
-	if(fout.is_open())
+	if (fout.is_open())
 	{
 		fout << "";
 		fout.close();
 	}
-	for(int i = 0; i < words.size(); ++i)
+	for (int i = 0; i < words.size(); ++i)
 	{
 		filename = "data/edit-words/eng-eng/" + words[i] + ".txt";
 		fout.open(filename);
-		if(fout.is_open())
+		if (fout.is_open())
 		{
 			fout << "";
 			fout.close();
@@ -1159,25 +1191,25 @@ void Application::resetEditDef()
 	words.clear();
 	filename = "data/edit-words/eng-vie/list-of-words.txt";
 	fin.open(filename);
-	if(fin.is_open())
+	if (fin.is_open())
 	{
-		while(std::getline(fin, line))
+		while (std::getline(fin, line))
 		{
 			words.push_back(line);
 		}
 		fin.close();
 	}
 	fout.open(filename);
-	if(fout.is_open())
+	if (fout.is_open())
 	{
 		fout << "";
 		fout.close();
 	}
-	for(int i = 0; i < words.size(); ++i)
+	for (int i = 0; i < words.size(); ++i)
 	{
 		filename = "data/edit-words/eng-vie/" + words[i] + ".txt";
 		fout.open(filename);
-		if(fout.is_open())
+		if (fout.is_open())
 		{
 			fout << "";
 			fout.close();
@@ -1187,25 +1219,25 @@ void Application::resetEditDef()
 	words.clear();
 	filename = "data/edit-words/vie-eng/list-of-words.txt";
 	fin.open(filename);
-	if(fin.is_open())
+	if (fin.is_open())
 	{
-		while(std::getline(fin, line))
+		while (std::getline(fin, line))
 		{
 			words.push_back(line);
 		}
 		fin.close();
 	}
 	fout.open(filename);
-	if(fout.is_open())
+	if (fout.is_open())
 	{
 		fout << "";
 		fout.close();
 	}
-	for(int i = 0; i < words.size(); ++i)
+	for (int i = 0; i < words.size(); ++i)
 	{
 		filename = "data/edit-words/vie-eng/" + words[i] + ".txt";
 		fout.open(filename);
-		if(fout.is_open())
+		if (fout.is_open())
 		{
 			fout << "";
 			fout.close();
