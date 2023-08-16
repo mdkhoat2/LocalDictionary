@@ -20,6 +20,7 @@
     <ClCompile Include="WordDisplayBox.cpp" />
     <ClCompile Include="Explore.cpp" />
     <ClCompile Include="RandomWord.cpp" />
+    <ClCompile Include="RandomDef.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -40,5 +41,6 @@
     <ClInclude Include="WordDisplayBox.h" />
     <ClInclude Include="Explore.h" />
     <ClInclude Include="RandomWord.h" />
+    <ClInclude Include="RandomDef.h" />
   </ItemGroup>
 </Project>

@@ -152,6 +152,7 @@
     <ClCompile Include="History.cpp" />
     <ClCompile Include="NewWord.cpp" />
     <ClCompile Include="ProposeWord.cpp" />
+    <ClCompile Include="RandomDef.cpp" />
     <ClCompile Include="RandomWord.cpp" />
     <ClCompile Include="RemoveWord.cpp" />
     <ClCompile Include="SearchDefinition.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="History.h" />
     <ClInclude Include="NewWord.h" />
     <ClInclude Include="ProposeWord.h" />
+    <ClInclude Include="RandomDef.h" />
     <ClInclude Include="RandomWord.h" />
     <ClInclude Include="RemoveWord.h" />
     <ClInclude Include="SearchDefinition.h" />
