@@ -658,7 +658,7 @@ void DisplayBox::showExistedDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("The Word Has Already Existed!");
+    word.setString("THIS WORD HAS ALREADY BEEN ADDED!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -674,7 +674,7 @@ void DisplayBox::showExistedVieEngDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("The Word Has Already Existed!");
+    word.setString("THIS WORD HAS ALREADY BEEN ADDED!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -690,7 +690,7 @@ void DisplayBox::showExistedEngVieDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Tu vung nay da co trong tu dien!");
+    word.setString("TU VUNG NAY DA CO TRONG TU DIEN!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -706,7 +706,7 @@ void DisplayBox::showNewEngVieDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Tu vung moi da duoc them thanh cong!");
+    word.setString("TU VUNG MOI DA DUOC THEM THANH CONG!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -722,7 +722,7 @@ void DisplayBox::showNewDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("New Word Imported Successfully!");
+    word.setString("NEW WORD IMPORTED SUCCESSFULLY!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -738,7 +738,7 @@ void DisplayBox::showNewVieEngDefinitions() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("New Word Imported Successfully!");
+    word.setString("NEW WORD IMPORTED SUCCESSFULLY!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -754,7 +754,7 @@ void DisplayBox::showDeletionReConfirmation() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Are you sure to delete this word?");
+    word.setString("ARE YOU SURE TO DELETE THIS WORD?");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -770,7 +770,7 @@ void DisplayBox::showDeleteSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Delete Successfully!");
+    word.setString("DELETE SUCCESSFULLY!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -786,7 +786,7 @@ void DisplayBox::showCancelSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Action Cancelled!");
+    word.setString("ACTION CANCELLED!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -802,7 +802,7 @@ void DisplayBox::showEVDeletionReConfirmation() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Ban co chac chan muon xoa tu vung nay?");
+    word.setString("BAN CO CHAC MUON XOA TU VUNG NAY?");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -818,7 +818,7 @@ void DisplayBox::showEVDeleteSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Da xoa tu vung thanh cong!");
+    word.setString("DA XOA TU VUNG THANH CONG!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -834,7 +834,7 @@ void DisplayBox::showEVCancelSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Hanh dong da duoc huy thanh cong!");
+    word.setString("HANH DONG DA DUOC HUY!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -850,7 +850,7 @@ void DisplayBox::showVEDeletionReConfirmation() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Are you sure to delete this word?");
+    word.setString("ARE YOU SURE TO DELETE THIS WORD?");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -866,7 +866,7 @@ void DisplayBox::showVEDeleteSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Delete Successfully!");
+    word.setString("DELETE SUCCESSFULLY!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");
@@ -882,7 +882,7 @@ void DisplayBox::showVECancelSuccessfully() {
     showNextButton = false;
     showPrevButton = false;
 
-    word.setString("Action cancelled!");
+    word.setString("ACTION CANCELLED!");
     wordType.setString("");
     wordDef.setString("");
     wordExample.setString("");

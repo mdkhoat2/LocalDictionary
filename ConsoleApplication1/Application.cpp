@@ -605,8 +605,8 @@ void Application::run()
 	// Load dictionaries
 	window.draw(loadingScreen);
 	window.display();
-	newWord = new NewWord(font, font2, window);
-	removeWord = new RemoveWord(font, font2, window);
+	newWord = new NewWord(font, font3, window);
+	removeWord = new RemoveWord(font, font3, window);
 	favourite = new Favourite(window);
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);

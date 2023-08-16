@@ -187,8 +187,8 @@ RemoveWord::RemoveWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window
     removeButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     confirmButton("", { 40, 40 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
-    noteBox({ 72, 240 }, { 100, 510 }, sf::Color::Transparent, sf::Color::Black),
-    displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
+    noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
+    displayBox({ 72, 325 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
     isDeleting(false),
     isEndScreen(false),
     currentDataSetID(0)
@@ -239,14 +239,14 @@ void RemoveWord::initBackground(sf::RenderWindow& window)
 
     // Scale cancel the image
     scaleX = static_cast<float>(185.f) / cancelTex.getSize().x;
-    scaleY = static_cast<float>(77.f) / cancelTex.getSize().y;
+    scaleY = static_cast<float>(75.f) / cancelTex.getSize().y;
     cancel.setScale(scaleX, scaleY);
     // Set the cancel image's position
-    cancel.setPosition({ 956, 237 });
+    cancel.setPosition({ 956, 238 });
 
 
     // Load confirm image from file
-    if (!confirmTex.loadFromFile("background/buttondelete.jpg"))
+    if (!confirmTex.loadFromFile("background/deletebutton.png"))
         std::cout << "buttondelete not found!\n";
     confirmTex.setSmooth(true);
     confirm.setTexture(confirmTex);
@@ -275,7 +275,7 @@ void RemoveWord::initBackButton(sf::Font& font) {
 
 void RemoveWord::initCancelButton(sf::Font& font) {
     cancelButton.setFont(font);
-    cancelButton.setPosition({ 972, 253 });
+    cancelButton.setPosition({ 972, 254 });
     cancelButton.setOutlineThickness(2);
 }
 

@@ -27,3 +27,7 @@ TS
 *n
 -A singer
 = "TS is one of the omnipresent singers of all time"
+add something to this app
+
+dictionary
+
