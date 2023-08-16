@@ -15,3 +15,4 @@ mieng
 luoi
 tim kiem loi
 rock
+chao

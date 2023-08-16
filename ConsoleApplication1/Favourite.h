@@ -42,7 +42,7 @@ public:
 
 	void resavePositionDeleteButton();
 
-	void addWord(std::string inputword);
+	void addWord(std::string inputword, EngTrieNode* root);
 	
 	void removeWord(sf::RenderWindow& window);
 
@@ -50,12 +50,14 @@ public:
 
 	void eraseWordList();
 
+	bool filterAndCheckinDictionary(EngTrieNode* root, std::string word);
+
 
 public:
 
 	void setDataSet(int theID);
 
-	void handleEvent(sf::Event& event, sf::RenderWindow& window,bool&endScreen);
+	void handleEvent(sf::Event& event, sf::RenderWindow& window,bool&endScreen, EngTrieNode* root);
 
 	void update(sf::RenderWindow& window);
 
@@ -74,7 +76,9 @@ private:
 	sf::Clock clock;
 	sf::Time elapse;
 	sf::Text existed;
+	sf::Text notFoundText;
 	bool isExist;
+	bool notFound;
 	std::vector<WordItem>wordItems;
 	sf::Texture  deleteButtonTexture, prevButtonTexture, nextButtonTexture, backgroundTexture;
 	sf::Sprite  deleteButtonImage, prevButtonImage, nextButtonImage, backgroundImage;
@@ -88,6 +92,7 @@ private:
 	int currentDataSetID;
 private:
 	void initExistedText();
+	void initNotFoundText();
 	void initBackground(sf::RenderWindow& window);
 	void initAddButton(sf::Font& font);
 	void initBackButton(sf::Font& font);

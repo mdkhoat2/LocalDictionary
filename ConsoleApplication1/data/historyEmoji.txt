@@ -25,3 +25,8 @@ jar
 hammer
 rock
 rock
+ghost
+dashing away
+airplane
+magic wand
+keyboard
