@@ -176,10 +176,10 @@ void RandomWord::displayKeyword(sf::RenderWindow& window)
 
 void RandomWord::getRandom(std::vector<WordDataEngVie>& root)
 {
-	int n1 = ranNum(root.size());
-	int n2 = ranNum(root.size());
-	int n3 = ranNum(root.size());
-	int n4 = ranNum(root.size());
+	int n1 = ranNum(root.size() - 5752) + 5752;
+	int n2 = ranNum(root.size() - 5752) + 5752;
+	int n3 = ranNum(root.size() - 5752) + 5752;
+	int n4 = ranNum(root.size() - 5752) + 5752;
 
 	word1.def = root[n1].defList[0].defAndExample.first;
 	word1.type = root[n1].defList[0].wordType;
