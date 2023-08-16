@@ -445,7 +445,7 @@ NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
-    displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
+    displayBox({ 72, 325 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
     isEndScreen(false),
     currentDataSetID(0),
     currentAddOptID(0),
@@ -589,7 +589,7 @@ void NewWord::initAddBox(const sf::Font& font, sf::Sprite& background)
 {
     float scaleX = background.getScale().x;
     float scaleY = background.getScale().y;
-    addBox.setPosition(247 * scaleX, 1292 * scaleY);
+    addBox.setPosition(247 * scaleX, 1000 * scaleY);
     addBox.setSize(sf::Vector2f(2887 * scaleX, 1569 * scaleY));
     addBox.setFont(font);
     addBox.setCharacterSize(25);
