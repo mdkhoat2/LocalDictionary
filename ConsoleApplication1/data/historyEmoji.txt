@@ -32,3 +32,9 @@ flag: European Union
 flag: Aruba
 carrot
 smilling face
+flag: Afghanistan
+eggplant
+rock
+rocket
+radioactive
+egg

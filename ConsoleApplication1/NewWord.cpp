@@ -441,7 +441,7 @@ NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     addBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     cancelButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    addOptButton("      Keyboard", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+    addOptButton("      TYPE IN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
@@ -505,7 +505,7 @@ void NewWord::initBackground(sf::RenderWindow& window)
     scaleY = static_cast<float>(92.f) / addOptTex.getSize().y;
     addOpt.setScale(scaleX, scaleY);
     // Set the image's position
-    addOpt.setPosition({ 956, 237 });
+    addOpt.setPosition({ 956, 238 });
 
     // cancel
     // Load image from file
@@ -575,7 +575,7 @@ void NewWord::initAddOptText(sf::Font& font)
 
 void NewWord::initAddOptButton(sf::Font& font) {
     addOptButton.setFont(font);
-    addOptButton.setPosition({ 972, 253 });
+    addOptButton.setPosition({ 972, 254 });
     addOptButton.setOutlineThickness(2);
     addOptButton.setStyle(sf::Text::Style::Bold);
 }
@@ -640,9 +640,9 @@ void NewWord::changeAddOpt() {
         currentAddOptID = 1;
 
     if (currentAddOptID == 0)
-        addOptButton.setString("      Keyboard");
+        addOptButton.setString("      TYPE IN");
     else if (currentAddOptID == 1)
-        addOptButton.setString("      Text file");
+        addOptButton.setString("      FILE");
 }
 
 std::string NewWord::getEditWordType()
