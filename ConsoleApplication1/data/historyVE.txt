@@ -13,6 +13,4 @@ mieng
 luoi
 tim kiem loi
 rock
-dac cach
-thunghiemthemVE
-Thuy Loan
+chao

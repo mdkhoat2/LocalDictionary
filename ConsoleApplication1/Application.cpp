@@ -813,7 +813,7 @@ void Application::handleEvent()
 		{
 			bool endScreen = false;
 			favourite->setEndScreen(endScreen);
-			favourite->handleEvent(event, window, endScreen);
+			favourite->handleEvent(event, window, endScreen,engEngRoot);
 			if (endScreen)
 			{
 				favourite->setEndScreen(endScreen);

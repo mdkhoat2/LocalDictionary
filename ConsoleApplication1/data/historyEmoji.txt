@@ -23,18 +23,8 @@ jar
 hammer
 rock
 rock
-eggplant
-deaf man: dark skin tone
-deaf person
-radioactive
-flag: Argentina
-flag: European Union
-flag: Aruba
-carrot
-smilling face
-flag: Afghanistan
-eggplant
-rock
-rocket
-radioactive
-egg
+ghost
+dashing away
+airplane
+magic wand
+keyboard

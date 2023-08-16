@@ -72,6 +72,7 @@ Favourite::Favourite(sf::RenderWindow& window) :
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	isEndScreen(false),
 	isExist(false),
+	notFound(false),
 	currentDataSetID(0)
 {
 	font.loadFromFile("font/SF-Pro-Rounded-Regular.otf");
@@ -83,6 +84,7 @@ Favourite::Favourite(sf::RenderWindow& window) :
 	initAddBar(font);
 	initDataSetButton(font);
 	initExistedText();
+	initNotFoundText();
 	posY1 = 260;
 	t1 = sf::seconds(1.5f);
 	filePath = "data/favourite/favorite_words" + std::to_string(currentDataSetID) + ".txt";
@@ -95,6 +97,15 @@ void Favourite::initExistedText()
 	existed.setFillColor(sf::Color::Black);
 	existed.setCharacterSize(33);
 	existed.setPosition(270, 630);
+}
+
+void Favourite::initNotFoundText()
+{
+	notFoundText.setFont(font);
+	notFoundText.setString("This word does not exist in the dictionary with this dataset.");
+	notFoundText.setFillColor(sf::Color::Black);
+	notFoundText.setCharacterSize(33);
+	notFoundText.setPosition(110, 630);
 }
 
 void Favourite::initAddBar(sf::Font& font)
@@ -228,10 +239,14 @@ void Favourite::resavePositionDeleteButton()
 	}
 }
 
-void Favourite::addWord(std::string inputword)
+void Favourite::addWord(std::string inputword, EngTrieNode* root)
 {
 	if (inputword.empty() == true)return;
-	if (filterAndCheck(inputword))
+	if (!filterAndCheckinDictionary(root, inputword))
+	{
+		notFound = true;
+	}
+	else if (filterAndCheck(inputword))
 	{
 		isExist = true;
 	}
@@ -285,7 +300,7 @@ void Favourite::removeWord(sf::RenderWindow& window)
 }
 
 ////////////////////
-void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window, bool& endScreen)
+void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window, bool& endScreen, EngTrieNode* root)
 {
 	if (event.type == sf::Event::TextEntered) {
 		addBar.typedOn(event);
@@ -303,7 +318,7 @@ void Favourite::handleEvent(sf::Event& event, sf::RenderWindow& window, bool& en
 		if (addButton.isMouseOver(window))
 		{
 			std::string word = addBar.getText();
-			addWord(word);
+			addWord(word, root);
 		}
 		else if (backButton.isMouseOver(window))
 		{
@@ -398,6 +413,14 @@ void Favourite::render(sf::RenderWindow& window)
 				isExist = false;
 			}
 			window.draw(existed);
+		}
+		if (notFound == true)
+		{
+			if (clock.getElapsedTime() >= t1 && notFound)
+			{
+				notFound = false;
+			}
+			window.draw(notFoundText);
 		}
 	}
 }
@@ -508,6 +531,43 @@ void Favourite::changeDataSet()
 	eraseWordList();
 	setCurrentDataSet();
 	loadWordsList();
+}
+bool Favourite::filterAndCheckinDictionary(EngTrieNode* root, std::string word)
+{
+	int result = trieSearch(root, word, currentDataSetID);
+	if (result !=-1)
+		return true;
+	for (int i = 0; i < word.length(); ++i)
+	{
+		if (word[i] >= 'a' && word[i] <= 'z')
+			word[i] = toupper(word[i]);
+	}
+	result = trieSearch(root, word, currentDataSetID);
+	if (result != -1)
+		return true;
+	for (int i = 0; i < word.length(); ++i)
+	{
+		word[i] = tolower(word[i]);
+	}
+	result = trieSearch(root, word, currentDataSetID);
+	if (result != -1)
+		return true;
+	word[0] = toupper(word[0]);
+	result = trieSearch(root, word, currentDataSetID);
+	if (result != -1)
+		return true;
+	word[0] = tolower(word[0]);
+	int i = 0;
+	while (word[i] != ' ' && i < word.length())
+		++i;
+	if (i < word.length() && word[i] == ' ')
+	{
+		if (word[i + 1] >= 'a' && word[i + 1] <= 'z')
+			word[i + 1] = toupper(word[i + 1]);
+	}
+	result = trieSearch(root, word, currentDataSetID);
+	if (result != -1)return true;
+	return false;
 }
 
 //=======================================================================================
