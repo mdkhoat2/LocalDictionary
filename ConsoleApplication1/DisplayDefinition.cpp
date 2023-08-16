@@ -942,7 +942,6 @@ const sf::Vector2f &DisplayBox::getPrevButtonScale() const
 
 void DisplayBox::showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector)
 {
-    std::string emoji = "0x"+ emojiVector[emojiIndex];
     std::string imagePath = emojiVector[emojiIndex];
     for (int i = 0; i < imagePath.length(); i++)
     {
@@ -951,7 +950,14 @@ void DisplayBox::showEmojiDefinition(std::string& inputWord, int& emojiIndex, st
     }
     if (!emojiTexture.loadFromFile("data/images/"+imagePath+".png"))
     {
-        showNoEmojiDefinition();
+        for (int i = 0; i < imagePath.length(); i++)
+        {
+            imagePath[i] = toupper(imagePath[i]);
+        }
+        if (!emojiTexture.loadFromFile("data/images2/" + imagePath + ".png"))
+        {
+            showNoEmojiDefinition();
+        }
     }
     emojiTexture.setSmooth(true);
     emojiImage.setTexture(emojiTexture);
@@ -982,6 +988,9 @@ void DisplayBox::showNoEmojiDefinition()
     word.setString("No emoji matches this definition.");
     wordType.setString("");
     wordDef.setString("");
+    sf::Texture emptyTexture;
+    emojiImage.setTexture(emptyTexture);
+    emojiImage.setPosition(130, 500);
 }
 
 

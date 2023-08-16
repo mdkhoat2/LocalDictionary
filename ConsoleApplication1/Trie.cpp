@@ -610,12 +610,13 @@ int filterAndSearch(EngTrieNode *root, std::string &word, int curDataSetID)
     if(result != -1)
         return result;
     // Lowercase all characters and uppercase all first characters of each single word
-    for(int i = 0; i < word.length(); ++i)
-    {
-        if(i == 0)
+    for (int i = 0; i < word.length(); ++i) {
+        if (i == 0 && isalpha(word[i])) {
             word[0] = toupper(word[0]);
-        if(word[i-1] == ' ')
+        }
+        else if (i > 0 && word[i - 1] == ' ' && isalpha(word[i])) {
             word[i] = toupper(word[i]);
+        }
     }
     result = trieSearch(root, word, curDataSetID);
     if(result != -1)
