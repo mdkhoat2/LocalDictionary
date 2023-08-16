@@ -241,7 +241,7 @@ void saveEditToFile(WordDataEngVie &theData, int currentDataSetID)
         }
         fin.close();
     }
-    // Now fileContent contains all the word that has been edited before
+    // Now fileContent contains all the words that has been edited before
     // We search if the word exist in the list or not
     if(fileContent.empty())
         fileContent = wordStr;
@@ -289,7 +289,13 @@ void saveEditToFile(WordDataEngVie &theData, int currentDataSetID)
                 savedContent += "\n@" + std::to_string(i);
             }
             savedContent += "\n*" + theData.defList[i].wordType;
-            savedContent += "\n" + theData.defList[i].defAndExample.first;
+            if(!theData.defList[i].defAndExample.first.empty())
+            {
+                if(theData.defList[i].defAndExample.first[0] == '-')
+                    savedContent += "\n" + theData.defList[i].defAndExample.first;
+                else
+                    savedContent += "\n-" + theData.defList[i].defAndExample.first;
+            }
             std::stringstream stream(theData.defList[i].defAndExample.second);
             while(std::getline(stream, line))
                 savedContent += "\n=" + line;

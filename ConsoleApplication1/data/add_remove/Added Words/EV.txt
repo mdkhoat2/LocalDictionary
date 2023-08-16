@@ -10,3 +10,7 @@ testingevkbadd
 *  dong tu
 -thu nghiem, kiem tra
 =to test for bugs+kiem tra loi
+TS
+*  danh tu
+-Ca si
+=TS la mot trong nhung ca si noi tieng cho den nay

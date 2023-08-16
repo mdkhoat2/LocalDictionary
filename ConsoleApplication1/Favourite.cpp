@@ -401,7 +401,7 @@ void Favourite::render(sf::RenderWindow& window)
 				window.draw(deleteButtonImage);
 				sf::Text wordText(wordItem.word, font, 20);
 				wordText.setFillColor(sf::Color::Black);
-				wordText.setPosition(140, y + 10);
+				wordText.setPosition(125, y + 10);
 				window.draw(wordText);
 				y += 50;
 			}

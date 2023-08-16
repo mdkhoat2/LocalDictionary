@@ -29,7 +29,8 @@ public:
         EditDefinitionScreen,
         FavouriteScreen,
         SearchDefinitionScreen,
-        RandomWordScreen
+        RandomWordScreen,
+        HistoryScreen
     };
 public:
     Application();
@@ -98,6 +99,7 @@ private:
     Button randomWordButton;
     Button randomDefButton;
     Button resetButton;
+    Button fullHistoryButton;
 
     Favourite *favourite;
     History history;
@@ -119,6 +121,7 @@ private:
     ProposeWord* proposedWord;
     FavouriteOnMainAndOptionScreen* favouriteMain;
     RandomWord* randomWord;
+    HistoryScreen* historyScreen;
 private:
     void initWindow();
     void initBackground();
@@ -138,6 +141,7 @@ private:
     void initRandomWordButton();
 	void initRandomDefButton();
     void initResetButton();
+    void initFullHistoryButton();
     void changeDataSet();
     void loadAllHistory();
     void drawHistory();

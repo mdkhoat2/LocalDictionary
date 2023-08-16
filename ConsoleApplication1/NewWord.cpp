@@ -441,11 +441,11 @@ NewWord::NewWord(sf::Font& font, sf::Font& font2, sf::RenderWindow& window) :
     addBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
     backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     cancelButton("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
-    addOptButton("      Keyboard", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
+    addOptButton("      TYPE IN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     addButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
     dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
     noteBox({ 72, 240 }, { 100, 610 }, sf::Color::Transparent, sf::Color::Black),
-    displayBox({ 72, 340 }, { 780, 610 }, sf::Color::Transparent, sf::Color::Black),
+    displayBox({ 72, 325 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
     isEndScreen(false),
     currentDataSetID(0),
     currentAddOptID(0),
@@ -505,7 +505,7 @@ void NewWord::initBackground(sf::RenderWindow& window)
     scaleY = static_cast<float>(92.f) / addOptTex.getSize().y;
     addOpt.setScale(scaleX, scaleY);
     // Set the image's position
-    addOpt.setPosition({ 956, 237 });
+    addOpt.setPosition({ 956, 238 });
 
     // cancel
     // Load image from file
@@ -575,7 +575,7 @@ void NewWord::initAddOptText(sf::Font& font)
 
 void NewWord::initAddOptButton(sf::Font& font) {
     addOptButton.setFont(font);
-    addOptButton.setPosition({ 972, 253 });
+    addOptButton.setPosition({ 972, 254 });
     addOptButton.setOutlineThickness(2);
     addOptButton.setStyle(sf::Text::Style::Bold);
 }
@@ -589,7 +589,7 @@ void NewWord::initAddBox(const sf::Font& font, sf::Sprite& background)
 {
     float scaleX = background.getScale().x;
     float scaleY = background.getScale().y;
-    addBox.setPosition(247 * scaleX, 1292 * scaleY);
+    addBox.setPosition(247 * scaleX, 1000 * scaleY);
     addBox.setSize(sf::Vector2f(2887 * scaleX, 1569 * scaleY));
     addBox.setFont(font);
     addBox.setCharacterSize(25);
@@ -640,9 +640,9 @@ void NewWord::changeAddOpt() {
         currentAddOptID = 1;
 
     if (currentAddOptID == 0)
-        addOptButton.setString("      Keyboard");
+        addOptButton.setString("      TYPE IN");
     else if (currentAddOptID == 1)
-        addOptButton.setString("      Text file");
+        addOptButton.setString("      FILE");
 }
 
 std::string NewWord::getEditWordType()
@@ -720,6 +720,8 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 displayBox.clearEngVieData();
             else if (currentDataSetID == 2)
                 displayBox.clearVieEngData();
+
+            isAdding = false;
             endScreen = true;
             isEndScreen = endScreen;
         }
@@ -752,7 +754,11 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                     theItem.word = inputWord;
                     EngVieDef theDef;
                     theDef.wordType = addWordType;
+                    if (addWordDef[0] != '-')
+                        addWordDef = '-' + addWordDef;
                     theDef.defAndExample.first = addWordDef;
+                    if (currentDataSetID == 0 && addWordExample[0] != '"')
+                        addWordExample = '"' + addWordExample + '"';
                     theDef.defAndExample.second = addWordExample;
                     theItem.defList.push_back(theDef);
                     if (currentDataSetID == 0) {
@@ -913,8 +919,10 @@ void NewWord::pushEEWordToQueue(std::string& inputWord, std::string& wordType, s
     else
         newWordType = wordType;
     std::string newWordInfo = "*" + newWordType + '\n' + wordDef;
-    if (!wordExample.empty())
-        newWordInfo += "; " + wordExample;
+    if (!wordExample.empty()) {
+        newWordInfo += '\n';
+        newWordInfo += "= " + wordExample;
+    }
     addedEEWord.push({ inputWord, newWordInfo });
 }
 
