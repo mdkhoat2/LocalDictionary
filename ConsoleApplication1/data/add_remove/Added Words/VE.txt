@@ -10,3 +10,7 @@ tim kiem loi
 * verb
 -to find bugs
 =Chung ta can tim kiem loi+We need to find bugs
+Thuy Loan
+* noun
+-A singer
+=Thuy Loan la ca si+Thuy Loan is a singer
