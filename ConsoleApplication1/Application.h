@@ -1,6 +1,6 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
-
+#pragma once
 #include "Button.h"
 #include "Textbox.h"
 #include "Trie.h"
@@ -16,6 +16,7 @@
 #include "ProposeWord.h"
 #include "Explore.h"
 #include "RandomWord.h"
+#include "RandomDef.h"
 
 class Application
 {
@@ -30,7 +31,8 @@ public:
         FavouriteScreen,
         SearchDefinitionScreen,
         RandomWordScreen,
-        HistoryScreen
+        HistoryScreen,
+        RandomDefScreen
     };
 public:
     Application();
@@ -122,6 +124,7 @@ private:
     FavouriteOnMainAndOptionScreen* favouriteMain;
     RandomWord* randomWord;
     HistoryScreen* historyScreen;
+    RandomDef* randomDef;
 private:
     void initWindow();
     void initBackground();
