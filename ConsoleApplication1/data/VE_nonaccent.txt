@@ -237,8 +237,6 @@
 =toi muon biet ai da dua ra loi goi y vo ly ay+I want to know who has dropped that absurd hint
 =co ai trong phong nay khong?+is there anyone (anybody) in this room?
 =co ai do dien thoai cho anh trong luc anh di vang+somebody (someone) made you a call during your absence
-=Khong co ai ca+Not anybody (nobody)
-=toi khong biet ai trong gia dinh nay ca+I don't know anybody (anyone) in this family
 
 @ai ai
 - Everyone, everybody
@@ -330,11 +328,6 @@
 - To feel compassion for
 =thay lu tre bo vo, ai cung ai ngai+at the sight of those waifs and strays, everyone feels compassion for them
 
-@
-- ai nu
-* noun
-- Daughter
-
 @ai nhi lan
 * noun
 -Ireland
@@ -362,8 +355,6 @@
 =am hieu can ke mot dinh ly hinh hoc+to know a geometrical theorem inside out
 =gioi am hieu+well-informed (knowledgeable, expert) circles
 =am hieu thi truong lao dong the gioi+to be well-informed about the world-wide labour market
-=chung toi chi chon nguoi nao am hieu lich su Viet Nam ma thoi+we only choose someone expert in Vietnamese history
-=ong ta am hieu thu tuc hanh chinh nhu long ban tay+he knows the administrative procedures like the back of his hand
 
 @am pe
 * noun
@@ -402,9 +393,6 @@
 - To insinuate, to allude to, to hint (at)
 =qua bai dien van khai mac, ong canh sat truong muon am chi thoi quan lieu dang trach cua luc luong canh sat dia phuong+by the inaugural speech, the chief constable wishes to allude to the blameworthy bureaucracy of the local police
 =anh am chi rang toi ngu chu gi?+do you want to imply that I am stupid?
-=buc biem hoa nay am chi nhung nguoi thich nhin dong ho trong cho mau den gio ve+this caricature makes an allusion to the clock-watchers
-=thai do hong hach cua ba ta am chi rang cac anh la thuoc cap cua ba ta+her authoritative attitude insinuates that you are her subordinates
-=anh ta gio nam ngon tay len am chi la phai hoi lo nam tram do la My+the fact he raises his five fingers hints at a requisite bribe of USD 500
 
 @am hai
 * verb
@@ -537,8 +525,6 @@
 =giao du voi ban xau thi khong an toan+it is not safe to keep bad company
 =su an toan+safety, safeness, security
 =cam giac an toan+feeling of safeness
-=cuoc rut lui an toan+a covered retreat
-=giay thong hanh an toan
 
 @an tri
 * verb
@@ -552,8 +538,6 @@
 =an ui ai+to pour comfort into someone's heart
 =mot chut an ui+a grain of comfort
 =nhung loi an ui+Words of consolation
-=ho tim nguon an ui o nguoi me men yeu+they seek solace from their beloved mother
-=nang la nguon an ui cuoi cung cua toi+She is my last solace
 
 @an vi
 * verb
@@ -726,10 +710,6 @@
 =anh huong cua to chuc ay lan rong khap vung bien gioi+that organization's influence spreads over the border regions
 =anh huong cua cac phuong phap moi doi voi cong nghe hien dai+the impact of new methods on modern technologies
 =anh huong bat loi+adverse effect
-=phat huy anh huong cua+to promote the effect of
-=gay anh huong ca nhan+to cultivate one's personal influence
-=khu vuc anh huong+sphere of influence
-=anh huong cua ho dang lu mo
 
 @anh lua
 * noun
@@ -764,9 +744,6 @@
 =cho sang va cho toi+light and shade
 =duoi anh sang cua chan ly+in the light of truth
 =anh sang cua khoa hoc hien dai+the light of the modern science
-=anh sang lung linh cua mot ngon nen+the flickering light of a candle
-=dung che anh sang khien ai khong thay ro+to stand in someone's light
-=toi mong rang nhung viec lam am muoi cua ong ta se duoc dua ra anh sang
 
 @ao
 * noun
@@ -781,7 +758,6 @@
 =sinh vien nao trong khoa luat cung ao uoc gianh duoc cam tinh cua co gai xinh dep ay+any student in the Faculty of Law longs to be in that pretty girl's favour
 =ao uoc mau het benh sot thuong han+to crave for a quick recovery from typhoid fever
 =su ao uoc, niem khao khat+wish, longing, craving
-=su ao uoc duoc song doc lap tu do+a longing for independence and freedom
 
 @ao
 * adv
@@ -878,11 +854,6 @@
 * noun
 - Glowing tunic, dress
 =ao dai cu tuong la sang boi khong ao ngan phai mang ao dai+tunics are no status symbol, they wear them for they have no short jackets
-
-@
-- ao giap
-* noun
-- Armour
 
 @ao giap
 * noun
@@ -1023,7 +994,6 @@
 =khong bi ap luc quan su nao+to be free from any military pressure
 =nhom gay ap luc+pressure group
 =dung ap luc doi voi ai, gay ap luc doi voi ai+to bring pressure to bear on someone
-=chu no gay ap luc doi voi con no de thu hoi mon no qua han+the creditor brought pressure to bear on the debtor to recover the overdue debt
 
 @ap suat
 * noun
@@ -1083,9 +1053,6 @@
 =cho ngua an yen mach+to feed oats to horses
 =den gio cho cac em be an chua?+is it time to feed the babies?
 =chung khong tu an mot minh duoc+they cannot feed themselves yet
-=an diem tam, an trua+to have breakfast, to have lunch
-=an mot bua an dam bac / thinh soan+to take a frugal/copious meal
-=thuc an
 
 @an bam
 * verb
@@ -1128,7 +1095,6 @@
 =ke nghien ma tuy co the an cap vat bat cu luc nao+drug addicts can pilfer at any time
 =pham toi an cap+to be guilty of theft
 =thoi an cap vat, thoi tat mat+kleptomania
-=nguoi hay an cap vat, nguoi tat mat+kleptomaniac
 
 @an chay
 * verb
@@ -1340,8 +1306,6 @@
 - To live as man and wife, to sleep together
 =mu dan ba lang loan ay san sang an nam voi bat ky nguoi dan ong nao giau co+that termagant is ready to sleep with any rich man
 =co tin don rang ho da an nam voi nhau truoc dam cuoi+rumour has it that they have lived together as husband and wife before their wedding, rumour has it that they have slept together (set up house together) before their wedding
-=an chay nam dat+to live in strict austerity (in sign of mourning or as religious observance)
-=an doi nam cho+to cool one's heels
 
 @an nan
 * verb
@@ -1663,7 +1627,6 @@
 =am nhac cung dinh+royal music
 =am nhac thinh phong+chamber music
 =buoi bieu dien am nhac+a performance of music, a concert
--The Kinh and all ethnic minorities in Vietnam have a time-honoured tradition of music and dance. This is evidenced by the figures seen dancing to music which were engraved on the bronze drums unearthed at Dong Son (Thanh Hoa province) and lithophones discovered in Tay Nguyen Highlands and other relics. Besides royal court music, there was also a rich vein of music which was closely attached to the daily lives of the working masses. Thousands of diverse musical tunes have been collected from this source. From Quan Ho folk songs in the North to Hue songs (songs from the Perfume River), "guessing game" songs, satirical songs, joking songs and numerous songs in southern provinces, all are characterised by a profound sensibility and poetic, lyrical sense. After 1945, royal court music was underdeveloped. But folk music flourished more than ever before along with the increasingly popular modern music
 
 @am phu
 * noun
@@ -8395,7 +8358,7 @@
 =bien gioi Lao-Viet+the Lao-Vietnamese frontier
 
 @Bien Hoa
-- Xem Dong Nai
+- a city of Dong Nai province
 
 @bien khu
 * noun
@@ -9278,9 +9241,6 @@
 * noun
 - Battery, small-size dynamo
 
-@Binh Dinh
-- Quy Nhon, provincial capital of Binh Dinh, is 1,065km from Ha Noi on National Highway 1. In the old days, Quy Nhon was called Thi Nai, the name of a beautiful lake inside the city. Bien Quy Nhon (Quy Nhon+Sea) has an annual average temperature of 25.7oC and is suitable for tourism the year round. Hoang Hau Beach is an ideal place for bathing. Quang Trung Museum is dedicated to Nguyen Hue, a national hero of the 18th century. It was built in his native land of Kien My village, Binh Thanh commune, Tay Son district, some 45km from Quy Nhon City. Nguyen Hue is one of three brothers who led the Tay Son Insurrection. In 1788, he led a great force advancing from Phu Xuan (Hue) to the North. It took 35 days and they exacted an overwhelming defeat on the Qing invaders near Thang Long (now Ha Noi), thereby liberating the royal+capital. He crowned himself Emperor Quang Trung the same year. At Quang Trung Museum, visitors will enjoy music and demonstrations of Vo Tay Son (traditional martial arts of Binh Dinh). In particular, they can+see a young woman, a niece of the 9th generation of Emperor Quang Trung, playing 11 battle drums. In addition, Hoi Van village (Cat Trinh commune, Phu Cat district) is well known for its hot spring. It is composed of+various chemical components useful in the treatment of rheumatism, mental disorder, cardio-vascular diseases and skin diseases. Beside the hot spring, there is a sanatorium which offers steam baths with mineral water of 38oC useful for medical treatment and general health improvement.=Built in 1665 in the Do Ban Citadel - second capital of the Kingdom of Cham Pa some 27km from Quy Nhon City - Thap Thap Pagoda is a Buddhist temple, but its decorations are characterized by the Cham decorative art. Duong Long Cham Tower is also called Thap Nga (Tower of Ivory),+consisting of three towers. This group of towers is one of the most beautiful in Central Vietnam. Banh It Tower is also called Thap Bac (Silver Tower). There, tourists can enjoy a panoramic view of this fertile countryside
-
 @binh dinh
 * verb
 - To pacify, to quell
@@ -9586,13 +9546,6 @@
 * verb
 - To grasp
 =biu canh cay de khoi nga+to grasp a branch to avoid a fall
-
-@Blowing dust and wind
-- (Gio bui tren duong) The wind and dust blowing on the road
--Troubled (times).
-=Thuo troi dat noi con gio bui+In troubled times by Heaven's will
--Hard, full of ups and downs
-=Cuoc doi gio bui+A life full of ups and downs
 
 @bo bo
 * noun
@@ -11072,10 +11025,6 @@
 =thuong nho boi hoi trong da+to fret with an obsessive longing
 =boi hoi nho lai nhung ky niem xua+to fret with obsessive memories of the past
 =Doi long an khe xot xa Khe chua, muoi man, long ta boi hoi+Hungry, one had to eat carambola which gave a prickly sensation, Now the obsessive memory of the sour and salt makes one's mind
-
-=boi hoi boi hoi+to fret intensively
-=Nho ai boi hoi boi hoi Nhu dung dong lua nhu ngoi dong than+One frets intensively with an obsessive longing for one's sweetheart, It is like sitting on thorns, being on pins and needles
-
 
 @boi te
 - (tu cu, nghia cu) Assistant (priest assisting the celebrant at the altar)
@@ -14853,7 +14802,7 @@
 -to fly; to run away
 
 @Cao Bang
-- Cao Bang is a mountainous province in North-Vietnam. Its provincial capital is under the same name. It shares a border of 314km with China to the north and the east, and is inhabited by many ethnic groups. Some 60km from the provincial capital is Pac Bo, a small hamlet in Truong Ha commune, Ha Quang district, close to the Vietnamese-Chinese border. In the local dialect, Pac Bo means watershed, where springs of clear water run. From Thai Nguyen City, provincial capital of Bac Thai province, you drive along Highway 3 to the towns of Bac Can and Phu Thong. After another 16km, you will arrive at Ba Be Lake which is about 225km from Ha Noi. The lake actually consists of three lakes called Pe Lam, Pe Lu and Pe Leng, so it is called Ba Be (Three Seas). Ba Be Lake is surrounded by limestone mountains and thick forests, home to many species of rare birds and animals
+- Cao Bang is a mountainous province in North-Vietnam.
 
 @cao boi
 * noun
@@ -18247,9 +18196,6 @@ dong tu To restrain; to hold on
 
 @Cham
 - dan toc Cham
-- With about 100,000 inhabitants, Cham (Cham, Chiem, Hoi) ethnic group originates from Ancient Cham Pa Kingdom. They live mainly in Ninh Thuan, Binh Thuan, Binh Dinh, Phu Yen. Belonging to Ma Lai-Da Dao linguistic group, the Cham people remains influenced by matriarchy and Indian culture. The ancient Cham writing is Sanskrit-based. Hinduism+and Mohammedanism are their principal religions
-- THE UNIQUE CHAM CULTURE: The Cham culture is a unique tradition, contributing much to the+diversity and richness of the Vietnamese multi-ethnic culture. From the first century AD, the Cham people received deep influences from Indian culture. In the 7th century AD, Cham Pa was already a kingdom with a capital in Tra Kieu (now Quang Nam) with a temple dedicated to the Indian Valmiki and his famous epic, the Ramayana By the middle of the 8th century AD, their capital was shifted to Nha Trang and five years later to Dong Duong, 15 km away from Tra Kieu in the southeast.
-- The Cham are one of the 53 ethnic groups in Vietnam and comprise various subgroups. There are around 98,000 Cham people, including the Cham Hroi in Binh Dinh, Phu Yen and those living in Ninh Thuan, Binh Thuan and other parts of southern Vietnam Inhabiting a large area, the Cham also have many diversified customs and social practices. While most of the Cham in Saigon, AnGiang and Tay Ninh, and the Cham from Cambodia follow Islam, those living in Binh Thuan, Ninh Thuan provinces follow Brahmanism. Islam is modified to suit the people here and is called 'Bani. The Cham language is of the+Malayo-Polynesian family and is spoken by about 250,000 people (G Moussay, Dictionaire Cham-Vietnamien-Francais, published by Phan Rang Culture Centre 1971). However, it does not necessarily follow that the Cham in different regions can fully understand each other. It is natural that the Cham borrow local words and expressions at the place they reside, mainly from Kho Me and Vietnamese. In terms of their script, only the Cham Dong (in Binh Thuan, Ninh Thuan provinces) have preserved their original script. The Cham script is now being taught at elementary school to help maintain this unique linguistic tradition. The Cham also+utilised the Akhar Thrah scripts from Nam An which has been incorporated into present-day Cham scripts. Ancient texts written on papyrus or paper+used both of these scripts and include various epics and love stories such as the Devamuno Inra Patra, Ummurup, Cambini, Bini-Cam, Sah Pakei, Patauw Kamai, Patauw adat Likei etc. This ancient literature gives a clear picture of the life and society of the Cham through history. Together with academic literature, the Cham also have very rich popular literature+which comprises hundreds of stories, sayings, idioms, puzzles, songs etc., which make up a precious literary tradition. Cham people have songs for+fishing using the 'vai chai' rhythm (pwoc jah), betrothals (danh dom da ra), milling rice (danh rasung chai) etc. These rhythms are also sung during festivities with dances which have become a real attraction to spectators. Surely the greatest and most unique contribution from the Cham culture is their architecture and carvings Historical stupa compounds in My Son (Quang Nam-Da Nang), Thap Ba (Nha Trang), Thap Cham (Ninh Thuan) and various Tara statues in Dong Duong, and Apsaras in Tra Kieu have all had their position+confirmed in the Southeast Asian sculptural tradition.+Though most of these works were created for religious purposes and stemmed from Brahmin spiritualism, they became popularised and part of the Cham+national culture. As such, the Indian-inspired Vishnus, and Shivas went through considerable transformations and became more human when recreated by Cham artisans.=In the present day, the Cham people have adjusted their lives to local conditions. People in Tay Ninh mostly work in agriculture, fishing and+commerce while those who live near Saigon have developed an urban lifestyle. The majority, however, still maintain traditional professions like cultivation, husbandry, weaving and ceramic production. Cham+handicrafts are now exported to various countries where they are highly appreciated due to their unique style and high quality workmanship
 
 @cham
 * noun & verb
@@ -19656,7 +19602,6 @@ dong tu To restrain; to hold on
 - Oar
 =mai cheo+an oar
 -Traditional operetta
-- Cheo (Traditional operetta) is an original synthesis of folk songs, dances and narration. The words of the play are imbued with the lyricism of folk songs, proverbs and popular sayings. A Cheo play could be put on stage in a large theatre, but it also could be performed successfully on one or two bed mats spread in the middle of a communal house with a cast of only three: a hero, a heroine and a clown. The clown in a Cheo play seems to be a supporting role, but actually he or she is very important to the performance. The clowns present a comic portrayal of social life, with ridiculous and satirical words and gestures they reduce the audience to tears of laughter. The national Cheo repertoire includes among others Truong Vien, Kim Nhan, Luu Binh Duong Le and Quan Am Thi Kinh, which are considered treasures of the traditional stage
 
 @cheo beo
 * noun
@@ -20685,8 +20630,6 @@ dong tu To restrain; to hold on
 @chieng
 * noun
 - Gong
-- Gongs were found in Vietnam in the Bronze Age (Dong Son culture from 2000 to 3500 years ago). Gongs were cast in bronze, an alloy of copper, zinc and lead. Gongs are used as a musical instrument by most ethnic groups in Vietnam. Gongs are frequently mentioned in Highland songs, and its music displays its contemplative nature. Highlanders believe that when gong music is played, there is an encounter between the human and spirit worlds, between the worlds of the living and the dead. In real life, the gong is closely associated with each stage of a lifespan. In the ceremony of blowing the ear for a newborn child, the sound of a gong serves to declare the offical acceptance of a new community member. When he or she is old enough to get married, in the ceremony of exchanging necklace, the gong sound is a reminder to the new couple to observe family and community traditions. The sound is so deep that it seems to ring only once in one's life. When beasts are destroying crops or a war rages, the gong seems to urge young people to dash to the battlefield and struggle for the survival of the community. If the gong sounds hilarious and fast, it heralds a victory or the ceremony of killing buffalo. When the gong sounds slow, sinister and heavy, then it is the news of a death. The gong is warm in a night of rest or around a fire with a pot of wine, an indication of a good harvest when young people gather to sing and dance and tell of their love
--When the gong sounds from the communal house, it can be heard all over the mountain and forest as a call for the young men to return to the communal house. When an old man passes away, the gong echoes its farewell. Virtually, all Western Highland and Long Range tribes have their own gongs. There are various types: Cong (with a nipple) and Chieng (without one) and there are also different sizes depending on the tribe, each region with its own regulations. It would not be an exaggeration to say that the gong is one of the main instruments in the orchestras of the Western Highland (Tay Nguyen) and Long Range (Truong Son) tribes, used in festivals such as the welcoming of a victory, killing buffalo, forgetting a tomb, and welcoming a good harvest. There are three pieces: Juar, Trum and Vang. Juar has an accelerating tempo revealing the majestic heroism of the victory; Trum (accompanied by a shield dance) expresses the hard but brave fight of the soldiers; and Vang, with a slow tempo, tells of sorrow, grief and regret felt for fallen soldiers. Gongs are named differently according to their size, register, timbre and function: Mother Gong, Father Gong, Older Sister Gong, Younger Sister Gong, or high pitch, medium pitch and low pitch. Hands or sticks are used to beat the gong. Sticks can be wrapped with cloth and/or rubber and a gong can be held by hand, put on the thigh or hung on a frame when played. Researchers all agree that of all the gongs of the ethnic groups, the Ba Na gong is the most majestic, imposing, romantic and echoing; the Gia Rai gong is the most solid, echoing and accelerated. The gong is an instrument of a philosophical and contemplative character. Closely associated with other art forms like singing and dancing, they can also be witty, cheerful and romantic. They are not only the property of the ethnic groups of the Western Highlands and the Long Range, but also bear unique and cherished value for Vietnamese culture as a whole. ()
 
 @chiep
 - xem chiem chiep
@@ -22257,10 +22200,6 @@ dong tu To restrain; to hold on
 @chu trinh
 * noun
 - (Recurrent) cycle
-
-@Chu Van An
-- Chu Van An (1292-1370) - talented and virtuous pedagogue and scholar in the Tran times - was reputed for straightforwardness and not being concerned with fame and advantages. His native village was in Thanh Dam (Thanh Tri- Ha Noi). He graduated as doctor and came home to teach instead of becoming a mandarin. Many of his students make their way in the world (Pham Su Manh, Le Quat). Chu Van An taught the crown prince at Quoc Tu Giam, and submitted That Tram So (petition asking to behead seven sycophantic mandarins) to the king. Because the king's disapproval, he resigned and led a secluded life under the pen-name Tieu An (secluded woodcutter). His works were Quoc Ngu Thi Tap (Anthology of national language), Tieu An Thi Tap (Anthology of a secluded woodcutter). There is a temple to his memory at the Temple of Literature in Ha Noi
-- CHU VAN AN: LIFE AND TIMES. Chu Van An died over six centuries ago, in the year 1370, but the example he set as a great patriot and teacher will remain engraved in the hearts of our people. Having won the degree of Thai Hoc Sinh (doctorate) in the official literary examinations, he refused to be appointed a mandarin official at the royal court and instead opened a school to train the country's scholars. Many of his more talented students would later go on to pursue successful careers. Two of his students, Pham Su Manh and Le Quat, rose to the position of prime minister. In the reign of Tran Minh Ton, Chu Van An was invited to teach at Quoc Tu Giam, the National University in the capital city of Thang Long (now Ha Noi), attended by the most talented scholars as well as the sons of high dignitaries, including the prince heir to the throne. He was the author of many books: Collections of poems in both the vernacular and classical Chinese, dissertations on Confucian classics, and a treaty on traditional medicine The vestiges of his life and career, carefully preserved by the people in spite of the ravages of war and the passage of time, testify to the great respect in which his memory is held. Thanh Liet commune in Thanh Tri district south of Ha Noi is believed to be the birth place of his mother, Le Thi Chiem. In the communal house are kept a record of his life and a couplet praising his virtues and achievements. A shrine was also built in 1846, dedicated to him and to a remarkable man among his descendants, Doctor Chu Dinh Bang, who lived in the reign of Le Thanh Ton (15th century) In Tam Hiep commune, Thanh Tri district is found Huynh Cung Temple, built on the site of a famous school founded by Chu Van An. In Van Dien south of Ha Noi is a stone stele with an inscription honouring Chu Van An, erected in 1803. But the most important national institutions related to his life and career are the Temple of Literature (Van Mieu) and the National University (Quoc Tu Giam) in Ha Noi. Here the Tran kings erected an altar to honour him alongside those dedicated to Confucius and his 72 disciples. Also in Ha Noi, a tree-lined street and a secondary school, the most renowned in the country, are named after him. In Hai Hung province are found vestiges related to the later years of his life. Here he lived as a recluse for ten years after unsuccessfully petitioning the king for the death sentence to seven corrupt high-ranking dignitaries. The commune where he spent those years is now named after him. It is located in Chi Linh district near a beautiful range of hills called Phuong Son (Phoenix Mount). His remains were buried there
 
 @chu vi
 * noun
@@ -26296,9 +26235,6 @@ dong tu To restrain; to hold on
 
 @Dao
 - dan toc Dao
--With more than 400,000 inhabitants, Dao ethnic group occupies 0.65% of the
-=Vietnamese population and belongs to Meo-Dao linguistic group. They live+at the altitude of 700-1000m, whereas H'Mong ethnic group at the more
-=considerable altitude. Most of them inhabit Ha Giang - Tuyen Quang, and+part of them in the northwest regions. Dao ethnic group came to Vietnam six centuries ago, and remains in a nomad life
 
 @dao
 * noun
@@ -29338,9 +29274,6 @@ dong tu To restrain; to hold on
 @duy tam luan
 - (cu) Idealism
 
-@Duy Tan
-- King Duy Tan (ruler from 1907 to 1916) whose name at birth was Vinh San was considered the mastermind behind the patriotic armed insurrection led by Thai Phien, Tran Cao Van and many other patriots. The insurrection, however, was soon discovered and crushed and all participants were killed. Only King Duy Tan was exiled to the Reunion island in the Indian Ocean. The king was released from jail only to be dragged into a re-invasion scheme of Vietnam after the World War II. He was fired at in a suspicious air-crack in Middle-Africa on Christmas day of 1945 as his "Absolute Independence policy" was not in line with the colonial aspirations of General De Gaulle. Unfortunately, the patriotic king was misunderstood by most Vietnamese people due to his unclear relation with General De Gaulle. By the 1960s, Vietnamese and French researchers brought to light the relation between king Duy Tan and General De Gaulle, proving the unchanging patriotic will of the king. In 942, from the jail island Reunion, listening for the first time to the anti-fascism appeal of General De Gaulle broadcast from Britain, king Duy Tan showed a deep respect and admiration for him. He then founded a war-resistant group operating for the ally- France. With a self-made radio, he recorded and transmitted information to the French Liberation Force against the pro-Germany government at VichyWhen Reunion island was liberated by the French Liberation Force, he voluntarily enrolled as a Radio maitre aboard the ship Leopard. In March 1945, France was liberated. By the end of the year, subsequent to the abdication of king Bao Dai in Vietnam, De Gaulle arranged for 100 parachute commandos in Sai Gon to prepare for the setting up of a dynasty headed by king Duy Tan.But Vinh San (king Duy Tan) knew nothing about this secret scheme. He vigorously believed that the French hero De Gaulle would help him bring peace, re-unification, and complete independence to his home country, Vietnam.+Additionally, he was opposed to the plan of ascending the throne . His political viewpoint was sharply contested and led him to become pessimistic. On December 17, 1945, he predicted his death to his friend and immediately wrote a political statement to express his belief in struggling for the unification of the north, centre and the south of Vietnam. As predicted, the event of his death took place eight days later His statement was veiled in secrecy until 1947 when the Combat newspaper copied and ran it. This delay in publicizing the facts surrounding his death and the nature of his true intentions for planning for a unified Vietnam made him misunderstood by the people of Vietnam. In reality, this patriot deserves the respect of all the peopleIn April 1987, thanks to the joint assistance of the governments of Vietnam and France, the king's remains were moved by his relatives to Vietnam and set down next to the royal mausoleums of King Duc Duc (his grandfather) and King Thanh Thai (his father) in the central city of Hue 
-
 @duy tan
 * verb
 -to reform
@@ -30087,10 +30020,10 @@ dong tu To restrain; to hold on
 =Chim Da Dieu (Ostrivhes)+cassowary
 
 @Da Lat
-- Xem Lam Dong
+- a city of Lam Dong province
 
 @Da Nang
-- Xem Quang Nam-Da Nang
+- a big city in the Central of Vietnam
 
 @da
 * verb
@@ -41874,17 +41807,7 @@ dong tu to push; to hurry; to urge
 - Hippopatamus
 
 @Ha Noi
-- Ha Noi is the political capital of Vietnam. Ha Noi lies in Red River Delta and is situated in a tropical area having a strong monsoon influence. The name of Ha Noi (Interior side of a river) has been+derived from an ancient language which is literally known as a land area located in the inner side of Red River. It does not mean that the city is inside the river, but it is embraced by about 100 km of the Red River dykes. Ha Noi has four inner precincts (Hoan Kiem, Ba Dinh, Hai Ba Trung, Dong Da) and five suburban districts (Tu Liem, Thanh Tri, Gia Lam, Dong Anh and Soc Son). From the time when the first State of ancient Vietnam was established, Ha Noi (formerly Thang+Long) has been considered a sacred and typical part of Vietnam. It was in the autumn of 1010 that Ly Cong Oan (also known as Ly Thai To) - the founder of Nha Hau Ly (Post-Ly Dynasty) - removed the court from Hoa Lu (present-day Ninh Binh province) to Dai La Citadel which was later renamed as Thang Long. As soon as the royal fleet with King Ly Thai To aboard cast anchors at the landing wharf in the Nhi River (present-day Red River), there ascended a golden dragon. Thinking that it was a good omen for his trip, King Ly Thai To had Dai La Citadel renamed Thang Long (Ascending Dragon). He also had Hoa Lu - his former capital - renamed Truong Yen. 1397 was the year marking an end to the decline of Nha Hau Le (Post-Le Dynasty). It was the time when the king indulged himself in entertainments. Ho Quy Ly, a high-ranking court+official, overthrew the king and proclaimed himself the king of a new dynasty - Ho Dynasty. This dynasty removed the court to Tay Do (Western Capital) in Thanh Hoa province. Thang Long was then renamed Dong Do (Eastern Capital). In 1407, the Ming aggressors defeated the army of Ho Dynasty. They rushed to Dong Do Citadel and renamed it Dong Quan Citadel. In 1418, a farmer whose name was Le Loi (future Le Thai To) grouped an insurrection army in Lam Son district in Thanh Hoa province. He proclaimed himself as Binh Dinh Vuong (King+of Pacification) and led the resistance against the aggressors for 10 years and regained national independence. He entered the then Dong Quan Citadel and the next year, he renamed the citadel as Dong Kinh (Eastern Imperial City). In 1527, when a new dynasty - Nha Mac (Mac Dynasty) - was in the control of the country, the citadel resumed its former name (Thang Long). In 1802, King Gia Long established the first court of Nha Nguyen (Nguyen Dynasty) in Phu Xuan in the central coastal city of Hue. Thang Long was then used as the regional capital exercising+influence on 11 northern citadels. But the word LONG which literally meant RuNG (Dragon) was changed to 'long' which was understood as 'thinh' (Prosperity). In 1831, King Minh Mang established the province of Ha Noi which includes the ancient Thang Long Citadel and the districts of Tu Liem, ung Hoa, Thuong Tin and Ly Nhan. In 1888, after the tragic defeat of Nha Nguyen (Nguyen Dynasty), Ha Noi became a colonial city until 1954. Ha Noi capital was liberated from French colonialists on October 10, 1954. After April 30, 1975, Ha Noi was+officially recognized as the capital of Vietnam by the communist goverment. In the old days, each of 36 guild streets in Ha Noi had its+name closely associated with the trade and occupation of the inhabitants Now, Ha Noi has 381 streets representing a tenfold increase as compared with the ancient Ha Noi with 36 guild streets only. These are some tourist attractions of Ha Noi
-- Chua mot cot (One-pillar Pagoda): Its original name was Dien Huu (long-lasting happiness and good luck). Legend has it that King Ly Thai Ton was very old and had no son of his own. Therefore, he often went to pagodas to pray for Buddha's blessing so that he might have a son.+One night, he had a dream that he was granted a private audience with Buddha with a male baby in his hands. Buddha, sitting on a lotus flower in a square-shaped lotus pond in the western side of Thang Long Citadel,+gave the king the baby. Months later, the queen got pregnant and gave birth to a male child. To repay gift from Buddha, the king ordered the construction of a pagoda which was supported by only one pillar resembling a lotus seat on which Buddha had been seated. The pagoda was dedicated to Buddha
-- Quoc Tu Giam (Temple of Literature) was built in 1070 as a dedication to the founder of Confucianism. Six years later, Quoc Tu Giam - the first university of Vietnam - was built in the premises of Van Mieu. Quoc Tu Giam was the first school for princes and children of royal family members. In 1482, King Le Thanh Ton ordered+the erection of steles with inscription of all the names, birth dates and birth places of doctors and other excellent graduates who took part in examinations since 1442. Each stela is placed on the back of a turtle representing the nation's longevity. During Nha Nguyen (Nguyen Dynasty), Temple of Literature was moved to Phu Xuan (Hue Royal City)
-- Chua Kim Lien (Kim Lien Pagoda): Legend has it that in the 12th century, Princess Tu Hoa, daughter of King Ly Than Ton, led her ladies-in-waiting to this area. They cultivated mulberry and silkworms to make silk. Later, a pagoda was built right on the site and by 1771, it was named Kim Lien (Golden Lotus)
-- Chua Quan Su (Quan Su Pagoda) was built in the 17th century. It is located in the street of the same name. Since 1958, Vietnam Buddhism Association has used this pagoda as its head office
-- Den Quan Thanh (Quan Thanh Temple): The three ancient Chinese characters which are still seen today on the top of the entrance to the temple mean Tran Vu Quan. Literally, the temple is dedicated to Saint Tran Vu Temples are places for worshipping saints while pagodas are dedicated+to Buddha and faithful disciplines. Saint Tran Vu was a legendary figure which was a combination between a legendary character in Vietnam's legend and a mystic character derived from Chinas legend. In Vietnam's legend, he was a saint who had earned the merits of assisting Thuc Phan (future King An Duong Vuong) in getting rid of ghost spirit during the construction of Co Loa Citadel. An Duong Vuong Temple in Co Loa Citadel (Dong Anh district) is also named Thuong Temple. Inside it, there are An Duong Vu+o+ng's bronze statue (cast in 1897) and a big arbalest symbolizing the magic arbalest in the old days. In Chinas+legend, Saint Tran Vu was a saint who had made many contributions in safeguarding the northern border. Quan Thanh Temple was built during the reign of King Ly Thai To (1010-1028). Special attention should be paid to the black bronze statue of Saint Tran Vu Another object of no less+significance is a smaller black bronze statue of Old Trong, a chief artisan of the bronze casting team who had made the giant statue of Saint Tran Vu and the great bell on top of the entrance
-- Den Hai Ba Trung (Hai Ba Trung Temple) is also called Dong Nhan Temple, because it is located in Dong Nhan village, Hai Ba Trung precinct. Built in 1142 under the reign of King Ly Anh Ton, it is dedicated to the two Vietnamese heroines Trung Trac and Trung Nhi. On+the 5th and 6th days of the lunar second month, there is a grand festival at this temple to commemorate the two national heroines
-- Ho Tay (West Lake) & Duong Thanh Nien (Youth Road): Youth Road can be compared to a beautiful bridge spanning across the two large bodies of water - West Lake to the northwest and Truc Bach Lake to the southeast. Covering an area of nearly 500 hectares, Ho Tay was also+called Dam Dam (Misty Pond), Lang Bac (White Waves)....Oral tradition has it that Ho Tay derived from a low-lying area upturned by a golden buffalo, so the stream derived from Ho Tay was named Song Kim Nguu (Golden Buffalo River). As for Truc Bach Lake, legend has it that in the old days, Truc Bach Lake was where lived the abandoned ladies-in-waiting who were forced to weave silk. Therefore, beautiful silk was called Truc Bach (Silk of the Truc village). As the biggest lake in the city, Ho Tay is surrounded by many areas reputed for their traditional occupations: Yen Phu and Nghi Tam (silkworm-breeding and silk-weaving villages in the past), Quang Ba, Nhat Tan (peach-growing village), Buoi (paper-making village). In Tay Son times, Nguyen Huy Luong wrote Tung Tay Ho Phu (Eulogy for West Lake) so as to highlight the landscapes of the West Lake and Nguyen Hue (future Quang Trung)'s glorious merits. Now, Ho Tay has been earmarked for the city's major+tourism development center
-- Ho Hoan Kiem (Lake of Restored Sword): The name of this lake is derived from a legend having it that a fisherman named Le Than caught a sword blade when drawing the fish-net. Than decided to offer it to his commanding general Le Loi (future Le Thai To). Afterwards, Le Loi found a hilt fitting that blade very well. This sword had always+been on his side during 10 years of resistance against Ming aggressors After winning over the foreign aggression, King Le Thai To returned to Thang Long Citadel. One day, aboard a royal boat, he took a cruise in the Luc Thuy lake. Suddenly, a giant turtle emerged and came towards him.+The king withdrew his sword, and pinpointed with the sword the direction of the coming turtle for his soldiers' attention. All of a sudden, the turtle caught the sword between its teeth from the king's hand and submerged. The king thought that during the resistance against Ming aggressors, the genius had offered him this sword to help him defeat the enemy. At that time, the peace was returning, and the genius appeared to take back the sword. Consequently, King Le Thai To decided to name the Luc Thuy lake Ho Hoan Kiem (Lake of Restored Sword). In the middle of the lake is Thap Rua (Turtle Tower). The lake abounds in big turtles+aged five or six hundred. When there are the changes in weather, they often emerge or expose themselves at the foot of the Turtle Temple
-- Den Ngoc Son (Ngoc Son Temple): Initially, the temple was called Ngoc Son Pagoda. Later, it was renamed as Ngoc Son Temple, because it+was dedicated to the saints. Saint Van Xuong was a person considered the brightest star in Vietnam's literature and intellectual circles. Tran Hung Dao was worshipped because he was the national hero who led the Vietnamese people to a resounding victory over the Mongol aggression. The temple as it is seen today was attributable to the restoration efforts of Nguyen Van Sieu, a great Hanoian writer. He had a large pen-shaped tower (Thap But) built at the entrance to the temple. On the upper section of Thap But, there are three Chinese characters Ta Thanh Thien which mean literally that to write on the blue sky is to imply the height of a genuine and righteous person's determination and will. Behind Thap But is Dai Nghien (Ink Stand). The Ink Stand is carved from stone resembling a peach, which is placed on the back of three frogs on top of the gate to the temple. Passing through Dai Nghien, visitors will tread on the wooden bridge called The Huc. The Huc is literally understood+as the place where beams of morning sunshine are touching
-- NGHI TAM: A VILLAGE OF FLOWERS? Once upon a time, the King of Nha Hau Ly decided to build a palace for Princess Tu Hoa in a village near Thang Long so that she could spend+her time farming silk cocoons on the large mulberry fields. The village was Nghi Tam, a name now famous throughout the country for the flowers grown here. Nghi Tam flowers in fact add to the beauty of Ho Tay or the West Lake area in present-day Ha Noi. It is said that Nha Hau Ly in Vietnam was not only famous for its glorious victories in defence+of the country against foreign invaders. It paid much attention to the development of agriculture and handicrafts. For long, the village of Tam (or the village of silk cocoons) had been known for its handlooms. The story of this village goes as follows: Initially, there were only three basic kinds of trees grown here, ie the peach, kumquat and chrysanthemum. Peach trees and their spring blossom have brought fame to this village. Originally, the cultivation of peach started in the village of Tam, then spread to Nhat Tan. Young peach trees are carefully tended and allowed to blossom only on the Lunar New Year's Eve. Hanoians take the utmost care in the selection of their New Year branch of peach From the size to the form of the branch and the design of the pot, every tiny detail must be in harmony with the sentiment or philosophy that one wishes to express, in addition to matching with the interior decoration of the house. Kumquat is another species that spread from Tam village to Tay Ho. During tet, most families in Ha Noi, and now throughout the country, have their kumquat trees inside the home. Kumquat is used by Vietnamese to symbolise "talents" and "wealth" for the family White apricot blossoms called "Bach mai" in Vietnamese are yet another scene-stealer in Nghi Tam. The villagers of Nghi Tam consider an apricot blossom as beautiful only when it has six white soft petals on a green calyx. They must resemble the swallow's wings in the spring days. There is also a kind of green apricot which is rare and valuable. Then there is "Song mai" or "Double apricot" since each flower gives two fruits. The apricot branch should be able to incorporate the spirit. After the flowering season, the branch starts to give fruit which are washed and put in a ceramic cask to prepare apricot wine for the following New Year's festival. Narcissus of various kinds are also cultivated in Nghi Tam. The people here know the secret of making these flowers bloom at the required time as on New Year's Eve or on the wedding day etc. Each narcissus pot should have about 20-30 flowers blooming to the right degree to express the virginity of the bride. Along with these species of flowers, Nghi Tam is also known for the chrysanthemum and camelia species it grows. But the concern now is that with the rapid urbanisation of the locality, will it continue to preserve this beautiful tradition?
+- Ha Noi is the political capital of Vietnam.
 
 @ha tan ha tien
 - Very thrifty
@@ -41900,14 +41823,14 @@ dong tu to push; to hurry; to urge
 - Multiflorous knootweed
 
 @Ha Tien
-- Ha Tien is a small town located on the banks of the Giang Thanh river and surrounded on all the sides with mountain ranges. The town is 120 kilometres from Rach Gia (provincial capital of Kien Giang) and 370 kilometres from Saigon. Ha Tien has 10 famous tourist attractions the names of which are mentioned in a piece of poetry named "Ha Tien Thap Vinh". Besides the attraction of swimming in the sea, visitors are likely to be interested in sightseeing. And the most likely place to be is Dong Ho (Dong Lake). The lake is two kilometres wide and about three kilometres long. The vast water surface looks tranquil all the time, due to the shelter offered by the surrounding mountains
+- Ha Tien is a small town located on the banks of the Giang Thanh river.
 
 @ha tien
 * adj
 - miserly; stingy
 
 @Ha Tinh
-- Ha Tinh is situated 340km from Ha Noi. Dong Loc is the meeting place of the two provincial roads 5 and 15 in the hilly area of Ha Tinh province. During the anti-US war, Dong Loc Forked Road was the main junction of the supply line from the North to Ho Chi Minh Trail. US aircraft concentrated a great number of bombs and ammunitions in repeated efforts to destroy the junction and the surrounding area. This less than 0-km section of road had to undergo 2,057 bombardments. A memorable place is the native village of the great poet Nguyen Du. Nguyen Du was born in 1765 from a family of scholars and illustrious mandarins. Having successfully passed the provincial examinations at the age of nineteen, he served as military mandarin under Le Canh Hung. In 1789, Nguyen Hue (emperor Quang Trung) made a northward advance and drove 290,000 Qing invaders out of the country. King Le Chieu Thong cowardly fled the country and followed the invaders. After the fall of the Le Dynasty, Nguyen Du refused to serve Nguyen Hue. Instead, he chose to live in poverty for 10 years in his wife's native village in Thai Binh province In 1802, Nguyen Du grudgingly accepted service under Gia Long, the founder of Nha Nguyen (Nguyen Dynasty). However, in his heart, he did not like mandarin work and applied for retirement no less than three times, each time in vain. He was named Deputy Minister at the Ministry of Rites. In 1820, he died in the royal capital of Hue. His most famous work is Kieu Story, a narrative in 3,254 verses. With this work, Nguyen Du stands out as the greatest poet Vietnam has ever produced There is a house in commemoration of Nguyen Du in Tien Dien village. About one kilometre from the house is his tomb
+- Ha Tinh is a province situated 340km from Ha Noi
 
 @ha xa
 - (tu ha xa nt) Placenta
@@ -42033,7 +41956,7 @@ dong tu to push; to hurry; to urge
 -to order; to command
 
 @Ha Long
-- Xem Quang Ninh
+- a city of Quang Ninh province
 
 @ha luu
 - Lower section (of a river)
@@ -44932,7 +44855,6 @@ dong tu to push; to hurry; to urge
 =ho voi ban sung say+much ado about nothing
 * noun
 - Vietnamese chanty, work song
--Ho Hue (Hue chanty): With high lyric quality, Hue chanty is closely attached to the everyday working life. They play the O chanty with a passionate tune when treading water, mowing weed, harrowing, or following a buffalo treading on paddy. They play the Do Hay chanty with a slow and sad tune when doing some light piece of job (hashing potatoes, chopping marsh-lentil, weaving cloth, lulling a baby..). The Ho Bui chanty has a+reasonably fast and rythmical air: One puts forward a tune, and another responds. They play the Nen chanty when building a road or a dyke, the Nen Voi chanty when pounding lime, even the Gia Gao chanty when grinding rice... The river chanties consist of Day Nuoc (pushing water), Mai Day (played when an overloaded boat crosses a waterfall, a very fast flow or strong waves) with very lively parallel sentences, and Dua Ghe (boat race). With no sneering hints, the Mai Nhi tender chanty alluding to warm trysts and heart-rending moans is played when the weather is attractively calm. In addition, there are Ru con (lulling a baby) and Dua Linh (attending a funeral) chanties
 
 @ho hen
 - nhu hen ho
@@ -44988,7 +44910,6 @@ dong tu to push; to hurry; to urge
 
 @Hoa
 - dan toc Hoa
-- In the late 19th century, nearly 500,000 Chinese migrated to Southeast Asia. With 1,000,000 inhabitants, Hoa ethnic group occupies 1.77 % of the Vietnamese population and lives mainly in Cho Lon area of Saigon (HoChiMinh City), Can Tho, Kien Giang, Da Nang, Ha Noi, Hai Phong, Quang Ninh.....Most of them are workers and have been+naturalised in Vietnam. However, many members of Hoa ethnic group are expert in business and held several leading economic branches in South-Vietnam before
 
 @hoa
 * noun
@@ -45163,7 +45084,7 @@ dong tu to push; to hurry; to urge
 - Harmony (in music)
 
 @Hoa Binh
-- Located on Highway 6, Hoa Binh provincial capital is 70km southwest of Ha Noi. Hoa Binh town and the adjacent area were the cradle of the Hoa Binh culture (see also Cac Nen Van Hoa O Viet Nam). Hoa Binh province is inhabited by Muong, Kinh (or Viet), Thai, Tay, Dao, H'Mong and Hoa. It attracts local and foreign visitors by such places as Kim Boi Hot Spring, Hoa Binh Hydro-Electric Power Plant on Da River...
+- Located on Highway 6, Hoa Binh provincial capital is 70km southwest of Ha Noi.
 
 @hoa binh
 * noun
@@ -45758,9 +45679,6 @@ dong tu to push; to hurry; to urge
 
 @hoang hau
 - Queen
-
-@Hoang Hoa Tham
-- Hoang Hoa Tham (De Tham,1858-1913) - an insurgent leader in the early 20th century - had Truong Van Nghia as true name and "Grey Tiger" as pseudonym. His native village was in Tien Lu (Hung Yen). He took part in the anti-French resistance at the age of 16, in the Yen The (Bac Giang) movement, then became a leader in 1892. The French had+to make peace with him twice. The insurrection spread throughout the midlands and the delta of Tonkin, even in Ha Noi. He also commanded the poisoning in Ha Noi Citadel in 1908. After the French had concentrated nearly 2,000 soldiers for an attack on Yen The (1909), the insurgents suffered heavy losses. Hoang Hoa Tham was betrayed and+murdered on February 10th 1913
 
 @hoang hon
 * noun
@@ -46415,7 +46333,7 @@ dong tu to push; to hurry; to urge
 - Hu violin (musical instrument of the Hu nationality in China)
 
 @Ho Chi Minh
-- Legendary leader of the Vietnamese communists in the North, he is virtually unknown to people in the South. Note: Due the conflicting information between the two side, oversea and Vietnam, we decide to postpone this entry
+- Legendary leader of the Vietnamese communists
 
 @ho de
 - Not easy at all
@@ -46429,8 +46347,7 @@ dong tu to push; to hurry; to urge
 - obscure
 
 @ho hai
-- Going through lakes and seas; high-flying (noi ve chi khi nguoi
-=con trai theo quan niem phong kien)
+- Going through lakes and seas; high-flying (noi ve chi khi nguoi con trai theo quan niem phong kien)
 
 @ho hoi
 - Jovial, cheerful
@@ -47734,7 +47651,7 @@ dong tu to push; to hurry; to urge
 =Hue ca lang (dua)+Everything is all right
 
 @Hue
-- Today's Hue is the provincial capital of Thua Thien - Hue.The melancholy beauty of Hue, capital of the last Vietnamese feudal regime, derives from the quiet Song Huong (Perfume River) weaving its course between rolling hills housing the temples and tombs of the Nguyen Kings This feature of Hue has been enhanced by the recent addition of many modern hotels and offices on the banks of the river. On the southern bank of Perfume River, construction has started beside the Huong Giang Hotel for the new, three-star, 138-room Hue Hotel. Hue is one of the three biggest tourist centres of Vietnam. Its attraction lies first of all in the many temples, palaces and mausoleums of Nha Nguyen (Nguyen Dynasty) built between 1805 and 1832. The old citadel measures 11 kilometres in circumference with a 21-metre thick wall and a flagpole standing 54.4 metres high. The Nguyen kings, from Tu Duc and Minh Mang to Dong Khanh and Thieu Tri were buried in mausoleums of different architectural styles. Hue also boasts nearly one hundred Buddhist pagodas and temples. Visitors should not miss Thien Mu Pagoda built in 1601 on a very poetic site on the bank of Perfume River, or the Tu Dam pagoda.=Among Hue's many tourist attractions are Perfume River, Ngu Mountain, Trang Tien and Phu Xuan bridges, Vong Canh (Belvedere) Hill, Bach Ma (White Horse) Mountain, Hai Van Pass, Tam Giang Lagoon, Thuan An and Canh Duong beaches and further north, the Cua Tung and Cua Viet estuaries. Hue also boasts the National College which was attended by patriotic Vietnameses, Duong Mo village with fascinating records from the fight against the French, and the museum devoted to Phan Boi Chau, a prominent patriot during the early years of French domination. From Hue, you can rent a car from the Thua Thien - Hue tourist company to visit the system of tunnels in Vinh Moc village dug during the Vietnam war and Hien Luong bridge at the demarcation line established between North and South Vietnam following the 1954 Geneva Conference. Then you can proceed to Con Tien and Doc Mieu, famous battle sites where vestiges of the US defence line are till visible, and further west, the mysterious Ho Chi Minh Trail. Visitors will never be bored by monotony or repetition during a ten-day or five-day package tour of Hue. If you are an admirer of antiquities, you may order a "royal feast" at the Huong Giang Hotel or sit on a "dragon" rowboat (which used to cater for the royal family only) and listen to the mellow song of young girls rowing. If you want to watch the quiet glory of dusk over the Huong River you can hire a room at the Huong Giang or Hue hotels. If you like to listen to the lapping of sea waves, go to Tan My Hotel on the beach at Thuan An. If you want a completely still night, you may choose Thuan Hoa or Morin hotels. Wherever you go you will be treated to the most varied traditional dishes of Hue, prepared and served by lovely girls dressed in the violet "ao dai" (long gown) which is also a typical feature of Hue.=From Ha Noi or Saigon, you can reach Hue by air, land and water. A twice weekly air service has just been inaugurated between Phu Bai airport in Hue and Tan Son Nhat airport in Thanh Pho Ho Chi Minh. A similar service will soon operate between Hue and Ha Noi, and arrangements are being made with Thai Airlines to link Phu Bai with Bangkok. In 1991 the Thua Thien - Hue tourist company received 60,000 guests including 10,000 foreigners. Investment on infrastructure will increase from 4.2 billion dong in 1991 to 10.5 billion this year.With its present capacity, Hue can receive at any one time 1,100 guests at both state-owned hotels which have more than 500 rooms, plus at private mini-hotels and homes To know more about Hue, please search the entry Thua Thien - Hue
+- Today's Hue is the provincial capital of Thua Thien - Hue.
 
 @hue
 * noun
@@ -50945,7 +50862,6 @@ dong tu to push; to hurry; to urge
 @khi hau
 * noun
 - Climate
-- Vietnam is located in the tropical and temperate zone. It is characterized by a strong monsoon influence, a considerable amount of sunny days, and with a high rate of rainfall and humidity. Some places located near the tropics or in mountainous regions are endowed with a temperate climate Average temperatures for the year range from 22o to 27oC. The climate in Vietnam is divided into two distinguished seasons: The cold season (from November to April) and the hot season (from May to October). The most noticeable seasonal changes in temperature are found in the northern provinces, where a difference of 12 degrees Celsius is possible. The difference in temperature, estimated at 3 degrees Celsius, between the two seasons in southern Vietnam is almost unnoticeable. Four distinct seasons are most evident in the northern provinces
 
 @khi hau hoc
 * noun
@@ -54334,7 +54250,7 @@ dong tu to push; to hurry; to urge
 - alone in a strange land
 
 @Lac Long Quan
-- Lac Long Quan - son of Kinh Duong Vuong and Long Nu (Long Vuong's daughter) - had an unusual strength. His father entrusted him with governing the Linh Nam region, suppressing the demons and teaching the people to grow water-rice, to cook rice and to cut wood for building houses. Lac Long Quan married Au Co - De Lai's daughter - who would give birth to a 100-egg bag hatching into 100 sons. 50 out of them followed their father to go down in sea, and the remainder followed their mother to go up in the mountains and became the ancestors of the Viet people. The eldest son was nobody other than King Hung. So, the Viet people always consider themselves as " Dragon's children, Fairy's grandchildren". Geographically, this legend reflected the process of exploiting mountains and Northern Delta by the Viet people
+- Lac Long Quan - son of Kinh Duong Vuong and Long Nu (Long Vuong's daughter)
 
 @lac long
 * adj
@@ -55121,7 +55037,7 @@ dong tu to push; to hurry; to urge
 * adv. hubbub
 
 @Lao Cai
-- Lao Cai is one of several provinces situated on the Sino-Vietnamese borderline. It is in the northwestern part of the country. Topography of Lao Cai is diversified with rivers, high mountain peaks, steep and high mountain passes, deep streams and wide valleys. Lao Cai is home to primeval forests with several kinds of rare timber plants such as Po Mu (fukiena), Lat Hoa (chukrasia tabularis) and Cho Chi It is also the habitat of many kinds of medicinal herbs and rare animals including deer, wild boars, tigers... Lao Cai is also reputed for its mineral resources Sapa is the most attractive rendez-vous in Lao Cai. Visitors to Sapa can attempt the walk across a suspended bamboo bridge over Muong Hoa River Next to the bamboo bridge is a beautiful water fall known locally as Thac Bac (Silver Fall). The rooftop of Vietnam is called Fansipan mountain peak which is 3,141m above sea level. The highest peak in Vietnam is in Hoang Lien Son mountain range
+- Lao Cai is one of several provinces situated on the Sino-Vietnamese borderline.
 
 @lao dao
 * verb
@@ -55463,7 +55379,6 @@ dong tu to push; to hurry; to urge
 - Phosphorus
 -Unicorn, kylin
 -Paper unicornhead (used in a traditional dance)
-=to chuc mua lan cho tre em xem+to stage a unicorn dance for an audience of children Today, the dragon dance is no longer considered an entertainment reserved for children. Originating from China, it has become part of Vietnamese culture. It is performed not only during Tet or the Mid-Autumn Festival, but also on special occasions such as ground-breaking or inauguration ceremonies. It can be performed on the day when recruits leave their native towns for military units, or on other occasions. If you think that anyone can perform a Dragon Dance, you are mistaken. As an art, Dragon Dance has its principles and rules. A dragon dance usually lasts from 20 to 25 minutes. It consists of five episodes: In the first episode, the dragon appears on the stage; in the second, it exits; in the third, it enters again and rolls over the ground, then it kneels before the audience, and finally bows to the donors. For each episode, there is a different way of beating the drum. Accompanied by the cymbals, the drum sounds like that of a military march. And an expert can distinguish all the five basic feelings of humans (joy, anger, love, hatred and fear) depicted by the beatings of the drum. The drummer not only must be versed in his art, but also knows how to assess the situation. For example, when he sees that the owner of the building hangs the prize on the balcony of his house, the drummer must use the one-three rhythm (cac, bum, bum bum) As the dragon hears the drum change its rhythm, it grows more excited. But when the drum beating is slow, the dragon knows that it is time to wait and relax.A team of dragon dancers consists of thirty persons, as they have to take turns to play the main part. They have different occupations, but when the need arises, they gather at once at the rallying place. In the past, this was an occasion for amusement, not for money.+The part of the dragon is performed by three to five persons, but the most important part is that of the head of the dragon.. Usually the performer must be versed in wushu. Another part requires some skills: Hong Hai Nhi (a character in the Chinese novel entitled "Pilgrimage to the West") juggling with two balls of imitation jade he challenges the dragon to try to catch them and thus perform an amusing dance. A part of much more importance is that of the Monkey (one of the main characters of the aforesaid novel). The Monkey also leads the dragon to enter a house, and leave it. And, more important, he manages to stop the dragon when the latter is too excited and loses self-control in its "pursuit of prey".However, to most accounts, the most important role is that of Ong Dia (the genie of the earth). He is like a clown in the Western theatre or in Vietnam's classical opera, but unlike the clown, he does not utter any words. He makes people laugh with his gestures. Therefore, Ong Dia will be immediately replaced if he fails to play his roleIt takes a person four years to be able to perform a part in a dragon dance which usually lasts 20-25 minutes. On Tet Festival, he has to work for four days running, especially on the first, second and third days of the Lunar New Year. Nowadays, a team of dragon dancers can earn a lot of money - at times, nearly ten million VND. Seventy percent of the earnings is divided among members, 10 percent will go to the bonus fund, 10 percent is reserved for re-investment (a dragon costs up to three million VND). The rest is used as "working capital".Dragon dance services are no longer available for free. Those who are interested should order in advance Foreign companies often rent dragon dance teams. In late 1995, San Miguel Beer, for example, offered bonuses worth several million VND. In recent years, the dragon dance has gone through many refinements with a view to catching up with modern times while preserving the best of Vietnam's cultural traditions
 
 @lan can
 * adj
@@ -55864,9 +55779,6 @@ dong tu to push; to hurry; to urge
 * noun
 - pear
 =cay le+pear-tree
-
-@Le Dai Hanh
-- As an excellent strategist, Le Dai Hanh (941-1005) was the king founding Nha Tien Le (Pre-Le Dynasty) (980-1009). His native land was in Tho Xuan (Thanh Hoa). Born in a poor family, Le Hoan (future Le Dai Hanh) was an orphan from his early childhood but very studious. He was appointed as Commander-in-chief by Dinh Tien Hoang. In 979, after Dinh Tien Hoang had been assassinated, Le Hoan became the regent because Dinh Tien Hoang 's successor remained too young. In 980, the Tong Chinese dynasty prepared to annex our country. In 981, the queen mother Duong Van Nga and the armed forces unanimously enthroned Le Hoang as Le Dai Hanh. In 981, Le Dai Hanh trounced the Tong invaders on Bach Dang River and at Chi Lang Pass. After Le Dai Ha`nh's death in 1005, his son Le Long Dinh killed his elder brother to usurp the throne. Indulging in debauchery, this cruel king Le Long Dinh always stretched out at the royal conferences, therefore he was also called Le Ngoa. Trieu (Ngoa. Trieu means "To stretch out at the royal conferences"). After his death, Ly Cong Uan replaced him in 1009 and founded Nha Hau Ly (Post-Ly Dynasty)
 
 @le the
 * adj
@@ -58987,7 +58899,6 @@ _trash
 @mang cut
 * noun
 - Mangosteen
--The name and the shape of this fruit do not look attractive to those who first see it. A mangosteen is as big as a tennis ball and has the dark violet and rough skin. Yet, when peeling off the upper part of the fruit with a small sharp knife and lifting the upper part off, you can see the transparent white pulp inside arranged in equal segments. Just lifting segment by segment of such transparent white pulp to the mouth, you can imagine of having a light and pure refreshment with an easily acceptable little sour taste lingering in your mouth
 
 @mang do
 -lin
@@ -59434,7 +59345,6 @@ _trash
 @mien
 * noun
 - Vermicelli made of cassava
-- Made from a kind of tuber plant familiar to cassava, Mien threads are very long and tough. When being served, these long tiny flour threads are cut into smaller pieces.This kind of cassava vermicelli is used to make several different dishes. The most popular is Mien Ga (chicken cassava vermicelli), Mien Bo (beef cassava vermicelli) and Mien Luon (eel cassava vermicelli). Cassava vermicelli is also used for different dishes stirred in fat such as Mien Xao Thit (vermicelli and pork stirred in fat), Mien Xao Long Ga (vermicelli and chicken tripe stirred in fat) and Mien Xao Cua (vermicelli and sea crab meat stirred in fat)
 
 @mieng
 * adj
@@ -59582,7 +59492,6 @@ _trash
 - Wooden bell, bamboo tocsin
 =su go mo tung kinh o chua+the bonzes strike the wooden bell while saying prayers in the pagoda
 -Village herald (belonging to the lowest social class, in former times)
-- THE EXTRAORDINARY SOUNDS OF TOCSIN: Tocsin, drum and horn are familiar musical instruments in Vietnam's countryside. However, tocsin is the most versatile with its extraordinary sounds, depending on whether it is found: in the forest, where it is used as a musical instrument, in the village, as a warning signal, or in the pagoda where it is essential for Buddhist rituals. In the village watch towerm, there used to be many wooden fish clappers. Depending on the rhythm of the beating, the villagers could be informed of different events: Festivities, thieves, fire, or strengthening dikes. In the highlands, small wooden rattles are attached to the necks of buffaloes to help their owners distinguish their cattle. These tocsins are oval-shaped ones. Their lengths and thickness also differ. Hence the peculiar sounds made by the buffaloes. In the pagoda, Mo Qua is used to accompany the prayers of Buddhist bronzes. Tocsins are made from different materials Some are made from the roots of a bamboo tree (widely used by the village crier), or from the trunk of an old bamboo (used in the watch tower because of the strident sound it produces).+As a result of years of study, Ta Tham, an elderly musician, managed to develop a new musical instrument comprising a series of tocsins. Thus this concert is composed of four kinds of tocsin: Ong, Qua, Trac and Thanh, meaning respectively tube, fruit, teak and sound. Trac tocsins, made of hard wood (such as teak or steel wood) and placed to the left, can produce clear and light sounds.The musician can use tube tocsins and teak tocsins to reflect exclusive sounds hitherto unknown in all kinds of tocsin. They can mock the sounds made by woodpeckers, partridges, frogs, insects or horse hooves. Since the cluster of tocsins was born, it has become highly valued by many art troupes nationwide. It has been awarded a prize by the Institute of Music under the Ministry of Culture and Information
 
 @mo toa
 - (tu cu) Usher, bailiff
@@ -61073,7 +60982,6 @@ _trash
 
 @Muong
 - dan toc Muong
-- With about 800,000 inhabitants, Muong ethnic group occupies 1.3% of the Vietnamese population. The Muong people's residential sphere set up an arc between the Vietnamese from Vinh Phu to west of Hoa Binh, then to midlands of Nghe An and Thanh Hoa. They belong to Viet-Muong linguistic group, but their culture is closer to Thai ethnic group. They live on growing rice, breeding, forging. Their residential area houses Hoa Binh Culture of the neolithic era along with which rice-growing appeared over 8,000 years BC Khua Luong ("Beating the mortar" in the Muong dialect) is a game played with wooden instruments by the Muong ethnic group, who settled in northern Vietnam in the early days of the nation's historyThe instruments of this game consist simply of mortars and pestles, all made of wood Mortars and pestles are very familiar items of use in the life of the Muong community. They are used to husk rice before it is cooked, or to crush lean meat to make gio, banh giay, and so on. Thus the sound of the pestle and mortar is very familiar to the Muong women. Gradually, it came to be used as a musical instrument producing familiar sounds and rhythms. Through generations, this musical instrument has known many refinements and finally was used as an instrument for a concert by both young people and the old people in the village. This musical instrument dates back many thousands of years and has been preserved to date as a precious tradition among the Muong ethnic group. It might have come into existence long before the Viet community knew how to melt copper to make bronze drums and bronze bells for musical instruments.=Nowadays, among the Muong community at Thuong Xuan, Thanh Hoa+province, there exist many Khua luong teams each comprising six to eight young girls. They can play up to 12 traditional concerts reflecting the landscape and the atmosphere of the Ban Muong (Muong villages)as well as the feelings of the people there. The most typical of the concerts are those depicting "a wedding party in the village", a scene of " Welcoming Guests", of "Waiting for the Bride" and of the wedding ceremony itself. In the "Welcoming Guests" item, a merry atmosphere is created through the sounds of pestle and mortar as the people busy themselves with husking rice and making cake to entertain the guests. In the "Waiting for the Bride" concert, there reigns an atmosphere of impatient longing for the bride. In the "Wedding Party", the stately sounds help people to get rid of the noisy crowd and enter a world of quiet felicity as the bride and groom gather under the cosy roof of their new house. Besides the four main concerts, there are some others such as "Welcoming New Rice", the "Early Rains", "Hymn to the Genie of Thunder". It is hard to imagine the perfection of the sounds and music unless you attend one of the ceremonies where khua luong concerts are performed. The music leaves a deep impression on the audience and, at times, tugs at the heartstrings
 
 @muong
 - Mountain village
@@ -65109,7 +65017,6 @@ _trash
 @ngon ngu
 * noun
 - Language
-- The Vietnamese language belongs to a language group which was established quite a long time ago in East Asia. However, changes in material conditions over many centuries and the increasing demands of cultural life increased the development of the Vietnamese language, both spoken and written. While adopting many elements of the Chinese language, the Vietnamese people creatively Vietnamized many Chinese words, and they gradually became Han-Viet (Chinese-Vietnamese), incorporated alongside purely Vietnamese words. The Vietnamization was not only applied to the Chinese language however, but also to the French and other languages to create a great, diversified, vital vocabulary for the Vietnamese language
 
 @ ngon ngu hoc
 -Linguistics
@@ -65587,15 +65494,6 @@ _trash
 
 @nguyen vat lieu
 - Raw and working material
-
-@Nguyen Du
-- Nguyen Du (1766-1820) - a great classical poet - had Tien Dien (Nghi Xuan, Ha Tinh) as native land. Nguyen Du was descended from a noble mandarin family (his father and his elder brother had been prime ministers of Nha Hau Le), but he himself had to pass through many hardships in the 18th century full of troubles. Famous for writing talent, he only graduated as junior bachelor. In 1802, as a mandarin of Nha Nguyen, he was hauntingly worried about the current circumstances. His works were both realistic and romantic. He was the author of Truyen Kieu (a very popular poetic masterpiece), Van Chieu Hon, Bac Hanh Tap Luc and Nam Trung Tap Ngam. World Peace Council classifies Nguyen Du among+memorable cultural celebrities in the world
-
-@Nguyen Du
-- Born in an intellectual family, the writer Nguyen Du (16th century) graduated as bachelor. His native village was in Thanh Mien, Hai Duong. He had nurtured a good will for society, but later, became disheartened and led a secluded life. Nguyen Du was the author of Truyen Ky Man Luc
-
-@Nguyen Trai
-- Nguyen Trai (1380-1442) - a great politician, strategist, diplomat, poet - was born in Thang Long, and his paternal village located in Nhi Khe (Thuong Tin - Ha Tay). His mother was the daughter of Tran Nguyen Dan (a high-ranking mandarin of Nha Tran). His father was Nguyen Phi Khanh who had graduated as doctor. At the age of 20, Nguyen Trai also graduated as doctor and served in the Ho dynasty like his father. On the occurence of the Chinese invasion, Nguyen Phi Khanh was captured and marched off to China. Nguyen Trai was kept under surveillance in Dong Quan (Thang Long). Later, he fled in Lam Son to follow Le Loi (future Le Thai To), submitted Binh Ngo Sach (strategies of the people's war against the Ming invasion). After the enemy had been completely expelled, Nguyen Trai did his best to help Le Loi in the national reconstruction. In 1442, because of dishonest mandarins' great harm, Nguyen Trai and all his three related families were exterminated. His famous works were Binh Ngo Dai Cao, Quan Trung Tu Menh Tap, Quoc Am Thi Tap...
 
 @nguyen vong
 * noun
@@ -66143,9 +66041,6 @@ _trash
 - Theatre, playhouse
 =nha hat Lon - Ha Noi
 
-@Nha Hau Le
-- Nha Hau Le (Post-Le Dynasty) was founded by Le Thai To after the resounding victory over the Ming invaders. Our country was Dai Viet with Dong Kinh (Ha Noi) as royal capital. The feudal centralism had the despotic trends, especially in the second half of the 15th century The economic, political, military, educational and cultural fields were considerably developed. Dai Viet became the powerful nation in Southeast Asia. Confucianism held a more and more important position, while the literature reached the apogee under the reign of Le Thanh Ton. Dai Viet defeated Cham Pa, occupied its royal city and set up the Quang Nam administrative division. Because of the ruling class' immoderate luxury, Post-Le Dynasty began to decline since the 17th century. Competition for power between warlords and peasant insurrections broke out everywhere. In 1527, Nha Mac (Mac Dynasty) usurped Nha Hau Le Under the pretext of restoring Nha Hau Le, Lords Nguyen and Trinh sought ways for suppressing Nha Mac. Between 1533 and 1788 was the period when Le passed through renaissance and decline
-
 @nha ho sinh
 - Maternity hospital
 
@@ -66194,7 +66089,6 @@ _trash
 
 @nha mo
 - Sepulchre, miniature house built on a fresh grave
-=Bo nha mo: Le cua nguoi Bana va Giarai de dua tien hon ma nguoi chet ve the gioi ben kia va tu nay khong phai trong coi mo ma nua. Le nay dien ra tu ba den nam ngay va co mua hat, danh chieng va uong ruou suot dem +Bo nha mo (Grave-hut removal ceremony): A ceremony of Ba Na and Gia Rai ethnic minorities in which they see off a dead person's soul instead of caring about his or her tomb in the future. This ceremony lasts between 3 and 5 days, at which attenders sing, play gongs and drink throughout the night
 
 @nha ngang
 - Annex, wing
@@ -66279,9 +66173,6 @@ _trash
 
 @nha tay
 - (cu) Europea-styled house
-
-@Nha Tay Son
-- Nha Tay Son (Tay Son Dynasty): After Lord Nguyen Phuc Khoat's death, the power-usurping courtier Truong Phuc Loan became utterly cruel.The peasant insurrection led by three brothers Nguyen Nhac, Nguyen Lu and Nguyen Hue broke out in 1777. In 1786, Tay Son troops suppressed Trinh and Nguyen Lords, defeated the Siam aggressors and reunified the country. In 1789, Quang Trung beat 290,000 Manchurian soldiers to pieces. The Tay Son times were a glorious period of the Vietnamese history. The Tay Son authorities tried to restore the economy and to develop the national culture. The kings were Trung uong hoang de Nguyen Nhac (1786-1793), Quang Trung (1788-1792) and Quang Toan (1792-1802)
 
 @nha tho
 - (cu) Brothel, bawdy-house
@@ -66452,8 +66343,6 @@ _trash
 * noun
 - Musical instrument
 =dan t'rung (to rung)+stringed instrument
-- VIETNAMESE TRADITIONAL MUSICAL INSTRUMENTS: Vietnamese traditional instruments have a rich capacity for expression and are unique. This is shown in many ways. In general, Vietnamese traditional instruments are of simple structure. Sometimes too simple to be called instruments. For example, the leaf-horn has only two requirements: The surface of the leaf should be smooth and the leaf itself not thick. A girl holds the "horn" by the edge in her mouth and begins to produce a shrill sound. After a "performance," the instrument can be thrown away. The jew's harp is only a piece of kouniak or ear of rice. Pitot, another flute, has only two holes - one for blowing and the other for fingering - but it can produce music written from the five-note scale. Castanets are simply two bamboo pieces; a bamboo end can become a split drum; a set of kouniak sticks of various lengths serves as a t'rung. Materials for making these instruments are available at home. The worm's silk will make strings and bamboo, kouniak and gourd covering is available in the garden. Further afield can be found bamboo, kouniak, wood, clay, leather, stone.. Only the parts of instruments are difficult to make. For example, with an organ the trick is to stick a reed into one end for blowing. But simple or not, these instruments are so skilfully made as to be works of art. Their sizes are also unique. Clappers can be as small as a longan kernel; the jew's harp is exactly like an ear of rice; a certain drum is no bigger than a lemon. Other instruments are huge. The lithophone, or Ndut Lieng Krak, is 01.7cm long and the Khanh Son 103cm while lithophones found in other parts of the world are only 80cm long. The Qui Dien bell, cast in 1080 in the times of Nha Hau Ly and Nha Tran, needed a 26 meter-high bell tower to house it. Another bell of the same period was cast in about 4,200 tonnes of bronze. The Van Ban bell with 180 tons in weight, made under Nha Tran, is 127cm high and has a diameter 74 cm. The bronze drum, especially the Son Dong drum, is huge, imposing and beautiful. The Thunder drum, which sounds like thunder, has a 148 cm diameter and is 170 cm high Some drums have a circumference of two metres and are made from the trunk of a banyan tree. Gongs and cymbals range from saucer-size to a plate 90cm in diameter. The different sizes mean that Vietnamese traditional instruments all carry characteristics stemming from the artistic creativity of the people.=The dan nguyet, moon-shaped lute, and dan day, lute, both have high+frets and strings which are never too tight - and not without reason. The strings must be made from worm's thread and the strings and frets are made longer and higher so that the musician can use luring and stressing techniques. The traverse flute, the end-blown flute, the Vietnamese trumpet, the pi-let, the xa-ra-nai- traditional instruments of various ethnic groups-all have plain finger holes without finger devices so that the musician is free to use luring and stressing techniques. The Sing Tien-a type of clapper- is a very simple instrument, but a really creative combination of three well-known instruments: The guiro, the maracas and castanets. All these instruments have made their contributions to traditional Vietnamese music. But the instruments designed so long ago suffer some limitations. One of these is low volume. With the exception of idiophones, membranophones and some wind instruments, almost all traditional instruments make a low sound with short vibrations
-- Nevertheless, their capacity is both abundant and unique. On the dan nguyet, the musician is able to "stress" a note making it a triple-interval higher note or vice versa. The dan day, a type of lute, also has available a "loose stress" and on the dan bau, monocord, a half-note, a third of a note, a quarter of a note and perhaps even less than a quarter of a note can be created. An even more subtle characteristic of the monocord is that the fingered string, touched, can produce a note lower than that made by the unfingered string. This cannot be done on any other instruments. The one-stringed monocord has a three-octave range, although some improved monocords have a four-octave range. The klongput makes sound without being touched by the musician Another technique worthy of study is that which allows musicians to play such horns as pile and xaranai to make a continuous sound without pausing or stopping. Vietnamese traditional instruments are close to the lives of the people and their activities. Vietnamese instruments - particularly primitive instruments - are part of their activities.=The Thai make the tang bu from bamboo poles and water bags; from pestal and mortar the Muong make the Duong; from sticks to make holes in the ground for sowing, the Khomu make the Kle Kla; others are the ding pa, klong put of the highlanders; the stones hung over a waterfall to make a sound when struck together and used to drive off beasts gave these groups the inspiration to make the very ancient lithophone; an elevated wicker string above a plank-covered hole is called rong Quan and was the prototype for the fantastic monocord; the Phong Tieu, a type of flute, which reminds the listener of a kite flute and the To diep, Ky pa are not remote from the highland hunters' beast-calling horn; the never-ending sound of the wind in caves and caverns, or on hills where kouniaks have been felled, served as tangible models for highlanders voong to be hung before the Nha Rong, or village hall, so that the wind makes a concert throughout the year. The lithophone is both musical instrument and a holy object. The gong and the cymbal are both musical instruments and precious and religious objects. Vietnam's musical instruments spring from real life and were made by creative laborers. The instruments were, and are, crucial to cultural life
 
 @nhac gia
 - (cu, trang trong) in-laws, one's wife'c parents
@@ -66602,7 +66491,6 @@ _trash
 - Label, trademark
 =nhan lo thuoc ho+the label of a cough potion bottle
 =nhan vo+a copy-book label
-=Long nhan+Longan trees are grown in a large number in northern provinces whereas few are planted in the southern part. The most famous longan comes from former Hung Yen province (now the present-day Hai Hung province). In the old days, Hung Yen longan was among the food items reserved as tributes to the kings. The fruit is as small as the tip of the thumb. Inside the thin and lightly brown skin is the transparently white pulp which covers a smaller glossy black seed. The thicker the pulp is, the juicier and the more fragrant the longan is. Longan is a kind of rich protein fruit. It is usually made one of the main ingredients to make lotus seed added Longan sweet soup which is very precious for refreshments in summer. Seedless Longan, when being dried, is called dried Longan. This is a very fine choice for connoisseurs
 
 @nhan ap
 - (y hoc) Ocular tension, eye-tensiobn
@@ -70903,7 +70791,6 @@ _trash
 * adj
 - Prose-like, simple, easy to understand
 =cau van nom lam+a very simple sentence
-- In opposition to the Chinese's Han language, Nom (slantingly pronounced from "Nam") language belonged to Viet ethnic group. It borrowed the Han hieroglyphic scripts to transcribe the Vietnamese language. Nom language might appear in the 8th century. The memorable poems in Nom language belonged to Han Thuyen and Nguyen Si Co (in the late 13th century) The birth of Nom language not only marked the Viet people's mature national consciousness, but also brought a brilliant development to the Vietnamese literature between the late 18th and early 19th centuries. For complication and imperfection, Nom language was replaced by quoc ngu (national language)
 
 @nom na
 - nhu nom nghia 2
@@ -70915,7 +70802,6 @@ _trash
 
 @nom
 - Sweet and sour grated salad
--Nom is a combination of a variety of fresh vegetables, considered to be salad in Western countries. The main ingredients include grated pieces of turnip, cabbage or papaya and slices of cucumber with grated boiled lean pork. Other auxiliary ingredients are grated carrot, slices of hot chilly and broken roasted groundnuts. These are used to make the dish more colourful. All are mixed thoroughly before being soaked in vinegar, sugar, garlic, hot chilly and seasoned with salt. The mixture of ingredients is put into a dish before being covered with some spicy vegetables. To try a mouthful of Nom is to enjoy a combination of all the tastes, including sour, hot, sweet, salty and fragrant. The dish helps digest at meal and party times. It can become an addictive aid to assist the real connoisseur to enjoy more food
 
 @non
 - cung noi mua Vomit, throw up.
@@ -70985,7 +70871,6 @@ _trash
 * noun
 - Agriculture, farming
 =Bo nong nghiep+Ministry of Agriculture
--CEREMONIES STILL AT THE HEART OF AGRICULTURE IN VIETNAM: Le Ha Dien is a popular ceremony which bears a religious significance for Vietnamese farmers. During the ceremony, farmers pray to heaven to grant them blessings. As Vietnam is an agricultural country where labour-intensive wet-rice is grown, the life of the majority of people is closely linked with the land. Hence, almost all ceremonies and rituals are connected with farming. Wet-rice is grown in very difficult natural conditions, especially in the Red River Delta and central Vietnam where natural calamities - typhoons, flooding, drought and pests - are a constant menace for the peasantry. In the past, in the absence of science and technology, Vietnamese farmers believed in mysterious forces which decided their success or failure. This faith is found in such folk songs as "Thanks to heaven which grants us good weather conditions" or "I pray to heaven to bring rain so that I can have enough water to drink and cover my fields". Heaven (or Troi in Vietnamese) is a common appellation for the spirit world. The belief in the power of spirits is handed down from generation to generation, so that even now our farmers turn to spirits for assistance. Hence the existence of so many farming-related ceremonies. In the past, there were two main rice crops: the Mua and the Chiem Depending on climate and local understanding, farmers regard the Chiem as the main crop, or vice versa. For this reason, Le Ha Dien differs from one region to another. In many villages, the ceremony is regarded as a major event in the life of the peasantry. Although the ceremonies may differ in scale, the rituals have many common features. On the day of the ceremony, early in the morning, village notables called Gia Lang (elder people) in the central highlands make their way to the communal house where other villagers await. There they pay tribute to Thanh Hoang (tutelary god) and Than Nong (god of agriculture) and other divinities; begging them to bring security, prosperity and bumper crops. Afterwards, the villagers head to a chosen location, usually not too far from the communal house, where the ceremony inaugurating the farming season takes place. In a first-class rice field already meticulously ploughed and harrowed, a bamboo tree is planted with all its branches and leaves. The tree is called Cay Ne^u. Ears of rice are attached to the top of the tree, and having reported to the god of agriculture, they start the ceremony proper. To start the ball rolling, a rice transplant ritual is performed. For this, many Chua Dong (Field Lords) are selected. In some villages, only one Chua Dong is singled out. They are mostly elderly people, versed in farming techniques and the soil. In addition, they must be kind-hearted people having extended families whose members live in perfect concord. Last but not least, they should not be mourning People hope that the good qualities of the Chua Dong will blend into the rice plants and impart great vitality to them. Having paid their respects to the god of agriculture, the Chua Dong step into the field and transplant rice around the bamboo tree. In the meantime, the villagers shout cheerfully and beat drums (mimicking natural disaster), targeting the Chua Dong. If these people can stand firm on their feet and manage to perform their task well, people believe that their wish will come true Le Ha Dien is held in a very simple way, but it is very dear to the  farmers. They pin all their hopes on the good health, prosperity and happiness that the ceremony promises. Furthermore, it is in this ceremony that the spirit of the community comes to the surface. In their hearts, everyone pledges to join forces for the common cause
 =nong nhan+Agricultual leisure
 
 @nong san
@@ -71274,7 +71159,6 @@ _trash
 
 @Nung
 - dan toc Nung
-- With about 650,000 inhabitants, Nung ethnic group occupies 1.05% of the Vietnamese population. Divided into many branches (Nung Phan Sinh, Nung Chao, Nung Inh..), they live in Cao Bang, Lang Son, Tuyen Quang, Lao Cai, Yen Bai, Ha Giang. This ethnic group migrated late to Vietnam and had relations close to the Tay people. Their popular literature and arts is abundant in poems and tales..... They are courageous, battle-tested, good at farming and able to trade. After 1954, many of them migrated to Eastern Cochinchina and Central Highlands
 
 @nung
 - Court fondling from, court pampering from, coddle oneself
@@ -73561,15 +73445,6 @@ _trash
 - domain, sphere
 =pham vi hoat dong+sphere of action
 
-@Phan Boi Chau
-- Phan Boi Chau (Sao Nam, 1867-1940) - a strong-willed patriotic scholar with Phan Van San as true name - had his native village in Nam Dan ( Nghe An). His father had been an unsuccessful Confucian scholar. Reputed for being an infant prodigy, he graduated as first laureate of interprovincial examination at the age of 33. With an anti-French strong will, he founded Hoi Duy Tan (Association of Reformists). In 1905, he came to Japan to seek reinforcements and promoted the Dong Du (Advance towards the East) movement. Expelled in 1908, he came to China to found Viet Nam Quang Phuc Hoi (Association for Restoration of Vietnam) in 912, and was imprisoned in Kwantung (Quang Dong) between 1913 and 917. After having met Nguyen ai Quoc in 1925, he intended to change his strategies but was kidnapped in Shangai by the French. He was sentenced to hard labour for life, put under surveillance in Hue and died there. His life reflected the ups and downs of the Vietnamese revolution after the Can Vuong movement and before the birth of Indochinese Communist Party (constitutional monarchy - bourgeois democracy  neo-democratic revolution). He wrote many works in Chinese and Vietnamese languages to awaken the patriotism, such as Hai Ngoai Huyet Thu, Nguc Trung Thu, Phan Boi Chau Nien Bieu, Khong Hoc Dang...
-
-@Phan Dinh Phung
-- Phan Dinh Phung (1847-1895) - an insurgent leader in Can Vuong (Royalist) Movement - had his native village in La Son (Ha Tinh). Born in a Confucianist family, he graduated as doctor and served Nha Nguyen (Nguyen Dynasty). In 1883, he was dismissed and came back to his native village. In 1885, when Can Vuong Decree was promulgated by King Ham Nghi, he rose up in arms against the French invaders. This 10-year resistance inflicted heavy losses to the French. Phan Dinh Phung died of a disease in 1895
-
-@Phan Van Tri
-- With Bao An district, Gia Dinh province (present-day Thanh Pho Saigon) as native village, Phan Van Tri (Junior Bachelor Tri, 830-1910) - a patriotic poet - graduated as bachelor in the Nguyen times (1849). Being Nguyen Dinh Chieu 's close friend, he set up a school and taught instead of serving the royal court. His anti-French strong will was reflected by engaging in a poetic polemic with Ton Tho Tuong (Phan Van Tri's fellow poet collaborating with the French)
-
 @phan nan
 * verb
 - to complain, to carg, to bemoan
@@ -75623,15 +75498,6 @@ _trash
 
 @Phong Trao Yeu Nuoc
 - Phong Trao Yeu Nuoc signifies " Patriotic movements".
-- Resistance war against Nam Han Dynasty (938): In 938, from Chau ai (Thanh Hoa), Ngo Quyen led his army to the North to punish the traitor Kieu Cong Tien who would seek reinforcements from Nam Han Dynasty In late 938, the king of Nam Han Dynasty ordered his son Hoang Thao to command the navy for an attack on our country while stationing personally the rescue troops in Kwangtung (China). Ngo Quyen took Dai La Citadel, killed Kieu Cong Tien and made preparations for the oncoming resistance war. The Nam Han troops were defeated and Hoang Thao was killed in action on Bach Dang river. The king of Nam Han Dynasty cancelled marching orders and gave up his aggression intention. The resistance war against Nam Han brought an end to more than 1,000 years of Chinese domination.
-- Anti-Tong resistance wars: After King Dinh Tien Hoang had been murdered, his son was too young (6 years old) when succeeding him. On this occasion, the Tong Chinese dynasty launched a large-scale aggression on Dai Co Viet (future Vietnam). Proclaimed king, Le Hoan (future Le Dai Hanh) hastened to prepare for an anti-Tong resistance war. In early 981, the Tong navy and infantry rushed overwhelmingly into Dai Co Viet. The enemy navy was beaten to pieces on Bach Dang River The enemy infantry was stopped short in Lang Son and strictly pursued Their commander-in-chief Hau Nhan Bao was killed in action. The Tong dynasty resigned itself to cancel marching orders. Aware of Tong Dynasty's aggression intention, Ly Thuong Kiet took the initiative to attack it first for a self-defence. In October 1075, Ly Thuong Kiet commanded the navy to occupy the Kham Chau, Liem Chau estuaries and to besiege Ung Chau Citadel while destroying its food warehouses Then he hastened to come home to set up the defence line on the Cau river for an oncoming resistance war. In late 1075, the Tong troops rushed into Vietnam with the determination of occupying Thang Long, but after two attacks, were stopped short at the aforesaid defence line and gradually worn out. In addition, the Tong navy was stopped short at sea In early 1077, Ly Thuong Kiet switched to a strategic counter-offensive. The Tong army resigned itself to "make peace", then went home in March 1077. The Tong dynasty's aggression intention was crushed since.
-- Anti-Mongol resistance wars (13th century): In 1258, trying in vain to entice Nha Tran (Tran Dynasty) into surrender, the Mongol dynasty ordered its 30,000 soldiers to invade our country. Tran Thu Do, Tran Quoc Tuan (Tran Hung Dao) and our king withdrew out of Thang Long, then all of a sudden made a counter-offensive. The enemy ran back to China in an utterly agitated state. In 1285, the crown prince Thoat Hoan (Togan) led 500,000 soldiers to attack Vietnam. The Tran troops withdrew temporarily to make a guerilla war before launching a general counter-offensive. The invaders ran helter skelter, and Thoat Hoan escaped by creeping into a bronze pipe. In 1287, the Mongol dynasty mobilized 500,000 soldiers (strengthened with navy and food supply fleet) for the third invasion on Vietnam. They were defeated again on Bach Dang River (1288) by the Tran troops under the command of Tran Quoc Tuan (Tran Hung Dao).
-- Anti-Ming resistance war: Under the pretext of overthrowing Ho Dynasty to restore Nha Tran (Tran Dynasty), two hundred thousand Ming aggressors rushed into our country in 1406. To prepare for an anti-aggression war, Ho Dynasty had set up a 400-kilometre long defence line from Tan Vien Mountain to Nam Ha (Ha Bac). But the resistance was unsuccessful. On January 20th 1407, the Ming invaders mastered Da Bang (present-day Ha Tay) - key position on that defence line - and flooded into Thang Long on January 22nd 1407. Consequently, the Ho army resigned itself to come back to Thanh Hoa. In June 1407, Ho Quy Ly and his trusted courtiers were captured and taken to China. Our country fell again to the foreign domination after nearly five centuries of independence.* Lam Son Insurrection (1418-1428): In 1406, under the pretext of overthrowing Ho Dynasty to restore Nha Tran (Tran Dynasty), Ming Dynasty invaded our country. In 1418, in Lam Son forests (Thanh Hoa), Le Loi (future Le Thai To) launched a 10-year insurrection with the wholehearted help of Nguyen Trai. Between 1418 and 1423, the guerilla war endured many disadvantages due to the enemy blockade. Between 423 and 1424, the insurgents made negotiations to keep their strength intact. Between 1424 and 1425, they were on the offensive by liberating Nghe An, Thanh Hoa, Tan Binh (Quang Binh), Thuan Hoa. Between 1425 and 1428, they launched the general offensive throughout the country. Resounding victories were Tot Dong-Chuc Dong, Chi Lang-Xuong Giang. On December 16th 1427, at Dong Quan (Ha Noi), Vuong Thong declared to withdraw his Ming troops. In January 1428, all the Ming invaders left Vietnam.
-- Anti-Manchurian resistance war (1788-1789): From the fact Le Chieu Thong had sought reinforcements from China, the Manchurian dynasty ordered Ton Si Nghi and 200,000 soldiers to invade Vietnam. By Ngo Thi Nham 's plan, the Tay Son troops left Bac Ha to return to Tam Diep (Ninh Binh) and Bien Son (Thanh Hoa). Just after receiving this information (Dec.21st 1788), Nguyen Hue proclaimed himself emperor Quang Trung and gave marching orders without any delay. Within 35 days, Nguyen Hue^.'s troops took the Gian Khau post at 90km from Thang Long. In the night of January 28th 1789, they forced the Ha Hoi post (at 20km from Thang Long) to surrender. In the morning of January 0th, the Ngoc Hoi, Khuong Thuong and Dong Da posts fell to Nguyen Hue. The Manchurian general Sam Nghi Dong committed suicide by hanging himself. The Tay Son army flooded into Thang Long  Ton Si Nghi (commander-in-chief of the Manchurian troops) escaped by crossing the pontoon bridge on Song Hong (Red River). To avoid the Tay Son army's pursuit, Ton Si Nghi ordered to cut the pontoon bridge and an enormous number of invaders drowned. In the afternoon of January 30th 789, Quang Trung and his main army flooded into Thang Long. The victory over the Manchurian aggressors was one of the most resounding feats of arms in Vietnamese history.
-- Ba Dinh Insurrection (1886-1887) was commanded by Pham Banh and Dinh Cong Trang against the French. Ba Dinh referred to three temples in three villages Thuong Tho, Mau Thinh, My Khe. The aggressors suffered many heavy losses due to that solid revolutionary base. After two unsuccessful attacks, the French besieged it so severely that the insurgents moved to Ma Cao (Thanh Hoa) and disintegrated. Pham Banh committed suicide and Dinh Cong Trang was killed.
-- Bai Say Insurrection was commanded by Nguyen Thien Thuat and Doc Tit in response to Can Vuong Decree. The base was very solid and inaccessible to the enemy. The insurgents applied skilfully the guerilla tactics and inflicted numberless damages to the French between 885 and 1892. Later, Nguyen Thien Thuat had to flee in China and Doc Tit was exiled to Algeria.
-- Huong Khe Insurrection was commanded by Phan Dinh Phung and Cao Thang in response to Can Vuong Decree. Their base located in the Huong Son forests (Ha Tinh). Being able to make the rifles in the latest style, the insurgents achieved the Vu Quang resounding victory.
-- Thai Nguyen Insurrection referred to the one of Vietnamese soldiers and prisoners under the command of Doi Can (Sergeant Can) and Luong Ngoc Quyen. After having killed the French commander, the insurgents liberated 203 prisoners and mastered the provincial capital. 623 insurgents (workers, peasants and civil servants included) had to face more than 2,000 French soldiers supported by artillery and navy
 
 @phong tran
 - Wind and dust; dust and heat of life, turmoil of life.
@@ -76056,7 +75922,7 @@ _trash
 @pho
 * noun
 - Noodle soup
-- Pho is the most popular food among the population. Pho is mostly commonly eaten for breakfast, although many other people would have it for their lunch or dinner. Anyone feeling hungry in the small hours of the morning can also enjoy a bowl of hot and spicy Pho to fill their empty stomach. Pho also needs its special taste and smell. The grated rice paper is made of the best variety of fragrant rice called Gao Te. The soup for Pho Bo (Pho with beef) is made by stewing the bones of cows and pigs for a long time in a large pot. Pieces of fillet mignon together with several slices of ginger are reserved for a bowl of Pho Bo Tai (rare fillet). Slices of well done meat are however offered to those less keen on eating rare fillets. Meanwhile soup for Pho Ga (Pho with chicken meat) is made by stewing together chicken and pig bones. White chicken meat served with Pho Ga is boneless and cut into thin slices You could regard Pho Bo and Pho Ga as Vietnam's special soup. It has the added advantage of being convenient to prepare and healthy to eat
+= Pho is the most popular food among the population.
 
 @pho tai
 - Underdone beef noodle soup
@@ -78147,7 +78013,6 @@ _trash
 @quan ao
 * noun
 - Clothing, clothes
-- The land of Vietnam is not large, but it incorporates over 50 ethnic groups. Except for the Kinh or Viet people living throughout the country's plains and occupying the majority, others find their place on the hilly and mountainous areas and are preserving their very own cultures and dressing patterns. A costume contest for all ethnicities in Vietnam, if organised, would for sure be very much interesting.What excites people most could be the both primitive and modern costumes of some groups like the Gia Rai. Women of this group wear nothing but a small skirt. Men would take just a loin-cloth to go on any occasion. Certainly, this is much more sexy than any modern fashions in the West! On the other hand, many others are dressing quite complicatedly. The H'Mong girls for instance would wear a shirt, undergarments, leggings and put on a coiled scarf on their head. Their skirts are usually in cone shape with lots of folds that enhance their gentleness. And it is not less exciting to watch them dance, making the folds wide open. The dressing pattern of each ethnic group reflects their culture, history and conceptions. It also shows their life style and working conditions as well. Also, each subgroup also has its distinction from the rest of the same minority. Take the Tay, Thai, Muong, Dao for example. The traditional Tay's costume for girls is a kerchief tied in a triangle on the forehead, simple indigo dress, belt and silver bracelets and chains. A Muong girl usually wears a medium length skirt, short white shirt and a pair of silver earrings The Thai girls are different. They would wear a colourful scarf, short jacket with silver buttons in two lines and a tight black skirt. The silver buttons and shining decorations look like budding bauhinia blossoms. People of the subgroups in the Dao minority share many similarities while at the same time are a little bit distinct from each other. Girls in the Dao Do (Red Dao) keep their hair long and fold them around their heads covered with a red cloth. They wear indigo dress embroiled with decorations in red. It is understandable that these people wear what suit their way of living and the climate they are in. But at the same time, they also know how to produce cloths, embroideries etc. to make their very own dress. One of the speciality they produce is brocade which has become quite famous and made a worthy export product. Nowadays, their traditional dresses have changed to some extend due to cultural interactions with other minorities and the Viet majority. This trend has been shown most obviously in those groups living near the plains where the Viet people are present. The culture of the Viet which forms the majority of their population greatly influences other minorities' cultures. Theoretically, this is a normal phenomena. In the last 10 years, thanks to the renovation process in the country, the pace of cultural, economic interactions among all ethnic groups have been increasing considerably. The process of rapid urbanisation can be found now even in hilly areas. As such, traditional and ethnic cultural activities experience deep changes both for the better and the worse. In some regions, it is now a little difficult to find a youth wearing his/her traditional costume. Although the middle-aged are still keeping with traditions like those in Thanh Hoa or Hoa Binh, it seems many of them have been 'Vietnamised'. The farther they stay from the plains, the more they could keep their dressing, patterns and traditions. It is something worth thinking of when there is a clash between traditional characteristics and a modern life style. Many among them have shifted from skirts and loin-cloths to jeans and plants plus a Western style shirt though the things they are wearing are local made and not quite in vogue The new way of dressing has been introduced to these remote areas by local civil workers who have had chances to go down to the country's urban areas or by teachers sent from such places. In many places, traditional dress is still overwhelming modern new one. With increasing awareness, ethnic people are trying to preserve their dressing patterns in a modern society, combining them to make new designs. This proves to be a good trend worth studying. Modernity does not always coincides with beauty. Fashion development should incorporate both cultural traditions and modern life For these ethnic people, there would be no traditional festivals held if their traditional dresses were dropped out. There would be no more cloth ball contests of the Thai if these people wear fashion wears. Many Vietnamese as well as foreign tourists have found themselves infatuated by the ruou can (wine pot to be drunk together) and the Thai girls' dance in their on-stilts houses. The guests would fly with the dance rhythms. And that is what is attracting tourists to Mai Chau (Hoa Binh province)
 
 @quan bo
 - Jeans
@@ -78783,7 +78648,6 @@ _trash
 @quoc ngu
 * noun
 - National language
-- Quoc Ngu (national language) resided in borrowing the Latin to transcribe the Vietnamese. In the 17th century, the Western evangelists came to Vietnam to preach Christianism and used the Latin alphabet to transcribe the Vietnamese. In 1651, Alexandre Rhodes published An Nam Portuguese and Latin Dictionary. In the early 19th century, Pigneau de Behaine and Taberd published An Nam -Latin Dictionary. Step by step, Quoc Ngu replaced Han (Chinese) and nom languages to become the Vietnamese official language
 
 @quoc phong
 * noun
@@ -81996,7 +81860,7 @@ _trash
 - Violet rice wine
 
 @ruou can
-- Ruou can (wine drunk out of a jar through pipes) is very popular among the highlanders, especially in Tay Nguyen. But its flavour differs from one area to another. In Son La (some 300 km north-west of Ha Noi), for example, where the Thai ethnic groups are to be found, people drink ruou can in their own special way. It is drunk on several occasions: Tet festival, wedding parties, ground-breaking ceremonies or other festive days. The jar containing the wine is put at a fixed place (in the middle of the house or the yard), so that as many people as possible can drink it. Pipes are put into the jar prior to drinking and a basinful of pure water is placed beside it. A buffalo horn to be used to pour water into the jar is put on a tray nearby. Not everyone is allowed to drink ruou can. And the order of precedence is strictly observed. But there is no racial discrimination: the Kinh ( Viet) may drink with the Thai and Muong. The ingredients of ruou can include wild leaves, cassava roots and rice which are washed and put above an oven for 20 days or so Then all the mixed ingredients are wrapped with large banana leaves and left in a corner of the house for a couple of days. As soon as the process of fermentation is completed, the whole brew is put into a jar. When all the guests are seated, the host pours water from the basin into the jar. At first, he invites the guests to taste the wine from a jar whose wine is more bitter than others. This is meant to remind everyone of the bitterness of life. Then a second jar is brought in which the wine tastes more pungent. In the third jar, the wine is sweetest symbolizing that " your heart can be happy after so much grief". Drinking ruou can is accompanied by Mua Xoe (a dance of the Thai ethnic minorities) and drum beating. All this is to help the host and guests forget all their daily worries and enjoy to the utmost the pleasure of tasting ruou can. (VNS)
+- A type of wine drunk out of a jar through pipes, which is very popular among the highlanders.
 
 @ruou chat
 * noun
@@ -82961,7 +82825,6 @@ _trash
 - Short and small bamboo blinds
 -Myna, mynah (chim)
 -Flute
-=sao truc+The bamboo flute is a stem of fine bamboo with a diameter of 1.5cm and a +length of about 30cm. On the stem, there is one mouth piece and 10 finger holes. It could be said that the bamboo flute contains the musical essence of the Vietnamese countryside together with all four tranquil seasons
 
 @sao da
 - Chinese starling
@@ -83788,7 +83651,6 @@ _trash
 @sau rieng
 * noun
 - Durian
-=qua sau rieng+Sau Rieng signifies "One's own sorrows" in Vietnamese. Why is this fruit under such an austere name? - Yes, it proceeds from an immortal love story. Long ago, there lived a young couple in the region. Not being able to overcome some social prejudices, they had to find their death to be faithful to their love for ever. Their own sorrows have received the populace's sympathies, and their dramatic love story has been handed down from generation to generation. To commemorate that couple, locals have named their one of the local valuable fruits Sau Rieng.+Durian is an expensive fruit. It is from five to six times larger than a mangosteen. Its skin is thick, rough and covered with sharp thorns. Yet, with a gentle cut between the edges of the outer shell, you can easily open the fruit to see layers of layers of brightly yellow segments of pulp as if the pulp is covered with a thin layer of butter. According to the writer Mai Van Tao, "The dense fragrance which spreads near and far and lingers a long time before disappearing. The strong smell can go straight to your nostrils when you are still as far as several dozen metres away from where the fruit is. The fragrance of durian is a mixture of smell coming from a ripening jackfruit and that of a shaddock. Moreover, it also has a strong smell that foreign-made cheese has to offer and is as tastily rich as that of a hen's egg. Others add more traits to the fruit as it also has the sweet like that of well-kept honey. What a specially tempting smell! Those who have not enjoyed the fruit for once could find it hard to eat. Yet, once they have tried it, they are likely to seek for it happily..."
 
 @sau tham
 * adj
@@ -88132,9 +87994,6 @@ _trash
 - French
 -Western personal, private
 
-@Tay Bac
-- DISCOVERING Tay Bac (North-West). There was a time, not so long ago, when Tay Bac or the north-west region of Vietnam, was so remote an area that people were scared to go there. In retrospect, the remoteness seems to have been a blessing in disguise. The region's wilderness, its mountains and culture that are unique to it have been drawing an increasing number of domestic and foreign tourists. Tourist facilities in the region are still insufficient, but that cannot stop the back-packers from going there and taking in the splendid scenic vistas on offer. The ethnic minorities and their way of life as yet untouched by modern civilisation are another alluring factor They come here in organised tours, informal groups, or even individually on motorbikes. The sharp bends and curves in the mountainous area are thrilling to negotiate and offer marvellous views of the Thai and Tay tribal villages from the heights, and of the H'Mong houses rising out of the rocks and clouds atop the mountains. Visitors can also meet ethnic people in colourful attire on their way to the market or the fields. The population here lives on rice and handloom cloth which are woven with colourful ethnic motifs. The cloth is sold in every houseIn Tay Bac, weekly markets held every Sunday has presented the same scenes for decades  a couple going to the market with the husband on a horse and the wife walking behind; youngsters dressed in their best, chatting, drinking and playing the traditional flute. Friendly as they are, the H'Mong and Dao boys do not shy away having a drink with a foreigner and sharing a piece of (maize cake). Sapa is already a popular tourist destination in the Tay Bac region. Here also, the visitor can get glimpses of the ethnic minority way of life. These communities cultivate, maize, rice and other grains and vegetables on terraced fields that are major attraction. The age-old practice of the market being the rendez-vous for young people to court still continues, though there have been concerns about it being disturbed by domestic and foreign tourists. In the Tay Bac region, however, there remains plenty for the visitor to discover and savour
-
 @tay bac
 * noun, adj
 -north-west
@@ -88370,8 +88229,6 @@ _trash
 @tet
 * noun
 - New Year's Day, Tet festival
-- To the Vietnamese people, Tet Nguyen Dan (Lunar New Year's Day) is very sacred. The Tet season usually falls on either the second half of the first calendar month, or the early days of the second calendar month of the year. This is the time when family members together make food, fruit and incense offerings on the family altars to commemorate their ancestors. This is also the time for people to visit their neighbours, their friends and relatives. During the first three or four days of Tet, any visitor who is the first visitor to one's house to offer Tet greetings would be considered as the first visitor for the year (Xong dat). Their good or bad luck would have a strong effect on the house owner's business success for the coming year. The belief of Xong dat remains very strong nowadays, especially among business people. Tet days are always regarded as a perfect time for people to enjoy traditional food such as banh chung, a square-shaped sticky rice cake, the fragrance of which alone could strongly provoke one's sense of nostalgia for Tet
-- WHAT TET MEANS FOR HANOIAN CHRISTIANS Ha Noi (originally called Thang Long) was an early site for the propagation of Christianity. Phan Phat Huon, author of "Viet Nam Giao Su" Vol.1 (A History of Religion in Vietnam), writes that in 1581, a missionary named De Pesaro wrote a letter and sent pictures depicting the history of Christianity to Mac Mau Hop (the then ruler of Thang Long). In 1584, another missionary, Bartholomew Ruiz of the Franciscan Order from Manila, came with an interpreter to Northern Vietnam (then called Tonkin) and Thang Long. He was warmly received by Mac Mau Hop and allowed to hold his services and ceremonies. In 1626, Father Baldinoti arrived in Thang Long and was greeted by Trinh Trang, the then Lord of the North. He was also granted permission to hold services for the public. This put the Christian faith in Vietnam well on its way. A real landmark came in 1627, when missionary Alexandre de Rhodes came to Ha Noi on July 2 after Lord Trinh Trang returned from his expedition to the South. This event effected a marked change in the propagation of Christianity in Northern Vietnam. From just a wooden hut provided by Trinh Trang, Rhodes set up a small prayer-hall to preach his faith and by the end of 1627, he had baptised over 1,200 people. In 1628, another ,000 were baptised, with this number growing to 3,500 in 1629. At the same time, Rhodes romanised the Vietnamese language in order to further facilitate the spread of Christianity. He also wrote a book in Vietnamese called 'Christianity in Eight Days'. To provide a stronger base for Christianity, he incorporated local customs and traditions to his religious festivals and practices, especially during the Tet Festival period. The New Year festival, according to the local people's lunar calendar, is one of the most important annual events for the people of this agricultural economy. During the festival, people erect in front of their houses a high bamboo pole called a 'cay neu' to ward off evil spirits. Taking full advantage of this tradition, he advised people, especially his Christian followers, to hang a cross on top of the pole to highlight theTrinity. He advised followers to offer prayers in the first three days of the New Year to the Holy Father, Holy Son and Holy Ghost and thanksgiving to the Trinity and saints of the religion. In 1805, the Bishop of Vietnam wrote to all Christians in Northern Vietnam during the New Year festival urging them to be brothers and offer each other good wishes, entertain and dine with each other. This remains a good and healthy practice. These practices were maintained until the 1960s, after which new ones were introduced. For instance, the second day of the New Year is used to commemorate ancestors, in keeping with the Vietnamese custom. Interestingly, Vietnamese Christians have included various Christian festivals in the lunar calendar. Following the Trinity festival and the Candle festival comes Tet. Thus, they say: 'Ba Vua, Le Nen, Tet den sau lung' (If Epiphany and Candlemas have come, Tet cannot be far behind). Christian churches also prepare for Tet putting up beautiful decorations and engaging in communal activities
 
 @teu
 * adj
@@ -88499,10 +88356,6 @@ _trash
 @thai hoi
 * verb
 - to sack, to dismiss
-
-@Thai
-- With nearly 900,000 inhabitants (1.45% of the Vietnamese population), Thai ethnic group is divided into Thai trang (White Thai) and Thai den (Black Thai) on the basis of the clothing colour. The residential sphere spreads from Red River right bank to Thanh Hoa, Nghe An Highlands. It is easy for them to mix with native ethnic groups. They settle in valleys surrounding immense fields (Muong Thanh, Quang Huy, Than Uyen, Nghia Lo), and live on farming, breeding, weaving. The Thai people has its own writing and a very developed popular culture
-- In the western part of Nghe An Province, there reside about 13,000 ethnic Thais belonging to the sub-groups of Tay Thanh, Tay Muoi, and others. Like their counterparts in the North-West of the country, the Thai community here possesses a rich culture that has been built up over the centuries. In their everyday working life, the Thai minority has developed a rich and abundant culture. Many traditional rites and festivals exist along with other Thai cultural activities. In this article, we introduce one particular cultural event - the Thai's Cave-Picnicking Festival. According to the elders in the community, the Cave-Visiting Festival of the Thai people living in the mountain villages surrounding Quy Hop dates back to time immemorial, and was in existence up to the middle of the twentieth century. Every year during the period from the 3rd through the 10th day of Thang Gieng (the Lunar Year's first month following Nguyen Dan - the Lunar New Year's Day), the Thai folk in and around the locality flock to the Cave - Picnicking Festival The event takes place in Tham Mon (Mon Cave) located in the Chau Quy commune, Quy Hop district. The Cave visitors are of all ages, but mainly single young people. They are natives from the villages of Quy Hop and other neighbouring districts in West Nghe An. Visitors are allowed to enter the cave only once a day until they find themselves a boy or girl friend, and return home when the festival ends. It is an inviolable rule that cave visitors must not bring in a lamp, fire or any source of light.+All visitors come into the cave for the festive occasion amid complete darkness. Young people first enter in groups, then disperse and move further into the dark cave. Once inside the cave, the girls usually gather in small groups of two or three, and stand timidly in the cave alleys. The boys, also in small groups, grope in the dark for girl friends. Every action must be made by hand, and every move made by foot as calling, speaking or shouting are completely forbiden... Having found a friend of the opposite sex, the boy can talk with and court the girl in the cave. If they find each other suitable, the couple come out of the cave hand-in-hand and go to the boy's home to announce their love to his parents. The parents then take the responsibility of guardianship, by assisting and creating favourable conditions for the couple to become husband and wife. That the Festival takes place in such a dark cave makes it an extremely fun-filled and enjoyable experience. All unmarried Thai boys and girls are eager to go to the Cave- Visiting Festival to try their luck at seeking a life companion. The Thai men traditionally look for a pretty girl of marriageable age who must be well-built and in good health Therefore, in the cave, a boy first makes sure that he finds himself the right girl, that is, he asks in whispers after her name, her whereabouts and her parents so as not to mistake a blood sister or relative whom he cannot marry. He then feels her thoroughly to find out whether she is strong and sturdy. If satisfied, he then starts to exchange intimacies, courts her and ultimately leads her out of the cave. Such a play of courtship all in the dark cave with the boys fumbling for the girls who hide themselves in the cave gorges or alleys cannot be free of conflicts and jostlings among the men. A struggle inevitably ensues when a boy finds a girl who has a flaw and tries to get rid of her. Similar to practices such as the "moonlight dance" or "moonlight stroll" of some other ethnic minorities, the Cave - Picnicking Festival of the Thai community in western Nghe An is a cultural activity - a community-gathering place for dating and courting couples.+It is a healthy practice and requires the participants to strictly adhere to the community's rules and customs. In earlier times, when social events were virtually non-existent among the Thais, the Cave-Picnicking festival presented a good opportunity for young people to discover and exchange love. The Festival in fact was an indispensable part of the cultural life of the Thai people in western Nghe An up to the first half of this century
 
 @thai
 * verb
@@ -88752,10 +88605,6 @@ _trash
 @thanh giao
 * noun
 - puritanism
-
-@Thanh Hoa
-- Thanh Hoa is a large province of Central Vietnam. Thanh Hoa is composed of three categories of mountain, plain and mid-land terrains. Its coastline is 102km in length. Being the dwelling place of the ancient Viets, Thanh Hoa is proud of the glorious Dong Son culture (see also Cac Nen Van Hoa o Viet Nam). Only 16 km from Thanh Hoa City, Sam Son Beach is very good for bathing. Beside sandy beaches, Sam Son also has some scenic spots such as Trong Mai Island, Doc Cuoc Temple and Co Tien Mount. Citadel of the Ho Dynasty (Thanh Nha Ho) was built in 1397. It was not only the location for the central government, but also a quite military project. All the ancient citadels in Vietnam such as the citadels of Hoa Lu and Co Loa were made of earth, the only exception being the Ho Dynasty Citadel, which was wholly built in block granite, depicting the power of creativeness and industriousness of the labouring people more than six centuries ago. The Ho Citadel Dynasty only existed for 10 years (1397-1407), but its vestiges are still surprising because many of its technical questions remain the unknowns 
-- Ba Trieu (Lady Trieu) Temple is located at the foot of the Tung mountain (Trieu Loc commune, Thanh Hoa province). This mountain was the centre of the insurrection led by her. Ba Trieu whose full name was Trieu Thi Trinh was a beloved national heroine. She led the nation in an uprising against the northern invasion in the 3rd century. Ritual ceremonies are held yearly at the temple on the 21st day of the lunar second month. People on pilgrimage to the temple often recall Ba Trieu s outright declaration: "I want to drive over strong wind, sail over strong waves and chase the foreign invaders out of the country, and I will not give up myself to be their servant-concubine". Ma River is the largest one in Thanh Hoa. Nearing the coast, the river meets a high mountain which resembles a dragon's head, from which the bridge spanning that part of river derives its name. In the early 20th century, French engineers tried in vain to built an iron bridge over Ma River. In 1905, they completed a suspension bridge only to see it destroyed in the anti-French war. When peace returned in 1954, Vietnamese engineers applied new engineering techniques and built an iron bridge. The new Ham Rong bridge was completed on May 19, 1964. The bridge gained fame because it became the main target of US air forces in the efforts to break the North-South supply lines
 
 @thanh kiem
 * adjective
@@ -91197,9 +91046,6 @@ _trash
 * noun
 - era, age
 
-@Thoi Dai Hung Vuong
-- It was in Thoi Dai Hung Vuong (Hung Vuong Era) that the first State of the Vietnamese people (Van Lang nation of the Lac Viet people) took shape. By the C14 radioactive method, the archaeologists demonstrate that Hung Vuong Era was not legendary (18 Hung kings of the Hong Bang times were only symbolical). The inhabitants grew vegetables and tubers (especially sticky rice), bred chickens,pigs, dogs, buffaloes and oxen. The hunting and fishing activities were secondary. The casting and forging technics appeared in Dong Son Culture (see also Cac Nen Van Hoa O Viet Nam). The carpentry and the earthenwares were rather prosperous. The usual clothes included embroidered skirts and brassieres The food included banh chung and banh giay (square cakes made of sticky rice), wine, pickled fish, betel-nuts.. The spiritual life consisted of singing, dancing, carving, painting, tattooing. Sun, angels and totems were worshipped. Differentiation between the rich and the poor resulted in social differentiation, and Van Lang nation came into being
-
 @thoi gian
 * noun
 - time
@@ -93275,7 +93121,6 @@ _trash
 @ton giao
 * noun
 - Religion
--Besides the traditional religious practices in Vietnam, there are other major religions such as Buddhism, Catholicism, Protestantism, Islam, the Cao Dai sect and the Hoa Hao sect... At present, over 70 percent of the population of Vietnam are either Buddhist or strongly influenced by Buddhist practices. About 10 percent of the population are considered to be catholic. The number of Protestants is estimated at a mere 400,000 Most of the Islamic followers in Vietnam are those of the Cham ethnic minority group living in the central part of the central coast. The number of Islamic followers in Vietnam totals about 50,000. The Cao Dai Church in Tay Ninh is the central point nearby which are located settlements of Cao Dai followers in South Vietnam. The number of followers of this sect is estimated at 2 million. More than 1 million Vietnamese are followers of the Hoa Hao sect. Most of them live in the western part of South Vietnam
 
 @ton nghiem
 * adj
@@ -93284,9 +93129,6 @@ _trash
 @ton sung
 * verb
 - to venerate
-
-@Ton That Thuyet
-- Ton That Thuyet (1835-1913) - patriotic general of Nha Nguyen (Nguyen Dynasty) and deputy minister of national defence - was at the head of the pro-war camp. After the unsuccessful attack on the French barracks in the night of July 4th 1885, Ton That Thuyet escorted King Ham Nghi to Ha Tinh where the latter would promulgate Can Vuong+Decree. After having come to China and tried in vain to seek reinforcements, Ton That Thuyet lived in exile there until his death
 
 @ton ti
 * noun
@@ -93866,9 +93708,6 @@ _trash
 * noun
 - the world, earth
 
-@Tran Thu Do
-- Tran Thu Do (1194-1264) was an eminent politician. With Hung Ha (Thai Binh) as native village, Tran Thu Do was born in a dignitary's family. He commanded the corps in defence of Nha Hau Ly (Post-Ly Dynasty)'s royal capital, then made artful arrangements for the abdication of Ly Chieu Hoang in favour of Tran Canh, which would form the Nha Tran (Tran Dynasty). Becoming the royal chancellor, he was a good ruler and achieved many merits in the resistance war against the Mongol invaders in 1258. Tran Thu Do was famous for his saying: " Whenever my head has not fallen on the ground, I beg Your Majesty not to worry"
-
 @tran tinh
 * verb
 - to make clear, to account on
@@ -93941,8 +93780,6 @@ _trash
 * noun
 - Betel
 -Quid of betel (and areca-nut)
-- An trau (Betel chewing): A popular custom formed in Vietnam since time immemorial. Each quid of betel consists of a piece of areca-nut and a betel leaf with no lime spread on it, and in some cases, included with a piece of tobacco. Traditionally, Vietnamese people invite their guests to chew betel before starting a conversation. This explains thoroughly the saying known to everyone: "A quid of betel and areca-nut starts the ball rolling"
-- An trau la tap tuc co tu thoi co. Mieng trau gom co: Mot mieng cau, Mot mieng la trau khong co quet voi. Co noi con them mot mau thuoc lao. Trong phong tuc Viet Nam, co tuc moi trau hau chuyen, nen co cau "Mieng trau la dau cau chuyen"
 
 @trau
 * noun
@@ -94462,7 +94299,6 @@ _trash
 
 @trong com
 - Cylindrical drum
-- LEGEND OF "TRONG COM". A famous song from Vietnamese folklore goes thus: "How joyful to have a Trong Com; and it is an honour for those who can clap it skilfully..."The lyrics and the melody are usually accompanied by a picture showing boy or girl drummers with axehead-shaped turbans over their heads and long-shaped drums hung loose from the neck down to about the belly... All these easily mislead the audience to believe that Trong Com (the Vietnamese cylindrical drum) is an ordinary musical instrument. In fact, in the national musical instrument ensemble, Trong Com contributes an unique sound - now happy and cheerful, now low, soft and woeful recalling the innermost feelings of one's native country, one's homeland...The drum is held at both ends by a strip hanging over the performer's neck. It thus lie horizontally against the belly of the drummer who uses both hands to clap the drumheads. In the past, people stuck a handful of glutinous rice to each drumhead. Trong Com is used in worshipping and various ceremonies, in cheo (traditional operetta) and in Phuong Bat Am or an octet (a popular ensemble of eight instrumental timbres). The glutinous rice stuck against the drumhead lends its name to the drum (Trong Com in Vietnamese literally means "Rice Drum"). Legend goes that once upon a time, there was a poor Confucian disciple who was very unlucky in competitions and examinations and had to go begging. Everyday, he went past the mansion of a wealthy family where there was always a girl waiting to give him rice. One day, so moved and also ashamed by her good deed, the young man came to thank the girl. She however said that she had done just what she had been ordered to do by her young mistress. Learning that, the man requested to see the mistress, who was a kind-hearted girl. Seeing the poor scholar bowing with joined hands, the damsel hurriedly bent down to raise him and said: "Never mind, please! I understand and sympathize with your unlucky lot. Since you depart now, I would like to give you a small sum as travelling expenses and this golden hair pin in the earnest hope that one day you will succeed in making both a living and your way in the world and come back to the native land, and then...". The girl left the sentence unfinished, but the scholar had got the message. Fully conscious of his fated misfortune at the workplace and in his pursuit of fame, he decided to turn to music with a determination to achieve success. As time passed, he became famous. Bearing in mind the old promise, he returned to the native village, hoping to meet again his benefactor. Unfortunately, upon arrival, he learnt that the damsel had just passed away due to illness. In his great lament, the young man brought along his musical instrumentalist guild to pay tributes to the deceased and himself created a small, cylindrical drum with rice stuck against both drumheads in commemoration of the ill-fated girl. The strip from which the drum was hung was made of white cloth symbolizing the mourning band. And as he clapped the drumheads, the doleful sounds echoed his deep pain and the loss of his sweetheart
 
 @trong khong
 * adjective
@@ -94823,7 +94659,6 @@ _trash
 @truyen thong
 * noun
 - Tradition
--The life style of Vietnamese people is closely attached to their villages and native land. LANG (village in Vietnamese language) is CHIENG (in Tay-Thai language), BAN (in Muong language) and BUON (in languages of several minority groups inhabiting Central Highlands). LANG is not only an administrative organization but also an economic unit based on sections of land on which farming products are made. Typical village features may be a banyan tree standing at the village front gate (or bamboo groves surrounding the village), deep water wells, the roof of the village temple, a far mountain peak, a river running nearby or may be the paddy fields and joyous bustling village festivals
 
 @truyen thu
 * verb
@@ -95310,7 +95145,6 @@ _trash
 =nhu tuong hoi han+to feel a kind of remorse
 =tuong vo on+an ungrateful sort
 -Classical drama
-- Tuong (Classical drama) was formed in the 12th century, and in the 17th century it was very much in vogue. Since 1950, Tuong has referred to Nghe Thuat Hat Boi (Classical drama art). The Tuong play consists of dances, songs and music which are highly stylised, conventional and imbued with symbolism. Thanks to the stylised, symbolic gestures used by the actors, and a good deal of imagination on behalf of the spectators, the scenery is very simple. Mountains, hills, rivers, dawn, twilight, horse riding and battlefields, are all presented on stage by using a minimum of accessories and technical equipments. Tuong includes many strict norms on styles of speaking, singing and dancing. In chronological order and by their contents, the Tuong plays are divided into traditional plays, royal plays, social plays and modern plays. The most popular ones include Son Hau, Dao Phi Phung, Tam Nu Do Vuong, Trung Nu Vuong and Ngheu So Oc Hen
 
 @tuong nhu
 - it seems, it appears
@@ -96498,7 +96332,6 @@ _trash
 * noun
 - Cloth
 -Litchi
--Vai Thieu (Thieu litchi) is a bit bigger than a longan. Unlike the skin of Longan which is rather smooth, the skin of litchi is rough with some ripples. The skin is dark red. The pulp of a litchi is transparently white, but is thicker than a longan. Therefore, litchi pulp is juicier than a longan. Litchi seed is also smaller than Longan seed. Thieu litchis are grown in many big orchards in Hung Yen province
 
 @vai
 * noun
@@ -96671,7 +96504,6 @@ _trash
 @van hoc
 * noun
 - Literature
-- Vietnamese literature was developed at an early date. It includes two major components which have developed simultaneously and are profoundly interrelated: Folk literature and written literature. Vietnamese folk literature came into being very early and had a profound effect on the spiritual life of the Viets. The folk literature always praised beauty, humanism, love of godness, and contributed to the formation of a national sense. Legends, fairy tales, humorous stories, folk songs, epics... have a tremendous vitality and have lived on today. Written literature first appeared around the 10th century. It had a leading role and bore the main traits of Vietnamese literature. From the 10th to the 15th century, literary works were written in Han (classical Chinese) and Chu Nom. But since the 16th century, Chu Nom literature became increasingly popular, and held a prime position by the early 18th century. Well-known works written in Chu Nom included Chinh Phu Ngam by female poet Doan Thi Diem, Kieu Story by Nguyen Du and the Chu Nom poems of female poet Ho Xuan Huong. These works were the cream of Vietnamese literature. In the 20's, the country's literature was written in Vietnamese Quoc Ngu (Romanized national language). In that period, the country saw drastic changes in its socio-economic structure and cultural life and began to experience the far-reaching influence of Western culture. Vietnamese literature thereby developed quickly in terms of quantity, genre and form. Prominent in prose were Tat Den by Ngo Tat To, Bi Vo by Nguyen Hong, Buoc Duong Cung and short stories by Nguyen Cong Hoan, short stories by Nam Cao, Giong To and other novels by Vu Trong Phung. Poetry also developed vigorously, culminating in the new poetry movement with a generation of famous authors such as: The Lu, Pham Huy Thong, Xuan Dieu, Luu Trong Lu, Huy Can... Traditionally, Vietnamese literature always featured patriotism, national pride and humanism. It was not by chance that great cultural personalities such as Nguyen Trai, Nguyen Du were also humanists
 
 @van kien
 * noun
@@ -97184,17 +97016,12 @@ _trash
 * verb
 - to write, to record
 
-@Viet
-- Viet ethnic group occupies 87% of the Vietnamese population. From the first residential area in Hong (Red River), Ca and Ma basin, they gradually advanced southwards together with other ethnic groups. The concentration was noticeable in the deltas from lower section of Red River, Coastal Centre to lower section of Mekong River. Viet's residential sphere spread uninterruptedly from the Ngoc cape to Ha Tien where the continental and oceanic ecological environments met each other The society was tightly organized in form of hamlets, villages, communes and townlets. Each village was a factor maintaining the traditional social structure of the Viet ethnic group and where small trade, agricultural and handicraft production took place. Its familiar landscapes resided in rice-fields, gardens, ponds, breeding and handicraft occupations Linguistically, there was the transition from Chinese language to nom language, then to quoc ngu (national language) with Latin-based letters in the late 19th century
-
 @viet kieu
 * noun
 - Vietnamese resident, overseas Vietnamese
 
 @Viet Nam
-- Vietnam
-- Different from China in the north, Vietnam referred to the Viet community in the south. Through its 4,000-year history, Viet Nam was named Van Lang, Au Lac, Van Xuan, Dai Co Viet, Dai Viet, Dai Ngu, Dai Viet. Under Thoi Bac Thuoc (Chinese domination), Vietnam was called Giao Chau, An Nam Do Ho Phu (Dominated An Nam). Since 1804, Nha Nguyen renamed this country Viet Nam. However, King Minh Mang (Nha Nguyen - Nguyen Dynasty) himself admitted that the name Viet Nam had existed long before. Nguyen Trai, Nguyen Binh Khiem and Le Quy Don had also used the name Viet Nam. In 1991, in Dong Dang (Lang Son), the archaeologists discovered the Thuy Mon Dinh stela with the words Viet Nam on it. Under the French domination, Vietnam was named An Nam, and An Nam also referred to Central Vietnam itself. The name Viet Nam has been officially and popularly used from 1945 till our days.
-- Besides 53 other ethnic groups (Dao, Ba Na, H'Mong, Hoa, Kho Me, Muong, Mo Nong, Nung, Xo Dang, Thai, Gia Rai, E De, Cham...), Viet (Viet or Kinh ethnic group) occupies up to 87% of the Vietnamese population. Many of ethnic minorities have the unnoticeable economic and cultural development, or remain in a primitive state.*See also Cac Nen Van Hoa Viet Nam 
+- Vietnam - a country in Southeast Asia
 
 @viet vi
 * adj
@@ -97205,7 +97032,7 @@ _trash
 - to seize, to catch, to hold, to lean on
 
 @Vinh
-- Xem Nghe An
+- A city of Nghe An province
 
 @vinh du
 * noun
@@ -97669,7 +97496,6 @@ _trash
 @vu sua
 * noun
 - Star apple
--Upon entering an orchard of star apple trees, visitors can see for themselves hundreds of star apples hanging suspendedly from branches. The round and smooth fruits are of the same size. The shape of the star apple only may as well match the name attached to it let alone its juice as fragrantly sweet, purely white as the milk from the breast. When using the knife to cut the fruit, it is advisable to cut the fruit into two parts before using a spoon to take out the pulp bit by bit until nothing is left. The most appreciated way to enjoy this fruit is to drill a small hole at its top and lift it to the mouth and raise the head backward to suck the flow of the fragrant juice into the mouth continuously as if a baby sucking milk from its mother's breast. Don't forget to squeeze the tough fruit for a while until it becomes tendered so that the juice can mix with the pulp of the fruit to become a sweet and fragrant muddy substance that looks like milk from the breast
 
 @vu
 * noun
@@ -97727,7 +97553,7 @@ _trash
 - pool, puddle
 
 @Vung Tau
-- Xem Ba Ria-Vung Tau
+- A city of Ba Ria-Vung Tau province
 
 @vung
 * adj
@@ -98477,7 +98303,6 @@ _trash
 @xoai
 * noun
 - Mango
--Mango plants are grown in most southern provinces. The most reputed mangoes come from Cao Lanh district in Dong Thap province. When the mangoes are ripening, they need large amounts of bright sunshine. The more sunshine the maturing fruit receives, the stronger its flavour will be and the brighter its skin will look. Mangoes are divided into several kinds, known locally as Xoai Cat, Xoai Tuong, Xoai Voi, Xoai Xiem, Xoai Ngua. The finest mango is Xoai Cat. The fruit has a brighter yellow peel and a rounder shape and weighs as much as 0.5 kilograms. The pulp is sweeter and more fragrant than that of other varieties
 
 @xoan
 * noun
