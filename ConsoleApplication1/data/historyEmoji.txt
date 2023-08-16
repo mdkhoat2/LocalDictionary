@@ -31,3 +31,4 @@ flag: Argentina
 flag: European Union
 flag: Aruba
 carrot
+smilling face

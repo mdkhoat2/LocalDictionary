@@ -720,6 +720,8 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                 displayBox.clearEngVieData();
             else if (currentDataSetID == 2)
                 displayBox.clearVieEngData();
+
+            isAdding = false;
             endScreen = true;
             isEndScreen = endScreen;
         }
@@ -752,7 +754,11 @@ void NewWord::handleEvent(sf::Event event, sf::RenderWindow& window, bool& endSc
                     theItem.word = inputWord;
                     EngVieDef theDef;
                     theDef.wordType = addWordType;
+                    if (addWordDef[0] != '-')
+                        addWordDef = '-' + addWordDef;
                     theDef.defAndExample.first = addWordDef;
+                    if (currentDataSetID == 0 && addWordExample[0] != '"')
+                        addWordExample = '"' + addWordExample + '"';
                     theDef.defAndExample.second = addWordExample;
                     theItem.defList.push_back(theDef);
                     if (currentDataSetID == 0) {
@@ -913,8 +919,10 @@ void NewWord::pushEEWordToQueue(std::string& inputWord, std::string& wordType, s
     else
         newWordType = wordType;
     std::string newWordInfo = "*" + newWordType + '\n' + wordDef;
-    if (!wordExample.empty())
-        newWordInfo += "; " + wordExample;
+    if (!wordExample.empty()) {
+        newWordInfo += '\n';
+        newWordInfo += "= " + wordExample;
+    }
     addedEEWord.push({ inputWord, newWordInfo });
 }
 
