@@ -943,26 +943,14 @@ const sf::Vector2f &DisplayBox::getPrevButtonScale() const
 void DisplayBox::showEmojiDefinition(std::string& inputWord, int& emojiIndex, std::vector<std::string>& emojiVector)
 {
     std::string imagePath = emojiVector[emojiIndex];
-    for (int i = 0; i < imagePath.length(); i++)
-    {
-        if (imagePath[i] == ' ')imagePath[i] = '-';
-        else imagePath[i] = tolower(imagePath[i]);
-    }
     if (!emojiTexture.loadFromFile("data/images/"+imagePath+".png"))
     {
-        for (int i = 0; i < imagePath.length(); i++)
-        {
-            imagePath[i] = toupper(imagePath[i]);
-        }
-        if (!emojiTexture.loadFromFile("data/images2/" + imagePath + ".png"))
-        {
-            showNoEmojiDefinition();
-        }
+        showNoEmojiDefinition();
     }
     emojiTexture.setSmooth(true);
     emojiImage.setTexture(emojiTexture);
     emojiImage.setScale(sf::Vector2f(175.f / emojiTexture.getSize().x, 175.f / emojiTexture.getSize().y));
-    emojiImage.setPosition(130, 300);
+    emojiImage.setPosition(130, 350);
     std::string word1 = inputWord;
     for (int i = 0; i < word1.length(); i++)
     {
