@@ -1,6 +1,6 @@
-#include "RandomWord.h"
+#include "RandomDef.h"
 
-RandomWord::RandomWord(sf::Font& first, sf::Font& second, sf::RenderWindow& window):
+RandomDef::RandomDef(sf::Font& first, sf::Font& second, sf::RenderWindow& window) :
 	backButton("", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	randomButton("", { 35, 35 }, 20, sf::Color::Transparent, sf::Color::Transparent),
 	button1("", { 153, 42 }, 20, sf::Color::Transparent, sf::Color::Transparent),
@@ -11,7 +11,7 @@ RandomWord::RandomWord(sf::Font& first, sf::Font& second, sf::RenderWindow& wind
 	isBackButtonPressed(false),
 	isSubmitted(false),
 	isCorrect(false),
-	currentChoice(0)
+	currentChoice(1)
 {
 	font = first;
 	font2 = second;
@@ -29,7 +29,7 @@ RandomWord::RandomWord(sf::Font& first, sf::Font& second, sf::RenderWindow& wind
 	initWord();
 }
 
-void RandomWord::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id, std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector, std::vector<WordDataEngVie>& vieEngVector)
+void RandomDef::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id, std::vector<WordDataEngVie>& engEngVector, std::vector<WordDataEngVie>& engVieVector, std::vector<WordDataEngVie>& vieEngVector)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
 	{
@@ -50,7 +50,7 @@ void RandomWord::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id
 				isSubmitted = false;
 			}
 			else {
-				keyword = "this mode does not support emojis, please choose another mode";
+				definition = "this mode does not support emojis, please choose en or vi";
 			}
 		}
 		else if (button1.isMouseOver(window)) {
@@ -80,7 +80,7 @@ void RandomWord::handleEvent(sf::Event& event, sf::RenderWindow& window, int& id
 	}
 }
 
-void RandomWord::update(sf::RenderWindow& window)
+void RandomDef::update(sf::RenderWindow& window)
 {
 	backButton.update(window);
 	randomButton.update(window);
@@ -91,7 +91,7 @@ void RandomWord::update(sf::RenderWindow& window)
 	submitButton.update(window);
 }
 
-void RandomWord::render(sf::RenderWindow& window)
+void RandomDef::render(sf::RenderWindow& window)
 {
 	window.draw(background);
 	backButton.drawTo(window);
@@ -102,60 +102,43 @@ void RandomWord::render(sf::RenderWindow& window)
 	button4.drawTo(window);
 	submitButton.drawTo(window);
 	if (currentChoice == 1)
-		displayDefinition(window, word1);
+		displayKeyword(window, word1);
 	else if (currentChoice == 2)
-		displayDefinition(window, word2);
+		displayKeyword(window, word2);
 	else if (currentChoice == 3)
-		displayDefinition(window, word3);
+		displayKeyword(window, word3);
 	else if (currentChoice == 4)
-		displayDefinition(window, word4);
-	else
-	{
-		//std::cout << "1 " << keyword << std::endl << word1.def << std::endl << word2.def << std::endl;
-	}
-	displayKeyword(window);
+		displayKeyword(window, word4);
+
+	displayDefinition(window);
 	//window.draw(right);
 	//window.draw(wrong);
 	if (isSubmitted)
 		if (isCorrect) {
 			//for (int i = 0; i < 5000; i++)
-				window.draw(right);
+			window.draw(right);
 			//isSubmitted = false;
 		}
 		else {
 			//for (int i = 0; i < 5000; i++)
-				window.draw(wrong);
+			window.draw(wrong);
 			//isSubmitted = false;
 		}
 }
 
-void RandomWord::displayDefinition(sf::RenderWindow& window, word toDraw)
+void RandomDef::displayDefinition(sf::RenderWindow& window)
 {
 	sf::Text text;
 	text.setFont(font);
-	text.setString(toDraw.type);
+	text.setString(type);
 	text.setCharacterSize(40);
 	text.setFillColor(sf::Color::Black);
 	text.setPosition(100, 270);
 	window.draw(text);
-	//std::vector<std::string> line;
-	//while (toDraw.def.size() > 0) {
-	//	std::string temp = toDraw.def.substr(0, 63);
-	//	toDraw.def.erase(0, 63);
-	//	line.push_back(temp);
-	//}
-	//for (int i = 0; i < line.size(); i++) {
-	//	sf::Text text;
-	//	text.setFont(font);
-	//	text.setString(line[i]);
-	//	text.setCharacterSize(30);
-	//	text.setFillColor(sf::Color::Black);
-	//	text.setPosition(100, 320 + i * 40);
-	//	window.draw(text);
-	//}
+
 	sf::Text text2;
 	text2.setFont(font);
-	text2.setString(toDraw.def);
+	text2.setString(definition);
 	text2.setCharacterSize(30);
 	text2.setFillColor(sf::Color::Black);
 	text2.setPosition(100, 320);
@@ -163,7 +146,7 @@ void RandomWord::displayDefinition(sf::RenderWindow& window, word toDraw)
 	window.draw(text2);
 }
 
-void RandomWord::displayKeyword(sf::RenderWindow& window)
+void RandomDef::displayKeyword(sf::RenderWindow& window, std::string& keyword)
 {
 	sf::Text text;
 	text.setFont(font2);
@@ -174,37 +157,39 @@ void RandomWord::displayKeyword(sf::RenderWindow& window)
 	window.draw(text);
 }
 
-void RandomWord::getRandom(std::vector<WordDataEngVie>& root)
+void RandomDef::getRandom(std::vector<WordDataEngVie>& root)
 {
 	int n1 = ranNum(root.size() - 5752) + 5752;
 	int n2 = ranNum(root.size() - 5752) + 5752;
 	int n3 = ranNum(root.size() - 5752) + 5752;
 	int n4 = ranNum(root.size() - 5752) + 5752;
 
-	word1.def = root[n1].defList[0].defAndExample.first;
-	word1.type = root[n1].defList[0].wordType;
-
-	word2.def = root[n2].defList[0].defAndExample.first;
-	word2.type = root[n2].defList[0].wordType;
-
-	word3.def = root[n3].defList[0].defAndExample.first;
-	word3.type = root[n3].defList[0].wordType;
-
-	word4.def = root[n4].defList[0].defAndExample.first;
-	word4.type = root[n4].defList[0].wordType;
+	word1 = root[n1].word;
+	word2 = root[n2].word;
+	word3 = root[n3].word;
+	word4 = root[n4].word;
 
 	answer = ranNum(4);
 	if (answer == 1)
-		keyword = root[n1].word;
-	else if (answer == 2)
-		keyword = root[n2].word;
-	else if (answer == 3)
-		keyword = root[n3].word;
-	else if (answer == 4)
-		keyword = root[n4].word;
+	{
+		definition = root[n1].defList[0].defAndExample.first;
+		type = root[n1].defList[0].wordType;
+	}
+	else if (answer == 2) {
+		definition = root[n2].defList[0].defAndExample.first;
+		type = root[n2].defList[0].wordType;
+	}
+	else if (answer == 3) {
+		definition = root[n3].defList[0].defAndExample.first;
+		type = root[n3].defList[0].wordType;
+	}
+	else if (answer == 4) {
+		definition = root[n4].defList[0].defAndExample.first;
+		type = root[n4].defList[0].wordType;
+	}
 }
 
-void RandomWord::wrapText(sf::Text& theText)
+void RandomDef::wrapText(sf::Text& theText)
 {
 	std::string str = theText.getString();
 	std::string wrappedStr;
@@ -246,10 +231,10 @@ void RandomWord::wrapText(sf::Text& theText)
 	theText.setString(wrappedStr);
 }
 
-void RandomWord::initBackground(sf::RenderWindow& window)
+void RandomDef::initBackground(sf::RenderWindow& window)
 {
-	if (!backgroundTexture.loadFromFile("background/randomWord.jpg"))
-		std::cout << "randomWord not found!\n";
+	if (!backgroundTexture.loadFromFile("background/randomDef.jpg"))
+		std::cout << "randomDef not found!\n";
 	backgroundTexture.setSmooth(true);
 	background.setTexture(backgroundTexture);
 	float scaleX = static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x;
@@ -257,81 +242,76 @@ void RandomWord::initBackground(sf::RenderWindow& window)
 	background.setScale(scaleX, scaleY);
 }
 
-void RandomWord::initSprite()
+void RandomDef::initSprite()
 {
 	if (!rightTexture.loadFromFile("background/congratulation.png"))
-		std::cout << "randomWord not found!\n";
+		std::cout << "randomDef not found!\n";
 	rightTexture.setSmooth(true);
 	right.setTexture(rightTexture);
 	right.setScale(0.3, 0.3);
 	right.setPosition(300, 300);
 
 	if (!wrongTexture.loadFromFile("background/oops.png"))
-		std::cout << "randomWord not found!\n";
+		std::cout << "randomDef not found!\n";
 	wrongTexture.setSmooth(true);
 	wrong.setTexture(wrongTexture);
 	wrong.setScale(0.3, 0.3);
 	wrong.setPosition(300, 300);
 }
 
-void RandomWord::initBackButton()
+void RandomDef::initBackButton()
 {
 	backButton.setFont(font);
 	backButton.setPosition({ 972, 163 });
 	backButton.setOutlineThickness(2);
 }
 
-void RandomWord::initRandomButton()
+void RandomDef::initRandomButton()
 {
 	randomButton.setFont(font);
 	randomButton.setPosition({ 882, 175 });
 	randomButton.setOutlineThickness(2);
 }
 
-void RandomWord::initButton1()
+void RandomDef::initButton1()
 {
 	button1.setFont(font);
 	button1.setPosition({ 972, 253 });
 	button1.setOutlineThickness(2);
 }
 
-void RandomWord::initButton2()
+void RandomDef::initButton2()
 {
 	button2.setFont(font);
 	button2.setPosition({ 972, 310 });
 	button2.setOutlineThickness(2);
 }
 
-void RandomWord::initButton3()
+void RandomDef::initButton3()
 {
 	button3.setFont(font);
 	button3.setPosition({ 972, 365 });
 	button3.setOutlineThickness(2);
 }
 
-void RandomWord::initButton4()
+void RandomDef::initButton4()
 {
 	button4.setFont(font);
 	button4.setPosition({ 972, 420 });
 	button4.setOutlineThickness(2);
 }
 
-void RandomWord::initSubmitButton()
+void RandomDef::initSubmitButton()
 {
 	submitButton.setFont(font);
 	submitButton.setPosition({ 972, 531 });
 	submitButton.setOutlineThickness(2);
 }
 
-void RandomWord::initWord()
+void RandomDef::initWord()
 {
-	word1.def = "	";
-	word1.type = "	";
-	word2.def = "	";
-	word2.type = "	";
-	word3.def = "	";
-	word3.type = "	";
-	word4.def = "	";
-	word4.type = "	";
-	keyword = "please click the shuffle icon to start...";
+	word1 = "please click the shuffle icon to start...";
+	word2 = "please click the shuffle icon to start...";
+	word3 = "please click the shuffle icon to start...";
+	word4 = "please click the shuffle icon to start...";
 }

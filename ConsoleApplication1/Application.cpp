@@ -30,6 +30,7 @@ Application::Application() :
 	removeWord(nullptr),
 	searchDefScreen(nullptr),
 	randomWord(nullptr),
+	randomDef(nullptr),
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	proposedWord(nullptr),
@@ -66,6 +67,10 @@ Application::~Application()
 	delete removeWord;
 	delete searchDefScreen;
 	delete randomWord;
+	delete historyScreen;
+	delete proposedWord;
+	delete favouriteMain;
+	delete randomDef;
 }
 
 void Application::loadEngEngDict()
@@ -592,6 +597,7 @@ void Application::run()
 	editDefScreen = new EditDefinitionScreen(font, font3, screenWithOptions);
 	searchDefScreen = new SearchDefinitionScreen(font, font3, window);
 	randomWord = new RandomWord(font, font3, window);
+	randomDef = new RandomDef(font, font3, window);
 	historyScreen = new HistoryScreen(font3, window, history, history1, history2, history3);
 	proposedWord = new ProposeWord();
 	favouriteMain = new FavouriteOnMainAndOptionScreen();
@@ -709,6 +715,9 @@ void Application::handleEvent()
 				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					currentScreen = ScreenState::RandomWordScreen;
 				}
+				else if (randomDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					currentScreen = ScreenState::RandomDefScreen;
+				}
 				else if (fullHistoryButton.isMouseOver(window) && currentScreen == ScreenState::MainScreen)
 					currentScreen = ScreenState::HistoryScreen;
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
@@ -823,6 +832,15 @@ void Application::handleEvent()
 			}
 
 		}
+		else if (currentScreen == ScreenState::RandomDefScreen) {
+			randomDef->isBackButtonPressed = false;
+			randomDef->handleEvent(event, window, currentDataSetID, engEngVector, engVieVector, vieEngVector);
+			if (event.type == sf::Event::MouseButtonPressed && dataSetButton.isMouseOver(window))
+				changeDataSet();
+			if (randomDef->isBackButtonPressed) {
+				currentScreen = ScreenState::OptionsScreen;
+			}
+		}
 		else if (currentScreen == ScreenState::HistoryScreen) {
 			historyScreen->isBackButtonPressed = false;
 			historyScreen->updatePage(history, history1, history2, history3);
@@ -917,6 +935,10 @@ void Application::update()
 	else if (currentScreen == ScreenState::RandomWordScreen) {
 		dataSetButton.update(window);
 		randomWord->update(window);
+	}
+	else if (currentScreen == ScreenState::RandomDefScreen) {
+		dataSetButton.update(window);
+		randomDef->update(window);
 	}
 	else if (currentScreen == ScreenState::HistoryScreen)
 	{
@@ -1014,6 +1036,10 @@ void Application::render()
 	}
 	else if (currentScreen == ScreenState::RandomWordScreen) {
 		randomWord->render(window);
+		dataSetButton.drawTo(window);
+	}
+	else if (currentScreen == ScreenState::RandomDefScreen) {
+		randomDef->render(window);
 		dataSetButton.drawTo(window);
 	}
 	else if (currentScreen == ScreenState::HistoryScreen) {
