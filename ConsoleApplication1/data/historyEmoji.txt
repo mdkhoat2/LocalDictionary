@@ -79,3 +79,35 @@ mage: medium-dark skin tone
 face exhaling
 jsdssad
 face in clouds
+man guard: medium-dark skin tone
+guard: medium-dark skin tone
+grimacing face
+grinning face
+crying face
+face with open mouth
+face with stuck-out tongue
+american football
+crying face
+face exhaling
+crying face
+mage: medium-dark skin tone
+guard: medium-dark skin tone
+woman bouncing ball: light skin tone
+man bouncing ball
+woman golfing
+magnifying glass tilted left
+oncoming automobile
+man running
+woman kneeling
+mage: medium-light skin tone
+face exhaling
+flag: Angola
+flag: Armenia
+flag: Australia
+flag: Argentina
+magnifying glass tilted right
+family: man, woman, girl, boy
+family: man, man, girl, boy
+face without mouth
+mage: medium-dark skin tone
+oncoming fist: medium-dark skin tone

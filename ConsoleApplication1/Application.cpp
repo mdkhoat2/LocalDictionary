@@ -311,7 +311,7 @@ void Application::loadVieEngDict()
 
 void Application::loadEmojiDict()
 {
-	std::ifstream inputFile("data/emoji.txt");
+	std::ifstream inputFile("data/emo.txt");
 	if (!inputFile) {
 		std::cout << "Falied to open file " << std::endl;
 		return;
@@ -320,36 +320,17 @@ void Application::loadEmojiDict()
 	int emojiIndex = 0;
 	while (std::getline(inputFile, line))
 	{
-		if (line.empty() || line[0] == '#')
-			continue;
-		std::string emojis;
-		// Find the position of ';' 
-		std::size_t separatorPos = line.find_first_of(';');
+		std::stringstream ss(line);
+		std::string hexCode, word,emojis;
+		ss >> hexCode;
+		std::getline(ss >> std::ws, word); 
 
-		// Tách dòng thành hai phần: mã hex và phần còn lại
-		std::string hexCode = line.substr(0, separatorPos);
-		std::string remainingPart = line.substr(separatorPos + 1);
-
-		// Tìm vị trí của ký tự '#' trong phần còn lại
-		std::size_t hashtagPos = remainingPart.find_first_of('#');
-
-		// Tách phần còn lại thành status và từ
-		std::string status = remainingPart.substr(1, hashtagPos - 2);
-		std::size_t meo = remainingPart.find_first_of(".");
-
-		std::string word = remainingPart.substr(meo + 2);
-
-		//xóa bỏ dấu space
-		hexCode = trim(hexCode);
-		status = trim(status);
-		word = trim(word);
 		emojis = hexCode;
 		emojiVector.push_back(emojis);
 		trieInsert(engEngRoot, word, emojiIndex, 3);
 		++emojiIndex;
 
 	}
-
 	inputFile.close();
 }
 
