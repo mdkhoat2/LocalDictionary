@@ -75,6 +75,8 @@ void History::loadHistory(std::string filename)
 	}
 	std::string temp;
 	while (std::getline(fin, temp)) {
+		if (temp.empty())
+			continue;
 		history.push_back(temp);
 	}
 	fin.close();
