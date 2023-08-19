@@ -34,7 +34,8 @@ Application::Application() :
 	displayBox({ 72, 250 }, { 850, 600 }, sf::Color::Transparent, sf::Color::Black),
 	dataSetButton("      EN - EN", { 153, 60 }, 20, sf::Color::Transparent, sf::Color::Black),
 	proposedWord(nullptr),
-	currentDataSetID(0)
+	currentDataSetID(0),
+	resetCount(0)
 {
 	initWindow();
 	initBackground();
@@ -637,6 +638,7 @@ void Application::handleEvent()
 				proposedWord->isTyping = true;
 				std::string word = searchBar.getText();
 				proposedWord->initWordList(word, engEngRoot);
+				resetCount = 0;
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -647,6 +649,7 @@ void Application::handleEvent()
 				// Start searching when search button is pressed
 				if (searchButton.isMouseOver(window))
 				{
+					resetCount = 0;
 					std::string inputWord = searchBar.getText();
 					proposedWord->isTyping = false;
 					favouriteMain->checkWordAddedOrNot(inputWord, currentDataSetID);
@@ -663,6 +666,7 @@ void Application::handleEvent()
 						searchInEmojiDict(inputWord, false);
 				}
 				else if (menuButton.isMouseOver(window)) {
+					resetCount = 0;
 					if (currentScreen == ScreenState::MainScreen)
 						currentScreen = ScreenState::OptionsScreen;
 					else
@@ -670,14 +674,17 @@ void Application::handleEvent()
 				}
 				else if (addButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					resetCount = 0;
 					currentScreen = ScreenState::AddScreen;
 				}
 				else if (deleteButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					resetCount = 0;
 					currentScreen = ScreenState::RemoveScreen;
 				}
 				else if (editDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					resetCount = 0;
 					editDefScreen->setCurrentDataSetID(currentDataSetID);
 					editDefScreen->initTextToEdit(displayBox.getWord(), displayBox.getWordType()
 						, displayBox.getWordDef(), displayBox.getWordExample());
@@ -685,6 +692,7 @@ void Application::handleEvent()
 				}
 				else if (favouritebutton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					resetCount = 0;
 					if (currentDataSetID == 0)
 						displayBox.clearEngEngData();
 					else if (currentDataSetID == 1)
@@ -698,6 +706,7 @@ void Application::handleEvent()
 				}
 				else if (searchDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen)
 				{
+					resetCount = 0;
 					if (currentDataSetID == 0)
 						displayBox.clearEngEngData();
 					else if (currentDataSetID == 1)
@@ -709,23 +718,33 @@ void Application::handleEvent()
 					currentScreen = ScreenState::SearchDefinitionScreen;
 				}
 				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					resetCount = 0;
 					proposedWord->isTyping = false;
 					explore();
 				}
 				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					resetCount = 0;
 					currentScreen = ScreenState::RandomWordScreen;
 				}
 				else if (randomDefButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
+					resetCount = 0;
 					currentScreen = ScreenState::RandomDefScreen;
 				}
-				else if (fullHistoryButton.isMouseOver(window) && currentScreen == ScreenState::MainScreen)
+				else if (fullHistoryButton.isMouseOver(window) && currentScreen == ScreenState::MainScreen) {
+					resetCount = 0;
 					currentScreen = ScreenState::HistoryScreen;
+				}
 				else if (resetButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					//reset function
-					resetEverything();
+					resetCount++;
+					if (resetCount == 2) {
+						resetCount = 0;
+						resetEverything();
+					}
 				}
 				else if (displayBox.nextButtonDrawn() && displayBox.isMouseOverNextButton(window))
 				{
+					resetCount = 0;
 					if (currentDataSetID == 0)
 						displayBox.showNextEngEngDef();
 					else if (currentDataSetID == 1)
@@ -735,6 +754,7 @@ void Application::handleEvent()
 				}
 				else if (displayBox.prevButtonDrawn() && displayBox.isMouseOverPrevButton(window))
 				{
+					resetCount = 0;
 					if (currentDataSetID == 0)
 						displayBox.showPrevEngEngDef();
 					else if (currentDataSetID == 1)
@@ -744,19 +764,22 @@ void Application::handleEvent()
 				}
 				else if (dataSetButton.isMouseOver(window))
 				{
+					resetCount = 0;
 					changeDataSet();
 				}
 				else if (favouriteFlag.isMouseOver(window) && !proposedWord->setIsTyping())
 				{
+					resetCount = 0;
 					favouriteMain->eraseOrAdd(searchBar, currentDataSetID);
 				}
 				else if (proposedWord->setIsTyping())
 				{
+					resetCount = 0;
 					proposedWord->handleEvent2(event, window, searchBar);
 				}
 				else
 				{
-
+					resetCount = 0;
 				}
 
 			}
