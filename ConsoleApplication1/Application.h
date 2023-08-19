@@ -78,6 +78,7 @@ private:
             2: VieEng
             3: Emoji
         */
+    int resetCount;
 
     sf::Font font;
     sf::Font font2;
