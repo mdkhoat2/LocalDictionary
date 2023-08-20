@@ -1171,6 +1171,8 @@ void Application::resetEverything()
 	newWord->resetAdd(engEngRoot);
 	// Reset remove
 	removeWord->resetRemove(engEngRoot);
+	//Reset favorite
+	resetFavorite();
 }
 
 void Application::resetHistoryAll() {
@@ -1284,4 +1286,10 @@ void Application::clearFile(std::string filename)
 	fout << "";
 	fout.close();
 }
-
+void Application::resetFavorite()
+{
+	clearFile("data/favourite/favorite_words0.txt");
+	clearFile("data/favourite/favorite_words1.txt");
+	clearFile("data/favourite/favorite_words2.txt");
+	clearFile("data/favourite/favorite_words3.txt");
+}
