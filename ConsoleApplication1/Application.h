@@ -40,7 +40,7 @@ public:
     void loadEngEngDict();
     void loadEngVieDict();
     void loadVieEngDict();
-    void loadEmojiDict(); 
+    void loadEmojiDict();
     void run();
 public:
     void handleEvent();
@@ -55,6 +55,7 @@ public:
     void resetEverything();
     void resetHistoryAll();
     void resetEditDef();
+    void resetFavorite();
     void clearFile(std::string filename);
 private:
     sf::VideoMode videoMode;
@@ -85,7 +86,7 @@ private:
     sf::Font font3;
 
     sf::Event event;
-    
+
     Textbox searchBar;
     sf::Text dataSetText;
 
