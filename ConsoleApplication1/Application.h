@@ -40,7 +40,7 @@ public:
     void loadEngEngDict();
     void loadEngVieDict();
     void loadVieEngDict();
-    void loadEmojiDict(); 
+    void loadEmojiDict();
     void run();
 public:
     void handleEvent();
@@ -79,13 +79,14 @@ private:
             2: VieEng
             3: Emoji
         */
+    int resetCount;
 
     sf::Font font;
     sf::Font font2;
     sf::Font font3;
 
     sf::Event event;
-    
+
     Textbox searchBar;
     sf::Text dataSetText;
 
