@@ -649,6 +649,7 @@ void Application::handleEvent()
 				{
 					std::string inputWord = searchBar.getText();
 					proposedWord->isTyping = false;
+					favouriteMain->showFlag = true;
 					favouriteMain->checkWordAddedOrNot(inputWord, currentDataSetID);
 					//if (inputWord!="")
 					//    history.add(inputWord);
@@ -710,6 +711,7 @@ void Application::handleEvent()
 				}
 				else if (exploreButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
 					proposedWord->isTyping = false;
+					favouriteMain->showFlag = false;
 					explore();
 				}
 				else if (randomWordButton.isMouseOver(window) && currentScreen == ScreenState::OptionsScreen) {
@@ -977,8 +979,11 @@ void Application::render()
 		menuButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
-			favouriteFlag.drawTo(window);
-			favouriteMain->drawTo(window, searchBar);
+			if (favouriteMain->showFlag)
+			{
+				favouriteFlag.drawTo(window);
+				favouriteMain->drawTo(window, searchBar);
+			}
 			displayBox.drawTo(window);
 		}
 		//dataSetBar.drawTo(window);
@@ -1006,8 +1011,11 @@ void Application::render()
 		resetButton.drawTo(window);
 		if (!proposedWord->setIsTyping())
 		{
-			favouriteFlag.drawTo(window);
-			favouriteMain->drawTo(window, searchBar);
+			if (favouriteMain->showFlag)
+			{
+				favouriteFlag.drawTo(window);
+				favouriteMain->drawTo(window, searchBar);
+			}
 			displayBox.drawTo(window);
 		}
 		//dataSetBar.drawTo(window);
@@ -1253,6 +1261,13 @@ void Application::resetEditDef()
 		}
 	}
 }
+void Application::resetFavorite()
+{
+	clearFile("data/favourite/favorite_words0.txt");
+	clearFile("data/favourite/favorite_words1.txt");
+	clearFile("data/favourite/favorite_words2.txt");
+	clearFile("data/favourite/favorite_words3.txt");
+}
 
 void Application::clearFile(std::string filename)
 {
@@ -1262,11 +1277,4 @@ void Application::clearFile(std::string filename)
 	}
 	fout << "";
 	fout.close();
-}
-void Application::resetFavorite()
-{
-	clearFile("data/favourite/favorite_words0.txt");
-	clearFile("data/favourite/favorite_words1.txt");
-	clearFile("data/favourite/favorite_words2.txt");
-	clearFile("data/favourite/favorite_words3.txt");
 }

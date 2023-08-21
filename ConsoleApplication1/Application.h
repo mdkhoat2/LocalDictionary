@@ -55,6 +55,7 @@ public:
     void resetEverything();
     void resetHistoryAll();
     void resetEditDef();
+    void resetFavorite();
     void clearFile(std::string filename);
 private:
     sf::VideoMode videoMode;
