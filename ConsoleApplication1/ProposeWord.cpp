@@ -10,7 +10,7 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 	{
 		if (theID == 0)
 		{
-			if (prefixRoot->engEngIndex != -1)
+			if (prefixRoot->engEngIndex != -1 && prefixRoot->isEEDeleted == false)
 			{
 				ProposeWords meo;
 				meo.word = prefix;
@@ -19,7 +19,7 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 		}
 		else if (theID == 1)
 		{
-			if (prefixRoot->engVieIndex != -1)
+			if (prefixRoot->engVieIndex != -1 && prefixRoot->isEVDeleted == false)
 			{
 				ProposeWords meo;
 				meo.word = prefix;
@@ -28,7 +28,7 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 		}
 		else if (theID == 2)
 		{
-			if (prefixRoot->vieEngIndex != -1)
+			if (prefixRoot->vieEngIndex != -1 && prefixRoot->isVEDeleted == false)
 			{
 				ProposeWords meo;
 				meo.word = prefix;
@@ -37,7 +37,7 @@ void findWordsWithPrefix(EngTrieNode* prefixRoot, const std::string& prefix, std
 		}
 		else
 		{
-			if (prefixRoot->emojiIndex != -1)
+			if (prefixRoot->emojiIndex != -1 && prefixRoot->isEmojiDeleted == false)
 			{
 				ProposeWords meo;
 				meo.word = prefix;
