@@ -31,3 +31,7 @@ add something to this app
 
 dictionary
 
+apcs
+*n
+-CS program
+= "test"
