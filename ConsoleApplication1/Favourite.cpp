@@ -580,6 +580,7 @@ FavouriteOnMainAndOptionScreen::FavouriteOnMainAndOptionScreen()
 	initAddedText();
 	initRemovedText();
 	CoutText = false;
+	showFlag = true;
 }
 
 

@@ -128,7 +128,7 @@ public:
 
 	bool filterAndCheck(std::string&word,std::string filePath);
 
-
+	bool showFlag;
 private:
 	sf::Texture favouriteFlag1Texture, favouriteFlag2Texture;
 	sf::Sprite favouriteFlag1Image, favouriteFlag2Image;
